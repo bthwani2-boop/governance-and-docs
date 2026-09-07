@@ -35,6 +35,12 @@ Examples:
 
 Incremental Product breadth may defer unrelated financial workflows, never the financial invariant of an effect already created.
 
+## Monetary representation
+
+Authoritative money uses an exact representation with explicit currency and scale/precision policy. Binary floating-point arithmetic is forbidden for authoritative monetary value, balance, fee, commission, payout, settlement or reconciliation calculations.
+
+Supported currencies and precision are governed Product/WLT policy and are not inferred from geography, provider defaults or UI formatting.
+
 ## One wallet / one ledger
 
 Each actor has one canonical internal WLT wallet. Available, held, pending, earned, settled, reserved and withdrawal-eligible amounts are states/projections over that truth, not parallel wallets. Every value-changing internal movement is represented through the canonical balanced ledger. Direct balance edits, spreadsheet totals, screenshots, client arithmetic and operator-entered authoritative amounts are forbidden.

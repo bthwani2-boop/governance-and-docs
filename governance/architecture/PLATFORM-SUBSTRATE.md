@@ -81,6 +81,17 @@ Without a proven current responsibility, do not prebuild generic workflow/journe
 
 A mechanism is admitted only when current consumers, ownership, failure behavior and lower total complexity than the simpler alternative are proven.
 
+## Representative vertical falsification
+
+Shared substrate is not proven merely because its folders, hosts, generators, migrations or health endpoints exist. When a claim depends on shared substrate being ready for real Product work, prove it with a representative real vertical outcome that exercises enough of the actual ownership/data/contract/runtime/surface chain to expose foundational mistakes.
+
+~~~text
+TOY_HEALTH_ROUTE != PLATFORM_READY
+REAL REPRESENTATIVE VERTICAL + CANONICAL READBACK = FOUNDATION FALSIFICATION EVIDENCE
+~~~
+
+This is an evidence principle, not a mandatory global phase and not authorization to activate another Product slice.
+
 ## Conformance
 
 A materially affected substrate element conforms when it is necessary, minimally implemented, correctly owned, nonduplicative and consistent with its specialized owners.

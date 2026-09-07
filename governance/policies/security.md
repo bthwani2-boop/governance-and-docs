@@ -80,6 +80,8 @@ data element
 - Retain sensitive data only for the governed operational/legal/audit need. A durable retention requirement must have an owner; absence of a material required retention/deletion decision is a governance gap rather than permission to retain forever.
 - Deletion/anonymization must respect canonical ownership, references, legal/audit/financial retention and reconciliation. Deleting a projection does not delete owner truth; deleting owner truth without resolving required consumers/references is not a conformant privacy/data-lifecycle result.
 - Production PII, credentials, identity documents, precise location history and financial payloads are not ordinary local/staging/test data. Exceptional diagnostic use must be authorized, minimized/sanitized, protected, time-bounded and removed after purpose.
+- Where Product, distribution-platform or applicable legal requirements require an account/privacy lifecycle, deletion/export/retention handling is a governed Product/data journey rather than release-form paperwork. Requester verification, session/credential disposition, owner-specific delete/anonymize/retain outcomes, third-party effects, cross-owner reconciliation and truthful terminal readback must remain explicit.
+- Mobile protected-resource permissions are purpose-limited and requested no earlier than needed for the user action. When a permission is not essential to the core outcome, provide a reasonable non-permission fallback where practicable; denial/revocation is a truthful recoverable state, never an authorization bypass.
 
 ## Sensitive logging, telemetry, and evidence
 
@@ -156,6 +158,8 @@ Treat these as explicit trust boundaries:
 - development/test environments.
 
 At each boundary validate identity, authorization/scope, input/schema, replay/idempotency, provenance and sensitive-data handling as applicable.
+
+A materially new or changed privileged, financial, personal-data or external-provider flow requires abuse/misuse-case reasoning sufficient to challenge the happy path. As applicable examine stolen token/device/session, replay/duplicate input, concurrent writers, client-tampered price/scope/role/context, provider timeout/lying/reordering, privileged-operator compromise and sensitive-data leakage through observability/support evidence.
 
 Data handling distinguishes at minimum:
 

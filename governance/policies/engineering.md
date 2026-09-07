@@ -63,6 +63,18 @@ Product/Journey
 
 Only materially applicable links are required; each omitted link requires an actual non-applicability reason, not assumption.
 
+## Safe parallelism and vertical closure
+
+Parallel engineering is allowed only when concurrent worksets have explicit, non-conflicting ownership and their shared data/migration/contract/runtime/integration effects are understood. Independent work may proceed concurrently, but the integrated candidate must be reverified wherever shared owners or dependencies invalidate earlier evidence.
+
+~~~text
+PARALLEL IMPLEMENTATION != HORIZONTAL PARTIAL CLOSURE
+BACKEND_WAVE_THEN_FRONTEND_WAVE != PRODUCT OUTCOME CLOSED
+INDEPENDENT WORKSETS + INTEGRATED VERTICAL READBACK = ADMISSIBLE
+~~~
+
+A claimed Product/System outcome still closes through its complete materially affected vertical path. Concurrency is an execution optimization, never permission to leave a half-migration, backend-only truth, UI-only behavior or unintegrated contract as final state.
+
 ## Verification law
 
 Use the smallest evidence capable of falsifying the affected claim, then expand by risk. Static reachability is not semantic correctness; build success is not runtime proof; runtime success is not authorization/security/data-migration proof; tool green is not system correctness.

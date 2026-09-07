@@ -262,9 +262,25 @@ CANONICAL DOMAIN SOURCES
 
 Analytics never becomes a transactional writer or authorization owner.
 
+## J16 — Customer account and privacy lifecycle
+
+```text
+CUSTOMER INITIATES ACCOUNT/PRIVACY REQUEST
+→ VERIFY REQUESTER + INTENT WITHOUT ENUMERATION
+→ CREATE IDEMPOTENT DSH PRIVACY-LIFECYCLE REQUEST
+→ IDENTITY APPLIES CLIENT-ROLE CREDENTIAL/SESSION/ACCESS DISPOSITION
+→ DSH CUSTOMER/PROFILE OWNERS APPLY DELETE/ANONYMIZE/RETAIN DISPOSITION
+→ WLT/OTHER SOVEREIGN OWNERS APPLY REQUIRED RETENTION/ANONYMIZATION WITHOUT MOVING THEIR TRUTH
+→ THIRD-PARTY PROCESSOR EFFECTS WHERE APPLICABLE
+→ RECONCILE OWNER DISPOSITIONS
+→ TRUTHFUL CUSTOMER-FACING TERMINAL READBACK
+```
+
+Deleting the customer account is not automatic deletion of the Human Actor or unrelated partner/captain/field/operator/platform-owner roles. Required financial/audit/security retention survives only under its owning policy and must not leave ordinary customer access active.
+
 ## Journey-step responsibility classification law
 
-Every material step named in J0–J15 must resolve to exactly one disposition:
+Every material step named in J0–J16 must resolve to exactly one disposition:
 
 ```text
 DURABLE_CAPABILITY
@@ -284,6 +300,7 @@ UNCLASSIFIED_MATERIAL_RESPONSIBILITIES=0
 ```
 
 Key durable dispositions in the current model:
+- ACCOUNT / PRIVACY REQUEST ORCHESTRATION + CROSS-OWNER COMPLETION → ACCOUNT_PRIVACY_LIFECYCLE; each sovereign owner retains its own identity/profile/financial/audit disposition.
 - CENTRAL CATALOG / APPROVAL / PUBLICATION → CENTRAL_CATALOG; approval/publication is a named subcapability/workflow.
 - CART / CHECKOUT → CART_CHECKOUT; ORDER CREATION begins after the governed checkout eligibility boundary.
 - ASSIGNED FIELD TASK / VISIT / READINESS / ESCALATION → FIELD_OPERATIONS_ASSIGNMENT_READINESS.
@@ -297,7 +314,7 @@ Key durable dispositions in the current model:
 |---|---|
 | ADMINISTRATION_ROLES_APPROVALS_AUDIT | J7 |
 | CAPTAIN_DISPATCH | J3 |
-| IDENTITY_ACTIVATION_SESSIONS | J0 |
+| IDENTITY_ACTIVATION_SESSIONS | J0, J16 where client credential/session disposition is required |
 | MAPS_SERVICE_AREA_ADDRESS_PRIVACY | J1, J9 |
 | ORDER_CREATION | J1 |
 | PARTNER_FLEET_CONNECTION | J2, J3 |
@@ -310,12 +327,13 @@ Key durable dispositions in the current model:
 | SUPPORT_INCIDENTS_ORDER_RESCUE | J8 |
 | WLT_MONEY_MOVEMENT_PAYOUT_RECONCILIATION | J5, J6 |
 | ZONES_SLA_CAPACITY_DELIVERY_MODES | J1, J3, J9 |
-| CUSTOMER_PROFILE_PREFERENCES | J1, J8, J11 where consent affects communication |
+| CUSTOMER_PROFILE_PREFERENCES | J1, J8, J11 where consent affects communication, J16 where customer-profile disposition is required |
+| ACCOUNT_PRIVACY_LIFECYCLE | J16 |
 | PARTNER_TEAM_MEMBERSHIP | J2, J14 |
 | CENTRAL_CATALOG | J1, J2, J10, J13 when media evidence/assets are required |
 | PROMOTIONS_COUPONS_FUNDING | J1, J5, J10 |
 | RATINGS_REVIEWS_TRUST | J1, J12 |
-| NOTIFICATIONS_COMMUNICATIONS | J1-J15 where a governed delivery/inbox result is required |
+| NOTIFICATIONS_COMMUNICATIONS | J1-J16 where a governed delivery/inbox result is required |
 | ANALYTICS_OPERATIONAL_READ_MODELS | J7, J15 |
 | WLT_PRICING_QUOTES | J1, J5, J9 |
 | WLT_CAPTAIN_COLLATERAL | J3, J5, J6 |

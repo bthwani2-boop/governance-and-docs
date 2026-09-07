@@ -24,6 +24,21 @@ AGENT ROUTER = NON-AUTHORITATIVE NAVIGATION
 
 A document may summarize another owner for usability only when the owner remains clear and the summary does not introduce a competing rule.
 
+## Cross-repository canonical consumption
+
+Governance/Docs may live in a dedicated canonical knowledge repository while executable implementation and repository-specific execution law live elsewhere. A consuming implementation repository binds knowledge only through an **exact immutable full commit SHA**.
+
+~~~text
+EXACT KNOWLEDGE COMMIT SHA = ADMISSIBLE
+FLOATING BRANCH/TAG/LATEST = NOT AUTHORITY
+TRACKED LOCAL GOVERNANCE/DOCS MIRROR = FORBIDDEN
+IGNORED EXACT-SHA MATERIALIZATION/CACHE = DERIVED ONLY
+~~~
+
+The consuming repository must expose the pin, prove that the pinned commit and entrypoints exist, and verify that any local materialization resolves to that exact commit before using it as semantic evidence. Moving `main` in the knowledge repository must never silently change the Governance/Docs governing an already-pinned implementation candidate.
+
+Cross-repository separation changes location only. Executable source/runtime remains current implementation authority and the consuming repository's Orchestrator remains execution/recovery/evidence/closure authority.
+
 ## Canonical-source and size discipline
 
 Every material meaning has one editable canonical source. Indexes, routers, Docs, generated views and Orchestrator routers may point to that source but may not maintain a second normative copy. Historical rationale belongs in Git history rather than a parallel live rule tree.

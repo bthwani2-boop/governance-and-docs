@@ -17,6 +17,8 @@ Requested permissions/capabilities/entitlements and privacy/data declarations mu
 
 Backend contracts remain compatible with supported public mobile versions through their real rollout/support window.
 
+When an app supports account creation and current distribution/legal rules require account deletion or another privacy lifecycle entrypoint, release qualification proves that the required entrypoints are reachable and truthful for the final candidate. Store forms do not own deletion semantics: durable customer account/privacy behavior belongs to `../../product/capabilities/access/account-privacy-lifecycle.md` plus applicable Security/Data/Identity/Financial owners.
+
 ### Apple
 
 Each submission revalidates current official Apple requirements. Qualify the correct bundle/application identity, version/build, signing/entitlements, privacy usage declarations, privacy manifests/Required Reason APIs where applicable, protected-resource behavior and final dependency/native set. Use TestFlight or another appropriate Apple pre-release path for the final candidate when applicable. Store metadata, privacy answers, review access, content/legal declarations and screenshots must represent actual current behavior. A changed binary after rejection is a new candidate.

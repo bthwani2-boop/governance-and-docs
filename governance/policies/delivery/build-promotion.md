@@ -87,6 +87,23 @@ Production uses one canonical deployment authority with suitable concurrency con
 
 A successful deployment command is not release success. Post-deployment evidence verifies the materially affected technical, Product, security and observability claims and an observation period appropriate to risk.
 
+## Rollout and release-control lifecycle
+
+A material release flag, server-side admission control, kill switch or rollout selector is a bounded delivery mechanism, not permanent parallel Product truth. It has as applicable:
+
+~~~text
+OWNER
+PURPOSE
+AUDIENCE / TARGET SCOPE
+SAFE DEFAULT + FAILURE BEHAVIOR
+OBSERVABILITY / RELEASE CORRELATION
+PROMOTION CONDITION
+STOP / ROLLBACK CONDITION
+EXPIRY / REMOVAL CONDITION
+~~~
+
+A rollout control cannot bypass canonical authorization, data, financial or migration invariants. Product experiment/variant semantics remain with the Product/Experience owner; this policy owns only release/promotion control behavior. Retire the control after the compatibility/observation purpose ends unless a separately proven durable responsibility remains.
+
 ## Rollback and forward recovery
 
 Rollback and forward recovery are distinct. Prefer redeployment of a previous known-good immutable server/web/container artifact when technically valid; do not rebuild an old ref and call it the same artifact.

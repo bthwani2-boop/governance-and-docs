@@ -61,6 +61,7 @@ One capability = one editable semantic owner file. Directories group related Pro
 
 - `capabilities/access/identity-activation-sessions.md` — `IDENTITY_ACTIVATION_SESSIONS`
 - `capabilities/access/customer-profile-preferences.md` — `CUSTOMER_PROFILE_PREFERENCES`
+- `capabilities/access/account-privacy-lifecycle.md` — `ACCOUNT_PRIVACY_LIFECYCLE`
 - `capabilities/access/administration-roles-approvals-audit.md` — `ADMINISTRATION_ROLES_APPROVALS_AUDIT`
 - `capabilities/access/platform-sovereign-control-plane.md` — `PLATFORM_SOVEREIGN_CONTROL_PLANE`
 

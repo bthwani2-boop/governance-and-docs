@@ -91,6 +91,18 @@ PLATFORM CONTROL → only explicitly admitted cross-platform governed control-pl
 
 No surface, integration adapter, search/index, analytics view, cache/projection or documentation artifact becomes a parallel Product owner merely because it renders or transports owner truth.
 
+## 4A. Required business/operational decisions
+
+Engineering must not invent missing business/legal/operational truth merely to make a template complete. Before a dependent capability/release requires them, the applicable authority must resolve items such as supported market/jurisdiction, legal operator identity, supported currency/precision, retention obligations, material support/operations responsibility and required reliability/recovery targets.
+
+~~~text
+MISSING_REQUIRED_DECISION != PERMISSION_TO_GUESS
+NO_AUTHORIZED_SLO/RPO/RTO != INVENT_A_NUMBER
+MARKET_LOCATION != IMPLIED_CURRENCY_POLICY
+~~~
+
+A required unresolved decision is an explicit Product/operations/legal gap and blocks only the outcome that depends on it.
+
 ## 5. Product-wide requirements
 
 The detailed behavior of catalog, cart, checkout, orders, partner/store lifecycle, dispatch, handoff, field operations, support, communications, analytics, promotions, ratings and financial operations is defined only in the applicable capability owner. This PRD does not maintain a second capability registry.

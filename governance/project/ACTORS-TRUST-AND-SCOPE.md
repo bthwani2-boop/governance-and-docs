@@ -106,7 +106,7 @@ Performs DSH-assigned field/onboarding/verification tasks. Field participant sta
 Authenticates through the operator Identity role and acts only through exact server-side permissions/scopes owned by the applicable administration/domain capability.
 
 ### Platform owner
-Authenticates through the `platform_owner` Identity role and is the human control-panel authority allowed to provision employees and issue operator enrollment tokens. This role does not become a generic permissions blob; each protected capability still owns its exact duties and approval separation.
+Authenticates through the `platform_owner` Identity role and is the human control-panel authority allowed to provision governed control-panel operators and issue operator enrollment tokens. This role does not become a generic permissions blob; each protected capability still owns its exact duties and approval separation.
 
 ## Approval and separation of duties
 

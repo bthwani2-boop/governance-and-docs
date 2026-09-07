@@ -48,6 +48,20 @@ Do not invent SLO/SLI thresholds. If safe operation requires a performance/relia
 
 When material prove behavior across process restart, partial failure, dependency outage, migration/backfill interruption and external unknown results. Durable state requires an applicable restore/rebuild/reconciliation path; backup existence alone does not prove recoverability.
 
+For a material restore claim, representative evidence should follow the smallest applicable form of:
+
+~~~text
+BACKUP/SNAPSHOT
+→ RESTORE INTO ISOLATED TARGET
+→ VERIFY SCHEMA
+→ VERIFY DATA INTEGRITY
+→ VERIFY REQUIRED JOURNEYS/READBACK
+→ RECONCILE FINANCIAL/AUDIT STATE WHEN APPLICABLE
+→ RECORD ACTUAL RECOVERY CHARACTERISTICS
+~~~
+
+Do not invent RPO/RTO values; when safe operation requires them and no authorized requirement exists, that absence is a decision gap.
+
 Rollback and forward recovery are distinct, especially with data/schema changes and public mobile clients. Recovery must preserve canonical ownership and must not re-enable obsolete/shadow writers.
 
 ## Clean-state reproducibility
