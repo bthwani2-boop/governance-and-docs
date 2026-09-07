@@ -14,7 +14,7 @@ Evidence classes include compile/type/static, schema/contract, unit/domain, migr
 
 ## Interactive verification
 
-The consuming repository's Orchestrator owns closure semantics. Practical roles when installed:
+Verification guidance does not self-certify closure. Choose evidence by the material claim and current risk. Practical roles when installed:
 
 - Playwright CLI/MCP for browser exploration; Playwright Test for durable web regression.
 - `agent-device` for agent-native mobile exploration/interaction.

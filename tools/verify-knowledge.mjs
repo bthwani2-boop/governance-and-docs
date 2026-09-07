@@ -43,6 +43,9 @@ for (const forbidden of [
 
 const expectedDocs = [
   "docs/README.md",
+  "docs/method/diagnosis-and-decision.md",
+  "docs/method/change-and-reconstruction.md",
+  "docs/method/verification-and-evidence.md",
   "docs/development/workflow.md",
   "docs/development/backend.md",
   "docs/development/frontend.md",
@@ -92,6 +95,28 @@ for (const file of docsFiles) {
     "CURRENT_IMPLEMENTATION_AUTHORITY: NONE",
   ]) if (!text.includes(token)) fail(relative + " missing docs metadata: " + token);
   if (/^SEMANTIC_OWNER:/m.test(text)) fail(relative + " must not be a semantic owner");
+}
+
+const liveTextFiles = [
+  ...governanceFiles,
+  ...docsFiles,
+  path.join(root, "README.md"),
+  path.join(root, "AGENTS.md"),
+].filter((file) => fs.existsSync(file));
+
+for (const file of liveTextFiles) {
+  const text = fs.readFileSync(file, "utf8");
+  for (const forbidden of [
+    /\borchestrator\b/i,
+    /\bLEVEL_4\b/,
+    /\bACTIVE_SLICE\b/,
+    /\bFULL_TARGET\b/,
+    /\bAUTHORIZED_SCOPE_FIXED_POINT\b/,
+    /\bUNIT_CLOSED\b/,
+    /\bRECENSUS\b/,
+  ]) {
+    if (forbidden.test(text)) fail(rel(file) + " retains retired execution terminology: " + forbidden);
+  }
 }
 
 const docsIndex = read("docs/README.md");

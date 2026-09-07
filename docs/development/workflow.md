@@ -25,7 +25,7 @@ services/   → bounded-context implementations
 packages/   → proven reusable technical packages
 contracts/  → genuinely cross-service protocol material only
 infra/      → environment/deployment composition
-tools/      → automation/evidence + repository-local Orchestrator
+tools/      → automation, evidence and machine safeguards
 governance.lock.json → exact immutable Governance/Docs pin
 ~~~
 

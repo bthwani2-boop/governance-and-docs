@@ -53,4 +53,4 @@ Schema/readback verification uses the executable schema-verification mechanism f
 
 ## Closure
 
-Verify canonical Identity readback, affected domain authorization/eligibility, revoked/renewed session behavior, negative cross-role cases and sensitive-data hygiene. Execution/campaign closure remains Orchestrator authority.
+Verify canonical Identity readback, affected domain authorization/eligibility, revoked/renewed session behavior, negative cross-role cases and sensitive-data hygiene. This runbook does not self-certify closure; verify the materially affected exact-current claims before declaring recovery complete.

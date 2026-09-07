@@ -66,7 +66,7 @@ The following old shapes are not current authorities:
 
 - `governance/decisions/**` — active rules moved into current semantic owners; Git history is rationale.
 - `governance/product/WORKFORCE-MODEL.md` and Workforce-as-peer-domain — superseded by one `actor_id` plus domain-owned DSH participation/eligibility.
-- numbered `docs/platform-engineering-lifecycle/**` and phase trees — superseded by focused Docs + Governance owners + repository-local Orchestrator.
+- numbered `docs/platform-engineering-lifecycle/**` and phase trees — superseded by focused Docs, canonical Governance owners and the consuming repository's concise agent safety contract.
 - broad runbooks for unimplemented domains — deleted until executable operational responsibility exists.
 - manual product-truth JSON/platform-model registries used as parallel semantics — replaced by canonical capability owners and executable contract/source lineage.
 - generic provider/business domains, runtime feature registries and generic human/tenant/context engines — rejected unless an independently proven current responsibility later admits them.
