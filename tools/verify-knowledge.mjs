@@ -113,7 +113,7 @@ for (const file of all) {
 const securityPath = path.join(root, "governance/policies/security.md");
 if (fs.existsSync(securityPath)) {
   const security = fs.readFileSync(securityPath, "utf8");
-  const phrase = "Development/bootstrap credentials or historical examples never define normal Identity credential policy.";
+  const phrase = "Development/bootstrap credentials or historical examples never define normal credential policy.";
   const occurrences = security.split(phrase).length - 1;
   if (occurrences !== 1) {
     failures.push("security bootstrap credential policy must occur exactly once; found " + occurrences);
