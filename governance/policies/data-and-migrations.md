@@ -118,4 +118,4 @@ For durable-data risk, backup configuration alone is not proof. Establish the ap
 
 ## Required conformance properties
 
-Concrete candidate closure remains Orchestrator authority. Data conformance requires consistent owner/schema/constraints/migration history, correct backfill/reconciliation, canonical readback, migrated consumers, zero superseded authoritative writer and no material duplicate/orphan/drift residue tied to the affected responsibility.
+This policy does not self-certify candidate closure; exact-current evidence must prove the materially affected claims. Data conformance requires consistent owner/schema/constraints/migration history, correct backfill/reconciliation, canonical readback, migrated consumers, zero superseded authoritative writer and no material duplicate/orphan/drift residue tied to the affected responsibility.

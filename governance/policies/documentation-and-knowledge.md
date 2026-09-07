@@ -10,16 +10,17 @@ IMPLEMENTATION_STATE_AUTHORITY: NONE
 
 This policy owns durable quality/authority rules for Governance, human Docs, agent-routing adapters and derived knowledge views.
 
-It does not own Product capabilities, implementation state or campaign execution. Those remain with their canonical semantic owners, executable source/runtime and the Orchestrator respectively.
+It does not own Product capabilities or current implementation state. Product meaning remains with canonical semantic owners; current state remains with executable source/runtime. Current human authorization defines the objective and permitted mutation scope, while repository-local `AGENTS.md` supplies concise operating/safety constraints.
 
 ## Authority partition
 
 ~~~text
-GOVERNANCE   = DURABLE PRODUCT/SYSTEM/ARCHITECTURE/POLICY MEANING
-DOCS         = HUMAN DEVELOPMENT/OPERATIONS GUIDANCE
-ORCHESTRATOR = EXECUTION/RECOVERY/VERIFICATION/CLOSURE LAW
-SOURCE       = CURRENT IMPLEMENTATION/CONFIGURATION/RUNTIME TRUTH
-AGENT ROUTER = NON-AUTHORITATIVE NAVIGATION
+HUMAN AUTHORIZATION = CURRENT OBJECTIVE / PERMITTED MUTATION SCOPE
+GOVERNANCE          = CURRENT DURABLE DECISION BASELINE
+SOURCE/RUNTIME      = CURRENT IMPLEMENTATION / CONFIGURATION / STATE
+AGENTS.md           = REPOSITORY-LOCAL OPERATING / SAFETY CONTRACT
+DOCS                = NON-NORMATIVE METHOD / DEVELOPMENT / OPERATIONS GUIDANCE
+REFERENCES/HISTORY  = EVIDENCE / FALSIFICATION INPUT
 ~~~
 
 A document may summarize another owner for usability only when the owner remains clear and the summary does not introduce a competing rule.
@@ -37,11 +38,11 @@ IGNORED EXACT-SHA MATERIALIZATION/CACHE = DERIVED ONLY
 
 The consuming repository must expose the pin, prove that the pinned commit and entrypoints exist, and verify that any local materialization resolves to that exact commit before using it as semantic evidence. Moving `main` in the knowledge repository must never silently change the Governance/Docs governing an already-pinned implementation candidate.
 
-Cross-repository separation changes location only. Executable source/runtime remains current implementation authority and the consuming repository's Orchestrator remains execution/recovery/evidence/closure authority.
+Cross-repository separation changes location only. Executable source/runtime remains current implementation authority. The consuming repository keeps its concise `AGENTS.md` operating/safety contract and machine-enforced safeguards locally.
 
 ## Canonical-source and size discipline
 
-Every material meaning has one editable canonical source. Indexes, routers, Docs, generated views and Orchestrator routers may point to that source but may not maintain a second normative copy. Historical rationale belongs in Git history rather than a parallel live rule tree.
+Every material meaning has one editable canonical source. Indexes, routing adapters, Docs and generated views may point to that source but may not maintain a second normative copy. Historical rationale belongs in Git history rather than a parallel live rule tree.
 
 ```text
 ONE MATERIAL MEANING → ONE EDITABLE CANONICAL OWNER
@@ -113,7 +114,7 @@ Durable Governance/Docs must not hand-maintain current implementation inventorie
 - CI/run status;
 - current provider health;
 - current environment values;
-- active campaign frontier;
+- active execution frontier;
 - branch/session-specific state.
 
 ~~~text
@@ -183,13 +184,13 @@ Filename parity is irrelevant. Required semantic/operational value is what must 
 
 A later shorter document may replace several old files only when the same still-valid meaning is represented or deliberately superseded.
 
-## Agent routing and selective loading
+## Agent operating contract and selective loading
 
-Root/nested agent adapters must remain routing-only and declare non-authority.
+Root/nested agent files may own repository-local operating/safety constraints, but they must not become Product semantic or current-state authorities.
 
 Large canonical catalogs may be queried through deterministic source-derived tooling when this reduces context load. Such indexes/query outputs are derived views and must not become editable parallel registries.
 
-A material task should load only the semantic/execution owners that can affect its decision, but skipping an applicable owner to avoid a constraint is forbidden.
+A material task should load only knowledge capable of changing the decision. Applicable Governance must be considered and challenged against current evidence; skipping it to avoid a constraint is forbidden, but implementing it mechanically without diagnosis is also forbidden.
 
 ## Knowledge verification
 
@@ -201,7 +202,7 @@ Applicable checks include:
 DUPLICATE_SEMANTIC_OWNER=0
 CONTRADICTORY_PLACEMENT_RULES=0
 DOCS_NORMATIVE_AUTHORITY=0
-ORCHESTRATOR_PRODUCT_AUTHORITY=0
+AGENT_PRODUCT_SEMANTIC_AUTHORITY=0
 GOVERNANCE_EXECUTION_STATE=0
 STALE_CURRENT_STATE_IN_DURABLE_DOCS=0
 BROKEN_INTERNAL_REFERENCE=0
@@ -224,7 +225,7 @@ Reference material should state:
 
 ## Required conformance properties
 
-Concrete candidate closure remains Orchestrator authority. Applicable knowledge-system conformance requires:
+Knowledge files never self-certify implementation closure. Applicable knowledge-system conformance requires:
 
 ~~~text
 GOVERNANCE_ENTRYPOINT=PASS

@@ -27,7 +27,7 @@ TARGET_JOURNEY_ENVELOPE != ACTIVE_JOURNEY_INCREMENT
 WHEN_REQUIRED / WHEN_APPLICABLE = CONDITIONAL PRODUCT TRIGGER
 ```
 
-An active increment may stop at an earlier meaningful outcome when the Orchestrator-authorized Product scope says so, provided every effect it actually creates is closed through its canonical owners and readback. A later target step must not be preimplemented as a placeholder.
+An active increment may stop at an earlier meaningful outcome when the current human-authorized Product objective says so, provided every effect it actually creates is closed through its canonical owners and readback. A later target step must not be preimplemented as a placeholder.
 
 Conversely, once an active increment creates a cross-owner effect—especially money, custody, authorization or external-provider state—the corresponding invariant/handoff is inside the active cone and cannot be deferred merely because the rest of the target journey is deferred.
 
@@ -184,7 +184,7 @@ OR SPECIAL-REQUEST CAPABILITY WHEN GOVERNED
 
 ## Journey semantic completeness invariant
 
-A durable journey definition is incomplete when it omits a material cross-owner handoff, user/system action, failure/recovery semantic or final canonical readback. Concrete candidate proof and closure are owned by the Orchestrator, not by this Governance artifact.
+A durable journey definition is incomplete when it omits a material cross-owner handoff, user/system action, failure/recovery semantic or final canonical readback. This Governance artifact does not self-certify implementation closure; materially affected journey claims require exact-current evidence.
 
 ## J10 — Catalog, promotion and discovery publication
 

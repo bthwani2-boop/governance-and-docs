@@ -36,12 +36,12 @@ ACTIVE_PRODUCT_SLICE != CURRENT_IMPLEMENTATION_STATE
 QUALITY_DEPTH != PRODUCT_BREADTH
 ```
 
-The Orchestrator/invocation owns which Product slice is currently authorized for implementation. A target feature outside that slice may remain deliberately deferred without being a Product defect.
+Current human authorization defines which Product outcome is presently in scope. A target feature outside that objective may remain deliberately deferred without being a Product defect.
 
 A deferred target capability must not be represented by fake screens, placeholder business APIs, temporary schemas, shadow state, speculative frameworks, or alternate source-of-truth models. When activated later, it is implemented vertically against the same canonical owners and boundaries.
 
 ```text
-SMALL_PRODUCT_BREADTH + CANONICAL_ARCHITECTURE + LEVEL_4_DEPTH = VALID
+SMALL_PRODUCT_BREADTH + CANONICAL_ARCHITECTURE + COMPLETE_AFFECTED_CONE = VALID
 TEMPORARY_MVP_ARCHITECTURE_THAT_MUST_BE_REPLACED_LATER = FORBIDDEN
 ```
 
@@ -139,7 +139,7 @@ Product semantics do not define repository execution order, current implementati
 - durable architecture belongs to the applicable `governance/architecture/**` owner;
 - engineering constraints belong to the applicable `governance/policies/**` owner;
 - current implementation/configuration/runtime truth belongs to executable source;
-- execution, recovery, evidence and closure belong exclusively to the Orchestrator.
+- execution order and candidate closure are not Product semantics; they are determined from current human authorization, exact-target evidence, the repository-local agent safety contract and machine safeguards.
 
 ## 8. Experience, accessibility, privacy and security routing
 

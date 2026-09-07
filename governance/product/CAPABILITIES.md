@@ -22,7 +22,7 @@ CAPABILITY_LISTING != EXECUTION_AUTHORIZATION
 CAPABILITY_SEMANTIC_OWNER != CURRENT_IMPLEMENTATION_STATE
 ```
 
-The current invocation and Orchestrator determine which capability/increment is executable now.
+The current human-authorized objective and exact-target diagnosis determine which capability/increment is in scope now.
 
 ## Capability semantic envelope
 

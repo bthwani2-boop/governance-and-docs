@@ -165,7 +165,7 @@ Do not introduce multiple providers merely for architectural flexibility. Multi-
 
 ## Required conformance properties
 
-For any materially affected provider/integration responsibility, the implementation must conform to the applicable properties below. Concrete candidate evidence and closure remain Orchestrator authority:
+For any materially affected provider/integration responsibility, the implementation must conform to the applicable properties below. This policy does not self-certify candidate closure; materially affected claims require exact-current evidence:
 
 ~~~text
 GENERIC_PROVIDER_GOD_SERVICE=0
