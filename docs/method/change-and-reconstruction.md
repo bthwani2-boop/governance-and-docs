@@ -9,7 +9,18 @@ CURRENT_IMPLEMENTATION_AUTHORITY: NONE
 
 Before a material write, re-pin exact repository/ref/HEAD, prove expected target identity, and distinguish repository permission from environment/operation authorization. Credentials, authenticated tools, connected devices and reachable endpoints are capability, not authorization.
 
-Production, destructive durable data/provider/release/credential/financial/break-glass effects require explicit target-specific human authorization.
+Production, staging mutation, destructive durable data/provider/release/credential/financial/break-glass effects require explicit target-specific human authorization. Generic autonomy language such as “continue”, “do everything”, “AUTO”, repository-wide permission or ownership of credentials does not implicitly escalate environment or operation authority.
+
+If repository/ref/HEAD moves after diagnosis or before a write:
+
+~~~text
+HEAD MOVED
+→ DO NOT OVERWRITE
+→ INSPECT FOREIGN CHANGE
+→ RECONCILE
+→ RE-DIAGNOSE THE AFFECTED CONE
+→ THEN WRITE
+~~~
 
 For high-impact or externally consequential mutations: prepare/read-only assessment → revalidate authority → apply once → read back/reconcile. Never blind-retry an ambiguous external or financial effect.
 

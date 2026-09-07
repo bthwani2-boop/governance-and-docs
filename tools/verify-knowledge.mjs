@@ -155,6 +155,12 @@ for (const id of capabilityIds.keys()) {
 }
 
 for (const [file, token] of [
+  ["docs/method/diagnosis-and-decision.md", "No source has global precedence. Authority is specific to the fact being decided."],
+  ["docs/method/diagnosis-and-decision.md", "Do not select a material solution before building an evidence model."],
+  ["docs/method/change-and-reconstruction.md", "does not implicitly escalate environment or operation authority"],
+  ["docs/method/change-and-reconstruction.md", "HEAD MOVED"],
+  ["docs/method/verification-and-evidence.md", "UNKNOWN EFFECT → AUTHORITATIVE RECONCILIATION"],
+  ["docs/method/verification-and-evidence.md", "affected prior evidence is stale"],
   ["governance/policies/documentation-and-knowledge.md", "EXACT KNOWLEDGE COMMIT SHA = ADMISSIBLE"],
   ["governance/policies/engineering.md", "PARALLEL IMPLEMENTATION != HORIZONTAL PARTIAL CLOSURE"],
   ["governance/architecture/PLATFORM-SUBSTRATE.md", "REAL REPRESENTATIVE VERTICAL + CANONICAL READBACK"],

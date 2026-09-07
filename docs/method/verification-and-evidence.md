@@ -9,7 +9,7 @@ CURRENT_IMPLEMENTATION_AUTHORITY: NONE
 
 A green command proves only what it exercised. Static, unit, schema, migration, integration, runtime, browser/device, visual/accessibility, security/privacy, financial/reconciliation and release evidence are distinct classes.
 
-Bind material evidence to the exact candidate, relevant configuration/environment and claimed proof scope.
+Bind material evidence to the exact candidate, relevant configuration/environment and claimed proof scope. If the candidate, relevant configuration/runtime, shared owner, contract, migration or material dependency changes, affected prior evidence is stale and must be re-run or re-established.
 
 ## Falsification
 
@@ -27,11 +27,20 @@ Trace material journeys through action → authorization → canonical effect �
 
 Do not rerun until green without diagnosis. Classify implementation defect, environment/config mismatch, flaky/nondeterministic test, infrastructure/resource failure, external-provider failure, tool/dependency failure or unknown requiring diagnosis.
 
+~~~text
+UNKNOWN EFFECT != SUCCESS
+UNKNOWN EFFECT != FAILURE
+UNKNOWN EFFECT → AUTHORITATIVE RECONCILIATION
+~~~
+
+This is especially strict for external/provider/financial mutations where blind retry can duplicate a real effect.
+
 ## Completion evidence
 
 ~~~text
 AUTHORIZED OBJECTIVE = PROVEN
-MATERIALLY AFFECTED CONE = ACCOUNTED
+MATERIALLY AFFECTED OWNER / DATA / CONTRACT / RUNTIME / SURFACES = ACCOUNTED
+MATERIALLY AFFECTED SECURITY / PRIVACY / FINANCIAL / EXTERNAL EFFECTS = ACCOUNTED
 KNOWN MATERIAL OPEN OBLIGATIONS = 0
 KNOWN LOSING/SHADOW AUTHORITIES IN CONE = 0
 REQUIRED NEGATIVE / FAILURE / RECOVERY CASES = PROVEN
