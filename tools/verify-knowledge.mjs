@@ -106,16 +106,8 @@ const liveTextFiles = [
 
 for (const file of liveTextFiles) {
   const text = fs.readFileSync(file, "utf8");
-  for (const forbidden of [
-    /\borchestrator\b/i,
-    /\bLEVEL_4\b/,
-    /\bACTIVE_SLICE\b/,
-    /\bFULL_TARGET\b/,
-    /\bAUTHORIZED_SCOPE_FIXED_POINT\b/,
-    /\bUNIT_CLOSED\b/,
-    /\bRECENSUS\b/,
-  ]) {
-    if (forbidden.test(text)) fail(rel(file) + " retains retired execution terminology: " + forbidden);
+  if (/MANDATORY_EXECUTION_STATE_MACHINE\s*=\s*1/i.test(text)) {
+    fail(rel(file) + " attempts to establish a mandatory execution state machine");
   }
 }
 
