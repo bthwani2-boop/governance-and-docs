@@ -23,7 +23,7 @@ Assign one Incident Commander for operational decision/communication, an operati
 
 ## Environment authority
 
-Local/integration reset uses current repository-owned lifecycle commands; the canonical full proof is resolved from executable scripts (currently `pnpm runtime:integration:close`).
+Local/integration reset and proof use the current consuming repository's exact repository-owned lifecycle commands. Resolve those commands from executable manifests/scripts; this runbook does not freeze a runtime command, project name, port or alternate topology.
 
 Staging/Production mutation, migration, provider effect, credential action or recovery is never inferred from repository access, credentials or this runbook. Use only an explicitly materialized and authorized mechanism for the exact environment/target/operation.
 

@@ -13,7 +13,7 @@ Before a material change:
 
 1. read the consuming repository's `AGENTS.md`;
 2. resolve the exact knowledge pin and load only applicable Governance owners;
-3. resolve capability/journey/owner with `pnpm knowledge:query -- ...`;
+3. resolve capability/journey/owner with the repository's current knowledge query mechanism where applicable;
 4. inspect exact repository HEAD, executable source/history/runtime and affected cone;
 5. classify environment and operation authority before any mutation.
 
@@ -33,28 +33,9 @@ Logical `governance/**` and `docs/**` paths come from the pinned knowledge commi
 
 ## Install and command truth
 
-Use repository-declared versions and scripts. Current pinned versions are verified against executable files by CI; this guide must not become an independent version registry.
+Use repository-declared versions and scripts. Exact current commands are implementation facts and must be resolved from the consuming repository's pinned executable manifests/scripts. This guide must not become an independent command, port or runtime-topology registry.
 
-~~~powershell
-pnpm install --frozen-lockfile
-pnpm bootstrap
-pnpm knowledge:sync
-~~~
-
-Primary host/verification entrypoints are resolved from current `package.json`. Common current roots include:
-
-~~~powershell
-pnpm client
-pnpm partner
-pnpm captain
-pnpm field
-pnpm control
-pnpm workspace:verify
-pnpm mobile:verify-config
-pnpm docs:verify:all
-pnpm knowledge:verify:all
-pnpm runtime:integration:close
-~~~
+A repository may expose bootstrap, workspace verification, mobile verification, documentation/knowledge verification and runtime lifecycle entrypoints. Use the current repository-owned entrypoint for each operation rather than a historical command copied from documentation.
 
 After a coherent verified working-branch unit, use the repository safe-push entrypoint when applicable rather than bypassing repository interlocks.
 

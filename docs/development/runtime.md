@@ -8,21 +8,25 @@ CURRENT_RUNTIME_TRUTH_SOURCE: live repository scripts/configuration
 CURRENT_VALUE_TRUTH_SOURCE: EXECUTABLE_CONFIG
 CURRENT_PROVIDER_CONFIG_TRUTH_SOURCE: live repository configuration
 
-## Runtime profiles
+## Runtime authority
 
-Current repository service execution is intentionally limited to `development`/`test`. The Identity and DSH runtime entrypoints fail closed before opening service-side effects when `BTHWANI_ENV` is `staging` or `production`; those environments remain unavailable until a controlled deployment authority is materialized. Production-oriented configuration validation can still be tested without granting runtime authority.
+Current repository service execution is intentionally limited to `development`/`test` until stronger environments and their authorities are explicitly materialized. Production-oriented configuration may be validated without granting Production runtime authority.
 
-Use the smallest runtime able to prove the current claim:
+Runtime shape and lifecycle commands are implementation facts. Resolve them from the consuming repository's exact pinned `package.json`, runtime scripts and executable configuration. This guide must not freeze command names, ports, Compose projects, profiles or alternate topologies.
 
-- **DAILY_DEV** — active app/service plus minimum dependencies.
-- **FOCUSED_INTEGRATION** — exact cross-service/provider/database dependencies required by the capability.
-- **FULL_INTEGRATION** — repository-owned orchestration for migrations/readiness/contracts/runtime/journey/failure proof.
+A verification class does not create a second runtime authority:
 
-Current integration-runtime commands are derived from `package.json`; canonical full proof is `pnpm runtime:integration:close`. Do not turn this guide into a second command/port registry.
+```text
+DAILY DEVELOPMENT NEED != SECOND RUNTIME TOPOLOGY
+INTEGRATION TEST != SECOND RUNTIME OWNER
+TEST ISOLATION != AUTOMATIC FIXED HOST-PORT STACK
+```
+
+When the consuming repository has one canonical local lifecycle/topology, daily development and integration evidence use that owner unless the exact claim proves that isolation is materially required. If isolation is required, it must be deliberately bounded, non-conflicting and self-cleaning; it must not become a second ordinary developer path. Never solve ownership defects by silently selecting another port.
 
 ## Stateful dependencies
 
-PostgreSQL/PostGIS provides relational durable development state according to service boundaries. Object storage remains an adapter behind owner-domain semantics. Redis/Valkey is optional cache/coordination infrastructure and must never become Product truth. Docker is a reproducible integration path, not mandatory daily runtime.
+PostgreSQL/PostGIS provides relational durable development state according to service boundaries. Object storage remains an adapter behind owner-domain semantics. Redis/Valkey is optional cache/coordination infrastructure and must never become Product truth. Docker is a runtime mechanism, not semantic authority; whether a component runs in Docker or on the host is determined by the current canonical repository topology.
 
 Development external services receive synthetic/test data only.
 
@@ -40,7 +44,7 @@ Secret values do not belong in Git, client bundles, generic database rows, ordin
 
 Platform-governed variables require server-side schema/type validation, version/audit/reason/rollout/readback and cannot bypass domain authorization/invariants.
 
-Missing security-, finance- or correctness-critical configuration fails safely instead of silently selecting insecure fallbacks.
+Missing security-, finance- or correctness-critical configuration fails safely instead of silently selecting insecure or alternate fallbacks.
 
 ## Identity runtime credentials
 
@@ -70,13 +74,13 @@ PRODUCTION_DATA_IN_GENERAL_DEV = FORBIDDEN
 
 Daily development intentionally does not require production-like breadth. Unless the active claim proves the need, do not require:
 
-- a dedicated development VPS or every service running in Docker continuously;
+- a dedicated development VPS or every service running continuously;
 - multiple vendors for one capability merely for architectural completeness;
 - always-on object storage, mail sink, tracing stack or cache when the active work does not consume them;
 - real paid messaging for ordinary developer authentication cycles;
 - cache/coordination infrastructure without a measured or correctness-driven requirement.
 
-A focused/full integration proof may temporarily require any of these; that does not make it a permanent daily dependency.
+A focused proof may temporarily require additional dependencies; that does not make them permanent daily dependencies or authorize a parallel ordinary runtime path.
 
 Conversely, evaluate a critical external provider early in an isolated spike when its API limitations, cost/quota, policy/compliance, native SDK/permission model or failure semantics could invalidate the intended architecture before many capabilities depend on it. Record the result as evidence; provider choice still does not become domain authority.
 
