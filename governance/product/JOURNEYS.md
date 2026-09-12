@@ -62,21 +62,24 @@ ELSE:
 
 Phone verification, managed activation, normal authentication, recovery/re-enrollment and first-Operator bootstrap are distinct Identity lifecycles. Bootstrap creates only an `operator`.
 
-## J1 — Customer commerce and fulfillment
+## J1 — Customer commerce and BThwani fulfillment
 
 ```text
 DISCOVERY / SERVICEABILITY
 → CART / CHECKOUT
 → ORDER CREATION
 → PAYMENT ALLOCATION / FINANCIAL AUTHORIZATION WHEN REQUIRED
-→ STORE/PARTNER FULFILLMENT
-→ DISPATCH WHEN REQUIRED
+→ STORE/PARTNER PREPARATION
+→ READY FOR DISPATCH
+→ BTHWANI CAPTAIN DISPATCH / ASSIGNMENT
 → STORE↔CAPTAIN HANDOFF
-→ DELIVERY / PICKUP OUTCOME
+→ BTHWANI FINAL-MILE DELIVERY
 → CUSTOMER READBACK / TRACKING
 → SUPPORT/RESCUE WHEN REQUIRED
 → FINAL FINANCIAL/REFUND READBACK WHEN REQUIRED
 ```
+
+Standard commerce has one canonical fulfillment path. No customer-side execution-path choice or second final-mile ownership lane exists in this journey.
 
 ## J2 — Partner onboarding to live commerce
 
@@ -89,24 +92,23 @@ IDENTITY / PARTNER ROLE
 → STORE READINESS
 → PUBLICATION
 → CATALOG/ORDER OPERATIONS
-→ FULFILLMENT POLICY
+→ STORE FULFILLMENT / BTHWANI HANDOFF READINESS
 → SETTLEMENT/COMMISSION READBACK
 ```
 
-`Partner` is one stakeholder/role throughout J2. No Partner Organization, Partner Member, partner-team membership or second Partner identifier participates in this journey.
+`Partner` is one stakeholder/role throughout J2. No Partner Organization, Partner Member, partner-team membership or second Partner identifier participates in this journey. Partner readiness does not create final-mile fleet ownership.
 
 ## J3 — Captain activation, assignment and earning
 
 ```text
 IDENTITY / ACTIVATION
-→ DSH CAPTAIN ELIGIBILITY
-→ DSH OPERATIONAL FLEET/READINESS
+→ DSH CAPTAIN ELIGIBILITY / AVAILABILITY
 → DISPATCH OFFER
 → ACCEPT/DECLINE/TIMEOUT
 → COD EXPOSURE RESERVATION WHEN REQUIRED
 → ASSIGNMENT
 → HANDOFF/CUSTODY
-→ DELIVERY/EXCEPTION
+→ BTHWANI DELIVERY / EXCEPTION
 → WLT EARNING / COD FINALIZATION
 → CANONICAL READBACK
 ```
@@ -183,8 +185,8 @@ INCIDENT DETECTION
 ```text
 ADDRESS / LOCATION INPUT
 → PRIVACY/OWNERSHIP CHECK
-→ ZONE / SLA / CAPACITY / DELIVERY-MODE EVALUATION
-→ STANDARD COMMERCE PATH WHEN ELIGIBLE
+→ ZONE / SLA / CAPACITY / SERVICEABILITY EVALUATION
+→ STANDARD BTHWANI COMMERCE PATH WHEN ELIGIBLE
 OR SPECIAL-REQUEST CAPABILITY WHEN GOVERNED
 → OWNER-SIDE ACCEPT/REJECT/QUOTE/STATE
 → FINANCIAL EFFECT WHEN REQUIRED
@@ -301,6 +303,7 @@ Key durable dispositions in the current model:
 - ACCOUNT / PRIVACY REQUEST ORCHESTRATION + CROSS-OWNER COMPLETION → ACCOUNT_PRIVACY_LIFECYCLE; each canonical owner retains its own identity/profile/financial/audit disposition.
 - CENTRAL CATALOG / APPROVAL / PUBLICATION → CENTRAL_CATALOG; approval/publication is a named subcapability/workflow.
 - CART / CHECKOUT → CART_CHECKOUT; ORDER_CREATION begins after the governed checkout eligibility boundary.
+- STANDARD COMMERCE FULFILLMENT → one BThwani path from Store preparation through CAPTAIN_DISPATCH, STORE_CAPTAIN_HANDOFF and final-mile delivery; no second final-mile owner is admitted.
 - FIELD-ASSISTED PARTNER/FIRST-STORE ONBOARDING ASSIGNMENT / VISIT / CHECK / EVIDENCE → subcapability of PARTNER_ONBOARDING_STORE_PUBLICATION; no standalone Field Operations capability exists.
 - PARTNER STORE SCOPE → DSH relationship between the Partner `actor_id` and Store; no Partner Organization/Member/team-membership layer exists.
 - CAMPAIGN / AUDIENCE / PLACEMENT / LOYALTY / NON-FINANCIAL COMMERCIAL PROGRAM ELIGIBILITY → MARKETING_CAMPAIGNS_LOYALTY.
@@ -311,11 +314,10 @@ Key durable dispositions in the current model:
 
 | Capability | Journey coverage |
 |---|---|
-| CAPTAIN_DISPATCH | J3 |
+| CAPTAIN_DISPATCH | J1, J3 |
 | IDENTITY_ACTIVATION_SESSIONS | J0, J7 where Operator identity/access is required, J15 where client credential/session disposition is required |
 | MAPS_SERVICE_AREA_ADDRESS_PRIVACY | J1, J9 |
 | ORDER_CREATION | J1 |
-| PARTNER_FLEET_CONNECTION | J2, J3 |
 | PARTNER_ONBOARDING_STORE_PUBLICATION | J2, J4 |
 | REPRESENTATIVE_WALLETS_REFERENCE_FINANCE | J1, J3, J5, J6 |
 | SETTLEMENTS_COMMISSIONS | J3, J6 |
@@ -323,7 +325,7 @@ Key durable dispositions in the current model:
 | STORE_CAPTAIN_HANDOFF | J1, J3 |
 | SUPPORT_INCIDENTS_ORDER_RESCUE | J8 |
 | WLT_MONEY_MOVEMENT_PAYOUT_RECONCILIATION | J5, J6 |
-| ZONES_SLA_CAPACITY_DELIVERY_MODES | J1, J3, J9 |
+| ZONES_SLA_CAPACITY_SERVICEABILITY | J1, J3, J9 |
 | CUSTOMER_PROFILE_PREFERENCES | J1, J8, J11 where consent affects communication, J15 where customer-profile disposition is required |
 | ACCOUNT_PRIVACY_LIFECYCLE | J15 |
 | CENTRAL_CATALOG | J1, J2, J10, J13 when media evidence/assets are required |

@@ -36,13 +36,27 @@ Operator is the only control-panel human role. System bootstrap creates the firs
 
 `Partner` is one stakeholder and one role represented by one `actor_id`. The current Product model has no `Partner Organization`, `Partner Member`, or partner-team membership layer. A Store is a DSH-managed business resource belonging to its Partner, not another actor or platform instance.
 
-## Fulfillment policy modes
+## Canonical fulfillment model
 
-- `BTHWANI_DELIVERY`
-- `PARTNER_DELIVERY`
-- `CLIENT_PICKUP`
+The current Product model has one end-to-end fulfillment model:
 
-A lower-level fleet/operational arrangement does not create an additional fulfillment policy mode unless Product governance explicitly introduces one.
+```text
+CURRENT_FULFILLMENT_MODEL = BTHWANI_DELIVERY
+
+CUSTOMER ORDER
+→ PARTNER/STORE PREPARATION
+→ READY FOR DISPATCH
+→ BTHWANI CAPTAIN ASSIGNMENT
+→ STORE↔CAPTAIN HANDOFF
+→ BTHWANI FINAL-MILE DELIVERY
+→ CUSTOMER READBACK
+```
+
+BThwani owns the final-mile operational path through DSH and the Captain surface. Partner responsibility ends at governed Store preparation and handoff into the assigned BThwani Captain custody, except for separately governed non-delivery responsibilities.
+
+The customer does not select among alternative fulfillment lanes in the current Product model. No second final-mile fleet, customer collection lane, compatibility branch, disabled placeholder, hidden selector or dormant schema is admitted merely for future optionality.
+
+A materially different fulfillment model may be introduced only by an explicit future Product change that proves its independent lifecycle, ownership, custody, financial, support, UX, migration and cross-surface consequences before any implementation shape is added.
 
 ## Partner commercial models
 
@@ -90,4 +104,5 @@ BOOTSTRAP != ROLE
 CONTROL_PANEL != DOMAIN_OWNER
 APP_HOST != BUSINESS_CAPABILITY_OWNER
 PROVIDER != BUSINESS_DOMAIN
+CURRENT_FULFILLMENT_MODEL = BTHWANI_DELIVERY
 ```

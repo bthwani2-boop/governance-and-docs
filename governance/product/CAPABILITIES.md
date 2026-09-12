@@ -68,7 +68,7 @@ One capability = one editable semantic owner file. Directories group related Pro
 - `capabilities/commerce/order-creation.md` — `ORDER_CREATION`
 - `capabilities/commerce/cart-checkout.md` — `CART_CHECKOUT`
 - `capabilities/commerce/maps-service-area-address-privacy.md` — `MAPS_SERVICE_AREA_ADDRESS_PRIVACY`
-- `capabilities/commerce/zones-sla-capacity-delivery-modes.md` — `ZONES_SLA_CAPACITY_DELIVERY_MODES`
+- `capabilities/commerce/zones-sla-capacity-serviceability.md` — `ZONES_SLA_CAPACITY_SERVICEABILITY`
 - `capabilities/commerce/special-requests.md` — `SPECIAL_REQUESTS`
 - `capabilities/commerce/support-incidents-order-rescue.md` — `SUPPORT_INCIDENTS_ORDER_RESCUE`
 
@@ -83,7 +83,6 @@ One capability = one editable semantic owner file. Directories group related Pro
 ### Fulfillment
 
 - `capabilities/fulfillment/captain-dispatch.md` — `CAPTAIN_DISPATCH`
-- `capabilities/fulfillment/partner-fleet-connection.md` — `PARTNER_FLEET_CONNECTION`
 - `capabilities/fulfillment/store-captain-handoff.md` — `STORE_CAPTAIN_HANDOFF`
 
 ### Finance
@@ -99,6 +98,20 @@ One capability = one editable semantic owner file. Directories group related Pro
 
 - `capabilities/communications/notifications-communications.md` — `NOTIFICATIONS_COMMUNICATIONS`
 - `capabilities/communications/analytics-operational-read-models.md` — `ANALYTICS_OPERATIONAL_READ_MODELS`
+
+## Fulfillment admission law
+
+The current standard-commerce fulfillment model is one BThwani-operated final-mile path. DSH owns serviceability, dispatch, assignment, custody and delivery operational truth; Partner prepares the Store order and performs the governed Store↔Captain handoff; Captain executes the assigned BThwani delivery.
+
+```text
+CURRENT_FULFILLMENT_MODEL = BTHWANI_DELIVERY
+ONE_STANDARD_ORDER → ONE_BTHWANI_FINAL_MILE_PATH
+NO_SPECULATIVE_ALTERNATE_FULFILLMENT_CAPABILITY
+NO_PARALLEL_FINAL_MILE_FLEET
+NO_DORMANT_COMPATIBILITY_SHAPE
+```
+
+A materially different fulfillment lifecycle is not an extension switch on the current model. It requires an explicit future Product requirement and must independently prove ownership, actors, custody, finance, support, UX, migrations, cross-surface readback and failure/recovery semantics before a new capability or executable shape is admitted.
 
 ## Partner-model admission law
 

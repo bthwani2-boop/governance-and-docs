@@ -50,6 +50,21 @@ Central catalog/taxonomy identity is authoritative. Partner surfaces may manage 
 
 Operational Partner/Store facts are DSH-owned; wallet, settlement, commission, payout and reconciliation are WLT-owned. DSH may provide trusted operational evidence to WLT but cannot calculate/post authoritative financial truth independently.
 
-## Handoff and delivery policy
+## Store fulfillment and BThwani delivery boundary
 
-Partner delivery and BThwani delivery are Product policy modes, not inferred from whichever app displays the order. Responsibility/custody transitions are explicit and auditable.
+Partner owns Store-side preparation and readiness for an accepted order. Once the order reaches governed handoff readiness, BThwani owns the final-mile operational path through DSH dispatch, Captain assignment, custody transfer and delivery readback.
+
+```text
+PARTNER RESPONSIBILITY
+→ STORE PREPARATION
+→ READY FOR DISPATCH
+→ GOVERNED STORE↔CAPTAIN HANDOFF
+
+BTHWANI RESPONSIBILITY
+→ CAPTAIN DISPATCH / ASSIGNMENT
+→ CUSTODY
+→ FINAL-MILE DELIVERY
+→ DELIVERY READBACK
+```
+
+Partner does not own a parallel final-mile fleet under the current Product model, and Store fulfillment readiness must not be interpreted as authority to bypass the governed BThwani dispatch/custody path. A materially different fulfillment lifecycle requires a future explicit Product change before any schema, route, UI or compatibility branch is introduced.

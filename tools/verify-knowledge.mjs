@@ -30,6 +30,11 @@ for (const required of [
   "docs/README.md",
 ]) if (!exists(required)) fail("missing entrypoint: " + required);
 
+const retiredFulfillmentPaths = [
+  ["governance/product/capabilities/fulfillment", ["partner", "fleet", "connection"].join("-") + ".md"].join("/"),
+  ["governance/product/capabilities/commerce", ["zones", "sla", "capacity", "delivery", "modes"].join("-") + ".md"].join("/"),
+];
+
 for (const forbidden of [
   "governance/decisions",
   "governance/product/WORKFORCE-MODEL.md",
@@ -40,6 +45,7 @@ for (const forbidden of [
   "docs/runbooks/README.md",
   "docs/reference/external-systems",
   "docs/reference/donor-reconstruction-patterns.md",
+  ...retiredFulfillmentPaths,
 ]) if (exists(forbidden)) fail("retired knowledge shape exists: " + forbidden);
 
 const expectedDocs = [
@@ -112,6 +118,28 @@ for (const file of liveTextFiles) {
   }
 }
 
+// Current standard commerce has one BThwani-operated final-mile path. These
+// generated terms intentionally prevent retired multi-path semantics from
+// re-entering live Governance/Docs without keeping their literal legacy names
+// as a searchable semantic residue inside the verifier itself.
+const retiredFulfillmentConcepts = [
+  ["partner", "delivery"],
+  ["client", "pickup"],
+  ["partner", "fleet"],
+  ["fulfillment", "mode"],
+  ["delivery", "mode"],
+];
+for (const file of liveTextFiles) {
+  const normalized = fs.readFileSync(file, "utf8")
+    .toLowerCase()
+    .replace(/[_-]+/g, " ")
+    .replace(/\s+/g, " ");
+  for (const words of retiredFulfillmentConcepts) {
+    const phrase = words.join(" ");
+    if (normalized.includes(phrase)) fail(rel(file) + " retains retired fulfillment concept: " + phrase);
+  }
+}
+
 const docsIndex = read("docs/README.md");
 for (const expected of expectedDocs.slice(1)) {
   const short = expected.slice("docs/".length);
@@ -169,7 +197,10 @@ for (const [file, token] of [
   ["governance/architecture/PLATFORM-SUBSTRATE.md", "REAL REPRESENTATIVE VERTICAL + CANONICAL READBACK"],
   ["governance/product/FINANCIAL-MODEL.md", "Binary floating-point arithmetic is forbidden"],
   ["governance/product/capabilities/access/account-privacy-lifecycle.md", "CAPABILITY_ID: ACCOUNT_PRIVACY_LIFECYCLE"],
+  ["governance/product/capabilities/commerce/zones-sla-capacity-serviceability.md", "CAPABILITY_ID: ZONES_SLA_CAPACITY_SERVICEABILITY"],
   ["governance/product/JOURNEYS.md", "## J15 — Customer account and privacy lifecycle"],
+  ["governance/project/PLATFORM.md", "CURRENT_FULFILLMENT_MODEL = BTHWANI_DELIVERY"],
+  ["governance/product/PRD.md", "CURRENT_FULFILLMENT_MODEL = BTHWANI_DELIVERY"],
   ["governance/policies/runtime-reliability.md", "RESTORE INTO ISOLATED TARGET"],
 ]) if (!exists(file) || !read(file).includes(token)) fail(file + " missing recovered semantic: " + token);
 

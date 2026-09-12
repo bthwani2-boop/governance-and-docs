@@ -31,13 +31,14 @@ OPERATOR = ONE OPERATOR-ROLE ACTOR / CONTROL-PANEL PERSONA
 BOOTSTRAP != ROLE
 CONTROL_PANEL != DOMAIN_OWNER
 AUTHORIZATION_SCOPE != CLIENT_CONTROLLED_CONTEXT
+CURRENT_FULFILLMENT_MODEL = BTHWANI_DELIVERY
 ```
 
-A tenancy boundary, additional Partner-person/team/organization abstraction, additional control-panel role, or new bounded context is admitted only when Product/System requirements prove an independent lifecycle that existing actors and owners cannot represent. BThwani also does not adopt an external commerce, ERP, wallet or identity platform as its Product owner merely because that system is mature or available.
+A tenancy boundary, additional Partner-person/team/organization abstraction, additional control-panel role, alternative fulfillment model, or new bounded context is admitted only when Product/System requirements prove an independent lifecycle that existing actors and owners cannot represent. BThwani also does not adopt an external commerce, ERP, wallet or identity platform as its Product owner merely because that system is mature or available.
 
 ## 1B. Target Product vision versus delivery breadth
 
-This PRD owns durable target Product meaning. It does **not** require every target capability, mode, surface function, or advanced workflow to be implemented in the same delivery slice.
+This PRD owns durable target Product meaning. It does **not** require every target capability, surface function, or advanced workflow to be implemented in the same delivery slice.
 
 ```text
 TARGET_PRODUCT_VISION != ACTIVE_PRODUCT_SLICE
@@ -150,7 +151,9 @@ A required unresolved decision is an explicit Product/operations/legal gap and b
 
 The detailed behavior of catalog, cart, checkout, orders, Partner/Store lifecycle, dispatch, handoff, field-assisted Partner onboarding, support, communications, analytics, promotions, ratings and financial operations is defined only in the applicable capability owner. This PRD does not maintain a second capability registry.
 
-The target supported fulfillment-policy modes are `bthwani_delivery`, `partner_delivery`, and `client_pickup`. Target support does not activate all modes simultaneously; the active Product slice and current executable contracts determine implemented breadth.
+The current fulfillment contract is singular: every standard commerce order that reaches fulfillment uses BThwani final-mile delivery through the governed DSH dispatch, Captain and Store↔Captain handoff path. The client does not choose an alternative fulfillment lane, Partner does not own a parallel final-mile fleet, and no dormant compatibility shape is retained for speculative future breadth.
+
+A materially different fulfillment lifecycle is outside the current Product model. It may enter only through an explicit future Product change that proves its ownership, custody, financial, support, UX, migration and cross-surface consequences before executable schemas or UI are added.
 
 Product-wide invariants are:
 
@@ -166,6 +169,8 @@ Product-wide invariants are:
 - derived search, analytics, projections and caches never become mutation authority;
 - external providers implement semantic ports and never become business-domain owners;
 - the `field` role and `app-field` exist only for the field-assisted Partner/first-Store onboarding subflow owned by `PARTNER_ONBOARDING_STORE_PUBLICATION`; no standalone/general Field Operations capability is admitted;
+- standard commerce fulfillment follows one BThwani-operated delivery path from Store readiness through Captain dispatch, custody handoff, delivery and canonical customer readback;
+- no alternate fulfillment lane, second final-mile fleet, client-side execution selector, dormant schema or disabled compatibility branch is admitted without a future explicit Product change;
 - inactive future Product breadth remains absent rather than represented by fake screens, tables, APIs, state machines or compatibility structures.
 
 ## 6. Capability and journey routing

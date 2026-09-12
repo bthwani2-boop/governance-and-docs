@@ -14,10 +14,10 @@ This file is the **sole editable durable semantic owner** of `ORDER_CREATION`. C
 
 ### ORDER_CREATION — إنشاء الطلب وحقيقة الطلب
 
-**Problem.** A valid checkout intent must create at most one auditable DSH order whose accepted commercial/address/item snapshots and operational truth cannot be silently repriced, rebound or duplicated under retry/concurrency.
+**Problem.** A valid checkout intent must create at most one auditable DSH order whose accepted commercial/address/item/delivery snapshots and operational truth cannot be silently repriced, rebound or duplicated under retry/concurrency.
 **Target state.** Retries/concurrency cannot duplicate the order, accepted snapshots remain stable, all affected surfaces read the same authorized operational truth, and no DSH/frontend financial authority is created.
 
-**Required outcome.** One eligible checkout intent yields one canonical DSH order with durable accepted snapshots, authorized multi-surface readback and WLT-owned financial projection semantics.
+**Required outcome.** One eligible checkout intent yields one canonical BThwani-delivery DSH order with durable accepted snapshots, authorized multi-surface readback and WLT-owned financial projection semantics.
 
 **Primary actors.** client, partner, operator, system.
 
@@ -30,39 +30,42 @@ This file is the **sole editable durable semantic owner** of `ORDER_CREATION`. C
 **Business invariants**
 - DSH owns order operational truth; WLT owns financial truth.
 - A canonical eligible checkout/idempotency scope yields at most one order.
-- Accepted commercial/address/item snapshots required by the contract remain stable after creation unless a later explicit legal transition governs a change.
+- Every standard commerce order created by this capability is on the canonical BThwani delivery path.
+- Accepted commercial/address/item/serviceability/delivery snapshots required by the contract remain stable after creation unless a later explicit legal transition governs a change.
+- Order creation does not accept a client-selected execution-path discriminator.
 - All required surfaces consume one authorized DSH order truth and bounded WLT-backed financial projection.
 - Required operational event/outbox state follows the same transactional consistency guarantees as order creation.
 
 **Forbidden/negative invariants**
 - No order is created from an invalid/ineligible checkout intent.
 - No duplicate order is created for one canonical checkout/idempotency scope.
-- No accepted snapshot is silently re-derived from live catalog/address state.
+- No accepted snapshot is silently re-derived from live catalog/address/serviceability state.
+- No alternate fulfillment lane, dormant compatibility enum or local execution-path branch is embedded in order creation.
 - No frontend derives allowed business actions solely from a local status label.
 - No surface exposes full address PII to an actor that does not operationally require it.
 - No DSH/frontend path performs debit, refund, settlement or balance mutation as order-creation truth.
 
 **Acceptance expectations**
 - One checkout intent/canonical idempotency scope creates at most one order even under concurrent retry.
-- The created order carries the governed identifiers/versioning required for subsequent concurrency-safe transitions.
-- Order items, prices, currency, address and fulfillment snapshots required by the contract are fixed at creation and are not re-derived from live catalog state.
+- The created order carries the governed identifiers/versioning required for subsequent concurrency-safe BThwani dispatch and fulfillment transitions.
+- Order items, prices, currency, address, serviceability and delivery snapshots required by the contract are fixed at creation and are not re-derived from live catalog state.
 - Client, partner and operator readbacks expose the same operational truth with actor-appropriate redaction.
 - Payment state is a read-only WLT-owned projection and DSH performs no authoritative financial mutation for order creation.
 - Required operational event/outbox effects are persisted with the order under the required transactional discipline and remain retry/reconciliation safe.
 - Affected surfaces expose truthful loading/empty/offline/forbidden/conflict/partial/error/retry states without mock/local truth.
 - Every read/write is scoped by trusted context plus actor/object authorization and produces attributable correlation/audit evidence where required.
 
-**Named failure classes:** ineligible_checkout_created, duplicate_order_for_checkout, snapshot_repriced_or_rebound, frontend_status_authority, cross_scope_order_access, address_pii_overexposed, dsh_financial_mutation, success_without_canonical_readback.
+**Named failure classes:** ineligible_checkout_created, duplicate_order_for_checkout, snapshot_repriced_or_rebound, alternate_execution_path_admitted, frontend_status_authority, cross_scope_order_access, address_pii_overexposed, dsh_financial_mutation, success_without_canonical_readback.
 
 **Actor responsibility envelope**
-- `client` — Creates an order from an owned eligible checkout intent and reads only authorized customer order truth.; permitted: submit eligible checkout intent for order creation, read owned order, retry with governed idempotency semantics; forbidden: supply authoritative price/financial truth, create from another client checkout intent, change immutable order snapshots after creation.
-- `partner` — Reads/operates store-scoped order truth after creation according to later legal transitions.; permitted: read authorized owned-store order, consume immutable order snapshot; forbidden: reprice the created order, change client address snapshot, read another store order, mutate WLT financial truth.
-- `operator` — Reads or performs separately authorized order operations without changing canonical creation truth outside legal transitions.; permitted: read authorized order truth, perform explicitly governed later order operations; forbidden: create duplicate order, rewrite immutable commercial/address/item snapshot, mutate WLT financial truth through DSH.
-- `system` — Validates the checkout intent and atomically persists one DSH order plus required operational event/outbox effects.; permitted: validate checkout eligibility, enforce one-order-per-canonical-idempotency scope, persist immutable snapshots, emit required operational event/outbox, return canonical readback; forbidden: rederive accepted price from live catalog after creation, create duplicate order on retry, treat WLT projection as DSH-owned finance.
+- `client` — Creates an order from an owned eligible checkout intent and reads only authorized customer order truth.; permitted: submit eligible checkout intent for order creation, read owned order, retry with governed idempotency semantics; forbidden: supply authoritative price/financial truth, choose an alternate execution path, create from another client checkout intent, change immutable order snapshots after creation.
+- `partner` — Reads/operates Store-scoped order truth after creation according to later legal transitions.; permitted: read authorized owned-Store order, consume immutable order snapshot, prepare the order for governed BThwani handoff; forbidden: reprice the created order, change client address snapshot, reroute final-mile ownership, read another Store order, mutate WLT financial truth.
+- `operator` — Reads or performs separately authorized order operations without changing canonical creation truth outside legal transitions.; permitted: read authorized order truth, perform explicitly governed later order operations; forbidden: create duplicate order, rewrite immutable commercial/address/item/delivery snapshot, create an alternate fulfillment path, mutate WLT financial truth through DSH.
+- `system` — Validates the checkout intent and atomically persists one DSH order plus required operational event/outbox effects.; permitted: validate checkout eligibility, enforce one-order-per-canonical-idempotency scope, persist immutable snapshots, mark the standard order for the canonical BThwani delivery path, emit required operational event/outbox, return canonical readback; forbidden: rederive accepted price from live catalog after creation, create duplicate order on retry, accept a client-selected execution discriminator, treat WLT projection as DSH-owned finance.
 
 **Surface semantics**
 - `app-client` — required; actors: client; states: loading, success, offline, forbidden, conflict, partial, error; actions: create order from eligible checkout, read order, retry/recover.
-- `app-partner` — required; actors: partner; states: loading, empty, ready, forbidden, offline, error; actions: read owned-store order truth.
+- `app-partner` — required; actors: partner; states: loading, empty, ready, forbidden, offline, error; actions: read owned-Store order truth.
 - `control-panel` — required; actors: operator; states: loading, ready, not_found, forbidden, error; actions: read authorized order truth.
 - `backend` — required; actors: client, partner, operator, system; states: authorized, forbidden, invalid_checkout, conflict, idempotent_replay, created; actions: authorize, validate checkout, persist order snapshot, persist required event/outbox, return canonical readback.
 - `database` — required; actors: system; states: transactional, idempotent, snapshot_persisted, auditable; actions: enforce one order per canonical checkout/idempotency identity, persist immutable required snapshot, atomically retain required operational event/outbox state.
@@ -78,11 +81,11 @@ This file is the **sole editable durable semantic owner** of `ORDER_CREATION`. C
     "Checkout intent belongs to the same server-resolved business scope and client required by the current contract.",
     "Checkout intent is in the financial/operational state allowed for order creation, including COD when applicable.",
     "Cart is active/non-empty and each item has a valid accepted commercial snapshot.",
-    "Address, fulfillment mode and serviceability are proven in the checkout intent.",
+    "Address and BThwani serviceability are proven in the checkout intent.",
     "Any WLT reference required by checkout remains a reference and does not grant DSH financial ownership."
   ]
 }
 ```
 
-**Primary success measure.** eligible confirmed checkout intents producing exactly one canonical order with immutable accepted snapshots and owner-side readback.
-**Guardrail measures.** duplicate order per checkout; order from blocked/expired checkout; snapshot repricing/rebinding; DSH financial write; success without persisted readback.
+**Primary success measure.** eligible confirmed checkout intents producing exactly one canonical BThwani-delivery order with immutable accepted snapshots and owner-side readback.
+**Guardrail measures.** duplicate order per checkout; order from blocked/expired checkout; snapshot repricing/rebinding; alternate execution-path admission; DSH financial write; success without persisted readback.
