@@ -2,9 +2,9 @@ name: Knowledge Integrity
 
 on:
   push:
-    branches: [main]
+    branches: [a]
   pull_request:
-    branches: [main]
+    branches: [a]
 
 permissions:
   contents: read
