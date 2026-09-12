@@ -31,10 +31,11 @@ MEANING
 |---|---|---|
 | actor identity/credential/authentication/activation/session | Identity | apps/services through Identity contracts |
 | high-level actor-role admission and role-scoped session state | Identity | authorized apps/services through Identity contracts |
-| business authorization scope/operational permission/context | capability/domain that owns the protected business truth; currently DSH for DSH partner/store/team/assignment scope | authorized consumers through owner contracts |
-| client/partner/captain operational participant profile/status/eligibility | DSH | authorized DSH surfaces and dependent services through DSH contracts |
-| field-assisted Partner/first-Store onboarding assignment/evidence scope | DSH `PARTNER_ONBOARDING_STORE_PUBLICATION` | app-field/control-panel and owner-relevant partner readback through DSH contracts |
-| partner/store operational truth | DSH | partner/operator hosts and dependent services through contracts |
+| business authorization scope/operational permission/context | capability/domain that owns the protected business truth; currently DSH for Partner/Store/assignment scope | authorized consumers through owner contracts |
+| client/Partner/captain operational participant profile/status/eligibility | DSH | authorized DSH surfaces and dependent services through DSH contracts |
+| field-assisted Partner/first-Store onboarding assignment/evidence scope | DSH `PARTNER_ONBOARDING_STORE_PUBLICATION` | app-field/control-panel and Partner readback through DSH contracts |
+| Partner operational truth and Partner↔Store relationship | DSH; Partner is keyed by the Partner actor's canonical `actor_id` | app-partner/control-panel and dependent services through DSH contracts |
+| Store operational truth | DSH | authorized Partner/operator hosts and dependent services through contracts |
 | address/serviceability/order/dispatch/delivery/support | DSH | apps and WLT where trusted operational evidence is required |
 | wallet/ledger/payment/refund | WLT | DSH/app bounded projections/readback |
 | commission/settlement/payout/reconciliation/COD exposure | WLT | authorized stakeholder/operator reads |
@@ -43,6 +44,19 @@ MEANING
 | design tokens/primitives | Design System technical owner | deployable app hosts and explicitly admitted host-neutral reusable presentation abstractions; never an app-shaped service feature UI tree |
 | external provider secret value | approved secret store/runtime binding | adapter only; never client/general DB truth |
 | provider operation outcome | operation-owning domain | projections only after owner normalization/reconciliation |
+
+## Partner ownership law
+
+```text
+PARTNER = ONE PARTNER-ROLE ACTOR / PRODUCT STAKEHOLDER
+PARTNER_CANONICAL_CROSS_BOUNDARY_ID = actor_id
+PARTNER_ORGANIZATION = NOT_ADMITTED
+PARTNER_MEMBER = NOT_ADMITTED_AS_SECOND_ENTITY
+PARTNER_TEAM_MEMBERSHIP = NOT_ADMITTED
+STORE = DSH_RESOURCE_MANAGED_BY_PARTNER
+```
+
+Do not manufacture an organization/member/membership layer merely to model the Partner actor's relationship to its Stores. If a future Product requirement truly needs multiple independent Partner users or another Partner lifecycle, it must be admitted explicitly before implementation.
 
 ## Projection law
 
@@ -72,12 +86,11 @@ The following classes must preserve single-owner semantics when present:
 | Meaning | Canonical owner / writer | Derived or delivery role |
 |---|---|---|
 | cart/checkout operational truth | DSH CART_CHECKOUT; WLT owns financial quote/payment-session facts | ORDER_CREATION consumes only eligible checkout evidence; apps consume canonical readback |
-| field-assisted Partner/first-Store onboarding assignment/visit/check/evidence | DSH PARTNER_ONBOARDING_STORE_PUBLICATION | app-field and control-panel operate the onboarding subflow; Partner/Store owners consume committed evidence/readback; no standalone field-operations owner exists |
+| field-assisted Partner/first-Store onboarding assignment/visit/check/evidence | DSH PARTNER_ONBOARDING_STORE_PUBLICATION | app-field and control-panel operate the onboarding subflow; Partner consumes committed readback; no standalone field-operations owner exists |
 | campaigns/audiences/placements/loyalty/non-financial program eligibility | DSH MARKETING_CAMPAIGNS_LOYALTY; WLT owns monetary charging/posting; promotion funding stays in its governed cross-owner capability | apps/checkout/notifications consume bounded eligibility/readback |
 | customer profile/preferences excluding authentication | DSH customer/profile capability unless a future explicit owner supersedes it | apps consume bounded readback |
 | customer account/privacy request lifecycle and cross-owner completion state | DSH ACCOUNT_PRIVACY_LIFECYCLE coordinator; each sovereign owner remains writer of its own identity/profile/financial/audit disposition | app/external request surface and authorized support consume privacy-safe status/readback; Identity/WLT/other owners do not become DSH-owned truth |
-| partner-team membership and store-scoped operational access facts | DSH partner/team capability; Identity owns only high-level role admission/session authentication | partner/control surfaces consume scoped owner readback |
-| catalog taxonomy/master-product/attribute/relationship/assortment identity and approval/publication eligibility | DSH CENTRAL_CATALOG; approval/publication is a named subcapability | stores/apps consume governed readback; discovery/search are derived consumers |
+| catalog taxonomy/master-product/attribute/relationship/assortment identity and approval/publication eligibility | DSH CENTRAL_CATALOG; approval/publication is a named subcapability | Stores/apps consume governed readback; discovery/search are derived consumers |
 | promotion/coupon operational eligibility | DSH for commerce eligibility; WLT owns resulting authoritative monetary postings/effects | clients/operators consume bounded readback |
 | notification source event/business meaning | originating domain | DSH Notifications owns inbox/preferences/topic/delivery records; channel adapters execute transport; app host owns native route translation |
 | media asset business association/authorization | owning business domain | object-storage adapter owns transport/storage mechanics only |

@@ -24,7 +24,7 @@ The journeys below describe the durable end-to-end **target envelope** and depen
 
 ```text
 TARGET_JOURNEY_ENVELOPE != ACTIVE_JOURNEY_INCREMENT
-WHEN_REQUIRED / WHEN_APPLICABLE = CONDITIONAL PRODUCT TRIGGER
+WHEN_REQUIRED / WHEN_APPLICABLE = CONDITIONAL_PRODUCT_TRIGGER
 ```
 
 An active increment may stop at an earlier meaningful outcome when the current human-authorized Product objective says so, provided every effect it actually creates is closed through its canonical owners and readback. A later target step must not be preimplemented as a placeholder.
@@ -77,8 +77,9 @@ DISCOVERY / SERVICEABILITY
 ## J2 — Partner onboarding to live commerce
 
 ```text
-IDENTITY / TRUSTED ACTOR
-→ PARTNER ONBOARDING CASE
+IDENTITY / PARTNER ROLE
+→ PARTNER ONBOARDING CASE BOUND TO PARTNER actor_id
+→ FIRST STORE
 → FIELD-ASSISTED PARTNER/FIRST-STORE VISIT / CHECK / DOCUMENT / EVIDENCE WHEN REQUIRED
 → OWNER-SIDE REVIEW
 → STORE READINESS
@@ -87,6 +88,8 @@ IDENTITY / TRUSTED ACTOR
 → FULFILLMENT POLICY
 → SETTLEMENT/COMMISSION READBACK
 ```
+
+`Partner` is one stakeholder/role throughout J2. No Partner Organization, Partner Member, partner-team membership or second Partner identifier participates in this journey.
 
 ## J3 — Captain activation, assignment and earning
 
@@ -115,7 +118,7 @@ IDENTITY / FIELD ROLE ACTIVATION
 → CANONICAL ONBOARDING READBACK
 ```
 
-J4 is the field actor's role-specific view of J2 and is wholly owned by `PARTNER_ONBOARDING_STORE_PUBLICATION`; it is not an independent Field Operations capability. No unrelated/general field task is admitted through the `field` role or `app-field`.
+J4 is the Field actor's role-specific view of J2 and is wholly owned by `PARTNER_ONBOARDING_STORE_PUBLICATION`; it is not an independent Field Operations capability. No unrelated/general Field task is admitted through the `field` role or `app-field`.
 
 ## J5 — Financial Cash-In / payment / reconciliation
 
@@ -238,20 +241,7 @@ AUTHORIZED BUSINESS INTENT
 → ORPHAN/FAILURE RECONCILIATION
 ```
 
-## J14 — Partner team and scoped access
-
-```text
-IDENTITY / PARTNER-ROLE SESSION
-→ DSH PARTNER ORGANIZATION/MEMBERSHIP
-→ MEMBERSHIP INVITE/ASSIGNMENT
-→ DSH STORE/OPERATION SCOPE
-→ SERVER-SIDE AUTHORIZATION READBACK
-→ PARTNER OPERATION
-→ AUDIT/READBACK
-→ SUSPEND/REMOVE/REASSIGN
-```
-
-## J15 — Operational analytics/read-model journey
+## J14 — Operational analytics/read-model journey
 
 ```text
 CANONICAL DOMAIN SOURCES
@@ -264,7 +254,7 @@ CANONICAL DOMAIN SOURCES
 
 Analytics never becomes a transactional writer or authorization owner.
 
-## J16 — Customer account and privacy lifecycle
+## J15 — Customer account and privacy lifecycle
 
 ```text
 CUSTOMER INITIATES ACCOUNT/PRIVACY REQUEST
@@ -278,11 +268,11 @@ CUSTOMER INITIATES ACCOUNT/PRIVACY REQUEST
 → TRUTHFUL CUSTOMER-FACING TERMINAL READBACK
 ```
 
-Deleting the customer account is not automatic deletion of the Human Actor or unrelated partner/captain/field/operator/platform-owner roles. Required financial/audit/security retention survives only under its owning policy and must not leave ordinary customer access active.
+Deleting the customer account is not automatic deletion of the Human Actor or unrelated Partner/captain/field/operator/platform-owner roles. Required financial/audit/security retention survives only under its owning policy and must not leave ordinary customer access active.
 
 ## Journey-step responsibility classification law
 
-Every material step named in J0–J16 must resolve to exactly one disposition:
+Every material step named in J0–J15 must resolve to exactly one disposition:
 
 ```text
 DURABLE_CAPABILITY
@@ -306,6 +296,7 @@ Key durable dispositions in the current model:
 - CENTRAL CATALOG / APPROVAL / PUBLICATION → CENTRAL_CATALOG; approval/publication is a named subcapability/workflow.
 - CART / CHECKOUT → CART_CHECKOUT; ORDER CREATION begins after the governed checkout eligibility boundary.
 - FIELD-ASSISTED PARTNER/FIRST-STORE ONBOARDING ASSIGNMENT / VISIT / CHECK / EVIDENCE → subcapability of PARTNER_ONBOARDING_STORE_PUBLICATION; no standalone Field Operations capability exists.
+- PARTNER STORE SCOPE → DSH relationship between the Partner `actor_id` and Store; no Partner Organization/Member/team-membership layer exists.
 - CAMPAIGN / AUDIENCE / PLACEMENT / LOYALTY / NON-FINANCIAL COMMERCIAL PROGRAM ELIGIBILITY → MARKETING_CAMPAIGNS_LOYALTY.
 - MEDIA BYTE STORAGE → TECHNICAL_MECHANISM_OWNED_ELSEWHERE; business association remains with the owning capability.
 - SEARCH / ANALYTICS INDEXING → DERIVED_PROJECTION_READ_MODEL; source domains remain mutation/eligibility owners.
@@ -316,7 +307,7 @@ Key durable dispositions in the current model:
 |---|---|
 | ADMINISTRATION_ROLES_APPROVALS_AUDIT | J7 |
 | CAPTAIN_DISPATCH | J3 |
-| IDENTITY_ACTIVATION_SESSIONS | J0, J16 where client credential/session disposition is required |
+| IDENTITY_ACTIVATION_SESSIONS | J0, J15 where client credential/session disposition is required |
 | MAPS_SERVICE_AREA_ADDRESS_PRIVACY | J1, J9 |
 | ORDER_CREATION | J1 |
 | PARTNER_FLEET_CONNECTION | J2, J3 |
@@ -329,14 +320,13 @@ Key durable dispositions in the current model:
 | SUPPORT_INCIDENTS_ORDER_RESCUE | J8 |
 | WLT_MONEY_MOVEMENT_PAYOUT_RECONCILIATION | J5, J6 |
 | ZONES_SLA_CAPACITY_DELIVERY_MODES | J1, J3, J9 |
-| CUSTOMER_PROFILE_PREFERENCES | J1, J8, J11 where consent affects communication, J16 where customer-profile disposition is required |
-| ACCOUNT_PRIVACY_LIFECYCLE | J16 |
-| PARTNER_TEAM_MEMBERSHIP | J2, J14 |
+| CUSTOMER_PROFILE_PREFERENCES | J1, J8, J11 where consent affects communication, J15 where customer-profile disposition is required |
+| ACCOUNT_PRIVACY_LIFECYCLE | J15 |
 | CENTRAL_CATALOG | J1, J2, J10, J13 when media evidence/assets are required |
 | PROMOTIONS_COUPONS_FUNDING | J1, J5, J10 |
 | RATINGS_REVIEWS_TRUST | J1, J12 |
-| NOTIFICATIONS_COMMUNICATIONS | J1-J16 where a governed delivery/inbox result is required |
-| ANALYTICS_OPERATIONAL_READ_MODELS | J7, J15 |
+| NOTIFICATIONS_COMMUNICATIONS | J1-J15 where a governed delivery/inbox result is required |
+| ANALYTICS_OPERATIONAL_READ_MODELS | J7, J14 |
 | WLT_PRICING_QUOTES | J1, J5, J9 |
 | WLT_CAPTAIN_COLLATERAL | J3, J5, J6 |
 | WLT_PROVIDER_PENALTIES | J3, J6, J8 |

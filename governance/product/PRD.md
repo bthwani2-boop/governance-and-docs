@@ -8,7 +8,7 @@ IMPLEMENTATION_STATE_AUTHORITY: NONE
 
 ## 1. Product definition
 
-BThwani is one BThwani-operated unified multi-surface B2B2C commerce, fulfillment, operations, and financial platform. It is not a collection of independent applications or partner-specific platform instances. The client, partner, captain, field, and control-panel surfaces are different operating views over shared governed domain truth.
+BThwani is one BThwani-operated unified multi-surface B2B2C commerce, fulfillment, operations, and financial platform. It is not a collection of independent applications or Partner-specific platform instances. The client, Partner, captain, field, and control-panel surfaces are different operating views over shared governed domain truth.
 
 The platform supports multi-vertical commerce including restaurants, groceries, pharmacy, electronics, gifts/flowers, desserts/juices, fruits/vegetables, and other catalog-governed verticals added through the same contracts.
 
@@ -16,15 +16,19 @@ Partner commercial relationships may use the governed models `COMMISSION`, `SUBS
 
 ## 1A. Product non-goals
 
-BThwani is not a separate platform instance per partner/store and is not a generic multi-tenant SaaS abstraction by default. Partner Organization, Store, Human Actor, Identity Role, Product Persona, organization membership, Authorization Scope and Tenant are distinct concepts.
+BThwani is not a separate platform instance per Partner/Store and is not a generic multi-tenant SaaS abstraction by default.
+
+The current Product model has exactly one Partner stakeholder/role: a Human Actor with Identity role `partner` using `app-partner`. DSH owns that Partner's operational state and Store relationships. `Partner Organization`, `Partner Member`, partner-team membership and similar second-layer Partner identities are not admitted current Product concepts.
 
 ```text
+PARTNER = ONE PARTNER-ROLE ACTOR / PRODUCT STAKEHOLDER
+PARTNER != STORE
 PARTNER != TENANT_BY_DEFAULT
 STORE != TENANT_BY_DEFAULT
-AUTHORIZATION_SCOPE != ORGANIZATION_ID
+AUTHORIZATION_SCOPE != CLIENT_CONTROLLED_CONTEXT
 ```
 
-A tenancy boundary is admitted only when Product/System requirements prove independent isolation/lifecycle semantics. BThwani also does not adopt an external commerce, ERP, wallet or identity platform as its Product owner merely because that system is mature or available.
+A tenancy boundary or additional Partner-person/team/organization abstraction is admitted only when Product/System requirements prove an independent lifecycle that the current Partner actor plus Store scope cannot represent. BThwani also does not adopt an external commerce, ERP, wallet or identity platform as its Product owner merely because that system is mature or available.
 
 ## 1B. Target Product vision versus delivery breadth
 
@@ -49,11 +53,11 @@ TEMPORARY_MVP_ARCHITECTURE_THAT_MUST_BE_REPLACED_LATER = FORBIDDEN
 
 The standard product surfaces are:
 
-- `app-client`: customer discovery, cart, checkout, orders, support, tracking, and bounded financial readback.
-- `app-partner`: partner/store/catalog/order/team and authorized financial readback.
+- `app-client`: Customer discovery, cart, checkout, orders, support, tracking, and bounded financial readback.
+- `app-partner`: Partner Store/catalog/order operations and authorized financial readback.
 - `app-captain`: assignment, delivery lifecycle, proof/exception handling, and authorized earnings readback.
 - `app-field`: assigned Partner/first-Store onboarding, field verification, required document/evidence capture and submission for review only; it has no general field-operations remit.
-- `control-panel`: governed operator administration and operational control.
+- `control-panel`: governed Operator/Platform-owner administration and operational control.
 - backend/domain services and their service-owned persistence.
 - generated/public service clients, app-owned surface-specific capability presentation, explicitly admitted host-neutral reusable presentation only when proven, design-system primitives, events/jobs and runtime infrastructure required by the above surfaces.
 
@@ -63,11 +67,23 @@ A target capability may exclude a surface when its durable semantics make the ex
 
 ## 3. Actors, roles, personas and trust
 
-The canonical human identity is the **Human Actor**. Customer/client, partner member, captain, field worker and operator are current Identity roles/Product personas of a human actor; they are not separate people or identity records. A **Partner** is a business organization, not a Human Actor. A partner-role actor acts for a Partner Organization only through DSH-owned membership and business authorization scope.
+The canonical human identity is the **Human Actor**. Customer/client, Partner, captain, field worker and operator are current Identity roles/Product personas of a human actor; they are not separate identity records.
+
+For Partner specifically, the Product model is deliberately simple:
+
+```text
+Human Actor / actor_id
+→ Identity role `partner`
+→ app-partner
+→ DSH Partner operational state
+→ one or more DSH Stores
+```
+
+There is no `Partner Organization`, `Partner Member`, partner-team membership or parallel Partner identifier in the current model.
 
 Current role/persona mapping is owned by `../project/ACTORS-TRUST-AND-SCOPE.md`; ubiquitous terms are owned by `../project/GLOSSARY.md`. This PRD does not create a parallel actor taxonomy.
 
-Trusted identity comes from authenticated Identity/session state. Fine-grained business scope, permissions, eligibility, assignment and operational context come from the capability that owns the protected truth. Partner Organization and Store are business scopes, not platform-isolation or tenancy boundaries. No client header, query parameter, request body, cached local value, UI selector or generic context field grants identity, role, permission, scope or tenancy.
+Trusted identity comes from authenticated Identity/session state. Fine-grained business scope, permissions, eligibility, assignment and operational context come from the capability that owns the protected truth. Store scope is DSH-owned and never grants platform isolation or tenancy. No client header, query parameter, request body, cached local value, UI selector or generic context field grants identity, role, permission, scope or tenancy.
 
 ## 4. Product ownership orientation
 
@@ -77,14 +93,14 @@ This PRD owns product-level orientation only. Exact durable owner/writer/readbac
 - `CAPABILITIES.md` and `capabilities/**` for capability-specific Product semantics;
 - `JOURNEYS.md` for cross-capability actor/system journeys;
 - `FINANCIAL-MODEL.md` for financial Product truth and WLT sovereignty;
-- `COMMERCIAL-AND-PARTNER-MODEL.md` for partner/commercial semantics;
+- `COMMERCIAL-AND-PARTNER-MODEL.md` for Partner/commercial semantics;
 - `EXPERIENCE-AND-DESIGN.md` for durable UX/design meaning.
 
 At the platform level:
 
 ```text
 IDENTITY → human identity, high-level role admission, credentials/proofs/sessions
-DSH      → commerce/fulfillment/partner/customer/captain operational truth plus field-assisted Partner onboarding truth
+DSH      → commerce/fulfillment/Partner/Store/customer/captain operational truth plus field-assisted Partner onboarding truth
 WLT      → authoritative financial truth
 PLATFORM CONTROL → only explicitly admitted cross-platform governed control-plane facts
 ```
@@ -105,7 +121,7 @@ A required unresolved decision is an explicit Product/operations/legal gap and b
 
 ## 5. Product-wide requirements
 
-The detailed behavior of catalog, cart, checkout, orders, partner/store lifecycle, dispatch, handoff, field-assisted Partner onboarding, support, communications, analytics, promotions, ratings and financial operations is defined only in the applicable capability owner. This PRD does not maintain a second capability registry.
+The detailed behavior of catalog, cart, checkout, orders, Partner/Store lifecycle, dispatch, handoff, field-assisted Partner onboarding, support, communications, analytics, promotions, ratings and financial operations is defined only in the applicable capability owner. This PRD does not maintain a second capability registry.
 
 The target supported fulfillment-policy modes are `bthwani_delivery`, `partner_delivery`, and `client_pickup`. Target support does not activate all modes simultaneously; the active Product slice and current executable contracts determine implemented breadth.
 
@@ -113,7 +129,8 @@ Product-wide invariants are:
 
 - one durable fact has one canonical semantic owner and governed writer;
 - one Human Actor may hold multiple Identity roles without creating duplicate human identities;
-- Partner Organization, Partner Member, Store, Human Actor, Identity Role, Product Persona, authorization scope and tenancy are distinct concepts;
+- Partner is one Product stakeholder/role represented by one `actor_id`; no Partner Organization/Member/team model is admitted unless a future explicit requirement proves it;
+- Store is a DSH business resource managed by Partner and is not another actor, Partner identity or tenant;
 - customer/client-controlled data never grants trusted identity, role, business scope, financial truth or platform isolation;
 - WLT remains the only authoritative owner of wallet/ledger/payment/refund/settlement/payout/commission/reconciliation truth;
 - derived search, analytics, projections and caches never become mutation authority;

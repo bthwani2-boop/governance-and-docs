@@ -34,6 +34,7 @@ for (const forbidden of [
   "governance/decisions",
   "governance/product/WORKFORCE-MODEL.md",
   "governance/architecture/FOUNDATION-AND-JOURNEY-READY-SUBSTRATE.md",
+  "governance/product/capabilities/partner/partner-team-membership.md",
   "docs/platform-engineering-lifecycle",
   "docs/development/README.md",
   "docs/runbooks/README.md",
@@ -130,6 +131,8 @@ for (const file of capabilityFiles) {
   if (!text.includes("### " + id)) fail(relative + " missing capability heading for " + id);
 }
 
+if (capabilityIds.has("PARTNER_TEAM_MEMBERSHIP")) fail("retired capability remains: PARTNER_TEAM_MEMBERSHIP");
+
 const capabilityIndex = read("governance/product/CAPABILITIES.md");
 for (const [id, relative] of capabilityIds) {
   const indexPath = relative.replace("governance/product/", "");
@@ -166,7 +169,7 @@ for (const [file, token] of [
   ["governance/architecture/PLATFORM-SUBSTRATE.md", "REAL REPRESENTATIVE VERTICAL + CANONICAL READBACK"],
   ["governance/product/FINANCIAL-MODEL.md", "Binary floating-point arithmetic is forbidden"],
   ["governance/product/capabilities/access/account-privacy-lifecycle.md", "CAPABILITY_ID: ACCOUNT_PRIVACY_LIFECYCLE"],
-  ["governance/product/JOURNEYS.md", "## J16 — Customer account and privacy lifecycle"],
+  ["governance/product/JOURNEYS.md", "## J15 — Customer account and privacy lifecycle"],
   ["governance/policies/runtime-reliability.md", "RESTORE INTO ISOLATED TARGET"],
 ]) if (!exists(file) || !read(file).includes(token)) fail(file + " missing recovered semantic: " + token);
 
@@ -202,6 +205,13 @@ for (const pattern of [/API level\s+\d+/i, /Xcode\s+\d+/i, /Snapshot date:/i]) {
 if (read("governance/project/ACTORS-TRUST-AND-SCOPE.md").includes("allowed to provision employees")) {
   fail("obsolete generic employee provisioning wording remains");
 }
+
+const glossary = read("governance/project/GLOSSARY.md");
+for (const required of [
+  "PARTNER = ONE PARTNER-ROLE ACTOR / PRODUCT STAKEHOLDER",
+  "PARTNER_ORGANIZATION = FORBIDDEN_UNLESS_FUTURE_PRODUCT_REQUIREMENT_PROVES_IT",
+  "PARTNER_TEAM_MEMBERSHIP = NOT_ADMITTED",
+]) if (!glossary.includes(required)) fail("glossary missing Partner simplification invariant: " + required);
 
 const security = read("governance/policies/security.md");
 const phrase = "Development/bootstrap credentials or historical examples never define normal credential policy.";

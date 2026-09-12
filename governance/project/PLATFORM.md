@@ -10,30 +10,30 @@ IMPLEMENTATION_STATE_AUTHORITY: NONE
 
 BThwani is one BThwani-operated unified multi-surface B2B2C commerce, fulfillment, operations and financial platform.
 
-It is not a collection of independent apps, not a separate platform instance per partner/store and not a generic multi-tenant SaaS abstraction by default.
+It is not a collection of independent apps, not a separate platform instance per Partner/Store and not a generic multi-tenant SaaS abstraction by default.
 
 ## Primary deployable surfaces
 
-- `app-client` — customer-facing mobile host.
-- `app-partner` — partner/store-facing mobile host.
-- `app-captain` — captain/delivery mobile host.
-- `app-field` — partner-onboarding field mobile host; it has no general field-operations remit outside partner onboarding.
-- `control-panel` — trusted operator web host.
+- `app-client` — Customer mobile host for discovery, shopping, checkout, orders, tracking and support.
+- `app-partner` — Partner mobile host for Store, catalog, order and authorized financial operations/readback.
+- `app-captain` — Captain mobile host for assigned pickup, custody, delivery, proof and exception workflows.
+- `app-field` — Field mobile host used only for assigned Partner/first-Store onboarding visits, checks and evidence capture; it has no general field-operations remit.
+- `control-panel` — trusted Operator/Platform-owner web host for governed administration, review, approvals and operational control.
 
 Surfaces compose capabilities; they do not own domain truth merely because a capability is rendered there.
 
 ## Primary human roles and personas
 
-One Human Actor may participate through multiple governed Identity roles. Current actor-facing roles/personas are:
+Current actor-facing roles/personas are:
 
 - Customer — Identity role `client`, primarily through `app-client`.
-- Partner member — Identity role `partner`, acting for a Partner Organization through DSH-owned membership/scope, primarily through `app-partner`.
+- Partner — Identity role `partner`, primarily through `app-partner`.
 - Captain — Identity role `captain`, primarily through `app-captain`.
 - Field worker — Identity role `field`, acting only in the field-assisted Partner/first-Store onboarding journey, primarily through `app-field`.
 - Operator — Identity role `operator`, primarily through `control-panel`.
+- Platform owner — Identity role `platform_owner`, through `control-panel`.
 
-System/service actors may exist where required. A Partner itself is an organization, not a Human Actor. Identity role, Product persona, organization affiliation, authorization scope, operational assignment and financial identity are separate facts.
-
+`Partner` is one stakeholder and one role represented by one `actor_id`. The current Product model has no `Partner Organization`, `Partner Member`, or partner-team membership layer. A Store is a DSH-managed business resource belonging to its Partner, not another actor or platform instance.
 
 ## Fulfillment policy modes
 
@@ -59,7 +59,7 @@ The primary operating market is Sana'a, Yemen. City/zone/serviceability is gover
 ## Bounded contexts
 
 - Identity — authentication/session/activation/identity authority.
-- DSH — commerce, catalog consumption, partner/store operations, checkout/order, serviceability, dispatch/delivery, special requests, support/rescue and other operational truth assigned by Product.
+- DSH — commerce, catalog consumption, Partner/Store operations, checkout/order, serviceability, dispatch/delivery, Partner onboarding, special requests, support/rescue and other operational truth assigned by Product.
 - WLT — wallet, ledger, payment, refund, commission, payout, settlement and reconciliation authority.
 - Platform Control — admitted semantic control-plane responsibility for explicitly assigned platform-wide governed configuration/change/rollout facts; independent deployable-service admission remains conditional on executable lifecycle/persistence/API/runtime evidence.
 
@@ -69,7 +69,7 @@ External vendors and technical mechanisms are integrations/adapters, not busines
 
 Some capabilities cross several bounded contexts without becoming new sovereign domains by default:
 
-- customer profile/preferences, partner-team operations, catalog/publication, ratings/reviews, support and commerce eligibility remain assigned DSH operational capabilities unless Governance explicitly rehomes them;
+- customer profile/preferences, Partner/Store operations, catalog/publication, ratings/reviews, support and commerce eligibility remain assigned DSH operational capabilities unless Governance explicitly rehomes them;
 - promotions/coupons can span DSH eligibility and WLT financial effect while retaining one owner per fact;
 - notification source-event meaning remains with the originating domain; DSH Notifications owns current inbox/preferences/topic/delivery-attempt truth; replaceable adapters execute channels; media business authorization remains with its owning domain while object storage is technical infrastructure;
 - search/discovery and analytics are derived/query capabilities and never become authorization, transactional or financial truth;
@@ -79,8 +79,8 @@ Some capabilities cross several bounded contexts without becoming new sovereign 
 
 ```text
 ACTOR != ROLE
-ROLE != ORGANIZATION
-ORGANIZATION != AUTHORIZATION_SCOPE
+PARTNER = ONE PARTNER-ROLE ACTOR / PRODUCT STAKEHOLDER
+PARTNER != STORE
 PARTNER != TENANT_BY_DEFAULT
 STORE != TENANT_BY_DEFAULT
 APP_HOST != BUSINESS_CAPABILITY_OWNER

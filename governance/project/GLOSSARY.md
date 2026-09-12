@@ -18,18 +18,13 @@ This glossary defines stable platform vocabulary. If implementation naming confl
 
 **Product Persona** — the user-facing participation label through which a Human Actor performs a journey. A persona does not create a second identity or business owner.
 
-**Role** — a responsibility/permission grouping; not the same as a person, organization or domain assignment.
+**Role** — a responsibility/permission grouping associated with an Actor.
 
-**Organization** — a business entity such as a partner organization. It is not automatically a tenant.
+**Partner** — the BThwani stakeholder represented by one Human Actor holding the `partner` Identity role and operating through `app-partner`. DSH owns the Partner's operational state and Store relationships. BThwani does not split this stakeholder into `Partner Organization`, `Partner Member`, partner-team membership, or another parallel Partner identity unless a future Product requirement explicitly proves that need.
 
-**Partner** / **Partner Organization** — the commercial/business organization that has the governed relationship with BThwani and may own/manage one or more Stores. A Partner is not a Human Actor, Store, Identity Role or Tenant.
-
-**Partner Member** — a Human Actor holding the `partner` Identity role and acting only through DSH-governed membership and Partner/Store authorization scope.
-
-**Store** — an operational commerce location/business scope governed by DSH. A Store is distinct from its owning Partner and is not automatically a Tenant.
+**Store** — an operational commerce resource governed by DSH and managed by its Partner. A Store is not a second Partner, Human Actor, Identity Role or Tenant.
 
 **Authorization Scope** — the object/business boundary inside which a permission applies.
-
 
 **Capability** — a stable semantic responsibility with a canonical owner.
 
@@ -85,18 +80,19 @@ This glossary defines stable platform vocabulary. If implementation naming confl
 ACTOR_PREFIX != CAPABILITY
 HUMAN_ACTOR != IDENTITY_ROLE
 IDENTITY_ROLE != PRODUCT_PERSONA
-PARTNER_ORGANIZATION != PARTNER_MEMBER
 ROUTE != CAPABILITY
 SCREEN != CAPABILITY
 VENDOR != DOMAIN
 IMPLEMENTATION_MECHANISM != DOMAIN
 GENERIC_BUCKET != CANONICAL_OWNER
 
+PARTNER = ONE PARTNER-ROLE ACTOR / PRODUCT STAKEHOLDER
+PARTNER_ORGANIZATION = FORBIDDEN_UNLESS_FUTURE_PRODUCT_REQUIREMENT_PROVES_IT
+PARTNER_MEMBER = FORBIDDEN_AS_A_SECOND_PRODUCT_ENTITY
+PARTNER_TEAM_MEMBERSHIP = NOT_ADMITTED
 PARTNER != STORE
 PARTNER != TENANT
 STORE != TENANT
-ACTOR != PARTNER
-ACTOR != STORE
 
 WALLET != LEDGER
 BALANCE != INDEPENDENT_SOURCE_OF_TRUTH

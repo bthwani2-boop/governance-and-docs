@@ -77,7 +77,6 @@ One capability = one editable semantic owner file. Directories group related Pro
 ### Partner
 
 - `capabilities/partner/partner-onboarding-store-publication.md` — `PARTNER_ONBOARDING_STORE_PUBLICATION`
-- `capabilities/partner/partner-team-membership.md` — `PARTNER_TEAM_MEMBERSHIP`
 - `capabilities/partner/central-catalog.md` — `CENTRAL_CATALOG`
 - `capabilities/partner/promotions-coupons-funding.md` — `PROMOTIONS_COUPONS_FUNDING`
 - `capabilities/partner/ratings-reviews-trust.md` — `RATINGS_REVIEWS_TRUST`
@@ -102,6 +101,10 @@ One capability = one editable semantic owner file. Directories group related Pro
 
 - `capabilities/communications/notifications-communications.md` — `NOTIFICATIONS_COMMUNICATIONS`
 - `capabilities/communications/analytics-operational-read-models.md` — `ANALYTICS_OPERATIONAL_READ_MODELS`
+
+## Partner-model admission law
+
+The current Product model admits one Partner stakeholder/role only. `Partner Organization`, `Partner Member`, partner-team membership, and store-scoped partner-team lifecycle are not admitted capabilities. Reintroducing any of them requires an explicit future Product requirement with a distinct lifecycle that cannot be represented by the existing Partner actor plus Store scope.
 
 ## Routing
 

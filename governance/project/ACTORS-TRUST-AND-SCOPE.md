@@ -8,20 +8,19 @@ IMPLEMENTATION_STATE_AUTHORITY: NONE
 
 ## Separation model
 
-BThwani treats these as independent axes:
+BThwani separates only materially distinct facts:
 
 ```text
 PERSON / ACTOR
 AUTHENTICATION IDENTITY
 HIGH-LEVEL IDENTITY ROLE
-ORGANIZATION
 STORE / BUSINESS SCOPE
-OPERATIONAL ROLE / ASSIGNMENT
+OPERATIONAL ASSIGNMENT
 AUTHORIZATION SCOPE / PERMISSION
 FINANCIAL IDENTITY / WALLET
 ```
 
-No identifier or table row may be overloaded to represent several meanings.
+No identifier or row may be overloaded to represent several meanings, and no new semantic axis is admitted without a concrete Product lifecycle.
 
 ```text
 ACTOR != ROLE
@@ -29,20 +28,18 @@ ROLE != BUSINESS_SCOPE
 IDENTITY_ROLE != DSH_OPERATIONAL_ELIGIBILITY
 ```
 
-The existence of an independent semantic axis does not require a generic service/table/header for that axis. Persist it only when a concrete owner and lifecycle require it.
-
 ## Canonical human-role-persona mapping
 
 | Human identity | Identity role | Product persona | Primary host | Business-scope owner |
 |---|---|---|---|---|
 | Human Actor | `client` | Customer | `app-client` | DSH for non-authentication business truth |
-| Human Actor | `partner` | Partner member | `app-partner` | DSH Partner/Store membership and scope |
+| Human Actor | `partner` | Partner | `app-partner` | DSH Partner operational state and Store scope |
 | Human Actor | `captain` | Captain | `app-captain` | DSH eligibility/assignment/affiliation |
 | Human Actor | `field` | Field worker | `app-field` | DSH Partner Onboarding assignment/evidence scope only |
 | Human Actor | `operator` | Operator | `control-panel` | applicable protected capability; Platform Control only where explicitly assigned |
 | Human Actor | `platform_owner` | Platform owner | `control-panel` | Platform Control sovereign administration; fine-grained duties remain capability-owned |
 
-A Partner Organization is never the Human Actor. Role/persona/host mapping does not grant business scope; server-side owner facts do.
+`Partner` is one Product stakeholder and one `partner` role bound to one `actor_id`. There is no `Partner Organization`, `Partner Member`, partner-team membership, or second Partner identity in the current Product model. A Store is a DSH resource managed by its Partner, not a second actor.
 
 ## Identity role law
 
@@ -71,7 +68,7 @@ NORMAL_AUTHENTICATION != RECOVERY_OR_REENROLLMENT
 
 Customer registration/recovery, managed-role activation and operator authentication therefore have separate journeys while remaining owned by the same Identity authority. Passkeys/WebAuthn are a preferred progressive hardening path, especially for privileged operator access, but are not a mandatory first-release credential for every actor class.
 
-Role enable/disable is Identity admission truth. Partner membership/store scope, captain eligibility/assignment/affiliation, and field Partner-Onboarding assignment/evidence scope remain DSH truth.
+Role enable/disable is Identity admission truth. Partner Store scope, captain eligibility/assignment/affiliation, and field Partner-Onboarding assignment/evidence scope remain DSH truth.
 
 ## Trust model
 
@@ -94,7 +91,7 @@ Any contextual authorization dimension must be owned by the capability that prov
 Consumes discovery/catalog/serviceability, checkout/order, support/tracking and authorized WLT-backed financial readback. Customer input never defines authoritative price, financial amount, serviceability or ownership.
 
 ### Partner
-Acts within DSH-governed partner/store scopes for store/catalog/order/team operations and authorized financial readback. Partner organization is a business scope, not platform isolation.
+Operates only as the authenticated `partner` actor through `app-partner`, managing authorized Store, catalog and order operations plus authorized financial readback. No organization/member/team abstraction sits between the Partner actor and its DSH Store scope.
 
 ### Captain
 Acts within dispatch/delivery/custody/proof/exception responsibilities only when DSH eligibility and assignment are valid.
@@ -121,4 +118,4 @@ Approval is bound to the exact object/version/decision being approved and cannot
 
 ## Tenant admission
 
-A `TENANT` concept may be introduced only if Product/System requirements prove independent lifecycle and isolation semantics. Partner/store/role alone do not satisfy that burden.
+A `TENANT` concept may be introduced only if Product/System requirements prove independent lifecycle and isolation semantics. Partner/Store/role alone do not satisfy that burden.
