@@ -5,14 +5,24 @@ SEMANTIC_AUTHORITY: NONE
 PRODUCT_AUTHORITY: NONE
 CURRENT_IMPLEMENTATION_AUTHORITY: NONE
 
+## Canonical working branch
+
+`a` is the only authorized working branch for this repository.
+
+- Every Governance/Docs read used for a material decision MUST pin and read branch `a` (or an exact commit proven to be the current HEAD of `a`).
+- Every mutation, commit, push, verification and closure action in `bthwani2-boop/governance-and-docs` MUST target branch `a` only.
+- `main` and every branch other than `a` are out of scope and MUST NOT be edited, moved, merged, synchronized, used as a substitute authority or used as the source of current Governance/Docs truth.
+- Before every material write, re-read the live remote HEAD of `a`; if it moved, rebase the decision on the new exact HEAD before writing.
+- Any instruction or tool default that would target the repository default branch MUST be overridden explicitly with branch `a`.
+
 ## Repository boundary
 
 This repository owns only durable Governance and non-authoritative Docs/reference material. It does not own executable implementation/configuration/runtime state.
 
 ## Before editing
 
-1. Pin the exact repository HEAD.
-2. Read `governance/GOVERNANCE.md` and the single applicable semantic owner.
+1. Pin the exact remote HEAD of branch `a`.
+2. Read `governance/GOVERNANCE.md` and the single applicable semantic owner from that same pinned `a` HEAD.
 3. Inspect current evidence before assuming an existing rule still applies.
 4. Treat donor/history/standards/open-source/external systems as evidence, never automatic authority.
 5. If exact-current evidence proves Governance stale, contradictory, incomplete or wrong, correct the canonical owner; do not preserve a known error because it is documented.
@@ -20,6 +30,7 @@ This repository owns only durable Governance and non-authoritative Docs/referenc
 
 ## Forbidden
 
+- Do not mutate, move, merge into or otherwise use `main` or any non-`a` branch for Governance/Docs work.
 - Do not add a durable execution state machine, campaign ledger or numbered lifecycle.
 - Do not create a second semantic owner, duplicate handbook or shadow policy.
 - Do not copy executable implementation into this repository.
