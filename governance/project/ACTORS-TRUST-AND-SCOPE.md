@@ -38,7 +38,7 @@ The existence of an independent semantic axis does not require a generic service
 | Human Actor | `client` | Customer | `app-client` | DSH for non-authentication business truth |
 | Human Actor | `partner` | Partner member | `app-partner` | DSH Partner/Store membership and scope |
 | Human Actor | `captain` | Captain | `app-captain` | DSH eligibility/assignment/affiliation |
-| Human Actor | `field` | Field worker | `app-field` | DSH eligibility/assignment/readiness |
+| Human Actor | `field` | Field worker | `app-field` | DSH Partner Onboarding assignment/evidence scope only |
 | Human Actor | `operator` | Operator | `control-panel` | applicable protected capability; Platform Control only where explicitly assigned |
 | Human Actor | `platform_owner` | Platform owner | `control-panel` | Platform Control sovereign administration; fine-grained duties remain capability-owned |
 
@@ -71,7 +71,7 @@ NORMAL_AUTHENTICATION != RECOVERY_OR_REENROLLMENT
 
 Customer registration/recovery, managed-role activation and operator authentication therefore have separate journeys while remaining owned by the same Identity authority. Passkeys/WebAuthn are a preferred progressive hardening path, especially for privileged operator access, but are not a mandatory first-release credential for every actor class.
 
-Role enable/disable is Identity admission truth. Captain/field/partner eligibility, assignment, organization/store membership and other operational states remain DSH truth.
+Role enable/disable is Identity admission truth. Partner membership/store scope, captain eligibility/assignment/affiliation, and field Partner-Onboarding assignment/evidence scope remain DSH truth.
 
 ## Trust model
 
@@ -100,7 +100,7 @@ Acts within DSH-governed partner/store scopes for store/catalog/order/team opera
 Acts within dispatch/delivery/custody/proof/exception responsibilities only when DSH eligibility and assignment are valid.
 
 ### Field worker
-Performs DSH-assigned field/onboarding/verification tasks. Field participant status, eligibility and task truth are DSH-owned.
+Performs only assigned Partner/first-Store onboarding work: field capture, verification, required documents/evidence and submission for owner review under `PARTNER_ONBOARDING_STORE_PUBLICATION`. The Field role has no general field-operations, fulfillment, support or unrelated operational-task responsibility.
 
 ### Operator
 Authenticates through the operator Identity role and acts only through exact server-side permissions/scopes owned by the applicable administration/domain capability.

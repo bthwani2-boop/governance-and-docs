@@ -52,7 +52,7 @@ The standard product surfaces are:
 - `app-client`: customer discovery, cart, checkout, orders, support, tracking, and bounded financial readback.
 - `app-partner`: partner/store/catalog/order/team and authorized financial readback.
 - `app-captain`: assignment, delivery lifecycle, proof/exception handling, and authorized earnings readback.
-- `app-field`: assigned field onboarding, verification, readiness, and DSH operational tasks.
+- `app-field`: assigned Partner/first-Store onboarding, field verification, required document/evidence capture and submission for review only; it has no general field-operations remit.
 - `control-panel`: governed operator administration and operational control.
 - backend/domain services and their service-owned persistence.
 - generated/public service clients, app-owned surface-specific capability presentation, explicitly admitted host-neutral reusable presentation only when proven, design-system primitives, events/jobs and runtime infrastructure required by the above surfaces.
@@ -84,7 +84,7 @@ At the platform level:
 
 ```text
 IDENTITY → human identity, high-level role admission, credentials/proofs/sessions
-DSH      → commerce/fulfillment/partner/customer/captain/field operational truth
+DSH      → commerce/fulfillment/partner/customer/captain operational truth plus field-assisted Partner onboarding truth
 WLT      → authoritative financial truth
 PLATFORM CONTROL → only explicitly admitted cross-platform governed control-plane facts
 ```
@@ -105,7 +105,7 @@ A required unresolved decision is an explicit Product/operations/legal gap and b
 
 ## 5. Product-wide requirements
 
-The detailed behavior of catalog, cart, checkout, orders, partner/store lifecycle, dispatch, handoff, field operations, support, communications, analytics, promotions, ratings and financial operations is defined only in the applicable capability owner. This PRD does not maintain a second capability registry.
+The detailed behavior of catalog, cart, checkout, orders, partner/store lifecycle, dispatch, handoff, field-assisted Partner onboarding, support, communications, analytics, promotions, ratings and financial operations is defined only in the applicable capability owner. This PRD does not maintain a second capability registry.
 
 The target supported fulfillment-policy modes are `bthwani_delivery`, `partner_delivery`, and `client_pickup`. Target support does not activate all modes simultaneously; the active Product slice and current executable contracts determine implemented breadth.
 
@@ -118,6 +118,7 @@ Product-wide invariants are:
 - WLT remains the only authoritative owner of wallet/ledger/payment/refund/settlement/payout/commission/reconciliation truth;
 - derived search, analytics, projections and caches never become mutation authority;
 - external providers implement semantic ports and never become business-domain owners;
+- the `field` role and `app-field` exist only for the field-assisted Partner/first-Store onboarding subflow owned by `PARTNER_ONBOARDING_STORE_PUBLICATION`; no standalone/general Field Operations capability is admitted;
 - inactive future Product breadth remains absent rather than represented by fake screens, tables, APIs, state machines or compatibility structures.
 
 ## 6. Capability and journey routing

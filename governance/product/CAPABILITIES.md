@@ -88,7 +88,6 @@ One capability = one editable semantic owner file. Directories group related Pro
 - `capabilities/fulfillment/captain-dispatch.md` — `CAPTAIN_DISPATCH`
 - `capabilities/fulfillment/partner-fleet-connection.md` — `PARTNER_FLEET_CONNECTION`
 - `capabilities/fulfillment/store-captain-handoff.md` — `STORE_CAPTAIN_HANDOFF`
-- `capabilities/fulfillment/field-operations-assignment-readiness.md` — `FIELD_OPERATIONS_ASSIGNMENT_READINESS`
 
 ### Finance
 

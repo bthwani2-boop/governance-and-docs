@@ -32,7 +32,8 @@ MEANING
 | actor identity/credential/authentication/activation/session | Identity | apps/services through Identity contracts |
 | high-level actor-role admission and role-scoped session state | Identity | authorized apps/services through Identity contracts |
 | business authorization scope/operational permission/context | capability/domain that owns the protected business truth; currently DSH for DSH partner/store/team/assignment scope | authorized consumers through owner contracts |
-| client/partner/captain/field operational participant profile/status/eligibility | DSH | authorized DSH surfaces and dependent services through DSH contracts |
+| client/partner/captain operational participant profile/status/eligibility | DSH | authorized DSH surfaces and dependent services through DSH contracts |
+| field-assisted Partner/first-Store onboarding assignment/evidence scope | DSH `PARTNER_ONBOARDING_STORE_PUBLICATION` | app-field/control-panel and owner-relevant partner readback through DSH contracts |
 | partner/store operational truth | DSH | partner/operator hosts and dependent services through contracts |
 | address/serviceability/order/dispatch/delivery/support | DSH | apps and WLT where trusted operational evidence is required |
 | wallet/ledger/payment/refund | WLT | DSH/app bounded projections/readback |
@@ -71,7 +72,7 @@ The following classes must preserve single-owner semantics when present:
 | Meaning | Canonical owner / writer | Derived or delivery role |
 |---|---|---|
 | cart/checkout operational truth | DSH CART_CHECKOUT; WLT owns financial quote/payment-session facts | ORDER_CREATION consumes only eligible checkout evidence; apps consume canonical readback |
-| field participant eligibility/assignment/visit/readiness/escalation | DSH FIELD_OPERATIONS_ASSIGNMENT_READINESS | Partner/Store and operator surfaces consume verified evidence |
+| field-assisted Partner/first-Store onboarding assignment/visit/check/evidence | DSH PARTNER_ONBOARDING_STORE_PUBLICATION | app-field and control-panel operate the onboarding subflow; Partner/Store owners consume committed evidence/readback; no standalone field-operations owner exists |
 | campaigns/audiences/placements/loyalty/non-financial program eligibility | DSH MARKETING_CAMPAIGNS_LOYALTY; WLT owns monetary charging/posting; promotion funding stays in its governed cross-owner capability | apps/checkout/notifications consume bounded eligibility/readback |
 | customer profile/preferences excluding authentication | DSH customer/profile capability unless a future explicit owner supersedes it | apps consume bounded readback |
 | customer account/privacy request lifecycle and cross-owner completion state | DSH ACCOUNT_PRIVACY_LIFECYCLE coordinator; each sovereign owner remains writer of its own identity/profile/financial/audit disposition | app/external request surface and authorized support consume privacy-safe status/readback; Identity/WLT/other owners do not become DSH-owned truth |

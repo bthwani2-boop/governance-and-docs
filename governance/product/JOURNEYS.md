@@ -78,8 +78,9 @@ DISCOVERY / SERVICEABILITY
 
 ```text
 IDENTITY / TRUSTED ACTOR
-→ PARTNER ONBOARDING
-→ DSH PARTICIPANT/ELIGIBILITY INPUTS WHEN REQUIRED
+→ PARTNER ONBOARDING CASE
+→ FIELD-ASSISTED PARTNER/FIRST-STORE VISIT / CHECK / DOCUMENT / EVIDENCE WHEN REQUIRED
+→ OWNER-SIDE REVIEW
 → STORE READINESS
 → PUBLICATION
 → CATALOG/ORDER OPERATIONS
@@ -103,17 +104,18 @@ IDENTITY / ACTIVATION
 → CANONICAL READBACK
 ```
 
-## J4 — Field operation
+## J4 — Field-assisted Partner onboarding
 
 ```text
-IDENTITY / ACTIVATION
-→ DSH FIELD PARTICIPANT/ELIGIBILITY
-→ ASSIGNED FIELD TASK
-→ PARTNER/STORE EVIDENCE OR OPERATIONAL RESULT
-→ OWNER-SIDE VERIFICATION
-→ DSH READBACK
-→ AUTHORIZED WLT READBACK WHEN APPLICABLE
+IDENTITY / FIELD ROLE ACTIVATION
+→ ASSIGNED PARTNER/FIRST-STORE ONBOARDING CASE
+→ REQUIRED FIELD VISIT / CHECK / DOCUMENT / EVIDENCE CAPTURE
+→ SUBMIT TO PARTNER_ONBOARDING_STORE_PUBLICATION
+→ OWNER-SIDE REVIEW / DECISION
+→ CANONICAL ONBOARDING READBACK
 ```
+
+J4 is the field actor's role-specific view of J2 and is wholly owned by `PARTNER_ONBOARDING_STORE_PUBLICATION`; it is not an independent Field Operations capability. No unrelated/general field task is admitted through the `field` role or `app-field`.
 
 ## J5 — Financial Cash-In / payment / reconciliation
 
@@ -303,7 +305,7 @@ Key durable dispositions in the current model:
 - ACCOUNT / PRIVACY REQUEST ORCHESTRATION + CROSS-OWNER COMPLETION → ACCOUNT_PRIVACY_LIFECYCLE; each sovereign owner retains its own identity/profile/financial/audit disposition.
 - CENTRAL CATALOG / APPROVAL / PUBLICATION → CENTRAL_CATALOG; approval/publication is a named subcapability/workflow.
 - CART / CHECKOUT → CART_CHECKOUT; ORDER CREATION begins after the governed checkout eligibility boundary.
-- ASSIGNED FIELD TASK / VISIT / READINESS / ESCALATION → FIELD_OPERATIONS_ASSIGNMENT_READINESS.
+- FIELD-ASSISTED PARTNER/FIRST-STORE ONBOARDING ASSIGNMENT / VISIT / CHECK / EVIDENCE → subcapability of PARTNER_ONBOARDING_STORE_PUBLICATION; no standalone Field Operations capability exists.
 - CAMPAIGN / AUDIENCE / PLACEMENT / LOYALTY / NON-FINANCIAL COMMERCIAL PROGRAM ELIGIBILITY → MARKETING_CAMPAIGNS_LOYALTY.
 - MEDIA BYTE STORAGE → TECHNICAL_MECHANISM_OWNED_ELSEWHERE; business association remains with the owning capability.
 - SEARCH / ANALYTICS INDEXING → DERIVED_PROJECTION_READ_MODEL; source domains remain mutation/eligibility owners.
@@ -318,7 +320,7 @@ Key durable dispositions in the current model:
 | MAPS_SERVICE_AREA_ADDRESS_PRIVACY | J1, J9 |
 | ORDER_CREATION | J1 |
 | PARTNER_FLEET_CONNECTION | J2, J3 |
-| PARTNER_ONBOARDING_STORE_PUBLICATION | J2 |
+| PARTNER_ONBOARDING_STORE_PUBLICATION | J2, J4 |
 | PLATFORM_SOVEREIGN_CONTROL_PLANE | J7 |
 | REPRESENTATIVE_WALLETS_REFERENCE_FINANCE | J1, J3, J5, J6 |
 | SETTLEMENTS_COMMISSIONS | J3, J6 |
@@ -337,9 +339,8 @@ Key durable dispositions in the current model:
 | ANALYTICS_OPERATIONAL_READ_MODELS | J7, J15 |
 | WLT_PRICING_QUOTES | J1, J5, J9 |
 | WLT_CAPTAIN_COLLATERAL | J3, J5, J6 |
-| WLT_PROVIDER_PENALTIES | J3, J4, J6, J8 |
+| WLT_PROVIDER_PENALTIES | J3, J6, J8 |
 | CART_CHECKOUT | J1, J5, J9 |
-| FIELD_OPERATIONS_ASSIGNMENT_READINESS | J2, J4 |
 | MARKETING_CAMPAIGNS_LOYALTY | J1, J2, J10, J11 when campaign communication is required |
 
 Generic media/object-storage and search/index mechanisms are not listed as sovereign capabilities. J13 is a cross-capability journey owned by the applicable business capability plus technical storage adapter; search/discovery steps in J1/J10 remain derived from canonical source owners.

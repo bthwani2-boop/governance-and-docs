@@ -17,7 +17,7 @@ It is not a collection of independent apps, not a separate platform instance per
 - `app-client` — customer-facing mobile host.
 - `app-partner` — partner/store-facing mobile host.
 - `app-captain` — captain/delivery mobile host.
-- `app-field` — field-operations mobile host.
+- `app-field` — partner-onboarding field mobile host; it has no general field-operations remit outside partner onboarding.
 - `control-panel` — trusted operator web host.
 
 Surfaces compose capabilities; they do not own domain truth merely because a capability is rendered there.
@@ -29,7 +29,7 @@ One Human Actor may participate through multiple governed Identity roles. Curren
 - Customer — Identity role `client`, primarily through `app-client`.
 - Partner member — Identity role `partner`, acting for a Partner Organization through DSH-owned membership/scope, primarily through `app-partner`.
 - Captain — Identity role `captain`, primarily through `app-captain`.
-- Field worker — Identity role `field`, primarily through `app-field`.
+- Field worker — Identity role `field`, acting only in the field-assisted Partner/first-Store onboarding journey, primarily through `app-field`.
 - Operator — Identity role `operator`, primarily through `control-panel`.
 
 System/service actors may exist where required. A Partner itself is an organization, not a Human Actor. Identity role, Product persona, organization affiliation, authorization scope, operational assignment and financial identity are separate facts.
