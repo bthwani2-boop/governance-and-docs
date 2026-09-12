@@ -71,7 +71,7 @@ This is a placement template, not permission to create empty lanes or a statemen
 
 Whether presentation belongs to an app host, a service, or a reusable presentation owner is **not defined here**; `APP-SERVICE-COMPOSITION.md` owns that semantic composition rule.
 
-Identity, DSH and WLT are the current durable primary bounded-context responsibilities. Any other peer service earns a `services/*` deployable only after a distinct Product lifecycle and executable service-admission evidence are proven. `control-panel` is an app host and does not imply a Platform Control service/domain.
+Identity, DSH and WLT are the current durable primary bounded-context responsibilities. Any other peer service earns a `services/*` deployable only after a distinct Product lifecycle and executable service-admission evidence are proven. `control-panel` is an app host; an app host never implies a peer service or bounded context.
 
 ## Packages
 

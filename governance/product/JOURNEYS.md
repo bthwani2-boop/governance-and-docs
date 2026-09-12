@@ -60,7 +60,7 @@ ELSE:
 → PASSKEY/WEBAUTHN AS THE PREFERRED PROGRESSIVE PHISHING-RESISTANT TARGET
 ```
 
-Phone verification, managed activation, normal authentication, recovery/re-enrollment and first-Operator bootstrap are distinct Identity lifecycles. Bootstrap creates only an `operator`; it does not create a second privileged role or generic administration owner.
+Phone verification, managed activation, normal authentication, recovery/re-enrollment and first-Operator bootstrap are distinct Identity lifecycles. Bootstrap creates only an `operator`.
 
 ## J1 — Customer commerce and fulfillment
 
@@ -151,7 +151,7 @@ ELIGIBILITY
 → COMPLETION
 ```
 
-## J7 — Operator administration
+## J7 — Operator operations
 
 ```text
 OPERATOR SESSION
@@ -163,7 +163,7 @@ OPERATOR SESSION
 → OWNER-DEFINED RECOVERY / APPROVAL WHEN REQUIRED
 ```
 
-J7 is a cross-capability Operator journey, not a generic Administration or Platform Control capability. The host and Operator role never become an alternate owner. Identity owns identity/access operations, DSH owns its operational administration, WLT owns financial administration, and any approval lifecycle belongs to the capability whose decision requires it.
+J7 is a cross-capability Operator journey. The host and Operator role never become an alternate owner. Identity owns identity/access operations, DSH owns its operational facts, WLT owns financial facts, and any approval lifecycle belongs to the capability whose decision requires it.
 
 ## J8 — Support incident and order rescue
 
@@ -262,7 +262,7 @@ CUSTOMER INITIATES ACCOUNT/PRIVACY REQUEST
 → CREATE IDEMPOTENT DSH PRIVACY-LIFECYCLE REQUEST
 → IDENTITY APPLIES CLIENT-ROLE CREDENTIAL/SESSION/ACCESS DISPOSITION
 → DSH CUSTOMER/PROFILE OWNERS APPLY DELETE/ANONYMIZE/RETAIN DISPOSITION
-→ WLT/OTHER SOVEREIGN OWNERS APPLY REQUIRED RETENTION/ANONYMIZATION WITHOUT MOVING THEIR TRUTH
+→ WLT/OTHER CANONICAL OWNERS APPLY REQUIRED RETENTION/ANONYMIZATION WITHOUT MOVING THEIR TRUTH
 → THIRD-PARTY PROCESSOR EFFECTS WHERE APPLICABLE
 → RECONCILE OWNER DISPOSITIONS
 → TRUTHFUL CUSTOMER-FACING TERMINAL READBACK
@@ -296,9 +296,9 @@ UNCLASSIFIED_MATERIAL_RESPONSIBILITIES=0
 ```
 
 Key durable dispositions in the current model:
-- OPERATOR BOOTSTRAP / ROLE / CREDENTIAL / SESSION → IDENTITY_ACTIVATION_SESSIONS; control-panel is only the host and generic administration/control-plane ownership is not admitted.
+- OPERATOR BOOTSTRAP / ROLE / CREDENTIAL / SESSION → IDENTITY_ACTIVATION_SESSIONS; `control-panel` is only the host.
 - OPERATOR DOMAIN ACTION → applicable canonical owner; approval/step-up remains with that owner when materially required.
-- ACCOUNT / PRIVACY REQUEST ORCHESTRATION + CROSS-OWNER COMPLETION → ACCOUNT_PRIVACY_LIFECYCLE; each sovereign owner retains its own identity/profile/financial/audit disposition.
+- ACCOUNT / PRIVACY REQUEST ORCHESTRATION + CROSS-OWNER COMPLETION → ACCOUNT_PRIVACY_LIFECYCLE; each canonical owner retains its own identity/profile/financial/audit disposition.
 - CENTRAL CATALOG / APPROVAL / PUBLICATION → CENTRAL_CATALOG; approval/publication is a named subcapability/workflow.
 - CART / CHECKOUT → CART_CHECKOUT; ORDER_CREATION begins after the governed checkout eligibility boundary.
 - FIELD-ASSISTED PARTNER/FIRST-STORE ONBOARDING ASSIGNMENT / VISIT / CHECK / EVIDENCE → subcapability of PARTNER_ONBOARDING_STORE_PUBLICATION; no standalone Field Operations capability exists.
@@ -337,4 +337,4 @@ Key durable dispositions in the current model:
 | CART_CHECKOUT | J1, J5, J9 |
 | MARKETING_CAMPAIGNS_LOYALTY | J1, J2, J10, J11 when campaign communication is required |
 
-Generic administration/control-plane, media/object-storage and search/index mechanisms are not listed as sovereign capabilities. J7 is a cross-capability Operator journey; J13 is a cross-capability media journey; search/discovery steps remain derived from canonical source owners.
+J7 is a cross-capability Operator journey; J13 is a cross-capability media journey; search/discovery steps remain derived from canonical source owners.

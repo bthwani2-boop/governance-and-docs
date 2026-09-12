@@ -24,7 +24,7 @@ This glossary defines stable platform vocabulary. If implementation naming confl
 
 **Store** — an operational commerce resource governed by DSH and managed by its Partner. A Store is not a second Partner, Human Actor, Identity Role or Tenant.
 
-**Operator** — the BThwani control-panel persona represented by one Human Actor holding the single `operator` Identity role. There is no owner/super-admin/platform-owner role above Operator in the current Product model. Operator actions remain authorized by and routed to the capability that owns the affected fact.
+**Operator** — the BThwani control-panel persona represented by one Human Actor holding the single `operator` Identity role. Operator actions remain authorized by and routed to the capability that owns the affected fact.
 
 **Operator Bootstrap** — the one-time technical Identity lifecycle that creates the first Operator and records that bootstrap has completed. Bootstrap is not a role, persona, domain, permission tier or continuing authority owner.
 
@@ -98,9 +98,7 @@ STORE != TENANT
 
 OPERATOR = ONE OPERATOR-ROLE ACTOR / CONTROL-PANEL PERSONA
 BOOTSTRAP != ROLE
-FIRST_OPERATOR != SECOND_PRIVILEGED_ROLE
 CONTROL_PANEL != DOMAIN_OWNER
-GENERIC_CONTROL_PLANE_DOMAIN = NOT_ADMITTED
 
 WALLET != LEDGER
 BALANCE != INDEPENDENT_SOURCE_OF_TRUTH

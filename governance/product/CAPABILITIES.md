@@ -51,7 +51,7 @@ SCREEN != CAPABILITY_OWNER
 IMPLEMENTATION_MECHANISM != DOMAIN
 ```
 
-Generic storage/search/transport/administration/control-plane mechanisms do not become Product capabilities without an independently proven Product lifecycle and responsibility.
+Generic storage/search/transport/presentation mechanisms do not become Product capabilities without an independently proven Product lifecycle and responsibility.
 
 ## Canonical capability owners
 
@@ -104,9 +104,9 @@ One capability = one editable semantic owner file. Directories group related Pro
 
 The current Product model admits one Partner stakeholder/role only. `Partner Organization`, `Partner Member`, partner-team membership, and store-scoped partner-team lifecycle are not admitted capabilities. Reintroducing any of them requires an explicit future Product requirement with a distinct lifecycle that cannot be represented by the existing Partner actor plus Store scope.
 
-## Operator-model admission law
+## Control-panel role law
 
-The current Product model admits one control-panel stakeholder/role only: `Operator` / Identity role `operator`. The first-Operator bootstrap is a one-time Identity lifecycle, not a capability or second role. Generic owner/super-admin/platform-owner personas, a generic administration/RBAC capability, and a generic platform-control/control-plane capability are not admitted current Product concepts. If a concrete domain later needs an approval/permission lifecycle, that lifecycle belongs to the capability that owns the protected decision unless independent Product evidence proves a new owner is necessary.
+The current Product model has one control-panel stakeholder/role: `Operator` / Identity role `operator`. The first-Operator bootstrap is a one-time Identity lifecycle, not a capability or second role. Operator actions are owned by the capability responsible for the protected decision. A new capability is admitted only through the capability-change law above when an independent Product lifecycle and responsibility are proven.
 
 ## Routing
 

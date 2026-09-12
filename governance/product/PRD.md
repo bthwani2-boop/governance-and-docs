@@ -20,7 +20,7 @@ BThwani is not a separate platform instance per Partner/Store and is not a gener
 
 The current Product model has exactly one Partner stakeholder/role: a Human Actor with Identity role `partner` using `app-partner`. DSH owns that Partner's operational state and Store relationships. `Partner Organization`, `Partner Member`, partner-team membership and similar second-layer Partner identities are not admitted current Product concepts.
 
-The current Product model also has exactly one control-panel stakeholder/role: a Human Actor with Identity role `operator` using `control-panel`. There is no owner, platform-owner, super-admin or generic control-plane persona above Operator. One-time bootstrap creates the first Operator and then becomes only an irreversible bootstrap-completed fact; it is not a continuing role or Product layer.
+The current Product model also has exactly one control-panel stakeholder/role: a Human Actor with Identity role `operator` using `control-panel`. One-time bootstrap creates the first Operator and then becomes only an irreversible bootstrap-completed fact; it is not a continuing role or Product layer.
 
 ```text
 PARTNER = ONE PARTNER-ROLE ACTOR / PRODUCT STAKEHOLDER
@@ -33,7 +33,7 @@ CONTROL_PANEL != DOMAIN_OWNER
 AUTHORIZATION_SCOPE != CLIENT_CONTROLLED_CONTEXT
 ```
 
-A tenancy boundary, additional Partner-person/team/organization abstraction, privileged Operator hierarchy, or generic administration/control-plane domain is admitted only when Product/System requirements prove an independent lifecycle that existing actors and owners cannot represent. BThwani also does not adopt an external commerce, ERP, wallet or identity platform as its Product owner merely because that system is mature or available.
+A tenancy boundary, additional Partner-person/team/organization abstraction, additional control-panel role, or new bounded context is admitted only when Product/System requirements prove an independent lifecycle that existing actors and owners cannot represent. BThwani also does not adopt an external commerce, ERP, wallet or identity platform as its Product owner merely because that system is mature or available.
 
 ## 1B. Target Product vision versus delivery breadth
 
@@ -62,7 +62,7 @@ The standard product surfaces are:
 - `app-partner`: Partner Store/catalog/order operations and authorized financial readback.
 - `app-captain`: assignment, delivery lifecycle, proof/exception handling, and authorized earnings readback.
 - `app-field`: assigned Partner/first-Store onboarding, field verification, required document/evidence capture and submission for review only; it has no general field-operations remit.
-- `control-panel`: trusted Operator administration and operational control, composing operations owned by Identity, DSH, WLT and other admitted capabilities.
+- `control-panel`: trusted Operator host for authorized domain operations, review and canonical readback, composing operations owned by Identity, DSH, WLT and other admitted capabilities.
 - backend/domain services and their service-owned persistence.
 - generated/public service clients, app-owned surface-specific capability presentation, explicitly admitted host-neutral reusable presentation only when proven, design-system primitives, events/jobs and runtime infrastructure required by the above surfaces.
 
@@ -105,7 +105,7 @@ EXISTING AUTHORIZED OPERATOR → SUBSEQUENT OPERATOR ADMISSION/ENROLLMENT
 OPERATOR SESSION → control-panel → APPLICABLE CANONICAL OWNER
 ```
 
-There is no second privileged human role above `operator`. Bootstrap is not authorization for ordinary domain operations; each protected action is authorized by its owning capability/service.
+Bootstrap is not authorization for ordinary domain operations; each protected action is authorized by its owning capability/service.
 
 Current role/persona mapping is owned by `../project/ACTORS-TRUST-AND-SCOPE.md`; ubiquitous terms are owned by `../project/GLOSSARY.md`. This PRD does not create a parallel actor taxonomy.
 
@@ -118,7 +118,7 @@ This PRD owns product-level orientation only. Exact durable owner/writer/readbac
 - `../architecture/OWNERSHIP-AND-SOURCE-OF-TRUTH.md` for the canonical owner map;
 - `CAPABILITIES.md` and `capabilities/**` for capability-specific Product semantics;
 - `JOURNEYS.md` for cross-capability actor/system journeys;
-- `FINANCIAL-MODEL.md` for financial Product truth and WLT sovereignty;
+- `FINANCIAL-MODEL.md` for financial Product truth and WLT ownership;
 - `COMMERCIAL-AND-PARTNER-MODEL.md` for Partner/commercial semantics;
 - `EXPERIENCE-AND-DESIGN.md` for durable UX/design meaning.
 
@@ -130,7 +130,7 @@ DSH      → commerce/fulfillment/Partner/Store/customer/captain operational tru
 WLT      → authoritative financial truth
 ```
 
-`control-panel` is a host. Operator actions are routed to the canonical owner of the affected fact. No generic administration or platform-control owner exists in the current Product model.
+`control-panel` is a host. Operator actions are routed to the canonical owner of the affected fact.
 
 No surface, integration adapter, search/index, analytics view, cache/projection or documentation artifact becomes a parallel Product owner merely because it renders or transports owner truth.
 
@@ -159,8 +159,8 @@ Product-wide invariants are:
 - current high-level actor-facing roles are exactly `client`, `partner`, `captain`, `field`, `operator`;
 - Partner is one Product stakeholder/role represented by one `actor_id`; no Partner Organization/Member/team model is admitted unless a future explicit requirement proves it;
 - Store is a DSH business resource managed by Partner and is not another actor, Partner identity or tenant;
-- Operator is one Product persona/role using `control-panel`; first-Operator bootstrap is a one-time Identity lifecycle, not a second privileged role;
-- `control-panel` does not own generic administration/domain truth; each action remains with its applicable canonical owner;
+- Operator is one Product persona/role using `control-panel`; first-Operator bootstrap is a one-time Identity lifecycle, not a second role;
+- `control-panel` does not own domain truth; each action remains with its applicable canonical owner;
 - customer/client-controlled data never grants trusted identity, role, business scope, financial truth or platform isolation;
 - WLT remains the only authoritative owner of wallet/ledger/payment/refund/settlement/payout/commission/reconciliation truth;
 - derived search, analytics, projections and caches never become mutation authority;

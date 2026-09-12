@@ -37,7 +37,7 @@ DESIGN SYSTEM → DOMAIN POLICY
 
 ## Contexts
 
-Identity, DSH and WLT are the current durable bounded-context responsibilities. Other peer services/domains require independent Product lifecycle and executable service-admission proof. A generic platform-control/control-plane domain is not admitted merely because trusted Operators need an administrative host or because several owners expose administrative operations.
+Identity, DSH and WLT are the current durable bounded-context responsibilities. Any additional peer service/domain requires an independent Product lifecycle and executable service-admission proof.
 
 ## Deployable hosts
 

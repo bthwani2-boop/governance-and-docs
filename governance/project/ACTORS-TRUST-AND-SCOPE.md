@@ -40,7 +40,7 @@ IDENTITY_ROLE != DSH_OPERATIONAL_ELIGIBILITY
 
 `Partner` is one Product stakeholder and one `partner` role bound to one `actor_id`. There is no `Partner Organization`, `Partner Member`, partner-team membership, or second Partner identity in the current Product model. A Store is a DSH resource managed by its Partner, not a second actor.
 
-`Operator` is one Product persona and one `operator` role bound to one `actor_id`. There is no owner, super-admin, platform-owner, governor or second privileged human role above Operator in the current Product model. The one-time bootstrap that creates the first Operator is a technical Identity lifecycle, not a Product persona, role, domain or continuing authority tier.
+`Operator` is one Product persona and one `operator` role bound to one `actor_id`. The one-time bootstrap creates the first Operator and records completion; it is not a Product persona, role, domain or continuing authority tier.
 
 ## Identity role law
 
@@ -65,12 +65,12 @@ PHONE_VERIFICATION != MANAGED_ACTIVATION
 MANAGED_ACTIVATION != NORMAL_AUTHENTICATION
 NORMAL_AUTHENTICATION != RECOVERY_OR_REENROLLMENT
 BOOTSTRAP != ROLE
-FIRST_OPERATOR != PRIVILEGED_ROLE_TIER
+FIRST_OPERATOR = OPERATOR
 ```
 
 Customer registration/recovery, managed-role activation and operator authentication therefore have separate journeys while remaining owned by the same Identity authority. Passkeys/WebAuthn are a preferred progressive hardening path for Operator access, but are not a mandatory first-release credential for every actor class.
 
-Role enable/disable is Identity admission truth. Partner Store scope, captain eligibility/assignment/affiliation, and field Partner-Onboarding assignment/evidence scope remain DSH truth. Fine-grained business authorization remains with the capability that owns the protected fact; `control-panel` does not create a generic authorization domain.
+Role enable/disable is Identity admission truth. Partner Store scope, captain eligibility/assignment/affiliation, and field Partner-Onboarding assignment/evidence scope remain DSH truth. Fine-grained business authorization remains with the capability that owns the protected fact.
 
 ## Trust model
 
@@ -102,11 +102,11 @@ Acts within dispatch/delivery/custody/proof/exception responsibilities only when
 Performs only assigned Partner/first-Store onboarding work: field capture, verification, required documents/evidence and submission for owner review under `PARTNER_ONBOARDING_STORE_PUBLICATION`. The Field role has no general field-operations, fulfillment, support or unrelated operational-task responsibility.
 
 ### Operator
-Authenticates through the single `operator` Identity role and uses `control-panel` to perform authorized administration/operations. Each mutation remains authorized and owned by the applicable Identity, DSH, WLT or other admitted capability; the Operator role and the host do not become a second business-truth owner.
+Authenticates through the single `operator` Identity role and uses `control-panel` to perform authorized operations. Each mutation remains authorized and owned by the applicable Identity, DSH, WLT or other admitted capability.
 
 ## Approval and separation of duties
 
-Where an owning capability materially requires independent approval, it defines and enforces that approval itself. BThwani does not create a generic privileged-role hierarchy or generic approval domain merely to anticipate future needs.
+Where an owning capability materially requires independent approval, it defines and enforces that approval itself.
 
 ```text
 UI_VISIBILITY != AUTHORIZATION

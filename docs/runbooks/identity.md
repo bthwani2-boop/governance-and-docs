@@ -7,7 +7,7 @@ CURRENT_IMPLEMENTATION_AUTHORITY: NONE
 
 ## Scope and owners
 
-Identity owns Human Actor identity/actor_id, verified login identifiers, credentials, Identity-wide security eligibility, high-level role admission, the one-time first-Operator bootstrap fact, verification/activation/recovery and role-scoped sessions. DSH owns partner/captain/field operational eligibility/scope. `control-panel` is the Operator host and does not become an Identity or generic administration owner.
+Identity owns Human Actor identity/actor_id, verified login identifiers, credentials, Identity-wide security eligibility, high-level role admission, the one-time first-Operator bootstrap fact, verification/activation/recovery and role-scoped sessions. DSH owns partner/captain/field operational eligibility/scope. `control-panel` is an authorized Operator client of Identity for Identity-owned operations.
 
 Current executable contracts/code/config/runtime are implementation authority.
 
@@ -24,7 +24,7 @@ Current executable contracts/code/config/runtime are implementation authority.
 
 - Verification challenge never self-grants governed partner/captain/field/operator admission.
 - Managed activation is one-time enrollment, not recurring login.
-- First-Operator bootstrap is one-time and creates only role `operator`; it never creates an owner/super-admin tier.
+- First-Operator bootstrap is one-time and creates only role `operator`.
 - Subsequent Operator admission is attributable to an authenticated Operator through the control-panel path.
 - Role disable revokes only that role's sessions/proofs; unrelated roles remain independent.
 - Identity-wide disable revokes authentication state without deleting role bindings.
@@ -45,7 +45,7 @@ Use security audit/correlation evidence to distinguish legitimate refresh race f
 
 - Operator recovery uses the current Identity-owned recovery or explicitly materialized break-glass mechanism for the exact Operator actor.
 - Any repository administrative recovery CLI is development/test only unless a separately controlled stronger break-glass mechanism is explicitly materialized and authorized.
-- Recovery does not create or elevate to another privileged role.
+- Recovery does not change the actor's role set except through governed role admission.
 - Never use arbitrary SQL, disable MFA or grant roles as a shortcut.
 
 ## Migration/schema failure

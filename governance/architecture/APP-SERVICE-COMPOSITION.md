@@ -69,13 +69,13 @@ Search/query infrastructure is derived. The owning domain remains authoritative 
 
 ## Control Panel
 
-`control-panel` is the single trusted Operator web host. It owns Operator navigation, shell and cross-capability page composition only. Authentication/Operator role state remains Identity-owned; DSH owns DSH administration/operations; WLT owns financial administration; every other protected operation remains with its admitted capability owner.
+`control-panel` is the single trusted Operator web host. It owns Operator navigation, shell and cross-capability page composition only. Authentication and Operator-role state remain Identity-owned; DSH owns its operational facts; WLT owns financial facts; every other protected operation remains with its admitted capability owner.
 
 ```text
 CONTROL_PANEL = HOST
 OPERATOR = ROLE/PERSONA
-HOST/ROLE != GENERIC_ADMIN_DOMAIN
-ADMIN_ACTION → APPLICABLE_CANONICAL_OWNER
+HOST != DOMAIN_OWNER
+OPERATOR_INTENT → APPLICABLE_CANONICAL_OWNER
 ```
 
-No generic Platform Control, owner/super-admin layer or shadow administration truth is admitted merely to centralize UI.
+A navigation section, route group or Operator workflow does not create a new business owner. New durable responsibility requires the same independent Product lifecycle and ownership proof as any other capability or service.

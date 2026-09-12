@@ -18,7 +18,7 @@ It is not a collection of independent apps, not a separate platform instance per
 - `app-partner` — Partner mobile host for Store, catalog, order and authorized financial operations/readback.
 - `app-captain` — Captain mobile host for assigned pickup, custody, delivery, proof and exception workflows.
 - `app-field` — Field mobile host used only for assigned Partner/first-Store onboarding visits, checks and evidence capture; it has no general field-operations remit.
-- `control-panel` — trusted Operator web host for authorized platform administration, review and operational control.
+- `control-panel` — trusted Operator web host for authorized domain operations, review and canonical readback.
 
 Surfaces compose capabilities; they do not own domain truth merely because a capability is rendered there.
 
@@ -32,7 +32,7 @@ Current actor-facing roles/personas are exactly:
 - Field worker — Identity role `field`, acting only in the field-assisted Partner/first-Store onboarding journey, primarily through `app-field`.
 - Operator — Identity role `operator`, through `control-panel`.
 
-There is no second owner/super-admin/platform-owner human role in the current Product model. System bootstrap creates the first Operator once; bootstrap is not a persona, continuing role tier or business capability.
+Operator is the only control-panel human role. System bootstrap creates the first Operator once; bootstrap is not a persona, continuing role tier or business capability.
 
 `Partner` is one stakeholder and one role represented by one `actor_id`. The current Product model has no `Partner Organization`, `Partner Member`, or partner-team membership layer. A Store is a DSH-managed business resource belonging to its Partner, not another actor or platform instance.
 
@@ -63,13 +63,13 @@ The primary operating market is Sana'a, Yemen. City/zone/serviceability is gover
 - DSH — commerce, catalog consumption, Partner/Store operations, checkout/order, serviceability, dispatch/delivery, Partner onboarding, special requests, support/rescue and other operational truth assigned by Product.
 - WLT — wallet, ledger, payment, refund, commission, payout, settlement and reconciliation authority.
 
-`control-panel` is a deployable host, not a fourth business/domain owner. Operator actions call the canonical owner of the affected fact. A future independent service/domain requires normal admission proof and a Product lifecycle that cannot be represented by these existing owners; a generic control-plane layer is not admitted by default.
+`control-panel` is a deployable host, not a fourth business/domain owner. Operator actions call the canonical owner of the affected fact. A future independent service/domain requires normal admission proof and a Product lifecycle that cannot be represented by these existing owners.
 
 External vendors and technical mechanisms are integrations/adapters, not business-domain owners.
 
 ## Cross-cutting capability classes
 
-Some capabilities cross several bounded contexts without becoming new sovereign domains by default:
+Some capabilities cross several bounded contexts without becoming new domains by default:
 
 - customer profile/preferences, Partner/Store operations, catalog/publication, ratings/reviews, support and commerce eligibility remain assigned DSH operational capabilities unless Governance explicitly rehomes them;
 - promotions/coupons can span DSH eligibility and WLT financial effect while retaining one owner per fact;

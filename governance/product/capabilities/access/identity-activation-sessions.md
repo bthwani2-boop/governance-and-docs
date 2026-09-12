@@ -14,7 +14,7 @@ This file is the **sole editable durable semantic owner** of `IDENTITY_ACTIVATIO
 
 ### IDENTITY_ACTIVATION_SESSIONS
 
-**Problem.** Every BThwani surface needs one sovereign human actor while customer self-service, governed managed-role activation and privileged Operator access require deliberately different authentication journeys. A single phone+OTP flow for every actor would collapse verification, activation, authentication and recovery into one unsafe abstraction.
+**Problem.** Every BThwani surface needs one canonical Human Actor identity while customer self-service, governed managed-role activation and Operator access require deliberately different authentication journeys. A single phone+OTP flow for every actor would collapse verification, activation, authentication and recovery into one unsafe abstraction.
 
 **Target state.** One normalized human identity resolves to one permanent `actor_id`; phone is a mutable verified identifier; high-level roles are explicit bindings; every session is single-role; the current role set is exactly `client`, `partner`, `captain`, `field`, `operator`; first-Operator bootstrap is an irreversible one-time Identity lifecycle rather than a second role or domain.
 
@@ -40,13 +40,13 @@ Identity keeps phone verification, governed activation, normal authentication/se
 
 - Identity alone creates `actor_id`; runtime consumers cannot request a new actor identifier.
 - One normalized canonical phone resolves to one actor even when the same human holds several roles. Phone is not the cross-boundary primary key.
-- Current actor-facing roles are exactly `client`, `partner`, `captain`, `field`, `operator`. No owner/platform-owner/super-admin role is admitted.
+- Current actor-facing roles are exactly `client`, `partner`, `captain`, `field`, `operator`.
 - Actor, role, identifier, credential, activation, session, bootstrap and recovery/re-enrollment are distinct facts/lifecycles.
 - Public customer self-service may establish only the client role after proving phone possession and registering a customer password credential.
 - Customer normal authentication is phone + customer password when no valid session can be restored. Recovery requires fresh phone proof and affects only the client role.
 - DSH manages only partner/captain/field role admission and explicit re-enrollment authorization. Those roles cannot self-grant through verification/activation.
 - Operator bootstrap is accepted only through the dedicated bootstrap principal while bootstrap state is incomplete. It creates an `operator`, not another role type.
-- After bootstrap, only the authenticated `control-panel` service acting with an attributable Operator actor may request Operator admission, enrollment-token issuance or other currently admitted Operator Identity administration.
+- After bootstrap, only the authenticated `control-panel` service acting with an attributable Operator actor may request Operator admission, enrollment-token issuance or other Identity-owned Operator operations.
 - Operator enrollment tokens are single-use, phone-bound, time-bounded and can target only an already admitted `operator` role. They never grant the role by themselves.
 - Every session has exactly one role; surface is derived from role.
 - Disabling one actor-role revokes only that role's sessions and pending role-specific proofs.
@@ -60,7 +60,7 @@ Identity keeps phone verification, governed activation, normal authentication/se
 
 ```text
 BOOTSTRAP != ROLE
-FIRST_OPERATOR != SPECIAL_OPERATOR_TIER
+FIRST_OPERATOR = OPERATOR
 CONTROL_PANEL != IDENTITY_OWNER
 OPERATOR_ROLE != UNIVERSAL_DOMAIN_PERMISSION
 ```
@@ -75,8 +75,7 @@ OPERATOR_ROLE != UNIVERSAL_DOMAIN_PERMISSION
 - No repeated managed activation as ordinary login after successful enrollment.
 - No automatic new-device activation reset.
 - No provisioning retry silently re-enables a disabled role or mutates another role.
-- No second privileged role/persona above `operator`.
-- No generic Platform Control service/domain or generic Administration/RBAC Product capability merely because `control-panel` exists.
+- No second control-panel human role above `operator`.
 - No Operator session from password alone in the current privileged baseline.
 - No public authentication response unnecessarily distinguishes blocked/disabled/non-admissible actor or role state.
 - No consumer-authored actor ID or caller header grants service identity/authority.
@@ -86,15 +85,15 @@ OPERATOR_ROLE != UNIVERSAL_DOMAIN_PERMISSION
 - Readiness fails closed for missing configuration/database/schema/relations, legacy actor/credential columns and clock failure.
 - Customer registration/login/recovery preserve one actor and role-isolated credentials/sessions.
 - Partner/captain/field activation succeeds only for a pre-existing enabled role that has not already been activated.
-- First-Operator bootstrap succeeds exactly once, creates role `operator`, records the irreversible bootstrap fact and leaves no second owner role/persona.
+- First-Operator bootstrap succeeds exactly once, creates role `operator` and records the irreversible bootstrap fact.
 - After bootstrap, ordinary Operator admission requires an existing authenticated Operator through control-panel, and activation requires the bounded Operator enrollment token plus phone proof/password enrollment.
 - Operator password proof alone does not create a session; required second-factor proof must also succeed.
 - Operator credential recovery/replacement revokes Operator sessions but not unrelated-role sessions.
 - Forged caller headers cannot change the principal resolved from a service credential.
-- Generated contract/client/app/database/runtime evidence contains zero owner/platform-owner role, platform-control service identity, or old owner-bootstrap route.
+- Generated contract/client/app/database/runtime evidence contains no unadmitted actor role, alternate Identity owner or legacy bootstrap route.
 - Mobile hosts and Control Panel transition to signed-out after local credential/cookie clearing even when remote revoke fails.
 
-**Named failure classes:** duplicate_actor, role_shaped_actor_id, actor_role_collapse, customer_activation_login, governed_role_self_grant, repeated_managed_activation, automatic_device_reactivation, cross_role_credential, cross_role_revocation, operator_single_factor_session, duplicate_operator_bootstrap, privileged_role_hierarchy_drift, generic_control_plane_drift, consumer_authored_actor_id, service_caller_header_trust, account_lockout_dos, challenge_replay, refresh_reuse, public_auth_state_enumeration, local_logout_ui_divergence, secret_or_pii_leak, parallel_identity_truth.
+**Named failure classes:** duplicate_actor, role_shaped_actor_id, actor_role_collapse, customer_activation_login, governed_role_self_grant, repeated_managed_activation, automatic_device_reactivation, cross_role_credential, cross_role_revocation, operator_single_factor_session, duplicate_operator_bootstrap, control_panel_role_drift, control_panel_ownership_drift, consumer_authored_actor_id, service_caller_header_trust, account_lockout_dos, challenge_replay, refresh_reuse, public_auth_state_enumeration, local_logout_ui_divergence, secret_or_pii_leak, parallel_identity_truth.
 
 ## Actor responsibility envelope
 
@@ -104,8 +103,8 @@ OPERATOR_ROLE != UNIVERSAL_DOMAIN_PERMISSION
 - `field` — performs one-time activation only after DSH pre-provisions field admission; Identity role never implies assignment beyond the DSH Partner-onboarding assignment.
 - `operator` — is the only control-panel human role. The first Operator may originate from one-time bootstrap; subsequent Operators are admitted by the authorized control-panel path. All normal Operator access requires password plus required second factor/challenge.
 - `dsh-service` — credential-authenticated manager of partner/captain/field Identity-role admission and explicit re-enrollment authorization only.
-- `control-panel-service` — credential-authenticated caller for currently admitted Operator Identity administration, always with attributable Operator actor context where required.
-- `operator-bootstrap-service` — dedicated one-time bootstrap principal; may create the initial Operator only while bootstrap is incomplete and has no ordinary runtime administration authority.
+- `control-panel-service` — credential-authenticated caller for Identity-owned Operator operations, always with attributable Operator actor context where required.
+- `operator-bootstrap-service` — dedicated one-time bootstrap principal; may create the initial Operator only while bootstrap is incomplete and has no ordinary runtime authority.
 
 ## Surface semantics
 

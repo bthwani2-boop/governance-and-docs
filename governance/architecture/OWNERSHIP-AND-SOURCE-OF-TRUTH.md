@@ -45,7 +45,7 @@ MEANING
 | external provider secret value | approved secret store/runtime binding | adapter only; never client/general DB truth |
 | provider operation outcome | operation-owning domain | projections only after owner normalization/reconciliation |
 
-`control-panel` and `operator` are not source-of-truth owners by themselves. An Operator expresses authorized intent through the host; the affected Identity/DSH/WLT/admitted capability validates, writes and reads back its own truth. A generic Platform Control/Administration authority is not admitted in the current model.
+`control-panel` and `operator` are not source-of-truth owners by themselves. An Operator expresses authorized intent through the host; the affected Identity/DSH/WLT/admitted capability validates, writes and reads back its own truth.
 
 ## Partner ownership law
 
@@ -66,13 +66,11 @@ Do not manufacture an organization/member/membership layer merely to model the P
 OPERATOR = ONE OPERATOR-ROLE ACTOR / CONTROL-PANEL PERSONA
 OPERATOR_CANONICAL_CROSS_BOUNDARY_ID = actor_id
 BOOTSTRAP = ONE_TIME_IDENTITY_LIFECYCLE
-OWNER_ROLE = NOT_ADMITTED
-SUPER_ADMIN_ROLE = NOT_ADMITTED
-GENERIC_PLATFORM_CONTROL_DOMAIN = NOT_ADMITTED
 CONTROL_PANEL = HOST_NOT_DOMAIN_OWNER
+OPERATOR_INTENT → APPLICABLE_CANONICAL_OWNER
 ```
 
-Do not manufacture a privileged human hierarchy or generic administration owner merely to centralize administrative presentation. A future permission/approval distinction is introduced only by the capability whose concrete lifecycle proves that need.
+The Operator role identifies the acting human; it does not transfer ownership of the affected fact. Any new permission/approval distinction is introduced by the capability whose concrete lifecycle requires it.
 
 ## Projection law
 
@@ -105,7 +103,7 @@ The following classes must preserve single-owner semantics when present:
 | field-assisted Partner/first-Store onboarding assignment/visit/check/evidence | DSH PARTNER_ONBOARDING_STORE_PUBLICATION | app-field and control-panel operate the onboarding subflow; Partner consumes committed readback; no standalone field-operations owner exists |
 | campaigns/audiences/placements/loyalty/non-financial program eligibility | DSH MARKETING_CAMPAIGNS_LOYALTY; WLT owns monetary charging/posting; promotion funding stays in its governed cross-owner capability | apps/checkout/notifications consume bounded eligibility/readback |
 | customer profile/preferences excluding authentication | DSH customer/profile capability unless a future explicit owner supersedes it | apps consume bounded readback |
-| customer account/privacy request lifecycle and cross-owner completion state | DSH ACCOUNT_PRIVACY_LIFECYCLE coordinator; each sovereign owner remains writer of its own identity/profile/financial/audit disposition | app/external request surface and authorized support consume privacy-safe status/readback; Identity/WLT/other owners do not become DSH-owned truth |
+| customer account/privacy request lifecycle and cross-owner completion state | DSH ACCOUNT_PRIVACY_LIFECYCLE coordinator; each canonical owner remains writer of its own identity/profile/financial/audit disposition | app/external request surface and authorized support consume privacy-safe status/readback; Identity/WLT/other owners do not become DSH-owned truth |
 | catalog taxonomy/master-product/attribute/relationship/assortment identity and approval/publication eligibility | DSH CENTRAL_CATALOG; approval/publication is a named subcapability | Stores/apps consume governed readback; discovery/search are derived consumers |
 | promotion/coupon operational eligibility | DSH for commerce eligibility; WLT owns resulting authoritative monetary postings/effects | clients/operators consume bounded readback |
 | notification source event/business meaning | originating domain | DSH Notifications owns inbox/preferences/topic/delivery records; channel adapters execute transport; app host owns native route translation |

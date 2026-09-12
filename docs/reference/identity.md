@@ -11,7 +11,7 @@ SECURITY_SUPPLY_CHAIN_RECHECK_ON_ADOPTION: REQUIRED
 
 ## Use
 
-Use for authentication/session/MFA/passkey, authorization-boundary and abuse-control falsification. These systems do not imply generic tenant/people/authorization/control-plane services or privileged role hierarchies in BThwani.
+Use for authentication/session/MFA/passkey, authorization-boundary and abuse-control falsification. These references provide evidence only for the question being tested; they do not expand BThwani's Product model or ownership boundaries.
 
 Choose a reference by the question being falsified. Stop when additional references no longer change the owner/boundary, invariant, failure/recovery model, UX/security requirement, implementation option or test case.
 

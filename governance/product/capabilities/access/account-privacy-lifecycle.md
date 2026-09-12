@@ -10,13 +10,13 @@ CAPABILITY_ID: ACCOUNT_PRIVACY_LIFECYCLE
 
 ## Scope
 
-This file is the sole editable durable semantic owner of the customer account/privacy-request lifecycle and cross-owner completion semantics for `ACCOUNT_PRIVACY_LIFECYCLE`. It does not become a second owner of Identity credentials/roles, DSH customer/profile fields, WLT financial records, provider data or legal retention policy. Sovereign owners apply their own governed disposition and report completion evidence back to this lifecycle.
+This file is the sole editable durable semantic owner of the customer account/privacy-request lifecycle and cross-owner completion semantics for `ACCOUNT_PRIVACY_LIFECYCLE`. It does not become a second owner of Identity credentials/roles, DSH customer/profile fields, WLT financial records, provider data or legal retention policy. Canonical owners apply their own governed disposition and report completion evidence back to this lifecycle.
 
 ### ACCOUNT_PRIVACY_LIFECYCLE
 
-**Problem.** Customer self-service account creation creates an ongoing privacy/account lifecycle. Treating deletion as store-submission metadata, a support-only message, a local UI toggle or a destructive database cascade can leave credentials active, retain undeclared personal data, erase required financial/audit evidence, delete unrelated roles of the same Human Actor, or claim completion before sovereign owners converge.
+**Problem.** Customer self-service account creation creates an ongoing privacy/account lifecycle. Treating deletion as store-submission metadata, a support-only message, a local UI toggle or a destructive database cascade can leave credentials active, retain undeclared personal data, erase required financial/audit evidence, delete unrelated roles of the same Human Actor, or claim completion before canonical owners converge.
 
-**Required outcome.** A customer can initiate the currently required account/privacy request through applicable customer-facing entrypoints; the request is safely verified, idempotently tracked, executed through sovereign owners, reconciled and exposed through truthful terminal readback. Mutable distribution/legal entrypoint mechanics remain current external-policy/Docs truth rather than frozen Product semantics.
+**Required outcome.** A customer can initiate the currently required account/privacy request through applicable customer-facing entrypoints; the request is safely verified, idempotently tracked, executed through canonical owners, reconciled and exposed through truthful terminal readback. Mutable distribution/legal entrypoint mechanics remain current external-policy/Docs truth rather than frozen Product semantics.
 
 **Primary actors.** customer; authorized support/operator only when assistance is explicitly permitted.
 
@@ -28,7 +28,7 @@ This file is the sole editable durable semantic owner of the customer account/pr
 - request lifecycle distinguishes `requested`, `verification_required`, `accepted`, `processing`, `completed`, `completed_with_required_retention`, `rejected` and recoverable failure/conflict where materially applicable;
 - request creation uses stable correlation/idempotency identity and cannot create duplicate destructive work;
 - requester verification proves authority to act on the customer account without exposing unrelated account/role existence;
-- accepted deletion makes the client account non-usable according to governed cutover while sovereign owners complete their dispositions;
+- accepted deletion makes the client account non-usable according to governed cutover while canonical owners complete their dispositions;
 - Identity client-session/credential/access disposition is independent from unrelated roles held by the same Human Actor;
 - each owner reports an attributable disposition such as deleted, anonymized, retained-for-governed-obligation, not-applicable or unresolved;
 - terminal completion requires reconciliation of all required owner/processor effects or an explicit unresolved blocker;
@@ -53,7 +53,7 @@ This file is the sole editable durable semantic owner of the customer account/pr
 - No store-form answer or local settings toggle counts as Product deletion evidence.
 - No retained personal data hidden behind a generic `required` label without an owning retention reason.
 
-**Failure/recovery.** Verification failure, idempotency conflict, owner unavailable, provider/processor unknown result, version conflict and required-retention disposition remain explicit. Retry resumes the same request when safe rather than creating duplicate destructive work. Reconciliation rereads every required sovereign owner/processor result before terminal completion.
+**Failure/recovery.** Verification failure, idempotency conflict, owner unavailable, provider/processor unknown result, version conflict and required-retention disposition remain explicit. Retry resumes the same request when safe rather than creating duplicate destructive work. Reconciliation rereads every required canonical owner/processor result before terminal completion.
 
 **Acceptance expectations.**
 - the customer can discover and initiate the applicable deletion/privacy request path without support improvisation where self-service is required;
@@ -69,7 +69,7 @@ This file is the sole editable durable semantic owner of the customer account/pr
 **Actor responsibility envelope**
 - `customer` — initiates/verifies only the owned customer account/privacy request and reads privacy-safe status.
 - `operator` — assists only through explicitly authorized, audited support/diagnostic actions; never bypasses owner contracts.
-- `DSH privacy lifecycle` — canonical request/correlation/orchestration/completion writer; calls sovereign owner contracts and reconciles dispositions.
+- `DSH privacy lifecycle` — canonical request/correlation/orchestration/completion writer; calls canonical owner contracts and reconciles dispositions.
 - `Identity` — canonical writer for client-role credentials/sessions/access and Human Actor identity semantics; preserves unrelated roles unless separately governed.
 - `DSH customer/profile owners` — canonical writers for their own customer-data disposition.
 - `WLT` — canonical writer for financial/audit/reconciliation disposition and required retention.
@@ -80,10 +80,10 @@ This file is the sole editable durable semantic owner of the customer account/pr
 - `external request surface` — conditional on current distribution/legal policy; safe initiation/status only, never second account truth.
 - `control-panel` — conditional authorized support/diagnosis only; no arbitrary delete/edit.
 - `backend` — required; verifies caller/intent, persists idempotent lifecycle, invokes owner contracts, reconciles results and returns privacy-safe readback.
-- `database` — DSH-owned request/correlation/audit lifecycle only; sovereign Identity/WLT/customer facts remain with their owners.
+- `database` — DSH-owned request/correlation/audit lifecycle only; canonical Identity/WLT/customer facts remain with their owners.
 - technical presentation binding — implementation evidence only; no local privacy/account truth.
 
-**Target state.** One DSH-owned customer privacy-request lifecycle coordinates sovereign-owner dispositions without deleting unrelated roles, bypassing retention obligations or claiming completion before canonical reconciliation.
+**Target state.** One DSH-owned customer privacy-request lifecycle coordinates canonical-owner dispositions without deleting unrelated roles, bypassing retention obligations or claiming completion before canonical reconciliation.
 
 **Primary success measure.** verified account/privacy requests reach truthful reconciled terminal status across all required owners.
 
