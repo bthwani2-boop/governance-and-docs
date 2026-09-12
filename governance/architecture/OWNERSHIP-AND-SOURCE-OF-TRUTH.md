@@ -34,8 +34,9 @@ MEANING
 | first-Operator bootstrap-completed fact | Identity | control-panel/bootstrap tooling through Identity contract/readback only |
 | business authorization scope/operational permission/context | capability/domain that owns the protected business truth; currently DSH for Partner/Store/assignment scope | authorized consumers through owner contracts |
 | client/Partner/captain operational participant profile/status/eligibility | DSH | authorized DSH surfaces and dependent services through DSH contracts |
-| field-assisted Partner/first-Store onboarding assignment/evidence scope | DSH `PARTNER_ONBOARDING_STORE_PUBLICATION` | app-field/control-panel and Partner readback through DSH contracts |
-| Partner operational truth and Partner↔Store relationship | DSH; Partner is keyed by the Partner actor's canonical `actor_id` | app-partner/control-panel and dependent services through DSH contracts |
+| prospective-Partner / Partner-joining case, field assignment, onboarding data and evidence before/through Partner admission | DSH `PARTNER_ONBOARDING_STORE_PUBLICATION` | app-field/control-panel; app-partner after canonical Partner binding through DSH contracts |
+| Partner role admission, actor binding, credential/activation/session | Identity | DSH/app-partner/control-panel through Identity contracts |
+| Partner operational truth and Partner↔Store relationship | DSH; Partner is keyed by the Partner actor's canonical `actor_id` after admission | app-partner/control-panel and dependent services through DSH contracts |
 | Store operational truth | DSH | authorized Partner/operator hosts and dependent services through contracts |
 | address/serviceability/order/dispatch/delivery/support | DSH | apps and WLT where trusted operational evidence is required |
 | wallet/ledger/payment/refund | WLT | DSH/app bounded projections/readback |
@@ -52,13 +53,27 @@ MEANING
 ```text
 PARTNER = ONE PARTNER-ROLE ACTOR / PRODUCT STAKEHOLDER
 PARTNER_CANONICAL_CROSS_BOUNDARY_ID = actor_id
+PARTNER_JOINING_CASE = DSH_ONBOARDING_TRUTH_BEFORE_AND_THROUGH_ROLE_ADMISSION
+PARTNER_JOINING_CASE != PARTNER_ROLE
 PARTNER_ORGANIZATION = NOT_ADMITTED
 PARTNER_MEMBER = NOT_ADMITTED_AS_SECOND_ENTITY
 PARTNER_TEAM_MEMBERSHIP = NOT_ADMITTED
 STORE = DSH_RESOURCE_MANAGED_BY_PARTNER
 ```
 
-Do not manufacture an organization/member/membership layer merely to model the Partner actor's relationship to its Stores. If a future Product requirement truly needs multiple independent Partner users or another Partner lifecycle, it must be admitted explicitly before implementation.
+Do not manufacture an organization/member/membership layer merely to model the Partner actor's relationship to its Stores. A pre-admission Partner joining case exists only to progress onboarding and must bind to the canonical Partner `actor_id` once role admission occurs; it never becomes a second Partner identity. If a future Product requirement truly needs multiple independent Partner users or another Partner lifecycle, it must be admitted explicitly before implementation.
+
+## Field-role ownership law
+
+```text
+FIELD = PARTNER_ACQUISITION_AND_ONBOARDING_REPRESENTATIVE
+FIELD_CANONICAL_CROSS_BOUNDARY_ID = actor_id
+FIELD_ASSIGNMENT_SCOPE = PARTNER_JOINING_CASES_ONLY
+FIELD_SUBMISSION != OWNER_APPROVAL
+APP_FIELD = HOST_NOT_DOMAIN_OWNER
+```
+
+The Field role identifies the BThwani representative acting on a Partner joining case. DSH owns the case and its onboarding evidence; Identity owns the prospective Partner's eventual actor/role admission; WLT owns any admitted compensation. The Field role is never a generic operational owner.
 
 ## Operator ownership law
 
@@ -100,7 +115,7 @@ The following classes must preserve single-owner semantics when present:
 | Meaning | Canonical owner / writer | Derived or delivery role |
 |---|---|---|
 | cart/checkout operational truth | DSH CART_CHECKOUT; WLT owns financial quote/payment-session facts | ORDER_CREATION consumes only eligible checkout evidence; apps consume canonical readback |
-| field-assisted Partner/first-Store onboarding assignment/visit/check/evidence | DSH PARTNER_ONBOARDING_STORE_PUBLICATION | app-field and control-panel operate the onboarding subflow; Partner consumes committed readback; no standalone field-operations owner exists |
+| Partner acquisition/joining/onboarding case including representative assignment, data capture, first-Store assistance, conditional visit/check, documents/evidence and correction loop | DSH PARTNER_ONBOARDING_STORE_PUBLICATION | app-field originates/progresses authorized joining work; control-panel reviews when required; Partner consumes committed readback after Identity admission/binding |
 | campaigns/audiences/placements/loyalty/non-financial program eligibility | DSH MARKETING_CAMPAIGNS_LOYALTY; WLT owns monetary charging/posting; promotion funding stays in its governed cross-owner capability | apps/checkout/notifications consume bounded eligibility/readback |
 | customer profile/preferences excluding authentication | DSH customer/profile capability unless a future explicit owner supersedes it | apps consume bounded readback |
 | customer account/privacy request lifecycle and cross-owner completion state | DSH ACCOUNT_PRIVACY_LIFECYCLE coordinator; each canonical owner remains writer of its own identity/profile/financial/audit disposition | app/external request surface and authorized support consume privacy-safe status/readback; Identity/WLT/other owners do not become DSH-owned truth |

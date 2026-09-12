@@ -22,6 +22,12 @@ This glossary defines stable platform vocabulary. If implementation naming confl
 
 **Partner** — the BThwani stakeholder represented by one Human Actor holding the `partner` Identity role and operating through `app-partner`. DSH owns the Partner's operational state and Store relationships. BThwani does not split this stakeholder into `Partner Organization`, `Partner Member`, partner-team membership, or another parallel Partner identity unless a future Product requirement explicitly proves that need.
 
+**Prospective Partner** — a business/contact being progressed through the governed Partner joining lifecycle before the `partner` Identity role is admitted. It is not a second Partner actor, Identity role or parallel identity.
+
+**Partner Joining Case** — the DSH-owned acquisition/onboarding workflow that tracks a prospective Partner through required data capture, identity/admission handoff, first-Store setup where applicable, documents/location/evidence, review corrections and submission. The case may exist before Partner role admission and becomes bound to the canonical Partner `actor_id` once Identity admits that role.
+
+**Partner Acquisition and Onboarding Representative** — the Product persona represented by Identity role `field` and primarily using `app-field`. Its purpose is to bring Partners into BThwani by progressing Partner joining cases. Visits, checks, documents, location capture, first-Store assistance and evidence are conditional activities inside that purpose, not the definition of the persona.
+
 **Store** — an operational commerce resource governed by DSH and managed by its Partner. A Store is not a second Partner, Human Actor, Identity Role or Tenant.
 
 **Operator** — the BThwani control-panel persona represented by one Human Actor holding the single `operator` Identity role. Operator actions remain authorized by and routed to the capability that owns the affected fact.
@@ -95,6 +101,12 @@ PARTNER_TEAM_MEMBERSHIP = NOT_ADMITTED
 PARTNER != STORE
 PARTNER != TENANT
 STORE != TENANT
+
+FIELD = PARTNER_ACQUISITION_AND_ONBOARDING_REPRESENTATIVE
+APP_FIELD = PARTNER_JOINING_SURFACE
+PARTNER_JOINING_CASE != PARTNER_ROLE
+FIELD_SUBMISSION != OWNER_APPROVAL
+FIELD_ROLE != GENERAL_OPERATIONAL_WORK
 
 OPERATOR = ONE OPERATOR-ROLE ACTOR / CONTROL-PANEL PERSONA
 BOOTSTRAP != ROLE

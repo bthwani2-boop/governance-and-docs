@@ -60,7 +60,7 @@ ELSE:
 → PASSKEY/WEBAUTHN AS THE PREFERRED PROGRESSIVE PHISHING-RESISTANT TARGET
 ```
 
-Phone verification, managed activation, normal authentication, recovery/re-enrollment and first-Operator bootstrap are distinct Identity lifecycles. Bootstrap creates only an `operator`.
+Phone verification, managed activation, normal authentication, recovery/re-enrollment and first-Operator bootstrap are distinct Identity lifecycles. A Partner joining case may precede Partner role admission, but Identity remains the sole actor/role authority.
 
 ## J1 — Customer commerce and BThwani fulfillment
 
@@ -81,22 +81,27 @@ DISCOVERY / SERVICEABILITY
 
 Standard commerce has one canonical fulfillment path. No customer-side execution-path choice or second final-mile ownership lane exists in this journey.
 
-## J2 — Partner onboarding to live commerce
+## J2 — Partner joining to live commerce
 
 ```text
-IDENTITY / PARTNER ROLE
-→ PARTNER ONBOARDING CASE BOUND TO PARTNER actor_id
-→ FIRST STORE
-→ FIELD-ASSISTED PARTNER/FIRST-STORE VISIT / CHECK / DOCUMENT / EVIDENCE WHEN REQUIRED
-→ OWNER-SIDE REVIEW
+PROSPECTIVE PARTNER / JOINING INTENT
+→ DSH PARTNER JOINING CASE
+→ ACQUISITION / CONTACT / FOLLOW-UP
+→ REQUIRED PARTNER/BUSINESS DATA
+→ IDENTITY RESOLUTION + `partner` ROLE ADMISSION WHEN ELIGIBLE
+→ CANONICAL Partner actor_id BINDING
+→ FIRST STORE SETUP WHEN APPLICABLE
+→ LOCATION / DOCUMENT / EVIDENCE / VISIT_OR_CHECK WHEN REQUIRED
+→ SUBMISSION
+→ OWNER REVIEW / CORRECTION / RESUBMISSION
 → STORE READINESS
 → PUBLICATION
 → CATALOG/ORDER OPERATIONS
 → STORE FULFILLMENT / BTHWANI HANDOFF READINESS
-→ SETTLEMENT/COMMISSION READBACK
+→ SETTLEMENT/COMMISSION READBACK WHEN APPLICABLE
 ```
 
-`Partner` is one stakeholder/role throughout J2. No Partner Organization, Partner Member, partner-team membership or second Partner identifier participates in this journey. Partner readiness does not create final-mile fleet ownership.
+`Partner` becomes the one canonical stakeholder/role when Identity admission occurs. A pre-admission joining case is DSH onboarding truth, not a second Partner identity. No Partner Organization, Partner Member, partner-team membership or second Partner identifier participates in this journey. Partner readiness does not create final-mile fleet ownership.
 
 ## J3 — Captain activation, assignment and earning
 
@@ -113,18 +118,22 @@ IDENTITY / ACTIVATION
 → CANONICAL READBACK
 ```
 
-## J4 — Field-assisted Partner onboarding
+## J4 — Partner acquisition and onboarding representative
 
 ```text
 IDENTITY / FIELD ROLE ACTIVATION
-→ ASSIGNED PARTNER/FIRST-STORE ONBOARDING CASE
-→ REQUIRED FIELD VISIT / CHECK / DOCUMENT / EVIDENCE CAPTURE
-→ SUBMIT TO PARTNER_ONBOARDING_STORE_PUBLICATION
+→ PROSPECTIVE PARTNER CONTACT OR ASSIGNED JOINING CASE
+→ CREATE / OPEN AUTHORIZED DSH PARTNER JOINING CASE
+→ CAPTURE / UPDATE REQUIRED PARTNER-BUSINESS DATA
+→ FIRST-STORE / LOCATION / DOCUMENT / EVIDENCE WORK WHEN REQUIRED
+→ VISIT / CHECK WHEN REQUIRED
+→ FOLLOW UP / COMPLETE MISSING INFORMATION
+→ SUBMIT / RESUBMIT TO PARTNER_ONBOARDING_STORE_PUBLICATION
 → OWNER-SIDE REVIEW / DECISION
-→ CANONICAL ONBOARDING READBACK
+→ CANONICAL JOINING READBACK
 ```
 
-J4 is the Field actor's role-specific view of J2 and is wholly owned by `PARTNER_ONBOARDING_STORE_PUBLICATION`; it is not an independent Field Operations capability. No unrelated/general Field task is admitted through the `field` role or `app-field`.
+J4 is the `field` role's role-specific view of J2. The Product persona is Partner Acquisition and Onboarding Representative. It can originate Partner joining before a `partner` role exists, but it cannot create Identity actors/roles, approve its own submission, publish a Store or perform unrelated operational work. The entire journey remains owned by `PARTNER_ONBOARDING_STORE_PUBLICATION`, Identity for role/actor truth, and WLT for any admitted compensation.
 
 ## J5 — Financial Cash-In / payment / reconciliation
 
@@ -304,8 +313,8 @@ Key durable dispositions in the current model:
 - CENTRAL CATALOG / APPROVAL / PUBLICATION → CENTRAL_CATALOG; approval/publication is a named subcapability/workflow.
 - CART / CHECKOUT → CART_CHECKOUT; ORDER_CREATION begins after the governed checkout eligibility boundary.
 - STANDARD COMMERCE FULFILLMENT → one BThwani path from Store preparation through CAPTAIN_DISPATCH, STORE_CAPTAIN_HANDOFF and final-mile delivery; no second final-mile owner is admitted.
-- FIELD-ASSISTED PARTNER/FIRST-STORE ONBOARDING ASSIGNMENT / VISIT / CHECK / EVIDENCE → subcapability of PARTNER_ONBOARDING_STORE_PUBLICATION; no standalone Field Operations capability exists.
-- PARTNER STORE SCOPE → DSH relationship between the Partner `actor_id` and Store; no Partner Organization/Member/team-membership layer exists.
+- PARTNER ACQUISITION / JOINING CASE / FIELD ASSIGNMENT / DATA / FIRST-STORE ASSISTANCE / CONDITIONAL VISIT-CHECK / DOCUMENT-EVIDENCE / CORRECTION-SUBMISSION → PARTNER_ONBOARDING_STORE_PUBLICATION; Identity alone owns Partner actor/role admission.
+- PARTNER STORE SCOPE → DSH relationship between the Partner `actor_id` and Store after canonical Partner binding; no Partner Organization/Member/team-membership layer exists.
 - CAMPAIGN / AUDIENCE / PLACEMENT / LOYALTY / NON-FINANCIAL COMMERCIAL PROGRAM ELIGIBILITY → MARKETING_CAMPAIGNS_LOYALTY.
 - MEDIA BYTE STORAGE → TECHNICAL_MECHANISM_OWNED_ELSEWHERE; business association remains with the owning capability.
 - SEARCH / ANALYTICS INDEXING → DERIVED_PROJECTION_READ_MODEL; source domains remain mutation/eligibility owners.
@@ -315,16 +324,16 @@ Key durable dispositions in the current model:
 | Capability | Journey coverage |
 |---|---|
 | CAPTAIN_DISPATCH | J1, J3 |
-| IDENTITY_ACTIVATION_SESSIONS | J0, J7 where Operator identity/access is required, J15 where client credential/session disposition is required |
+| IDENTITY_ACTIVATION_SESSIONS | J0, J2/J4 where Partner role admission or field authentication is required, J7 where Operator identity/access is required, J15 where client credential/session disposition is required |
 | MAPS_SERVICE_AREA_ADDRESS_PRIVACY | J1, J9 |
 | ORDER_CREATION | J1 |
 | PARTNER_ONBOARDING_STORE_PUBLICATION | J2, J4 |
-| REPRESENTATIVE_WALLETS_REFERENCE_FINANCE | J1, J3, J5, J6 |
-| SETTLEMENTS_COMMISSIONS | J3, J6 |
+| REPRESENTATIVE_WALLETS_REFERENCE_FINANCE | J1, J3, J4 only when field Partner-joining compensation exists, J5, J6 |
+| SETTLEMENTS_COMMISSIONS | J2/J4 only when field Partner-joining compensation exists, J3, J6 |
 | SPECIAL_REQUESTS | J8, J9 |
 | STORE_CAPTAIN_HANDOFF | J1, J3 |
 | SUPPORT_INCIDENTS_ORDER_RESCUE | J8 |
-| WLT_MONEY_MOVEMENT_PAYOUT_RECONCILIATION | J5, J6 |
+| WLT_MONEY_MOVEMENT_PAYOUT_RECONCILIATION | J5, J6; J4 only when field Partner-joining compensation requires payout |
 | ZONES_SLA_CAPACITY_SERVICEABILITY | J1, J3, J9 |
 | CUSTOMER_PROFILE_PREFERENCES | J1, J8, J11 where consent affects communication, J15 where customer-profile disposition is required |
 | ACCOUNT_PRIVACY_LIFECYCLE | J15 |

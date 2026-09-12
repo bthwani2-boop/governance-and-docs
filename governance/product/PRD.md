@@ -8,7 +8,7 @@ IMPLEMENTATION_STATE_AUTHORITY: NONE
 
 ## 1. Product definition
 
-BThwani is one BThwani-operated unified multi-surface B2B2C commerce, fulfillment, operations, and financial platform. It is not a collection of independent applications or Partner-specific platform instances. The client, Partner, captain, field, and control-panel surfaces are different operating views over shared governed domain truth.
+BThwani is one BThwani-operated unified multi-surface B2B2C commerce, fulfillment, operations, and financial platform. It is not a collection of independent applications or Partner-specific platform instances. The client, Partner, captain, Partner-onboarding-representative, and control-panel surfaces are different operating views over shared governed domain truth.
 
 The platform supports multi-vertical commerce including restaurants, groceries, pharmacy, electronics, gifts/flowers, desserts/juices, fruits/vegetables, and other catalog-governed verticals added through the same contracts.
 
@@ -20,6 +20,8 @@ BThwani is not a separate platform instance per Partner/Store and is not a gener
 
 The current Product model has exactly one Partner stakeholder/role: a Human Actor with Identity role `partner` using `app-partner`. DSH owns that Partner's operational state and Store relationships. `Partner Organization`, `Partner Member`, partner-team membership and similar second-layer Partner identities are not admitted current Product concepts.
 
+The current Product model has one Partner acquisition/onboarding persona: a Human Actor with Identity role `field` using `app-field`. The technical role name does not define a generic field-work function. Its Product purpose is to bring Partners into BThwani by originating or progressing governed Partner joining cases.
+
 The current Product model also has exactly one control-panel stakeholder/role: a Human Actor with Identity role `operator` using `control-panel`. One-time bootstrap creates the first Operator and then becomes only an irreversible bootstrap-completed fact; it is not a continuing role or Product layer.
 
 ```text
@@ -27,6 +29,10 @@ PARTNER = ONE PARTNER-ROLE ACTOR / PRODUCT STAKEHOLDER
 PARTNER != STORE
 PARTNER != TENANT_BY_DEFAULT
 STORE != TENANT_BY_DEFAULT
+FIELD = PARTNER_ACQUISITION_AND_ONBOARDING_REPRESENTATIVE
+APP_FIELD = PARTNER_JOINING_SURFACE
+PARTNER_JOINING_CASE != PARTNER_ROLE
+FIELD_SUBMISSION != OWNER_APPROVAL
 OPERATOR = ONE OPERATOR-ROLE ACTOR / CONTROL-PANEL PERSONA
 BOOTSTRAP != ROLE
 CONTROL_PANEL != DOMAIN_OWNER
@@ -60,9 +66,9 @@ TEMPORARY_MVP_ARCHITECTURE_THAT_MUST_BE_REPLACED_LATER = FORBIDDEN
 The standard product surfaces are:
 
 - `app-client`: Customer discovery, cart, checkout, orders, support, tracking, and bounded financial readback.
-- `app-partner`: Partner Store/catalog/order operations and authorized financial readback.
+- `app-partner`: Partner Store/catalog/order operations and authorized financial readback after canonical Partner admission/activation.
 - `app-captain`: assignment, delivery lifecycle, proof/exception handling, and authorized earnings readback.
-- `app-field`: assigned Partner/first-Store onboarding, field verification, required document/evidence capture and submission for review only; it has no general field-operations remit.
+- `app-field`: Partner joining surface for the Partner Acquisition and Onboarding Representative. It supports prospective-Partner acquisition/contact, joining-case creation/progression, required Partner/business/first-Store data, location/documents/evidence, conditional visit/check, follow-up/correction, and submission/resubmission for owner review. It has no unrelated operational remit.
 - `control-panel`: trusted Operator host for authorized domain operations, review and canonical readback, composing operations owned by Identity, DSH, WLT and other admitted capabilities.
 - backend/domain services and their service-owned persistence.
 - generated/public service clients, app-owned surface-specific capability presentation, explicitly admitted host-neutral reusable presentation only when proven, design-system primitives, events/jobs and runtime infrastructure required by the above surfaces.
@@ -73,7 +79,7 @@ A target capability may exclude a surface when its durable semantics make the ex
 
 ## 3. Actors, roles, personas and trust
 
-The canonical human identity is the **Human Actor**. Customer/client, Partner, captain, field worker and Operator are the current Identity roles/Product personas of a human actor; they are not separate identity records.
+The canonical human identity is the **Human Actor**. Customer/client, Partner, captain, Partner Acquisition and Onboarding Representative, and Operator are the current Product personas backed by Identity roles; they are not separate identity records.
 
 ```text
 Human Actor / actor_id
@@ -89,14 +95,27 @@ operator → control-panel
 For Partner specifically:
 
 ```text
-Human Actor / actor_id
-→ Identity role `partner`
-→ app-partner
-→ DSH Partner operational state
-→ one or more DSH Stores
+PROSPECTIVE PARTNER / JOINING INTENT
+→ DSH PARTNER JOINING CASE
+→ REQUIRED ONBOARDING WORK
+→ IDENTITY RESOLUTION + `partner` ROLE ADMISSION WHEN ELIGIBLE
+→ CANONICAL Partner actor_id BINDING
+→ app-partner ACTIVATION / OPERATIONS
 ```
 
-There is no `Partner Organization`, `Partner Member`, partner-team membership or parallel Partner identifier in the current model.
+The Partner joining case may exist before role `partner`; it is not another Partner identity. Identity alone creates/resolves the Human Actor and admits the role. There is no `Partner Organization`, `Partner Member`, partner-team membership or parallel Partner identifier in the current model.
+
+For the `field` role specifically:
+
+```text
+FIELD SESSION
+→ app-field
+→ AUTHORIZED PARTNER JOINING CASE
+→ ACQUIRE / CONTACT / CAPTURE / FOLLOW UP / SUBMIT
+→ OWNER REVIEW
+```
+
+The representative may perform several activities inside Partner joining, including first-Store assistance, location/documents/evidence and visit/check steps when required. Those activities are conditional parts of the joining lifecycle, not separate definitions of the persona. The representative cannot create `actor_id`, grant/activate `partner`, approve their own submission, publish a Store, or own financial truth.
 
 For Operator specifically:
 
@@ -127,11 +146,11 @@ At the platform level:
 
 ```text
 IDENTITY → human identity, high-level role admission, credentials/proofs/sessions, first-Operator bootstrap
-DSH      → commerce/fulfillment/Partner/Store/customer/captain operational truth plus field-assisted Partner onboarding truth
+DSH      → commerce/fulfillment/Partner joining/Partner/Store/customer/captain operational truth
 WLT      → authoritative financial truth
 ```
 
-`control-panel` is a host. Operator actions are routed to the canonical owner of the affected fact.
+`app-field` is a Partner-joining host; it is not a domain owner. `control-panel` is a host. Actions are routed to the canonical owner of the affected fact.
 
 No surface, integration adapter, search/index, analytics view, cache/projection or documentation artifact becomes a parallel Product owner merely because it renders or transports owner truth.
 
@@ -149,7 +168,7 @@ A required unresolved decision is an explicit Product/operations/legal gap and b
 
 ## 5. Product-wide requirements
 
-The detailed behavior of catalog, cart, checkout, orders, Partner/Store lifecycle, dispatch, handoff, field-assisted Partner onboarding, support, communications, analytics, promotions, ratings and financial operations is defined only in the applicable capability owner. This PRD does not maintain a second capability registry.
+The detailed behavior of catalog, cart, checkout, orders, Partner joining/Store lifecycle, dispatch, handoff, support, communications, analytics, promotions, ratings and financial operations is defined only in the applicable capability owner. This PRD does not maintain a second capability registry.
 
 The current fulfillment contract is singular: every standard commerce order that reaches fulfillment uses BThwani final-mile delivery through the governed DSH dispatch, Captain and Store↔Captain handoff path. The client does not choose an alternative fulfillment lane, Partner does not own a parallel final-mile fleet, and no dormant compatibility shape is retained for speculative future breadth.
 
@@ -161,14 +180,16 @@ Product-wide invariants are:
 - one Human Actor may hold multiple Identity roles without creating duplicate human identities;
 - current high-level actor-facing roles are exactly `client`, `partner`, `captain`, `field`, `operator`;
 - Partner is one Product stakeholder/role represented by one `actor_id`; no Partner Organization/Member/team model is admitted unless a future explicit requirement proves it;
+- a Partner joining case may exist before role `partner`, but it never becomes a second Partner identity and must bind to the canonical `actor_id` after admission;
 - Store is a DSH business resource managed by Partner and is not another actor, Partner identity or tenant;
+- the `field` role means Partner Acquisition and Onboarding Representative only; `app-field` exists to originate/progress Partner joining work, which may include multiple policy-dependent activities;
+- Field submission never grants Partner role, final approval or Store publication authority;
 - Operator is one Product persona/role using `control-panel`; first-Operator bootstrap is a one-time Identity lifecycle, not a second role;
 - `control-panel` does not own domain truth; each action remains with its applicable canonical owner;
 - customer/client-controlled data never grants trusted identity, role, business scope, financial truth or platform isolation;
 - WLT remains the only authoritative owner of wallet/ledger/payment/refund/settlement/payout/commission/reconciliation truth;
 - derived search, analytics, projections and caches never become mutation authority;
 - external providers implement semantic ports and never become business-domain owners;
-- the `field` role and `app-field` exist only for the field-assisted Partner/first-Store onboarding subflow owned by `PARTNER_ONBOARDING_STORE_PUBLICATION`; no standalone/general Field Operations capability is admitted;
 - standard commerce fulfillment follows one BThwani-operated delivery path from Store readiness through Captain dispatch, custody handoff, delivery and canonical customer readback;
 - no alternate fulfillment lane, second final-mile fleet, client-side execution selector, dormant schema or disabled compatibility branch is admitted without a future explicit Product change;
 - inactive future Product breadth remains absent rather than represented by fake screens, tables, APIs, state machines or compatibility structures.

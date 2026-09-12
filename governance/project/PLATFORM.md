@@ -17,7 +17,7 @@ It is not a collection of independent apps, not a separate platform instance per
 - `app-client` — Customer mobile host for discovery, shopping, checkout, orders, tracking and support.
 - `app-partner` — Partner mobile host for Store, catalog, order and authorized financial operations/readback.
 - `app-captain` — Captain mobile host for assigned pickup, custody, delivery, proof and exception workflows.
-- `app-field` — Field mobile host used only for assigned Partner/first-Store onboarding visits, checks and evidence capture; it has no general field-operations remit.
+- `app-field` — Partner-joining mobile host for the Partner Acquisition and Onboarding Representative. It supports acquiring prospective Partners, opening and progressing Partner joining cases, capturing required Partner/business/first-Store data, documents/location/evidence, performing a visit or check when policy requires it, following up missing information and submitting/resubmitting the case for canonical owner review.
 - `control-panel` — trusted Operator web host for authorized domain operations, review and canonical readback.
 
 Surfaces compose capabilities; they do not own domain truth merely because a capability is rendered there.
@@ -29,12 +29,16 @@ Current actor-facing roles/personas are exactly:
 - Customer — Identity role `client`, primarily through `app-client`.
 - Partner — Identity role `partner`, primarily through `app-partner`.
 - Captain — Identity role `captain`, primarily through `app-captain`.
-- Field worker — Identity role `field`, acting only in the field-assisted Partner/first-Store onboarding journey, primarily through `app-field`.
+- Partner Acquisition and Onboarding Representative — Identity role `field`, responsible for bringing Partners into BThwani through the governed Partner joining journey, primarily through `app-field`.
 - Operator — Identity role `operator`, through `control-panel`.
+
+The technical Identity role name `field` does not define a generic field-work persona. Its Product meaning is Partner acquisition and onboarding only.
 
 Operator is the only control-panel human role. System bootstrap creates the first Operator once; bootstrap is not a persona, continuing role tier or business capability.
 
 `Partner` is one stakeholder and one role represented by one `actor_id`. The current Product model has no `Partner Organization`, `Partner Member`, or partner-team membership layer. A Store is a DSH-managed business resource belonging to its Partner, not another actor or platform instance.
+
+A prospective Partner or Partner joining case may exist before Identity admits the `partner` role. Prospect/joining-case data is DSH onboarding truth and never becomes a second Human Actor or parallel Partner identity. Once Identity admits/binds the Partner role, the canonical `actor_id` is the cross-boundary Partner identity.
 
 ## Canonical fulfillment model
 
@@ -73,8 +77,8 @@ The primary operating market is Sana'a, Yemen. City/zone/serviceability is gover
 
 ## Bounded contexts
 
-- Identity — authentication/session/activation/identity authority, including Operator identity/bootstrap/authentication.
-- DSH — commerce, catalog consumption, Partner/Store operations, checkout/order, serviceability, dispatch/delivery, Partner onboarding, special requests, support/rescue and other operational truth assigned by Product.
+- Identity — authentication/session/activation/identity authority, including Partner role admission and Operator identity/bootstrap/authentication.
+- DSH — commerce, catalog consumption, Partner acquisition/joining/onboarding, Partner/Store operations, checkout/order, serviceability, dispatch/delivery, special requests, support/rescue and other operational truth assigned by Product.
 - WLT — wallet, ledger, payment, refund, commission, payout, settlement and reconciliation authority.
 
 `control-panel` is a deployable host, not a fourth business/domain owner. Operator actions call the canonical owner of the affected fact. A future independent service/domain requires normal admission proof and a Product lifecycle that cannot be represented by these existing owners.
@@ -85,7 +89,7 @@ External vendors and technical mechanisms are integrations/adapters, not busines
 
 Some capabilities cross several bounded contexts without becoming new domains by default:
 
-- customer profile/preferences, Partner/Store operations, catalog/publication, ratings/reviews, support and commerce eligibility remain assigned DSH operational capabilities unless Governance explicitly rehomes them;
+- customer profile/preferences, Partner joining/Store operations, catalog/publication, ratings/reviews, support and commerce eligibility remain assigned DSH operational capabilities unless Governance explicitly rehomes them;
 - promotions/coupons can span DSH eligibility and WLT financial effect while retaining one owner per fact;
 - notification source-event meaning remains with the originating domain; DSH Notifications owns current inbox/preferences/topic/delivery-attempt truth; replaceable adapters execute channels; media business authorization remains with its owning domain while object storage is technical infrastructure;
 - search/discovery and analytics are derived/query capabilities and never become authorization, transactional or financial truth;
@@ -99,6 +103,10 @@ PARTNER = ONE PARTNER-ROLE ACTOR / PRODUCT STAKEHOLDER
 PARTNER != STORE
 PARTNER != TENANT_BY_DEFAULT
 STORE != TENANT_BY_DEFAULT
+FIELD = PARTNER_ACQUISITION_AND_ONBOARDING_REPRESENTATIVE
+APP_FIELD = PARTNER_JOINING_SURFACE
+PARTNER_JOINING_CASE != PARTNER_ROLE
+FIELD_ROLE != GENERAL_OPERATIONAL_WORK
 OPERATOR = ONE OPERATOR-ROLE ACTOR / CONTROL-PANEL PERSONA
 BOOTSTRAP != ROLE
 CONTROL_PANEL != DOMAIN_OWNER

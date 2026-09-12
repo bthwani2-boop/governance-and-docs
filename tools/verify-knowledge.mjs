@@ -26,6 +26,13 @@ function hasTokenSequence(tokens, words) {
   }
   return false;
 }
+function tokenize(text) {
+  return text.toLowerCase()
+    .replace(/[_-]+/g, " ")
+    .replace(/[^a-z0-9\s]+/g, " ")
+    .split(/\s+/)
+    .filter(Boolean);
+}
 
 const governanceFiles = collect(path.join(root, "governance"));
 const docsFiles = collect(path.join(root, "docs"));
@@ -125,10 +132,6 @@ for (const file of liveTextFiles) {
   }
 }
 
-// Current standard commerce has one BThwani-operated final-mile path. These
-// generated terms intentionally prevent retired multi-path semantics from
-// re-entering live Governance/Docs without keeping their literal legacy names
-// as a searchable semantic residue inside the verifier itself.
 const retiredFulfillmentConcepts = [
   ["partner", "delivery"],
   ["client", "pickup"],
@@ -137,15 +140,28 @@ const retiredFulfillmentConcepts = [
   ["delivery", "mode"],
 ];
 for (const file of liveTextFiles) {
-  const tokens = fs.readFileSync(file, "utf8")
-    .toLowerCase()
-    .replace(/[_-]+/g, " ")
-    .replace(/[^a-z0-9\s]+/g, " ")
-    .split(/\s+/)
-    .filter(Boolean);
+  const tokens = tokenize(fs.readFileSync(file, "utf8"));
   for (const words of retiredFulfillmentConcepts) {
     if (hasTokenSequence(tokens, words)) {
       fail(rel(file) + " retains retired fulfillment concept: " + words.join(" "));
+    }
+  }
+}
+
+// Retired narrow Field-persona semantics must not re-enter live knowledge.
+// Build token sequences here so the verifier itself does not become a durable
+// prose owner for the superseded model.
+const retiredFieldConcepts = [
+  ["field", "worker"],
+  ["field", "assisted", "partner", "first", "store"],
+  ["field", "assisted", "partner", "onboarding"],
+  ["visit", "commission"],
+];
+for (const file of liveTextFiles) {
+  const tokens = tokenize(fs.readFileSync(file, "utf8"));
+  for (const words of retiredFieldConcepts) {
+    if (hasTokenSequence(tokens, words)) {
+      fail(rel(file) + " retains retired field-role concept: " + words.join(" "));
     }
   }
 }
@@ -252,10 +268,29 @@ for (const required of [
   "PARTNER = ONE PARTNER-ROLE ACTOR / PRODUCT STAKEHOLDER",
   "PARTNER_ORGANIZATION = FORBIDDEN_UNLESS_FUTURE_PRODUCT_REQUIREMENT_PROVES_IT",
   "PARTNER_TEAM_MEMBERSHIP = NOT_ADMITTED",
+  "FIELD = PARTNER_ACQUISITION_AND_ONBOARDING_REPRESENTATIVE",
+  "APP_FIELD = PARTNER_JOINING_SURFACE",
+  "PARTNER_JOINING_CASE != PARTNER_ROLE",
+  "FIELD_SUBMISSION != OWNER_APPROVAL",
+  "FIELD_ROLE != GENERAL_OPERATIONAL_WORK",
   "OPERATOR = ONE OPERATOR-ROLE ACTOR / CONTROL-PANEL PERSONA",
   "BOOTSTRAP != ROLE",
   "CONTROL_PANEL != DOMAIN_OWNER",
 ]) if (!glossary.includes(required)) fail("glossary missing simplification invariant: " + required);
+
+const actors = read("governance/project/ACTORS-TRUST-AND-SCOPE.md");
+for (const required of [
+  "Partner Acquisition and Onboarding Representative",
+  "The `field` role exists to bring Partners into BThwani.",
+  "FIELD_SUBMISSION != OWNER_APPROVAL",
+]) if (!actors.includes(required)) fail("actors model missing field-role invariant: " + required);
+
+const onboarding = read("governance/product/capabilities/partner/partner-onboarding-store-publication.md");
+for (const required of [
+  "A Partner joining case may be created before `partner` role admission",
+  "An authorized Field actor can originate a Partner joining case from a prospective Partner",
+  "No Field-created `actor_id`, direct `partner` role grant",
+]) if (!onboarding.includes(required)) fail("partner onboarding missing acquisition invariant: " + required);
 
 const security = read("governance/policies/security.md");
 const phrase = "Development/bootstrap credentials or historical examples never define normal credential policy.";

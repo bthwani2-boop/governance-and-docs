@@ -31,7 +31,8 @@ Examples:
 - a commerce slice with no money effect does not require payout, refund, external-rail or wallet UI merely because they exist in the target model;
 - once checkout creates a COD/payment allocation, WLT conservation/idempotency for that allocation is mandatory in that slice;
 - once captain assignment depends on COD capacity, the corresponding WLT exposure reservation and its lawful backing are mandatory before assignment;
-- once delivery creates earnings/payables/commission/COD finalization truth, those postings cannot be deferred to a later “finance phase.”
+- once delivery creates earnings/payables/commission/COD finalization truth, those postings cannot be deferred to a later “finance phase”;
+- the `field` role does not imply a wallet, commission or payout by itself; such financial state exists only when an admitted WLT policy compensates a Partner acquisition/onboarding outcome.
 
 Incremental Product breadth may defer unrelated financial workflows, never the financial invariant of an effect already created.
 
@@ -43,7 +44,7 @@ Supported currencies and precision are governed Product/WLT policy and are not i
 
 ## One wallet / one ledger
 
-Each actor has one canonical internal WLT wallet. Available, held, pending, earned, settled, reserved and withdrawal-eligible amounts are states/projections over that truth, not parallel wallets. Every value-changing internal movement is represented through the canonical balanced ledger. Direct balance edits, spreadsheet totals, screenshots, client arithmetic and operator-entered authoritative amounts are forbidden.
+Each actor with admitted financial state has one canonical internal WLT wallet. Available, held, pending, earned, settled, reserved and withdrawal-eligible amounts are states/projections over that truth, not parallel wallets. Every value-changing internal movement is represented through the canonical balanced ledger. Direct balance edits, spreadsheet totals, screenshots, client arithmetic and operator-entered authoritative amounts are forbidden.
 
 ## Server-derived values
 
@@ -81,7 +82,7 @@ Do not invoke another provider/route for the same ambiguous money movement until
 
 ## Payout destinations and stakeholder Cash-Out
 
-Partner, captain and field use one WLT-owned payout engine with stakeholder-specific eligibility expressed as policy. Destination master data is WLT-owned, versioned, encrypted/masked where appropriate and read-only on beneficiary surfaces.
+Partner and captain use the common WLT-owned payout engine when eligible. A Partner Acquisition and Onboarding Representative uses that same engine only when an admitted WLT compensation policy creates eligible Partner-joining earnings; the role itself never implies payout entitlement. Destination master data is WLT-owned, versioned, encrypted/masked where appropriate and read-only on beneficiary surfaces.
 
 The current governed manual external settlement lifecycle is:
 
@@ -100,13 +101,25 @@ ELIGIBILITY
 
 A bare `mark paid` transition is forbidden. Approved payout/frozen settlement facts are immutable. Automated external payout is a separate approved capability, not an implication of a provider adapter.
 
+## Field Partner-joining compensation boundary
+
+If BThwani compensates the `field` persona, WLT derives that earning only from canonical DSH Partner-joining evidence and an explicit versioned compensation policy.
+
+```text
+FIELD_ROLE != FINANCIAL_ENTITLEMENT
+PARTNER_JOINING_EVIDENCE + ADMITTED_WLT_POLICY → OPTIONAL_FIELD_COMPENSATION
+FIELD_VISIT_OR_FORM_INPUT != COMMISSION_TRUTH
+```
+
+A contact attempt, visit, check, document upload or local app status cannot independently create financial entitlement unless the active policy explicitly defines the canonical event and WLT verifies it.
+
 ## Settlements, commissions and adjustments
 
 DSH supplies trusted operational identities/evidence; WLT verifies that evidence and its own refund/payment truth before calculating settlement/commission effects. Cancelled/unverified sources are not payable; deterministic idempotency prevents duplicate effects; adjustments are typed, reasoned, attributable and balanced.
 
 ## Representative financial reads
 
-Client, partner, captain and field read only authorized WLT-backed wallet/ledger state. Operator financial lookup is permission-scoped and trusted-context isolated.
+Client, partner and captain read only authorized WLT-backed wallet/ledger state. A Field representative receives a financial surface only when canonical WLT Partner-joining compensation exists for that actor. Operator financial lookup is permission-scoped and trusted-context isolated.
 
 ```text
 READ_PERMISSION != MONEY_MOVEMENT_PERMISSION

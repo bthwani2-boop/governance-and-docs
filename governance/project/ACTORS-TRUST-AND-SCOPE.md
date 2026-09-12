@@ -35,10 +35,12 @@ IDENTITY_ROLE != DSH_OPERATIONAL_ELIGIBILITY
 | Human Actor | `client` | Customer | `app-client` | DSH for non-authentication business truth |
 | Human Actor | `partner` | Partner | `app-partner` | DSH Partner operational state and Store scope |
 | Human Actor | `captain` | Captain | `app-captain` | DSH eligibility/assignment/affiliation |
-| Human Actor | `field` | Field worker | `app-field` | DSH Partner Onboarding assignment/evidence scope only |
+| Human Actor | `field` | Partner Acquisition and Onboarding Representative | `app-field` | DSH Partner joining case/assignment scope only |
 | Human Actor | `operator` | Operator | `control-panel` | applicable protected capability/domain owner |
 
 `Partner` is one Product stakeholder and one `partner` role bound to one `actor_id`. There is no `Partner Organization`, `Partner Member`, partner-team membership, or second Partner identity in the current Product model. A Store is a DSH resource managed by its Partner, not a second actor.
+
+A prospective Partner is not yet the `partner` Identity role merely because a joining case exists. DSH may hold the minimum governed business/contact/onboarding data required to progress a Partner joining case before Identity role admission. When the joining lifecycle reaches the governed admission point, Identity creates or resolves the Human Actor and binds role `partner`; that canonical `actor_id` then becomes the Partner cross-boundary identity.
 
 `Operator` is one Product persona and one `operator` role bound to one `actor_id`. The one-time bootstrap creates the first Operator and records completion; it is not a Product persona, role, domain or continuing authority tier.
 
@@ -56,7 +58,7 @@ operator → control-panel
 
 A session is bound to one actor and one role. It does not carry every role held by the human.
 
-Customer self-service may establish only the `client` role after proving phone possession and registering a client credential. DSH provisions partner/captain/field role admission; those governed roles perform initial activation through phone verification and password enrollment. Identity's one-time operator bootstrap creates only the first `operator`; after bootstrap, an authenticated Operator may initiate admission of another Operator through the governed control-panel path, which uses a one-time enrollment token before first activation. Normal Operator access requires password plus a second factor/challenge.
+Customer self-service may establish only the `client` role after proving phone possession and registering a client credential. DSH provisions partner/captain/field role admission; those governed roles perform initial activation through phone verification and password enrollment. A Partner joining case may precede `partner` role admission, but no Field action may create `actor_id`, grant the `partner` role or complete Identity activation directly. Identity's one-time operator bootstrap creates only the first `operator`; after bootstrap, an authenticated Operator may initiate admission of another Operator through the governed control-panel path, which uses a one-time enrollment token before first activation. Normal Operator access requires password plus a second factor/challenge.
 
 `actor_id` is the permanent cross-boundary human identifier. Phone is a mutable verified identifier, not the primary identity key; username is optional and must not exist merely as an authentication convention without Product need.
 
@@ -64,13 +66,14 @@ Customer self-service may establish only the `client` role after proving phone p
 PHONE_VERIFICATION != MANAGED_ACTIVATION
 MANAGED_ACTIVATION != NORMAL_AUTHENTICATION
 NORMAL_AUTHENTICATION != RECOVERY_OR_REENROLLMENT
+PARTNER_JOINING_CASE != PARTNER_ROLE
 BOOTSTRAP != ROLE
 FIRST_OPERATOR = OPERATOR
 ```
 
 Customer registration/recovery, managed-role activation and operator authentication therefore have separate journeys while remaining owned by the same Identity authority. Passkeys/WebAuthn are a preferred progressive hardening path for Operator access, but are not a mandatory first-release credential for every actor class.
 
-Role enable/disable is Identity admission truth. Partner Store scope, captain eligibility/assignment/affiliation, and field Partner-Onboarding assignment/evidence scope remain DSH truth. Fine-grained business authorization remains with the capability that owns the protected fact.
+Role enable/disable is Identity admission truth. Partner Store scope, captain eligibility/assignment/affiliation, and field Partner-joining case/assignment scope remain DSH truth. Fine-grained business authorization remains with the capability that owns the protected fact.
 
 ## Trust model
 
@@ -98,8 +101,8 @@ Operates only as the authenticated `partner` actor through `app-partner`, managi
 ### Captain
 Acts within dispatch/delivery/custody/proof/exception responsibilities only when DSH eligibility and assignment are valid.
 
-### Field worker
-Performs only assigned Partner/first-Store onboarding work: field capture, verification, required documents/evidence and submission for owner review under `PARTNER_ONBOARDING_STORE_PUBLICATION`. The Field role has no general field-operations, fulfillment, support or unrelated operational-task responsibility.
+### Partner Acquisition and Onboarding Representative
+The `field` role exists to bring Partners into BThwani. The representative may identify/contact a prospective Partner, create or receive a Partner joining case, capture and update required Partner/business/contact data, assist with first-Store setup, capture location/documents/evidence, perform a visit/check when policy requires it, follow up missing information, and submit/resubmit the case for canonical owner review. The representative does not create `actor_id`, grant or activate the `partner` role, approve their own case, publish a Store, own Partner truth, own financial truth, or perform unrelated operational work.
 
 ### Operator
 Authenticates through the single `operator` Identity role and uses `control-panel` to perform authorized operations. Each mutation remains authorized and owned by the applicable Identity, DSH, WLT or other admitted capability.
@@ -110,6 +113,7 @@ Where an owning capability materially requires independent approval, it defines 
 
 ```text
 UI_VISIBILITY != AUTHORIZATION
+FIELD_SUBMISSION != OWNER_APPROVAL
 OPERATOR_ROLE != UNIVERSAL_DOMAIN_PERMISSION
 APPROVAL_WHEN_REQUIRED → OWNING_CAPABILITY
 ```
