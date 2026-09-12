@@ -19,6 +19,13 @@ function rel(file) { return path.relative(root, file).split(path.sep).join("/");
 function read(relative) { return fs.readFileSync(path.join(root, ...relative.split("/")), "utf8"); }
 function exists(relative) { return fs.existsSync(path.join(root, ...relative.split("/"))); }
 function fail(message) { failures.push(message); }
+function hasTokenSequence(tokens, words) {
+  if (words.length > tokens.length) return false;
+  for (let i = 0; i <= tokens.length - words.length; i += 1) {
+    if (words.every((word, offset) => tokens[i + offset] === word)) return true;
+  }
+  return false;
+}
 
 const governanceFiles = collect(path.join(root, "governance"));
 const docsFiles = collect(path.join(root, "docs"));
@@ -130,13 +137,16 @@ const retiredFulfillmentConcepts = [
   ["delivery", "mode"],
 ];
 for (const file of liveTextFiles) {
-  const normalized = fs.readFileSync(file, "utf8")
+  const tokens = fs.readFileSync(file, "utf8")
     .toLowerCase()
     .replace(/[_-]+/g, " ")
-    .replace(/\s+/g, " ");
+    .replace(/[^a-z0-9\s]+/g, " ")
+    .split(/\s+/)
+    .filter(Boolean);
   for (const words of retiredFulfillmentConcepts) {
-    const phrase = words.join(" ");
-    if (normalized.includes(phrase)) fail(rel(file) + " retains retired fulfillment concept: " + phrase);
+    if (hasTokenSequence(tokens, words)) {
+      fail(rel(file) + " retains retired fulfillment concept: " + words.join(" "));
+    }
   }
 }
 
