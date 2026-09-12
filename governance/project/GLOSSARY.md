@@ -30,9 +30,13 @@ This glossary defines stable platform vocabulary. If implementation naming confl
 
 **Store** — an operational commerce resource governed by DSH and managed by its Partner. A Store is not a second Partner, Human Actor, Identity Role or Tenant.
 
+**Control Panel** — the administrative web surface `control-panel`. It is a presentation/application host, not a Human Actor role, business-domain owner or authority tier.
+
 **Operator** — the BThwani control-panel persona represented by one Human Actor holding the single `operator` Identity role. Operator actions remain authorized by and routed to the capability that owns the affected fact.
 
 **Operator Bootstrap** — the one-time technical Identity lifecycle that creates the first Operator and records that bootstrap has completed. Bootstrap is not a role, persona, domain, permission tier or continuing authority owner.
+
+**Retired control-panel identity names** — `platform_owner` and `operator_owner` are not admitted Identity roles, personas, authority tiers or control-panel modes. Historical implementation residue using either name must converge to `operator` when it means the control-panel Human Actor role, or to the one-time Operator Bootstrap lifecycle when it means first-Operator establishment.
 
 **Authorization Scope** — the object/business boundary inside which a permission applies.
 
@@ -108,7 +112,11 @@ PARTNER_JOINING_CASE != PARTNER_ROLE
 FIELD_SUBMISSION != OWNER_APPROVAL
 FIELD_ROLE != GENERAL_OPERATIONAL_WORK
 
-OPERATOR = ONE OPERATOR-ROLE ACTOR / CONTROL-PANEL PERSONA
+CONTROL_PANEL = ADMINISTRATIVE_SURFACE
+OPERATOR = ONLY_CONTROL_PANEL_HUMAN_ROLE
+FIRST_OPERATOR_BOOTSTRAP = ONE_TIME_IDENTITY_LIFECYCLE
+PLATFORM_OWNER = NOT_ADMITTED
+OPERATOR_OWNER = NOT_ADMITTED
 BOOTSTRAP != ROLE
 CONTROL_PANEL != DOMAIN_OWNER
 
