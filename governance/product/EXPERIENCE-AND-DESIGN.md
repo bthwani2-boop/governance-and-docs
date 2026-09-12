@@ -35,7 +35,7 @@ A screen that looks correct but communicates the wrong state, authority, next ac
 
 ## Audience and platform character
 
-BThwani serves customer, partner, captain, field worker and operator surfaces over one governed platform. The product is Arabic-first for its current operating context while supporting English/Latin technical presentation where needed. The control-panel default experience is Arabic/RTL.
+BThwani serves Customer, Partner, Captain, Partner Acquisition and Onboarding Representative, and Operator surfaces over one governed platform. The product is Arabic-first for its current operating context while supporting English/Latin technical presentation where needed. The control-panel default experience is Arabic/RTL.
 
 Cross-surface vocabulary should feel like one platform while allowing different information density, task urgency, input mode, viewport and native-platform adaptation.
 
