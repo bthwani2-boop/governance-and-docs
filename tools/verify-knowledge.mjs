@@ -35,6 +35,8 @@ for (const forbidden of [
   "governance/product/WORKFORCE-MODEL.md",
   "governance/architecture/FOUNDATION-AND-JOURNEY-READY-SUBSTRATE.md",
   "governance/product/capabilities/partner/partner-team-membership.md",
+  "governance/product/capabilities/access/administration-roles-approvals-audit.md",
+  "governance/product/capabilities/access/platform-sovereign-control-plane.md",
   "docs/platform-engineering-lifecycle",
   "docs/development/README.md",
   "docs/runbooks/README.md",
@@ -112,6 +114,21 @@ for (const file of liveTextFiles) {
   }
 }
 
+for (const file of liveTextFiles) {
+  const relative = rel(file);
+  if (relative === "docs/reference/donor.md") continue;
+  const text = fs.readFileSync(file, "utf8");
+  for (const retired of [
+    "platform_owner",
+    "platform-owner",
+    "Platform owner",
+    "Platform Owner",
+    "Platform Control",
+    "PLATFORM_SOVEREIGN_CONTROL_PLANE",
+    "ADMINISTRATION_ROLES_APPROVALS_AUDIT",
+  ]) if (text.includes(retired)) fail(relative + " retains retired Operator hierarchy/control-plane concept: " + retired);
+}
+
 const docsIndex = read("docs/README.md");
 for (const expected of expectedDocs.slice(1)) {
   const short = expected.slice("docs/".length);
@@ -132,6 +149,8 @@ for (const file of capabilityFiles) {
 }
 
 if (capabilityIds.has("PARTNER_TEAM_MEMBERSHIP")) fail("retired capability remains: PARTNER_TEAM_MEMBERSHIP");
+if (capabilityIds.has("PLATFORM_SOVEREIGN_CONTROL_PLANE")) fail("retired capability remains: PLATFORM_SOVEREIGN_CONTROL_PLANE");
+if (capabilityIds.has("ADMINISTRATION_ROLES_APPROVALS_AUDIT")) fail("retired capability remains: ADMINISTRATION_ROLES_APPROVALS_AUDIT");
 
 const capabilityIndex = read("governance/product/CAPABILITIES.md");
 for (const [id, relative] of capabilityIds) {
@@ -211,7 +230,10 @@ for (const required of [
   "PARTNER = ONE PARTNER-ROLE ACTOR / PRODUCT STAKEHOLDER",
   "PARTNER_ORGANIZATION = FORBIDDEN_UNLESS_FUTURE_PRODUCT_REQUIREMENT_PROVES_IT",
   "PARTNER_TEAM_MEMBERSHIP = NOT_ADMITTED",
-]) if (!glossary.includes(required)) fail("glossary missing Partner simplification invariant: " + required);
+  "OPERATOR = ONE OPERATOR-ROLE ACTOR / CONTROL-PANEL PERSONA",
+  "BOOTSTRAP != ROLE",
+  "GENERIC_CONTROL_PLANE_DOMAIN = NOT_ADMITTED",
+]) if (!glossary.includes(required)) fail("glossary missing simplification invariant: " + required);
 
 const security = read("governance/policies/security.md");
 const phrase = "Development/bootstrap credentials or historical examples never define normal credential policy.";

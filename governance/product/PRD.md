@@ -20,15 +20,20 @@ BThwani is not a separate platform instance per Partner/Store and is not a gener
 
 The current Product model has exactly one Partner stakeholder/role: a Human Actor with Identity role `partner` using `app-partner`. DSH owns that Partner's operational state and Store relationships. `Partner Organization`, `Partner Member`, partner-team membership and similar second-layer Partner identities are not admitted current Product concepts.
 
+The current Product model also has exactly one control-panel stakeholder/role: a Human Actor with Identity role `operator` using `control-panel`. There is no owner, platform-owner, super-admin or generic control-plane persona above Operator. One-time bootstrap creates the first Operator and then becomes only an irreversible bootstrap-completed fact; it is not a continuing role or Product layer.
+
 ```text
 PARTNER = ONE PARTNER-ROLE ACTOR / PRODUCT STAKEHOLDER
 PARTNER != STORE
 PARTNER != TENANT_BY_DEFAULT
 STORE != TENANT_BY_DEFAULT
+OPERATOR = ONE OPERATOR-ROLE ACTOR / CONTROL-PANEL PERSONA
+BOOTSTRAP != ROLE
+CONTROL_PANEL != DOMAIN_OWNER
 AUTHORIZATION_SCOPE != CLIENT_CONTROLLED_CONTEXT
 ```
 
-A tenancy boundary or additional Partner-person/team/organization abstraction is admitted only when Product/System requirements prove an independent lifecycle that the current Partner actor plus Store scope cannot represent. BThwani also does not adopt an external commerce, ERP, wallet or identity platform as its Product owner merely because that system is mature or available.
+A tenancy boundary, additional Partner-person/team/organization abstraction, privileged Operator hierarchy, or generic administration/control-plane domain is admitted only when Product/System requirements prove an independent lifecycle that existing actors and owners cannot represent. BThwani also does not adopt an external commerce, ERP, wallet or identity platform as its Product owner merely because that system is mature or available.
 
 ## 1B. Target Product vision versus delivery breadth
 
@@ -57,19 +62,30 @@ The standard product surfaces are:
 - `app-partner`: Partner Store/catalog/order operations and authorized financial readback.
 - `app-captain`: assignment, delivery lifecycle, proof/exception handling, and authorized earnings readback.
 - `app-field`: assigned Partner/first-Store onboarding, field verification, required document/evidence capture and submission for review only; it has no general field-operations remit.
-- `control-panel`: governed Operator/Platform-owner administration and operational control.
+- `control-panel`: trusted Operator administration and operational control, composing operations owned by Identity, DSH, WLT and other admitted capabilities.
 - backend/domain services and their service-owned persistence.
 - generated/public service clients, app-owned surface-specific capability presentation, explicitly admitted host-neutral reusable presentation only when proven, design-system primitives, events/jobs and runtime infrastructure required by the above surfaces.
 
-These are target platform surfaces. An active delivery slice may exercise only the materially required subset. A deployable host may remain technically ready (identity/session/bootstrap/build) while its business semantics are deliberately deferred; do not create fake feature screens merely to make every target surface appear functionally populated.
+These are target platform surfaces. An active delivery slice may exercise only the materially required subset. A deployable host may remain technically ready while its business semantics are deliberately deferred; do not create fake feature screens merely to make every target surface appear functionally populated.
 
 A target capability may exclude a surface when its durable semantics make the exclusion explicit where omission could otherwise be ambiguous. Active-slice execution additionally follows the current authorized Product breadth.
 
 ## 3. Actors, roles, personas and trust
 
-The canonical human identity is the **Human Actor**. Customer/client, Partner, captain, field worker and operator are current Identity roles/Product personas of a human actor; they are not separate identity records.
+The canonical human identity is the **Human Actor**. Customer/client, Partner, captain, field worker and Operator are the current Identity roles/Product personas of a human actor; they are not separate identity records.
 
-For Partner specifically, the Product model is deliberately simple:
+```text
+Human Actor / actor_id
+→ one applicable role-scoped session
+
+client   → app-client
+partner  → app-partner
+captain  → app-captain
+field    → app-field
+operator → control-panel
+```
+
+For Partner specifically:
 
 ```text
 Human Actor / actor_id
@@ -80,6 +96,16 @@ Human Actor / actor_id
 ```
 
 There is no `Partner Organization`, `Partner Member`, partner-team membership or parallel Partner identifier in the current model.
+
+For Operator specifically:
+
+```text
+ONE-TIME IDENTITY BOOTSTRAP → FIRST `operator`
+EXISTING AUTHORIZED OPERATOR → SUBSEQUENT OPERATOR ADMISSION/ENROLLMENT
+OPERATOR SESSION → control-panel → APPLICABLE CANONICAL OWNER
+```
+
+There is no second privileged human role above `operator`. Bootstrap is not authorization for ordinary domain operations; each protected action is authorized by its owning capability/service.
 
 Current role/persona mapping is owned by `../project/ACTORS-TRUST-AND-SCOPE.md`; ubiquitous terms are owned by `../project/GLOSSARY.md`. This PRD does not create a parallel actor taxonomy.
 
@@ -99,11 +125,12 @@ This PRD owns product-level orientation only. Exact durable owner/writer/readbac
 At the platform level:
 
 ```text
-IDENTITY → human identity, high-level role admission, credentials/proofs/sessions
+IDENTITY → human identity, high-level role admission, credentials/proofs/sessions, first-Operator bootstrap
 DSH      → commerce/fulfillment/Partner/Store/customer/captain operational truth plus field-assisted Partner onboarding truth
 WLT      → authoritative financial truth
-PLATFORM CONTROL → only explicitly admitted cross-platform governed control-plane facts
 ```
+
+`control-panel` is a host. Operator actions are routed to the canonical owner of the affected fact. No generic administration or platform-control owner exists in the current Product model.
 
 No surface, integration adapter, search/index, analytics view, cache/projection or documentation artifact becomes a parallel Product owner merely because it renders or transports owner truth.
 
@@ -111,11 +138,11 @@ No surface, integration adapter, search/index, analytics view, cache/projection 
 
 Engineering must not invent missing business/legal/operational truth merely to make a template complete. Before a dependent capability/release requires them, the applicable authority must resolve items such as supported market/jurisdiction, legal operator identity, supported currency/precision, retention obligations, material support/operations responsibility and required reliability/recovery targets.
 
-~~~text
+```text
 MISSING_REQUIRED_DECISION != PERMISSION_TO_GUESS
 NO_AUTHORIZED_SLO/RPO/RTO != INVENT_A_NUMBER
 MARKET_LOCATION != IMPLIED_CURRENCY_POLICY
-~~~
+```
 
 A required unresolved decision is an explicit Product/operations/legal gap and blocks only the outcome that depends on it.
 
@@ -129,8 +156,11 @@ Product-wide invariants are:
 
 - one durable fact has one canonical semantic owner and governed writer;
 - one Human Actor may hold multiple Identity roles without creating duplicate human identities;
+- current high-level actor-facing roles are exactly `client`, `partner`, `captain`, `field`, `operator`;
 - Partner is one Product stakeholder/role represented by one `actor_id`; no Partner Organization/Member/team model is admitted unless a future explicit requirement proves it;
 - Store is a DSH business resource managed by Partner and is not another actor, Partner identity or tenant;
+- Operator is one Product persona/role using `control-panel`; first-Operator bootstrap is a one-time Identity lifecycle, not a second privileged role;
+- `control-panel` does not own generic administration/domain truth; each action remains with its applicable canonical owner;
 - customer/client-controlled data never grants trusted identity, role, business scope, financial truth or platform isolation;
 - WLT remains the only authoritative owner of wallet/ledger/payment/refund/settlement/payout/commission/reconciliation truth;
 - derived search, analytics, projections and caches never become mutation authority;
@@ -157,7 +187,7 @@ Product semantics do not define repository execution order, current implementati
 - durable architecture belongs to the applicable `governance/architecture/**` owner;
 - engineering constraints belong to the applicable `governance/policies/**` owner;
 - current implementation/configuration/runtime truth belongs to executable source;
-- execution order and candidate closure are not Product semantics; they are determined from current human authorization, exact-target evidence, the repository-local agent safety contract and machine safeguards.
+- execution order and candidate closure are determined from current human authorization, exact-target evidence, the repository-local agent safety contract and machine safeguards.
 
 ## 8. Experience, accessibility, privacy and security routing
 

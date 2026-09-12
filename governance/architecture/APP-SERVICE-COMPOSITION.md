@@ -69,4 +69,13 @@ Search/query infrastructure is derived. The owning domain remains authoritative 
 
 ## Control Panel
 
-Control Panel is a deployable trusted operator host. It composes service-owned capabilities and may own operator navigation/shell, but it does not absorb Identity, DSH, WLT or Platform Control semantics into a generic administration domain.
+`control-panel` is the single trusted Operator web host. It owns Operator navigation, shell and cross-capability page composition only. Authentication/Operator role state remains Identity-owned; DSH owns DSH administration/operations; WLT owns financial administration; every other protected operation remains with its admitted capability owner.
+
+```text
+CONTROL_PANEL = HOST
+OPERATOR = ROLE/PERSONA
+HOST/ROLE != GENERIC_ADMIN_DOMAIN
+ADMIN_ACTION → APPLICABLE_CANONICAL_OWNER
+```
+
+No generic Platform Control, owner/super-admin layer or shadow administration truth is admitted merely to centralize UI.

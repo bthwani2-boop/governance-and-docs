@@ -52,7 +52,6 @@ This file owns their **repository placement and container admission only**. The 
 
 A pass-through `apps/<app>/runtime/` wrapper with no independent sibling lifecycle is noncanonical. Preserve deployable identity while flattening; path cleanup never authorizes accidental Expo/EAS/package/bundle/scheme/update/hosting identity change.
 
-
 ## Services
 
 A `services/<owner>/` container is admitted only when the corresponding semantic responsibility and required lifecycle/storage/API/runtime boundary are already justified by the applicable Governance owner.
@@ -72,8 +71,7 @@ This is a placement template, not permission to create empty lanes or a statemen
 
 Whether presentation belongs to an app host, a service, or a reusable presentation owner is **not defined here**; `APP-SERVICE-COMPOSITION.md` owns that semantic composition rule.
 
-Identity, DSH and WLT are durable primary bounded-context responsibilities. Platform Control or any other peer service earns an independent `services/*` deployable only after its executable service-admission evidence is proven; donor/current folder names never grant admission.
-
+Identity, DSH and WLT are the current durable primary bounded-context responsibilities. Any other peer service earns a `services/*` deployable only after a distinct Product lifecycle and executable service-admission evidence are proven. `control-panel` is an app host and does not imply a Platform Control service/domain.
 
 ## Packages
 

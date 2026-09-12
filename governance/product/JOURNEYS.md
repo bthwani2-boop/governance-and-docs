@@ -48,15 +48,19 @@ GOVERNED ROLE PROVISIONING
 → EXPLICIT GOVERNED RECOVERY / RE-ENROLLMENT WHEN ACCESS IS LOST
 
 OPERATOR:
-GOVERNED ROLE/CREDENTIAL PROVISIONING
+IF SYSTEM BOOTSTRAP IS INCOMPLETE:
+  ONE-TIME IDENTITY OPERATOR BOOTSTRAP → FIRST OPERATOR
+ELSE:
+  AUTHORIZED EXISTING OPERATOR → OPERATOR ROLE ADMISSION → ONE-TIME ENROLLMENT TOKEN
+→ PHONE-VERIFIED INITIAL ACTIVATION + PASSWORD ENROLLMENT WHEN REQUIRED
 → PASSWORD PROOF
 → REQUIRED SECOND-FACTOR CHALLENGE
 → OPERATOR SESSION
-→ STEP-UP WHEN A SENSITIVE CAPABILITY REQUIRES IT
+→ STEP-UP ONLY WHEN THE OWNING CAPABILITY REQUIRES IT
 → PASSKEY/WEBAUTHN AS THE PREFERRED PROGRESSIVE PHISHING-RESISTANT TARGET
 ```
 
-Phone verification, managed activation, normal authentication and recovery/re-enrollment are distinct Identity lifecycles. None may silently grant a business role or scope.
+Phone verification, managed activation, normal authentication, recovery/re-enrollment and first-Operator bootstrap are distinct Identity lifecycles. Bootstrap creates only an `operator`; it does not create a second privileged role or generic administration owner.
 
 ## J1 — Customer commerce and fulfillment
 
@@ -138,7 +142,7 @@ USER/SYSTEM INTENT
 ELIGIBILITY
 → HOLD
 → REQUEST/PREPARE
-→ APPROVAL WHEN REQUIRED
+→ APPROVAL WHEN REQUIRED BY WLT POLICY
 → IMMUTABLE SNAPSHOT/BATCH
 → EXTERNAL EXECUTION
 → EVIDENCE
@@ -147,19 +151,19 @@ ELIGIBILITY
 → COMPLETION
 ```
 
-## J7 — Operator administration and controlled change
+## J7 — Operator administration
 
 ```text
-TRUSTED AUTHORIZATION SCOPE
-→ EXACT PERMISSION
-→ PROPOSED CHANGE
-→ VERSION/CONFLICT CHECK
-→ INDEPENDENT APPROVAL WHEN REQUIRED
-→ CANONICAL OWNER MUTATION
-→ AUDIT
+OPERATOR SESSION
+→ CONTROL-PANEL INTENT
+→ APPLICABLE CANONICAL OWNER AUTHORIZATION + VALIDATION
+→ OWNER MUTATION
+→ OWNER/AUDIT EVIDENCE
 → CANONICAL READBACK
-→ ROLLBACK/INVERSE DECISION WHEN REQUIRED
+→ OWNER-DEFINED RECOVERY / APPROVAL WHEN REQUIRED
 ```
+
+J7 is a cross-capability Operator journey, not a generic Administration or Platform Control capability. The host and Operator role never become an alternate owner. Identity owns identity/access operations, DSH owns its operational administration, WLT owns financial administration, and any approval lifecycle belongs to the capability whose decision requires it.
 
 ## J8 — Support incident and order rescue
 
@@ -186,10 +190,6 @@ OR SPECIAL-REQUEST CAPABILITY WHEN GOVERNED
 → FINANCIAL EFFECT WHEN REQUIRED
 → CUSTOMER/OPERATOR READBACK
 ```
-
-## Journey semantic completeness invariant
-
-A durable journey definition is incomplete when it omits a material cross-owner handoff, user/system action, failure/recovery semantic or final canonical readback. This Governance artifact does not self-certify implementation closure; materially affected journey claims require exact-current evidence.
 
 ## J10 — Catalog, promotion and discovery publication
 
@@ -268,7 +268,11 @@ CUSTOMER INITIATES ACCOUNT/PRIVACY REQUEST
 → TRUTHFUL CUSTOMER-FACING TERMINAL READBACK
 ```
 
-Deleting the customer account is not automatic deletion of the Human Actor or unrelated Partner/captain/field/operator/platform-owner roles. Required financial/audit/security retention survives only under its owning policy and must not leave ordinary customer access active.
+Deleting the customer account is not automatic deletion of the Human Actor or unrelated Partner/captain/field/operator roles. Required financial/audit/security retention survives only under its owning policy and must not leave ordinary customer access active.
+
+## Journey semantic completeness invariant
+
+A durable journey definition is incomplete when it omits a material cross-owner handoff, user/system action, failure/recovery semantic or final canonical readback. This Governance artifact does not self-certify implementation closure; materially affected journey claims require exact-current evidence.
 
 ## Journey-step responsibility classification law
 
@@ -292,9 +296,11 @@ UNCLASSIFIED_MATERIAL_RESPONSIBILITIES=0
 ```
 
 Key durable dispositions in the current model:
+- OPERATOR BOOTSTRAP / ROLE / CREDENTIAL / SESSION → IDENTITY_ACTIVATION_SESSIONS; control-panel is only the host and generic administration/control-plane ownership is not admitted.
+- OPERATOR DOMAIN ACTION → applicable canonical owner; approval/step-up remains with that owner when materially required.
 - ACCOUNT / PRIVACY REQUEST ORCHESTRATION + CROSS-OWNER COMPLETION → ACCOUNT_PRIVACY_LIFECYCLE; each sovereign owner retains its own identity/profile/financial/audit disposition.
 - CENTRAL CATALOG / APPROVAL / PUBLICATION → CENTRAL_CATALOG; approval/publication is a named subcapability/workflow.
-- CART / CHECKOUT → CART_CHECKOUT; ORDER CREATION begins after the governed checkout eligibility boundary.
+- CART / CHECKOUT → CART_CHECKOUT; ORDER_CREATION begins after the governed checkout eligibility boundary.
 - FIELD-ASSISTED PARTNER/FIRST-STORE ONBOARDING ASSIGNMENT / VISIT / CHECK / EVIDENCE → subcapability of PARTNER_ONBOARDING_STORE_PUBLICATION; no standalone Field Operations capability exists.
 - PARTNER STORE SCOPE → DSH relationship between the Partner `actor_id` and Store; no Partner Organization/Member/team-membership layer exists.
 - CAMPAIGN / AUDIENCE / PLACEMENT / LOYALTY / NON-FINANCIAL COMMERCIAL PROGRAM ELIGIBILITY → MARKETING_CAMPAIGNS_LOYALTY.
@@ -305,14 +311,12 @@ Key durable dispositions in the current model:
 
 | Capability | Journey coverage |
 |---|---|
-| ADMINISTRATION_ROLES_APPROVALS_AUDIT | J7 |
 | CAPTAIN_DISPATCH | J3 |
-| IDENTITY_ACTIVATION_SESSIONS | J0, J15 where client credential/session disposition is required |
+| IDENTITY_ACTIVATION_SESSIONS | J0, J7 where Operator identity/access is required, J15 where client credential/session disposition is required |
 | MAPS_SERVICE_AREA_ADDRESS_PRIVACY | J1, J9 |
 | ORDER_CREATION | J1 |
 | PARTNER_FLEET_CONNECTION | J2, J3 |
 | PARTNER_ONBOARDING_STORE_PUBLICATION | J2, J4 |
-| PLATFORM_SOVEREIGN_CONTROL_PLANE | J7 |
 | REPRESENTATIVE_WALLETS_REFERENCE_FINANCE | J1, J3, J5, J6 |
 | SETTLEMENTS_COMMISSIONS | J3, J6 |
 | SPECIAL_REQUESTS | J8, J9 |
@@ -333,4 +337,4 @@ Key durable dispositions in the current model:
 | CART_CHECKOUT | J1, J5, J9 |
 | MARKETING_CAMPAIGNS_LOYALTY | J1, J2, J10, J11 when campaign communication is required |
 
-Generic media/object-storage and search/index mechanisms are not listed as sovereign capabilities. J13 is a cross-capability journey owned by the applicable business capability plus technical storage adapter; search/discovery steps in J1/J10 remain derived from canonical source owners.
+Generic administration/control-plane, media/object-storage and search/index mechanisms are not listed as sovereign capabilities. J7 is a cross-capability Operator journey; J13 is a cross-capability media journey; search/discovery steps remain derived from canonical source owners.

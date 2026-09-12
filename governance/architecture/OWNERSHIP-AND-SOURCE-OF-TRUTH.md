@@ -31,6 +31,7 @@ MEANING
 |---|---|---|
 | actor identity/credential/authentication/activation/session | Identity | apps/services through Identity contracts |
 | high-level actor-role admission and role-scoped session state | Identity | authorized apps/services through Identity contracts |
+| first-Operator bootstrap-completed fact | Identity | control-panel/bootstrap tooling through Identity contract/readback only |
 | business authorization scope/operational permission/context | capability/domain that owns the protected business truth; currently DSH for Partner/Store/assignment scope | authorized consumers through owner contracts |
 | client/Partner/captain operational participant profile/status/eligibility | DSH | authorized DSH surfaces and dependent services through DSH contracts |
 | field-assisted Partner/first-Store onboarding assignment/evidence scope | DSH `PARTNER_ONBOARDING_STORE_PUBLICATION` | app-field/control-panel and Partner readback through DSH contracts |
@@ -39,11 +40,12 @@ MEANING
 | address/serviceability/order/dispatch/delivery/support | DSH | apps and WLT where trusted operational evidence is required |
 | wallet/ledger/payment/refund | WLT | DSH/app bounded projections/readback |
 | commission/settlement/payout/reconciliation/COD exposure | WLT | authorized stakeholder/operator reads |
-| cross-platform governed variables/change/rollout state | Platform Control semantic control-plane responsibility when explicitly assigned; independent service deployment remains conditional on executable admission proof | services/apps through validated configuration contracts |
 | deployable route/navigation/shell composition | each app host | local presentation only |
 | design tokens/primitives | Design System technical owner | deployable app hosts and explicitly admitted host-neutral reusable presentation abstractions; never an app-shaped service feature UI tree |
 | external provider secret value | approved secret store/runtime binding | adapter only; never client/general DB truth |
 | provider operation outcome | operation-owning domain | projections only after owner normalization/reconciliation |
+
+`control-panel` and `operator` are not source-of-truth owners by themselves. An Operator expresses authorized intent through the host; the affected Identity/DSH/WLT/admitted capability validates, writes and reads back its own truth. A generic Platform Control/Administration authority is not admitted in the current model.
 
 ## Partner ownership law
 
@@ -57,6 +59,20 @@ STORE = DSH_RESOURCE_MANAGED_BY_PARTNER
 ```
 
 Do not manufacture an organization/member/membership layer merely to model the Partner actor's relationship to its Stores. If a future Product requirement truly needs multiple independent Partner users or another Partner lifecycle, it must be admitted explicitly before implementation.
+
+## Operator ownership law
+
+```text
+OPERATOR = ONE OPERATOR-ROLE ACTOR / CONTROL-PANEL PERSONA
+OPERATOR_CANONICAL_CROSS_BOUNDARY_ID = actor_id
+BOOTSTRAP = ONE_TIME_IDENTITY_LIFECYCLE
+OWNER_ROLE = NOT_ADMITTED
+SUPER_ADMIN_ROLE = NOT_ADMITTED
+GENERIC_PLATFORM_CONTROL_DOMAIN = NOT_ADMITTED
+CONTROL_PANEL = HOST_NOT_DOMAIN_OWNER
+```
+
+Do not manufacture a privileged human hierarchy or generic administration owner merely to centralize administrative presentation. A future permission/approval distinction is introduced only by the capability whose concrete lifecycle proves that need.
 
 ## Projection law
 

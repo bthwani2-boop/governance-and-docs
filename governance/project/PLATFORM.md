@@ -18,20 +18,21 @@ It is not a collection of independent apps, not a separate platform instance per
 - `app-partner` — Partner mobile host for Store, catalog, order and authorized financial operations/readback.
 - `app-captain` — Captain mobile host for assigned pickup, custody, delivery, proof and exception workflows.
 - `app-field` — Field mobile host used only for assigned Partner/first-Store onboarding visits, checks and evidence capture; it has no general field-operations remit.
-- `control-panel` — trusted Operator/Platform-owner web host for governed administration, review, approvals and operational control.
+- `control-panel` — trusted Operator web host for authorized platform administration, review and operational control.
 
 Surfaces compose capabilities; they do not own domain truth merely because a capability is rendered there.
 
 ## Primary human roles and personas
 
-Current actor-facing roles/personas are:
+Current actor-facing roles/personas are exactly:
 
 - Customer — Identity role `client`, primarily through `app-client`.
 - Partner — Identity role `partner`, primarily through `app-partner`.
 - Captain — Identity role `captain`, primarily through `app-captain`.
 - Field worker — Identity role `field`, acting only in the field-assisted Partner/first-Store onboarding journey, primarily through `app-field`.
-- Operator — Identity role `operator`, primarily through `control-panel`.
-- Platform owner — Identity role `platform_owner`, through `control-panel`.
+- Operator — Identity role `operator`, through `control-panel`.
+
+There is no second owner/super-admin/platform-owner human role in the current Product model. System bootstrap creates the first Operator once; bootstrap is not a persona, continuing role tier or business capability.
 
 `Partner` is one stakeholder and one role represented by one `actor_id`. The current Product model has no `Partner Organization`, `Partner Member`, or partner-team membership layer. A Store is a DSH-managed business resource belonging to its Partner, not another actor or platform instance.
 
@@ -58,10 +59,11 @@ The primary operating market is Sana'a, Yemen. City/zone/serviceability is gover
 
 ## Bounded contexts
 
-- Identity — authentication/session/activation/identity authority.
+- Identity — authentication/session/activation/identity authority, including Operator identity/bootstrap/authentication.
 - DSH — commerce, catalog consumption, Partner/Store operations, checkout/order, serviceability, dispatch/delivery, Partner onboarding, special requests, support/rescue and other operational truth assigned by Product.
 - WLT — wallet, ledger, payment, refund, commission, payout, settlement and reconciliation authority.
-- Platform Control — admitted semantic control-plane responsibility for explicitly assigned platform-wide governed configuration/change/rollout facts; independent deployable-service admission remains conditional on executable lifecycle/persistence/API/runtime evidence.
+
+`control-panel` is a deployable host, not a fourth business/domain owner. Operator actions call the canonical owner of the affected fact. A future independent service/domain requires normal admission proof and a Product lifecycle that cannot be represented by these existing owners; a generic control-plane layer is not admitted by default.
 
 External vendors and technical mechanisms are integrations/adapters, not business-domain owners.
 
@@ -73,7 +75,7 @@ Some capabilities cross several bounded contexts without becoming new sovereign 
 - promotions/coupons can span DSH eligibility and WLT financial effect while retaining one owner per fact;
 - notification source-event meaning remains with the originating domain; DSH Notifications owns current inbox/preferences/topic/delivery-attempt truth; replaceable adapters execute channels; media business authorization remains with its owning domain while object storage is technical infrastructure;
 - search/discovery and analytics are derived/query capabilities and never become authorization, transactional or financial truth;
-- external providers remain adapters behind the operation-owning domain; Platform Control may govern configuration/rollout but does not execute unrelated domain semantics.
+- external providers remain adapters behind the operation-owning domain.
 
 ## Core non-conflation laws
 
@@ -83,6 +85,9 @@ PARTNER = ONE PARTNER-ROLE ACTOR / PRODUCT STAKEHOLDER
 PARTNER != STORE
 PARTNER != TENANT_BY_DEFAULT
 STORE != TENANT_BY_DEFAULT
+OPERATOR = ONE OPERATOR-ROLE ACTOR / CONTROL-PANEL PERSONA
+BOOTSTRAP != ROLE
+CONTROL_PANEL != DOMAIN_OWNER
 APP_HOST != BUSINESS_CAPABILITY_OWNER
 PROVIDER != BUSINESS_DOMAIN
 ```

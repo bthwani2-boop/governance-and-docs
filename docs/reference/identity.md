@@ -1,4 +1,4 @@
-# External References — Identity and Platform Control
+# External References — Identity and Operator Access
 
 DOCUMENT_CLASS: NON_AUTHORITATIVE_EXTERNAL_REFERENCE
 EXECUTION_AUTHORITY: NONE
@@ -11,7 +11,7 @@ SECURITY_SUPPLY_CHAIN_RECHECK_ON_ADOPTION: REQUIRED
 
 ## Use
 
-Use for authentication/session/MFA/passkey, authorization-boundary, abuse-control and governed configuration/rollout falsification. These systems do not imply generic tenant/people/authorization services in BThwani.
+Use for authentication/session/MFA/passkey, authorization-boundary and abuse-control falsification. These systems do not imply generic tenant/people/authorization/control-plane services or privileged role hierarchies in BThwani.
 
 Choose a reference by the question being falsified. Stop when additional references no longer change the owner/boundary, invariant, failure/recovery model, UX/security requirement, implementation option or test case.
 
@@ -23,8 +23,6 @@ Reference selection never authorizes dependency/provider adoption.
 - ZITADEL — https://github.com/zitadel/zitadel and https://zitadel.com/docs
 - Ory — https://github.com/ory and https://www.ory.sh/docs/
 - OpenFGA — https://github.com/openfga/openfga and https://openfga.dev/docs
-- OpenFeature — https://github.com/open-feature and https://openfeature.dev/docs/
-- LaunchDarkly docs — https://docs.launchdarkly.com/
 
 ## Boundary
 

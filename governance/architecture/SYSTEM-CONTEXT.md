@@ -37,14 +37,17 @@ DESIGN SYSTEM → DOMAIN POLICY
 
 ## Contexts
 
-Identity, DSH and WLT are the primary durable bounded-context responsibilities. Platform Control is an admitted semantic control-plane responsibility for explicitly assigned cross-platform configuration/change/rollout facts; whether it is an independently deployable service remains conditional on executable service-admission evidence. Other peer services require the same independent admission proof. External systems are integrations behind semantic owners.
+Identity, DSH and WLT are the current durable bounded-context responsibilities. Other peer services/domains require independent Product lifecycle and executable service-admission proof. A generic platform-control/control-plane domain is not admitted merely because trusted Operators need an administrative host or because several owners expose administrative operations.
 
 ## Deployable hosts
 
 Apps own composition: routes, navigation, shell/tabs, deep links, app bootstrap, native/OS adapters, app assets and cross-capability page composition.
 
+`control-panel` is the trusted Operator host. It composes authorized Identity/DSH/WLT/other owner operations but owns none of their durable business/authentication/financial truth merely by displaying or coordinating them.
+
 ```text
 WHERE_IT_APPEARS != WHO_OWNS_IT
+CONTROL_PANEL != DOMAIN_OWNER
 ```
 
 ## External systems

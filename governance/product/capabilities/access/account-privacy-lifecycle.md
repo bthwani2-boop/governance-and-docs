@@ -36,7 +36,7 @@ This file is the sole editable durable semantic owner of the customer account/pr
 
 **Business invariants**
 - customer account deletion is not automatic deletion of the Human Actor;
-- customer account deletion is not automatic revocation/deletion of partner, captain, field, operator or platform-owner roles;
+- customer account deletion is not automatic revocation/deletion of partner, captain, field or operator roles;
 - disabling/deactivating the customer account without required deletion/anonymization is not represented as completed deletion;
 - financial, fraud, audit, dispute, security or regulatory records survive only under their owning retention rule and do not keep ordinary customer access active;
 - deletion/anonymization follows canonical owner contracts; DSH does not directly edit Identity or WLT private storage;
