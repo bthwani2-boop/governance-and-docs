@@ -1,33 +1,23 @@
-# External References — Engineering
+# Engineering Assurance References
 
-DOCUMENT_CLASS: NON_AUTHORITATIVE_EXTERNAL_REFERENCE
+DOCUMENT_CLASS: NONAUTHORITATIVE_EXTERNAL_REFERENCE
 EXECUTION_AUTHORITY: NONE
 PRODUCT_SEMANTIC_AUTHORITY: NONE
 CURRENT_IMPLEMENTATION_AUTHORITY: NONE
 ADOPTION_AUTHORITY: NONE
 REFERENCE_FRESHNESS: REVALIDATE_AT_USE
-LICENSE_RECHECK_ON_ADOPTION: REQUIRED
-SECURITY_SUPPLY_CHAIN_RECHECK_ON_ADOPTION: REQUIRED
+REFERENCE_CLASS: ENGINEERING_ASSURANCE
 
-## Use
+Use to challenge lifecycle, security, testing, reliability, delivery and review quality.
 
-Use for API contracts, generation, integration/fault testing, telemetry, supply-chain and runtime engineering falsification.
-
-Choose a reference by the question being falsified. Stop when additional references no longer change the owner/boundary, invariant, failure/recovery model, UX/security requirement, implementation option or test case.
-
-Reference selection never authorizes dependency/provider adoption.
-
-## References
-
-- OpenAPI Specification — https://spec.openapis.org/oas/latest.html
-- Redocly docs — https://redocly.com/docs/
-- Schemathesis — https://github.com/schemathesis/schemathesis
-- Testcontainers-Go — https://github.com/testcontainers/testcontainers-go
+- NIST SSDF SP 800-218 v1.1 — https://csrc.nist.gov/pubs/sp/800/218/final
+- OWASP SAMM — https://owaspsamm.org/model/
+- Microsoft Code With Engineering Playbook — https://microsoft.github.io/code-with-engineering-playbook/
+- Google Site Reliability Engineering books — https://sre.google/books/
+- SLSA — https://slsa.dev/spec/
+- Schemathesis — https://schemathesis.readthedocs.io/
+- Testcontainers — https://testcontainers.com/
 - OpenTelemetry — https://opentelemetry.io/docs/
-- Sentry docs — https://docs.sentry.io/
-- k6 — https://github.com/grafana/k6
-- SLSA — https://slsa.dev/
+- k6 — https://grafana.com/docs/k6/latest/
 
-## Boundary
-
-Extract behavior/invariants/failure cases, not vendor naming, topology, extra Product breadth or generic abstractions. Any code/tool/provider adoption returns to current BThwani Governance and executable dependency/configuration truth.
+Apply only material controls. Assurance frameworks challenge BThwani decisions; they do not create Product scope.

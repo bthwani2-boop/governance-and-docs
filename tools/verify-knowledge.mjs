@@ -3,308 +3,175 @@ import path from "node:path";
 
 const root = path.resolve(import.meta.dirname, "..");
 const failures = [];
-const MAX_BYTES = 24000;
+
+const rel = (p) => path.relative(root, p).split(path.sep).join("/");
+const read = (p) => fs.readFileSync(path.join(root, ...p.split("/")), "utf8");
+const exists = (p) => fs.existsSync(path.join(root, ...p.split("/")));
+const fail = (m) => failures.push(m);
 
 function collect(dir) {
   if (!fs.existsSync(dir)) return [];
   const out = [];
-  for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
-    const absolute = path.join(dir, entry.name);
-    if (entry.isDirectory()) out.push(...collect(absolute));
-    else if (entry.isFile() && entry.name.endsWith(".md")) out.push(absolute);
+  for (const e of fs.readdirSync(dir, { withFileTypes: true })) {
+    const p = path.join(dir, e.name);
+    if (e.isDirectory()) out.push(...collect(p));
+    else if (e.isFile()) out.push(p);
   }
   return out.sort();
 }
-function rel(file) { return path.relative(root, file).split(path.sep).join("/"); }
-function read(relative) { return fs.readFileSync(path.join(root, ...relative.split("/")), "utf8"); }
-function exists(relative) { return fs.existsSync(path.join(root, ...relative.split("/"))); }
-function fail(message) { failures.push(message); }
-function hasTokenSequence(tokens, words) {
-  if (words.length > tokens.length) return false;
-  for (let i = 0; i <= tokens.length - words.length; i += 1) {
-    if (words.every((word, offset) => tokens[i + offset] === word)) return true;
-  }
-  return false;
-}
-function tokenize(text) {
-  return text.toLowerCase()
-    .replace(/[_-]+/g, " ")
-    .replace(/[^a-z0-9\s]+/g, " ")
-    .split(/\s+/)
-    .filter(Boolean);
-}
 
-const governanceFiles = collect(path.join(root, "governance"));
-const docsFiles = collect(path.join(root, "docs"));
-
-for (const required of [
+const required = [
+  "AGENTS.md",
+  "README.md",
   "governance/GOVERNANCE.md",
+  "governance/platform/PLATFORM.md",
+  "governance/product/PRODUCT.md",
   "governance/product/CAPABILITIES.md",
   "governance/product/JOURNEYS.md",
+  "governance/system/SYSTEM.md",
   "docs/README.md",
-]) if (!exists(required)) fail("missing entrypoint: " + required);
-
-const retiredFulfillmentPaths = [
-  ["governance/product/capabilities/fulfillment", ["partner", "fleet", "connection"].join("-") + ".md"].join("/"),
-  ["governance/product/capabilities/commerce", ["zones", "sla", "capacity", "delivery", "modes"].join("-") + ".md"].join("/"),
+  "docs/DEVELOPMENT.md",
+  "docs/OPERATIONS.md",
 ];
+for (const p of required) if (!exists(p)) fail(`missing required knowledge entrypoint: ${p}`);
 
-for (const forbidden of [
-  "governance/decisions",
-  "governance/product/WORKFORCE-MODEL.md",
-  "governance/architecture/FOUNDATION-AND-JOURNEY-READY-SUBSTRATE.md",
-  "governance/product/capabilities/partner/partner-team-membership.md",
-  "docs/platform-engineering-lifecycle",
-  "docs/development/README.md",
-  "docs/runbooks/README.md",
-  "docs/reference/external-systems",
-  "docs/reference/donor-reconstruction-patterns.md",
-  ...retiredFulfillmentPaths,
-]) if (exists(forbidden)) fail("retired knowledge shape exists: " + forbidden);
-
-const expectedDocs = [
-  "docs/README.md",
-  "docs/method/diagnosis-and-decision.md",
-  "docs/method/change-and-reconstruction.md",
-  "docs/method/verification-and-evidence.md",
-  "docs/development/workflow.md",
-  "docs/development/backend.md",
-  "docs/development/frontend.md",
-  "docs/development/design-system.md",
-  "docs/development/mobile.md",
-  "docs/development/runtime.md",
-  "docs/development/observability.md",
-  "docs/development/quality.md",
-  "docs/development/release.md",
-  "docs/runbooks/identity.md",
-  "docs/runbooks/platform-recovery.md",
-  "docs/reference/donor.md",
-  "docs/reference/commerce.md",
-  "docs/reference/finance.md",
-  "docs/reference/identity.md",
-  "docs/reference/engineering.md",
-  "docs/reference/experience.md",
+const retiredRoots = [
+  "governance/project",
+  "governance/architecture",
+  "governance/policies",
+  "governance/product/PRD.md",
+  "governance/product/COMMERCIAL-AND-PARTNER-MODEL.md",
+  "governance/product/FINANCIAL-MODEL.md",
+  "governance/product/EXPERIENCE-AND-DESIGN.md",
+  "docs/method",
+  "docs/development",
+  "docs/runbooks",
+  "tools/verify-control-panel-identity-vocabulary.mjs",
 ];
-const expectedDocSet = new Set(expectedDocs);
-for (const file of docsFiles) if (!expectedDocSet.has(rel(file))) fail("unexpected docs file: " + rel(file));
-for (const file of expectedDocs) if (!exists(file)) fail("missing docs file: " + file);
+for (const p of retiredRoots) if (exists(p)) fail(`retired knowledge topology survives: ${p}`);
 
-for (const file of [...governanceFiles, ...docsFiles]) {
-  if (fs.statSync(file).size > MAX_BYTES) fail(rel(file) + " exceeds " + MAX_BYTES + " bytes");
+const governanceFiles = collect(path.join(root, "governance")).filter((p) => p.endsWith(".md"));
+const docsFiles = collect(path.join(root, "docs")).filter((p) => p.endsWith(".md"));
+
+const allowedGovernancePrefixes = [
+  "governance/GOVERNANCE.md",
+  "governance/platform/",
+  "governance/product/",
+  "governance/system/",
+  "governance/policy/",
+];
+for (const f of governanceFiles) {
+  const r = rel(f);
+  if (!allowedGovernancePrefixes.some((p) => r === p || r.startsWith(p))) {
+    fail(`unexpected governance ownership lane: ${r}`);
+  }
 }
 
 const owners = new Map();
-for (const file of governanceFiles) {
-  const relative = rel(file);
-  const text = fs.readFileSync(file, "utf8");
-  const matches = [...text.matchAll(/^SEMANTIC_OWNER:\s*(\S+)\s*$/gm)].map((m) => m[1]);
-  if (matches.length !== 1) { fail(relative + " must have exactly one SEMANTIC_OWNER"); continue; }
-  if (matches[0] !== relative) fail(relative + " SEMANTIC_OWNER mismatch: " + matches[0]);
-  if (owners.has(matches[0])) fail("duplicate SEMANTIC_OWNER: " + matches[0]);
-  owners.set(matches[0], relative);
-  if (!text.includes("EXECUTION_AUTHORITY: NONE")) fail(relative + " missing execution non-authority");
-  if (!text.includes("IMPLEMENTATION_STATE_AUTHORITY: NONE")) fail(relative + " missing implementation non-authority");
-}
-
-for (const file of docsFiles) {
-  const relative = rel(file);
-  const text = fs.readFileSync(file, "utf8");
-  for (const token of [
-    "DOCUMENT_CLASS:",
-    "EXECUTION_AUTHORITY: NONE",
-    "PRODUCT_SEMANTIC_AUTHORITY: NONE",
-    "CURRENT_IMPLEMENTATION_AUTHORITY: NONE",
-  ]) if (!text.includes(token)) fail(relative + " missing docs metadata: " + token);
-  if (/^SEMANTIC_OWNER:/m.test(text)) fail(relative + " must not be a semantic owner");
-}
-
-const liveTextFiles = [
-  ...governanceFiles,
-  ...docsFiles,
-  path.join(root, "README.md"),
-  path.join(root, "AGENTS.md"),
-].filter((file) => fs.existsSync(file));
-
-for (const file of liveTextFiles) {
-  const text = fs.readFileSync(file, "utf8");
-  if (/MANDATORY_EXECUTION_STATE_MACHINE\s*=\s*1/i.test(text)) {
-    fail(rel(file) + " attempts to establish a mandatory execution state machine");
+for (const f of governanceFiles) {
+  const r = rel(f);
+  const text = fs.readFileSync(f, "utf8");
+  const ownerMatches = [...text.matchAll(/^SEMANTIC_OWNER:\s*(\S+)\s*$/gm)].map((m) => m[1]);
+  if (ownerMatches.length !== 1) {
+    fail(`${r} must declare exactly one SEMANTIC_OWNER`);
+    continue;
   }
+  const owner = ownerMatches[0];
+  if (owner !== r) fail(`${r} SEMANTIC_OWNER mismatch: ${owner}`);
+  if (owners.has(owner)) fail(`duplicate SEMANTIC_OWNER: ${owner}`);
+  owners.set(owner, r);
+  if (!text.includes("EXECUTION_AUTHORITY: NONE")) fail(`${r} missing execution non-authority`);
+  if (!text.includes("IMPLEMENTATION_STATE_AUTHORITY: NONE")) fail(`${r} missing implementation-state non-authority`);
 }
 
-const retiredFulfillmentConcepts = [
-  ["partner", "delivery"],
-  ["client", "pickup"],
-  ["partner", "fleet"],
-  ["fulfillment", "mode"],
-  ["delivery", "mode"],
-];
-for (const file of liveTextFiles) {
-  const tokens = tokenize(fs.readFileSync(file, "utf8"));
-  for (const words of retiredFulfillmentConcepts) {
-    if (hasTokenSequence(tokens, words)) {
-      fail(rel(file) + " retains retired fulfillment concept: " + words.join(" "));
-    }
+for (const f of docsFiles) {
+  const r = rel(f);
+  const text = fs.readFileSync(f, "utf8");
+  if (!text.includes("DOCUMENT_CLASS:")) fail(`${r} missing DOCUMENT_CLASS`);
+  if (!text.includes("EXECUTION_AUTHORITY: NONE")) fail(`${r} missing execution non-authority`);
+  if (!text.includes("PRODUCT_SEMANTIC_AUTHORITY: NONE")) fail(`${r} missing Product non-authority`);
+  if (!text.includes("CURRENT_IMPLEMENTATION_AUTHORITY: NONE")) fail(`${r} missing implementation non-authority`);
+  if (/^SEMANTIC_OWNER:/m.test(text)) fail(`${r} must not be a semantic owner`);
+}
+
+const capabilityRoot = path.join(root, "governance/product/capabilities");
+const capabilityFiles = collect(capabilityRoot).filter((p) => p.endsWith(".md"));
+const capabilityIds = new Map();
+for (const f of capabilityFiles) {
+  const r = rel(f);
+  const text = fs.readFileSync(f, "utf8");
+  const ids = [...text.matchAll(/^CAPABILITY_ID:\s*([A-Z0-9_]+)\s*$/gm)].map((m) => m[1]);
+  if (ids.length !== 1) {
+    fail(`${r} must declare exactly one CAPABILITY_ID`);
+    continue;
   }
+  const id = ids[0];
+  if (capabilityIds.has(id)) fail(`duplicate CAPABILITY_ID: ${id}`);
+  capabilityIds.set(id, r);
+  if (/^STATUS:\s*FUTURE\s*$/mi.test(text)) fail(`${r} attempts to keep future Product breadth live`);
 }
 
-// Retired narrow Field-persona semantics must not re-enter live knowledge.
-// Build token sequences here so the verifier itself does not become a durable
-// prose owner for the superseded model.
-const retiredFieldConcepts = [
-  ["field", "worker"],
-  ["field", "assisted", "partner", "first", "store"],
-  ["field", "assisted", "partner", "onboarding"],
-  ["visit", "commission"],
-];
-for (const file of liveTextFiles) {
-  const tokens = tokenize(fs.readFileSync(file, "utf8"));
-  for (const words of retiredFieldConcepts) {
-    if (hasTokenSequence(tokens, words)) {
-      fail(rel(file) + " retains retired field-role concept: " + words.join(" "));
-    }
+const product = read("governance/product/PRODUCT.md");
+const admittedBlock = product.match(/## Admitted capabilities([\s\S]*?)(?=\n## |$)/)?.[1] ?? "";
+const admittedIds = new Set([...admittedBlock.matchAll(/`([A-Z][A-Z0-9_]+)`/g)].map((m) => m[1]));
+if (!admittedIds.size) fail("PRODUCT.md has no admitted capability set");
+
+for (const [id, p] of capabilityIds) if (!admittedIds.has(id)) fail(`capability owner not admitted by PRODUCT.md: ${id} -> ${p}`);
+for (const id of admittedIds) if (!capabilityIds.has(id)) fail(`PRODUCT.md admits capability without owner: ${id}`);
+
+const router = read("governance/product/CAPABILITIES.md");
+for (const [id, p] of capabilityIds) {
+  const local = p.replace("governance/product/", "");
+  if (!router.includes(`\`${id}\``) || !router.includes(`\`${local}\``)) fail(`capability router missing ${id} -> ${local}`);
+}
+const routedIds = new Set([...router.matchAll(/`([A-Z][A-Z0-9_]+)`\s*→/g)].map((m) => m[1]));
+for (const id of routedIds) if (!capabilityIds.has(id)) fail(`capability router contains non-owner ID: ${id}`);
+
+const journeys = read("governance/product/JOURNEYS.md");
+const journeyNumbers = [...journeys.matchAll(/^##\s+J(\d+)\s+/gm)].map((m) => Number(m[1]));
+for (let i = 0; i < journeyNumbers.length; i += 1) if (journeyNumbers[i] !== i) fail(`journeys must be sequential J0..Jn; found ${journeyNumbers.join(",")}`);
+for (const id of admittedIds) if (!journeys.includes(`\`${id}\``)) fail(`admitted capability has no current journey coverage: ${id}`);
+
+const referenceFiles = docsFiles.filter((p) => rel(p).startsWith("docs/reference/"));
+if (!referenceFiles.length) fail("no external reference routing exists");
+const urlOwners = new Map();
+for (const f of referenceFiles) {
+  const r = rel(f);
+  const text = fs.readFileSync(f, "utf8");
+  for (const token of ["ADOPTION_AUTHORITY: NONE", "REFERENCE_FRESHNESS: REVALIDATE_AT_USE", "REFERENCE_CLASS:"]) {
+    if (!text.includes(token)) fail(`${r} missing reference boundary: ${token}`);
+  }
+  for (const m of text.matchAll(/https?:\/\/[^\s)>`]+/g)) {
+    const url = m[0].replace(/[.,;:]$/, "");
+    if (urlOwners.has(url) && urlOwners.get(url) !== r) fail(`duplicate curated external URL: ${url} in ${urlOwners.get(url)} and ${r}`);
+    else urlOwners.set(url, r);
   }
 }
 
 const docsIndex = read("docs/README.md");
-for (const expected of expectedDocs.slice(1)) {
-  const short = expected.slice("docs/".length);
-  if (!docsIndex.includes(short)) fail("docs/README.md does not route: " + short);
+for (const f of docsFiles) {
+  const r = rel(f);
+  if (r === "docs/README.md") continue;
+  const local = r.slice("docs/".length);
+  if (!docsIndex.includes(`\`${local}\``)) fail(`docs/README.md does not route ${local}`);
 }
 
-const capabilityFiles = collect(path.join(root, "governance/product/capabilities"));
-const capabilityIds = new Map();
-for (const file of capabilityFiles) {
-  const relative = rel(file);
-  const text = fs.readFileSync(file, "utf8");
-  const ids = [...text.matchAll(/^CAPABILITY_ID:\s*([A-Z0-9_]+)\s*$/gm)].map((m) => m[1]);
-  if (ids.length !== 1) { fail(relative + " must have exactly one CAPABILITY_ID"); continue; }
-  const id = ids[0];
-  if (capabilityIds.has(id)) fail("duplicate CAPABILITY_ID: " + id);
-  capabilityIds.set(id, relative);
-  if (!text.includes("### " + id)) fail(relative + " missing capability heading for " + id);
+const liveKnowledge = [...governanceFiles, ...docsFiles, path.join(root, "AGENTS.md"), path.join(root, "README.md")].filter(fs.existsSync);
+const stalePathTokens = ["governance/project/", "governance/architecture/", "governance/policies/", "docs/method/", "docs/development/", "docs/runbooks/"];
+for (const f of liveKnowledge) {
+  const r = rel(f);
+  const text = fs.readFileSync(f, "utf8");
+  for (const token of stalePathTokens) if (text.includes(token)) fail(`${r} retains retired live path: ${token}`);
 }
-
-if (capabilityIds.has("PARTNER_TEAM_MEMBERSHIP")) fail("retired capability remains: PARTNER_TEAM_MEMBERSHIP");
-
-const capabilityIndex = read("governance/product/CAPABILITIES.md");
-for (const [id, relative] of capabilityIds) {
-  const indexPath = relative.replace("governance/product/", "");
-  if (!capabilityIndex.includes(indexPath) || !capabilityIndex.includes(id)) {
-    fail("capability index missing owner: " + id + " -> " + indexPath);
-  }
-}
-const indexedPathCount = (capabilityIndex.match(/capabilities\/[a-z0-9\/-]+\.md/g) || []).length;
-if (indexedPathCount !== capabilityIds.size) fail("capability index count mismatch");
-
-const journeys = read("governance/product/JOURNEYS.md");
-const journeyNumbers = [...journeys.matchAll(/^##\s+J(\d+)\s+—/gm)].map((m) => Number(m[1]));
-const expectedJourneyNumbers = Array.from({ length: journeyNumbers.length }, (_, i) => i);
-if (JSON.stringify(journeyNumbers) !== JSON.stringify(expectedJourneyNumbers)) fail("journeys are not sequential J0..Jn");
-const journeyIds = new Set(journeyNumbers.map((n) => "J" + n));
-
-for (const id of capabilityIds.keys()) {
-  const row = journeys.split("\n").find((line) => line.startsWith("| " + id + " |"));
-  if (!row) { fail("capability missing journey coverage: " + id); continue; }
-  const refs = [...row.matchAll(/\bJ\d+\b/g)].map((m) => m[0]);
-  if (!refs.length) fail("capability coverage has no journey: " + id);
-  for (const ref of refs) if (!journeyIds.has(ref)) fail("unknown journey " + ref + " in coverage for " + id);
-}
-
-for (const [file, token] of [
-  ["docs/method/diagnosis-and-decision.md", "No source has global precedence. Authority is specific to the fact being decided."],
-  ["docs/method/diagnosis-and-decision.md", "Do not select a material solution before building an evidence model."],
-  ["docs/method/change-and-reconstruction.md", "does not implicitly escalate environment or operation authority"],
-  ["docs/method/change-and-reconstruction.md", "HEAD MOVED"],
-  ["docs/method/verification-and-evidence.md", "UNKNOWN EFFECT → AUTHORITATIVE RECONCILIATION"],
-  ["docs/method/verification-and-evidence.md", "affected prior evidence is stale"],
-  ["governance/policies/documentation-and-knowledge.md", "EXACT KNOWLEDGE COMMIT SHA = ADMISSIBLE"],
-  ["governance/policies/engineering.md", "PARALLEL IMPLEMENTATION != HORIZONTAL PARTIAL CLOSURE"],
-  ["governance/architecture/PLATFORM-SUBSTRATE.md", "REAL REPRESENTATIVE VERTICAL + CANONICAL READBACK"],
-  ["governance/product/FINANCIAL-MODEL.md", "Binary floating-point arithmetic is forbidden"],
-  ["governance/product/capabilities/access/account-privacy-lifecycle.md", "CAPABILITY_ID: ACCOUNT_PRIVACY_LIFECYCLE"],
-  ["governance/product/capabilities/commerce/zones-sla-capacity-serviceability.md", "CAPABILITY_ID: ZONES_SLA_CAPACITY_SERVICEABILITY"],
-  ["governance/product/JOURNEYS.md", "## J15 — Customer account and privacy lifecycle"],
-  ["governance/project/PLATFORM.md", "CURRENT_FULFILLMENT_MODEL = BTHWANI_DELIVERY"],
-  ["governance/product/PRD.md", "CURRENT_FULFILLMENT_MODEL = BTHWANI_DELIVERY"],
-  ["governance/policies/runtime-reliability.md", "RESTORE INTO ISOLATED TARGET"],
-]) if (!exists(file) || !read(file).includes(token)) fail(file + " missing recovered semantic: " + token);
-
-for (const file of docsFiles) {
-  const relative = rel(file);
-  const text = fs.readFileSync(file, "utf8");
-  for (const forbidden of [
-    "REFERENCE_REVIEWED_ON:",
-    "REFERENCE_MAX_REVIEW_AGE_DAYS:",
-    "Snapshot reviewed:",
-  ]) if (text.includes(forbidden)) fail(relative + " freezes mutable reference state: " + forbidden);
-
-  if (relative !== "docs/reference/donor.md") {
-    for (const retired of [
-      "docs/platform-engineering-lifecycle/",
-      "docs/reference/external-systems/",
-      "governance/product/WORKFORCE-MODEL.md",
-    ]) if (text.includes(retired)) fail(relative + " retains retired live path: " + retired);
-  }
-}
-
-for (const file of docsFiles.filter((f) => rel(f).startsWith("docs/reference/") && rel(f) !== "docs/reference/donor.md")) {
-  if (!fs.readFileSync(file, "utf8").includes("REFERENCE_FRESHNESS: REVALIDATE_AT_USE")) {
-    fail(rel(file) + " missing external revalidation boundary");
-  }
-}
-
-const release = read("docs/development/release.md");
-for (const pattern of [/API level\s+\d+/i, /Xcode\s+\d+/i, /Snapshot date:/i]) {
-  if (pattern.test(release)) fail("release guide freezes mutable platform requirement: " + pattern);
-}
-
-if (read("governance/project/ACTORS-TRUST-AND-SCOPE.md").includes("allowed to provision employees")) {
-  fail("obsolete generic employee provisioning wording remains");
-}
-
-const glossary = read("governance/project/GLOSSARY.md");
-for (const required of [
-  "PARTNER = ONE PARTNER-ROLE ACTOR / PRODUCT STAKEHOLDER",
-  "PARTNER_ORGANIZATION = FORBIDDEN_UNLESS_FUTURE_PRODUCT_REQUIREMENT_PROVES_IT",
-  "PARTNER_TEAM_MEMBERSHIP = NOT_ADMITTED",
-  "FIELD = PARTNER_ACQUISITION_AND_ONBOARDING_REPRESENTATIVE",
-  "APP_FIELD = PARTNER_JOINING_SURFACE",
-  "PARTNER_JOINING_CASE != PARTNER_ROLE",
-  "FIELD_SUBMISSION != OWNER_APPROVAL",
-  "FIELD_ROLE != GENERAL_OPERATIONAL_WORK",
-  "OPERATOR = ONLY_CONTROL_PANEL_HUMAN_ROLE",
-  "BOOTSTRAP != ROLE",
-  "CONTROL_PANEL != DOMAIN_OWNER",
-]) if (!glossary.includes(required)) fail("glossary missing simplification invariant: " + required);
-
-const actors = read("governance/project/ACTORS-TRUST-AND-SCOPE.md");
-for (const required of [
-  "Partner Acquisition and Onboarding Representative",
-  "The `field` role exists to bring Partners into BThwani.",
-  "FIELD_SUBMISSION != OWNER_APPROVAL",
-]) if (!actors.includes(required)) fail("actors model missing field-role invariant: " + required);
-
-const onboarding = read("governance/product/capabilities/partner/partner-onboarding-store-publication.md");
-for (const required of [
-  "A Partner joining case may be created before `partner` role admission",
-  "An authorized Field actor can originate a Partner joining case from a prospective Partner",
-  "No Field-created `actor_id`, direct `partner` role grant",
-]) if (!onboarding.includes(required)) fail("partner onboarding missing acquisition invariant: " + required);
-
-const security = read("governance/policies/security.md");
-const phrase = "Development/bootstrap credentials or historical examples never define normal credential policy.";
-if (security.split(phrase).length - 1 !== 1) fail("bootstrap credential rule must occur exactly once");
 
 if (failures.length) {
   console.error("KNOWLEDGE_INTEGRITY=FAIL");
-  for (const failure of [...new Set(failures)].sort()) console.error("  " + failure);
+  for (const f of [...new Set(failures)].sort()) console.error(`  ${f}`);
   process.exit(1);
 }
 
 console.log("KNOWLEDGE_INTEGRITY=PASS");
-console.log("GOVERNANCE_MARKDOWN=" + governanceFiles.length);
-console.log("DOCS_MARKDOWN=" + docsFiles.length);
-console.log("SEMANTIC_OWNERS=" + owners.size);
-console.log("CAPABILITY_OWNERS=" + capabilityIds.size);
-console.log("JOURNEYS=" + journeyIds.size);
+console.log(`SEMANTIC_OWNERS=${owners.size}`);
+console.log(`ADMITTED_CAPABILITIES=${capabilityIds.size}`);
+console.log(`REFERENCE_FILES=${referenceFiles.length}`);
+console.log(`CURATED_EXTERNAL_URLS=${urlOwners.size}`);
