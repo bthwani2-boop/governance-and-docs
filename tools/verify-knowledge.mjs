@@ -273,7 +273,7 @@ for (const required of [
   "PARTNER_JOINING_CASE != PARTNER_ROLE",
   "FIELD_SUBMISSION != OWNER_APPROVAL",
   "FIELD_ROLE != GENERAL_OPERATIONAL_WORK",
-  "OPERATOR = ONE OPERATOR-ROLE ACTOR / CONTROL-PANEL PERSONA",
+  "OPERATOR = ONLY_CONTROL_PANEL_HUMAN_ROLE",
   "BOOTSTRAP != ROLE",
   "CONTROL_PANEL != DOMAIN_OWNER",
 ]) if (!glossary.includes(required)) fail("glossary missing simplification invariant: " + required);
