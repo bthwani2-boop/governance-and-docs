@@ -32,11 +32,12 @@ Identity keeps phone verification, governed activation, normal authentication/se
 - A DSH Partner joining case may exist before a Partner Human Actor/role is admitted. When DSH reaches the governed Partner admission point, Identity creates or resolves the Human Actor and admits `partner`; the joining case then binds to that canonical `actor_id`.
 - Partner/captain/field require DSH role admission, phone proof and password enrollment for one-time activation, then normal role-scoped session/login/recovery behavior.
 - Field representatives cannot create `actor_id`, grant the `partner` role or bypass Partner activation while progressing Partner joining cases.
-- While Operator bootstrap is incomplete, the dedicated bootstrap principal may create exactly one initial `operator` actor-role with its initial credential and mark bootstrap complete.
+- While Operator bootstrap is incomplete, the dedicated bootstrap principal may create exactly one initial `operator` actor-role without creating an Operator password or session, and mark bootstrap complete.
 - Bootstrap cannot be repeated and does not create a special role.
 - After bootstrap, an authenticated Operator acting through the credential-authenticated `control-panel` service may admit another `operator` role and issue a one-time phone-bound enrollment token for that already admitted role.
-- A newly admitted Operator consumes the enrollment token plus separate phone proof and password enrollment for initial activation.
-- Normal Operator access requires password plus a required second factor/challenge before an Operator session is created. Passkeys/WebAuthn remain the preferred progressive phishing-resistant target.
+- A newly admitted Operator consumes the enrollment token plus separate phone proof and a required user-verified, discoverable WebAuthn registration for initial activation.
+- Normal Operator access requires a server-verified, user-verified WebAuthn/Passkey ceremony and creates an Operator session only after challenge, RP ID, origin, credential, expiry, role and security eligibility checks succeed. Operator password login and SMS normal-login MFA are not admitted.
+- Operator break-glass recovery requires a one-time recovery credential plus fresh phone proof, then bounded WebAuthn re-enrollment; the old authenticator and Operator sessions are revoked and a replacement recovery credential is shown once.
 
 ## Business invariants
 
@@ -55,7 +56,7 @@ Identity keeps phone verification, governed activation, normal authentication/se
 - Disabling one actor-role revokes only that role's sessions and pending role-specific proofs.
 - Identity-wide security disable is distinct from role/DSH lifecycle state and remains an Identity mutation. Any control-panel invocation is only an authorized client of Identity, not an alternate owner.
 - Refresh rotates atomically; known replay compromises that session family; unrelated random refresh cannot revoke it.
-- Refresh is device-fingerprint checked; access remains a short-lived bearer token.
+- Refresh requires the protected random `clientInstanceId` for the same client installation/browser instance; Identity stores and compares only its digest. It is a refresh possession/binding signal, not hardware fingerprinting, MFA or device attestation.
 - Password credentials use current secure hashing and role-appropriate policy. Development/bootstrap examples never define normal credential policy.
 - Verification/activation/Operator-challenge abuse controls include bounded expiry, attempts, replay/single-use behavior and source/identifier throttling without permanent account lockout.
 - Public authentication surfaces remain non-enumerating before applicable proof.
@@ -81,7 +82,7 @@ OPERATOR_ROLE != UNIVERSAL_DOMAIN_PERMISSION
 - No automatic new-device activation reset.
 - No provisioning retry silently re-enables a disabled role or mutates another role.
 - No second control-panel human role above `operator`.
-- No Operator session from password alone in the current privileged baseline.
+- No Operator password login, password credential, SMS normal-login MFA or Operator session from a non-WebAuthn fallback.
 - No public authentication response unnecessarily distinguishes blocked/disabled/non-admissible actor or role state.
 - No consumer-authored actor ID or caller header grants service identity/authority.
 
@@ -92,9 +93,9 @@ OPERATOR_ROLE != UNIVERSAL_DOMAIN_PERMISSION
 - A Partner joining case can begin before Partner role admission; the governed admission handoff creates/resolves exactly one canonical Human Actor and role without duplicate identity.
 - Partner/captain/field activation succeeds only for a pre-existing enabled role that has not already been activated.
 - First-Operator bootstrap succeeds exactly once, creates role `operator` and records the irreversible bootstrap fact.
-- After bootstrap, ordinary Operator admission requires an existing authenticated Operator through control-panel, and activation requires the bounded Operator enrollment token plus phone proof/password enrollment.
-- Operator password proof alone does not create a session; required second-factor proof must also succeed.
-- Operator credential recovery/replacement revokes Operator sessions but not unrelated-role sessions.
+- After bootstrap, ordinary Operator admission requires an existing authenticated Operator through control-panel, and activation requires the bounded Operator enrollment token plus phone proof and user-verified WebAuthn registration.
+- Operator authentication requires a discoverable WebAuthn credential with user verification; wrong RP, origin, credential, signature, UV state, expired/replayed ceremony, disabled role/security state or revoked credential is rejected.
+- Operator recovery/replacement requires recovery credential plus fresh phone proof, revokes Operator sessions and authenticators, rotates the recovery credential, and does not revoke unrelated-role sessions.
 - Forged caller headers cannot change the principal resolved from a service credential.
 - Generated contract/client/app/database/runtime evidence contains no unadmitted actor role, alternate Identity owner or legacy bootstrap route.
 - Mobile hosts and Control Panel transition to signed-out after local credential/cookie clearing even when remote revoke fails.
@@ -107,7 +108,7 @@ OPERATOR_ROLE != UNIVERSAL_DOMAIN_PERMISSION
 - `partner` — performs one-time activation only after DSH requests governed partner admission and Identity creates/resolves the canonical Human Actor/role; normal use relies on the resulting governed session and explicit recovery/re-enrollment when required.
 - `captain` — performs one-time activation only after DSH pre-provisions captain admission; Identity role never implies dispatch eligibility.
 - `field` — performs one-time activation only after DSH pre-provisions field admission; Identity role identifies the Partner Acquisition and Onboarding Representative and never grants Partner-role admission authority for the prospective Partners they onboard.
-- `operator` — is the only control-panel human role. The first Operator may originate from one-time bootstrap; subsequent Operators are admitted by the authorized control-panel path. All normal Operator access requires password plus required second factor/challenge.
+- `operator` — is the only control-panel human role. The first Operator may originate from one-time bootstrap; subsequent Operators are admitted by the authorized control-panel path. All normal Operator access requires a server-verified, user-verified WebAuthn/Passkey ceremony.
 - `dsh-service` — credential-authenticated manager of partner/captain/field Identity-role admission and explicit re-enrollment authorization; Partner admission requests must derive from canonical DSH joining/readiness policy rather than Field assertion alone.
 - `control-panel-service` — credential-authenticated caller for Identity-owned Operator operations, always with attributable Operator actor context where required.
 - `operator-bootstrap-service` — dedicated one-time bootstrap principal; may create the initial Operator only while bootstrap is incomplete and has no ordinary runtime authority.
@@ -117,7 +118,7 @@ OPERATOR_ROLE != UNIVERSAL_DOMAIN_PERMISSION
 - `app-client` — restore/refresh existing session; signed-out registration/login/recovery; no activation-screen semantics for Customer.
 - `app-partner`, `app-captain`, `app-field` — phone-verification proof after their own governed role admission, password enrollment for initial activation, then restore/refresh/login/logout; re-enrollment only after governed recovery authorization.
 - `app-field` Partner-joining actions operate DSH joining-case truth and are never an Identity role-grant interface for the prospective Partner.
-- `control-panel` — first-Operator bootstrap only when bootstrap is incomplete; otherwise Operator activation/login/restore/logout. All authenticated control-panel sessions carry role `operator` only.
+- `control-panel` — first-Operator bootstrap only when bootstrap is incomplete; otherwise Operator activation, Passkey login, governed recovery/re-enrollment, restore and logout. All authenticated control-panel sessions carry role `operator` only.
 - `backend` — credential-derived service identity, differentiated actor-class authentication policy, role admission, bootstrap, verification/activation/recovery and session lifecycle.
-- `database` — one actor identity, actor-role bindings, role-scoped password credentials, purpose-bound single-use challenges, one-row bootstrap-completed state, Operator enrollment tokens, sessions, refresh history, login attempts and security audit.
+- `database` — one actor identity, actor-role bindings, password credentials only for password-bearing roles, purpose-bound single-use challenges, one-row bootstrap-completed state, Operator enrollment tokens, WebAuthn users/credentials/ceremonies, one-use recovery-credential digests, sessions, refresh history, login attempts and security audit.
 - technical presentation binding — generated typed role-specific flows without parallel auth truth.

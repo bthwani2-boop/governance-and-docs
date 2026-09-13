@@ -140,7 +140,7 @@ Exact thresholds are configuration/policy values and must not be invented in gov
 
 Raw OTPs must not enter production logs, traces, analytics or general audit records.
 
-For privileged Control Panel/operator authentication, password-only session creation is not sufficient. The current minimum baseline requires password plus a second factor/challenge before an operator session is created. A one-time phone-delivered challenge is permitted as a transitional MFA factor because it reuses the governed Identity challenge engine, but it is not phishing-resistant; Passkeys/WebAuthn are the preferred progressive phishing-resistant target and sensitive operations may require stronger step-up policy.
+For privileged Control Panel/operator authentication, normal access requires a server-verified, user-verified WebAuthn/Passkey ceremony with a discoverable credential where supported. Operator password login and SMS normal-login MFA are retired. Fresh phone proof is permitted only as part of governed enrollment or break-glass recovery and never creates privileged access by itself. Sensitive operations may require stronger step-up policy.
 
 Customer phone verification is for registration/recovery proof, not a recurring activation-login loop. Partner/captain/field activation is one-time after governed role provisioning; loss of access after activation follows an explicit recovery/re-enrollment path rather than automatic activation reset.
 

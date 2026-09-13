@@ -58,7 +58,7 @@ operator → control-panel
 
 A session is bound to one actor and one role. It does not carry every role held by the human.
 
-Customer self-service may establish only the `client` role after proving phone possession and registering a client credential. DSH provisions partner/captain/field role admission; those governed roles perform initial activation through phone verification and password enrollment. A Partner joining case may precede `partner` role admission, but no Field action may create `actor_id`, grant the `partner` role or complete Identity activation directly. Identity's one-time operator bootstrap creates only the first `operator`; after bootstrap, an authenticated Operator may initiate admission of another Operator through the governed control-panel path, which uses a one-time enrollment token before first activation. Normal Operator access requires password plus a second factor/challenge.
+Customer self-service may establish only the `client` role after proving phone possession and registering a client credential. DSH provisions partner/captain/field role admission; those governed roles perform initial activation through phone verification and password enrollment. A Partner joining case may precede `partner` role admission, but no Field action may create `actor_id`, grant the `partner` role or complete Identity activation directly. Identity's one-time operator bootstrap creates only the first `operator` without an Operator password or session; after bootstrap, an authenticated Operator may initiate admission of another Operator through the governed control-panel path, which uses a one-time enrollment token before first activation. Normal Operator access requires user-verified WebAuthn/Passkey authentication.
 
 `actor_id` is the permanent cross-boundary human identifier. Phone is a mutable verified identifier, not the primary identity key; username is optional and must not exist merely as an authentication convention without Product need.
 
@@ -71,7 +71,7 @@ BOOTSTRAP != ROLE
 FIRST_OPERATOR = OPERATOR
 ```
 
-Customer registration/recovery, managed-role activation and operator authentication therefore have separate journeys while remaining owned by the same Identity authority. Passkeys/WebAuthn are a preferred progressive hardening path for Operator access, but are not a mandatory first-release credential for every actor class.
+Customer registration/recovery, managed-role activation and operator authentication therefore have separate journeys while remaining owned by the same Identity authority. Passkeys/WebAuthn are mandatory for normal Operator access, while ordinary client/partner/captain/field password journeys remain unchanged.
 
 Role enable/disable is Identity admission truth. Partner Store scope, captain eligibility/assignment/affiliation, and field Partner-joining case/assignment scope remain DSH truth. Fine-grained business authorization remains with the capability that owns the protected fact.
 
@@ -105,7 +105,7 @@ Acts within dispatch/delivery/custody/proof/exception responsibilities only when
 The `field` role exists to bring Partners into BThwani. The representative may identify/contact a prospective Partner, create or receive a Partner joining case, capture and update required Partner/business/contact data, assist with first-Store setup, capture location/documents/evidence, perform a visit/check when policy requires it, follow up missing information, and submit/resubmit the case for canonical owner review. The representative does not create `actor_id`, grant or activate the `partner` role, approve their own case, publish a Store, own Partner truth, own financial truth, or perform unrelated operational work.
 
 ### Operator
-Authenticates through the single `operator` Identity role and uses `control-panel` to perform authorized operations. Each mutation remains authorized and owned by the applicable Identity, DSH, WLT or other admitted capability.
+Authenticates through the single `operator` Identity role using a server-verified, user-verified WebAuthn/Passkey ceremony and uses `control-panel` to perform authorized operations. Break-glass replacement requires a one-time recovery credential plus fresh phone proof and bounded WebAuthn re-enrollment. Each mutation remains authorized and owned by the applicable Identity, DSH, WLT or other admitted capability.
 
 ## Approval and separation of duties
 

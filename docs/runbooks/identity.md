@@ -15,7 +15,7 @@ Current executable contracts/code/config/runtime are implementation authority.
 
 1. Pin exact candidate, environment and correlation identity.
 2. Verify current Identity health/readiness through executable interfaces.
-3. Classify: customer registration/auth/recovery; managed-role activation/re-enrollment; Operator bootstrap/admission/enrollment; Operator MFA; refresh/revocation; service authentication; challenge delivery; abuse controls.
+3. Classify: customer registration/auth/recovery; managed-role activation/re-enrollment; Operator bootstrap/admission/enrollment; Operator WebAuthn authentication and recovery; refresh/revocation; service authentication; challenge delivery; abuse controls.
 4. Resolve actor/session role server-side.
 5. Verify canonical credential/challenge/session/readback and owning-domain eligibility where business authorization is involved.
 6. Reproduce with sanitized identifiers and masked contact data.
@@ -28,9 +28,9 @@ Current executable contracts/code/config/runtime are implementation authority.
 - Subsequent Operator admission is attributable to an authenticated Operator through the control-panel path.
 - Role disable revokes only that role's sessions/proofs; unrelated roles remain independent.
 - Identity-wide disable revokes authentication state without deleting role bindings.
-- Operator sessions obey required MFA/step-up.
+- Operator normal sessions require server-verified, user-verified WebAuthn/Passkey authentication; capability-sensitive actions may require additional step-up.
 - Caller headers/body/query/UI state never grant identity, role, scope or service identity.
-- Never repair stale development state by adding legacy compatibility authority.
+- Never repair stale development state by adding legacy compatibility authority or an Operator password fallback.
 - Never log passwords, challenges, bearer/refresh tokens, hashes or secrets.
 
 ## Challenge delivery failure
@@ -46,7 +46,7 @@ Use security audit/correlation evidence to distinguish legitimate refresh race f
 - Operator recovery uses the current Identity-owned recovery or explicitly materialized break-glass mechanism for the exact Operator actor.
 - Any repository administrative recovery CLI is development/test only unless a separately controlled stronger break-glass mechanism is explicitly materialized and authorized.
 - Recovery does not change the actor's role set except through governed role admission.
-- Never use arbitrary SQL, disable MFA or grant roles as a shortcut.
+- Never use arbitrary SQL, disable WebAuthn/security checks or grant roles as a shortcut. Break-glass recovery requires the current one-time recovery credential plus fresh phone proof and must revoke the replaced Operator authenticator and sessions.
 
 ## Migration/schema failure
 
