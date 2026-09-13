@@ -8,7 +8,7 @@ ADOPTION_AUTHORITY: NONE
 REFERENCE_FRESHNESS: REVALIDATE_AT_USE
 REFERENCE_CLASS: PRIMARY_TECHNOLOGY_DOCUMENTATION
 
-Use current primary documentation for mutable framework/tool/platform facts.
+Use current primary documentation for mutable language/framework/tool/platform facts. Exact versions and commands remain implementation truth in the consuming repository.
 
 - Go — https://go.dev/doc/
 - PostgreSQL — https://www.postgresql.org/docs/
@@ -22,5 +22,14 @@ Use current primary documentation for mutable framework/tool/platform facts.
 - Nx — https://nx.dev/docs
 - Biome — https://biomejs.dev/guides/getting-started/
 - Playwright — https://playwright.dev/docs/
+- PowerShell — https://learn.microsoft.com/powershell/
+- PSScriptAnalyzer — https://learn.microsoft.com/powershell/utility-modules/psscriptanalyzer/overview
+- Android Developers — https://developer.android.com/
+- Apple Developer Documentation — https://developer.apple.com/documentation/
 
-Exact versions and commands remain implementation truth in the consuming repository.
+Release/store requirements are mutable external constraints and are revalidated only when release/store scope is materially affected:
+
+- Google Play developer policy/help — https://support.google.com/googleplay/android-developer/
+- Apple App Store Review Guidelines — https://developer.apple.com/app-store/review/guidelines/
+
+Primary documentation proves technology/platform facts within its scope; it does not define BThwani Product architecture, visual identity or business workflow.
