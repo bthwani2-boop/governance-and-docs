@@ -14,6 +14,21 @@ A ready BThwani-delivery order receives at most one active DSH dispatch offer/as
 
 DSH owns Captain operational eligibility/availability, dispatch offer, assignment and reassignment truth. WLT owns any later-admitted financial effect.
 
+## Admission boundary
+
+DSH establishes standing Captain admission/operational eligibility before a Captain role is requested from Identity. The canonical order is:
+
+```text
+DSH Captain admission / standing operational eligibility
+→ authorized Identity request
+→ Identity actor resolution + `captain` role admission
+→ activation / enrollment
+→ DSH availability
+→ dispatch offer / assignment
+```
+
+A transient delivery assignment is not standing role admission and is not required merely to activate or enter the Captain surface.
+
 ## Invariants
 
 - only a canonically ready order is dispatchable;

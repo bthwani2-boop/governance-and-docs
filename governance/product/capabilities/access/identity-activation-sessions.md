@@ -12,20 +12,22 @@ One Human Actor resolves to one permanent `actor_id`; verification, role admissi
 
 ## Ownership
 
-Identity owns `actor_id`, verified identifiers, credentials, high-level role admission, first-Operator bootstrap state, authentication proofs and role-scoped sessions. DSH may request governed `partner`, `captain` and `field` role admission only from DSH-owned eligibility/onboarding truth. Surfaces never grant roles themselves.
+Identity owns `actor_id`, verified identifiers, credentials, high-level role admission, first-Operator bootstrap state, authentication proofs and role-scoped sessions. For a domain-managed role, the owning domain first establishes admission/eligibility and then sends an authorized role-admission request to Identity; Identity alone resolves or creates the `actor_id` and persists the role admission. DSH may request governed `partner`, `captain` and `field` role admission only from DSH-owned eligibility/onboarding truth. Surfaces never grant roles themselves.
 
 ## Current roles
 
 Exactly `client`, `partner`, `captain`, `field`, `operator`. Every session has one role.
 
 - Client uses governed self-registration/login/recovery.
-- Partner/Captain/Field require governed role admission followed by one-time activation/enrollment and normal role-scoped session behavior.
+- Partner/Captain/Field require domain admission/eligibility, governed Identity role admission, then one-time activation/enrollment and normal role-scoped session behavior. A current dispatch assignment is not a prerequisite for standing Captain admission.
 - Operator is the only control-panel human role. First bootstrap is one-time. Normal Operator login requires user-verified WebAuthn/Passkey; Operator password login and SMS-as-normal-login-MFA are not admitted.
 
 ## Invariants
 
 - phone is a mutable verified identifier, never the cross-boundary primary key;
 - one human resolution must not create duplicate actors;
+- domain admission/eligibility, Identity role admission, activation/enrollment, authentication/session and resource authorization are distinct ordered facts;
+- a domain-managed role admission request is authorized by the owning domain's admission/eligibility truth, never by a phone number, surface input or current task assignment;
 - one role's credential/session cannot authenticate another role;
 - role disable revokes only that role's sessions unless Identity-wide security disable applies;
 - refresh rotates atomically and known replay compromises the session family;
