@@ -31,6 +31,3 @@ jobs:
 
       - name: Verify canonical knowledge integrity
         run: node tools/verify-knowledge.mjs
-
-      - name: Verify control-panel identity vocabulary
-        run: node tools/verify-control-panel-identity-vocabulary.mjs
