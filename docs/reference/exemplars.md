@@ -34,11 +34,6 @@ Use exemplars to recover edge cases, state machines, failure/recovery patterns a
 - Blnk — https://github.com/blnkfinance/blnk
 - Apache Fineract — https://github.com/apache/fineract
 
-## Experience and accessibility implementation
-- React Aria — https://react-spectrum.adobe.com/react-aria/
-- Base UI accessibility — https://base-ui.com/react/overview/accessibility
-- Cloudscape patterns — https://cloudscape.design/patterns/
-- Storybook — https://storybook.js.org/docs
-- axe-core — https://github.com/dequelabs/axe-core
+Experience/accessibility/design-system implementation exemplars are routed through `experience.md` so their evidence class is explicit and does not compete with domain/Product exemplars.
 
 EXEMPLAR_VALUE != EXEMPLAR_AUTHORITY.
