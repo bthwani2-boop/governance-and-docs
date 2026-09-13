@@ -1,0 +1,91 @@
+name: Governance Pull Request Policy
+
+on:
+  pull_request:
+    branches: [main]
+    types: [opened, synchronize, reopened, edited, ready_for_review, converted_to_draft]
+
+permissions:
+  contents: read
+  pull-requests: read
+
+concurrency:
+  group: governance-pr-policy-${{ github.event.pull_request.head.ref }}
+  cancel-in-progress: true
+
+jobs:
+  governance-pr-policy:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - name: Checkout exact candidate
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
+        with:
+          persist-credentials: false
+          fetch-depth: 2
+
+      - name: Validate material review evidence
+        shell: bash
+        env:
+          PR_BODY: ${{ github.event.pull_request.body }}
+          PR_TITLE: ${{ github.event.pull_request.title }}
+          PR_BASE: ${{ github.event.pull_request.base.ref }}
+          PR_DRAFT: ${{ github.event.pull_request.draft }}
+        run: |
+          set -euo pipefail
+
+          [[ "${PR_BASE}" == "main" ]] || { echo "::error::Canonical Governance promotion target must be main"; exit 1; }
+          (( ${#PR_TITLE} >= 8 )) || { echo "::error::PR title is too short"; exit 1; }
+
+          if [[ "${PR_DRAFT}" == "true" ]]; then
+            echo "GOVERNANCE_PR_POLICY_DRAFT=DEFERRED_UNTIL_READY"
+            exit 0
+          fi
+
+          body="${PR_BODY:-}"
+          (( ${#body} >= 500 )) || { echo "::error::Ready Governance PR lacks material evidence"; exit 1; }
+
+          required_headings=(
+            '## Summary'
+            '## Exact candidate and material question'
+            '## Governance impact'
+            '## Material quality census'
+            '## Evidence and freshness'
+            '## Verification'
+            '## Negative space and consumer impact'
+          )
+          for heading in "${required_headings[@]}"; do
+            grep -Fq -- "${heading}" <<<"${body}" || { echo "::error::PR body missing required section: ${heading}"; exit 1; }
+          done
+
+          mapfile -t impacts < <(grep -Eo 'GOVERNANCE_IMPACT=(NONE|REVALIDATE_ONLY|UPDATE_REQUIRED|DEFECT_FOUND)' <<<"${body}" || true)
+          [[ ${#impacts[@]} -eq 1 ]] || { echo "::error::Ready PR must declare exactly one GOVERNANCE_IMPACT"; exit 1; }
+
+          mapfile -t dimensions < <(sed -n 's/^QUALITY_DIMENSION:[[:space:]]*\([A-Z0-9_]*\)[[:space:]]*$/\1/p' governance/policy/QUALITY.md)
+          [[ ${#dimensions[@]} -gt 0 ]] || { echo "::error::No canonical QUALITY_DIMENSION values found"; exit 1; }
+
+          for dimension in "${dimensions[@]}"; do
+            line="$(grep -E "^- ${dimension}: (AFFECTED|PROVEN_UNAFFECTED|N/A_WITH_REASON)([[:space:]]+[-—][[:space:]].+)$" <<<"${body}" || true)"
+            [[ -n "${line}" ]] || { echo "::error::Missing resolved material-quality classification for ${dimension}"; exit 1; }
+            [[ "$(wc -l <<<"${line}" | tr -d ' ')" == "1" ]] || { echo "::error::Duplicate material-quality classification for ${dimension}"; exit 1; }
+          done
+
+          if grep -Eiq '(^|[^A-Z])(TODO|UNEXAMINED|NOT_CHECKED|MAYBE|LATER)([^A-Z]|$)' <<<"${body}"; then
+            echo "::error::Ready PR contains unresolved evidence state"
+            exit 1
+          fi
+
+          for closure in \
+            MATERIAL_DIMENSIONS_UNEXAMINED=0 \
+            AFFECTED_DIMENSIONS_WITHOUT_OWNER=0 \
+            AFFECTED_DIMENSIONS_WITHOUT_RULE=0 \
+            AFFECTED_DIMENSIONS_WITHOUT_REQUIRED_PROOF=0 \
+            KNOWN_MATERIAL_DEFECTS=0 \
+            KNOWN_MATERIAL_CONTRADICTIONS=0 \
+            DECISION_CRITICAL_UNKNOWNS=0 \
+            KNOWN_GOVERNANCE_DRIFT=0; do
+            grep -Fq -- "${closure}" <<<"${body}" || { echo "::error::Ready PR missing closure assertion: ${closure}"; exit 1; }
+          done
+
+          echo "GOVERNANCE_PR_POLICY=PASS"
+          echo "QUALITY_DIMENSIONS=${#dimensions[@]}"
