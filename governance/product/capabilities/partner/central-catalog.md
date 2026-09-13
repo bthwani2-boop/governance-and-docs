@@ -8,27 +8,63 @@ CAPABILITY_ID: CENTRAL_CATALOG
 
 ## Outcome
 
-DSH owns one canonical catalog and Store-assortment publication truth so Partner operations and customer discovery cannot fork item/category/availability meaning.
+DSH owns one canonical Central Product identity and one canonical Store Assortment truth. Partner operations select existing Products and manage only the offer facts for Stores they own; customer discovery reads the live composition of both records.
 
-## Invariants
+## Central Product
 
-- catalog identity and Store assortment have one canonical DSH writer;
-- Partner mutates only authorized Store catalog/assortment material;
-- customer visibility requires current Store publication plus catalog/assortment eligibility;
-- stale-version and materially different retry payloads are rejected;
-- search/index/cache/local UI flags are derived and never publication authority;
-- media/object storage owns bytes only, never catalog eligibility.
+DSH owns the single canonical identity of each current sellable Product:
 
-## Minimal lifecycle
+- `product_id`
+- `canonical_name` (required)
+- `brand` (optional)
+- `barcode` (optional; unique when present)
+- `canonical_image_url` (optional; centrally controlled)
+- `sell_unit` (`piece` or `kg`)
+- `active`
+- `version`
+- creation and update timestamps
 
-DRAFT or PROPOSED → VALIDATED → PUBLISHED, with REJECTED / NEEDS_CORRECTION / HIDDEN branches only when required.
+Packaged goods such as `Coca Cola 330ml` are independent Products with `sell_unit=piece`. Goods sold by weight such as apples are Products with `sell_unit=kg`. Product families, variants, unit conversions and SKU hierarchies are not admitted in this slice. `sell_unit` is identity-defining: a change of commercial unit requires a new Product identity and disabling the old one.
 
-Do not add marketing, loyalty, promotion or advanced master-catalog stages until current Product need proves them.
+Central Product lifecycle is only:
 
-## Failure and recovery
+```text
+ACTIVE ↔ DISABLED
+```
 
-Duplicate identity, stale version, invalid assortment relation and publication-gate failure recover from canonical DSH readback; derived consumers are rebuildable.
+There is no Partner-created Product, proposal, approval workflow, marketing review or `PROPOSED` state in the current capability.
+
+The active operator is the only Central Product mutation authority. Partner must not create or mutate central Product name, image, brand, barcode or sell unit. No Store-local copy of Product name or image, search result, cache or UI value may become mutation authority.
+
+## Store Assortment
+
+DSH owns the Store-scoped offer relation:
+
+- `store_id`
+- `product_id`
+- `price_minor` (exact integer)
+- `currency=YER`
+- `availability`
+- `publication_state`
+- `version`
+- creation and update timestamps
+
+`(store_id, product_id)` is unique. A Store Assortment must reference an existing active Central Product when selected or published. Partner may, for a server-authorized Store it owns, select an existing Product, set or update `price_minor`, set availability, and publish or hide the assortment. Price is a DSH Store offer fact, not WLT ledger truth or Checkout total truth.
+
+Store Assortment lifecycle is only:
+
+```text
+DRAFT → PUBLISHED ↔ HIDDEN
+```
+
+A disabled Central Product is never customer-visible through an assortment. An assortment may remain historically referenced while the Product is disabled, and Partner may hide it for recovery/control.
+
+## Customer readback and failure recovery
+
+Public readback composes the live Central Product identity with the live Store Assortment facts. It does not copy Product identity into the assortment. Therefore a central name or image change appears in every Store immediately, an offer-price change affects only its Store, disabling a Product hides it everywhere, and hiding an assortment hides it only in its Store.
+
+Customer visibility requires a published Store, eligible Partner identity, and at least one assortment that is published, available, priced above zero, and linked to an active Product. Stale versions and materially different idempotent retries are rejected. Duplicate barcode, invalid Product relation, authorization failure and publication-gate failure recover through canonical DSH readback; derived consumers are rebuildable.
 
 ## Material surfaces
 
-`app-partner`, `control-panel` when owner review is required, `app-client` read-only discovery, DSH backend/database.
+`app-partner`, `control-panel`, `app-client` read-only discovery, and DSH backend/database.
