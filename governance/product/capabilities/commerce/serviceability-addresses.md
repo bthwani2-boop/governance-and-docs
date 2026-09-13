@@ -29,6 +29,28 @@ DSH owns delivery-address operational truth, the Store delivery-origin fact requ
 - no alternate fulfillment lane can be selected through address/serviceability input;
 - exact location is purpose-limited operational data and must be minimized.
 
+## Implementation sequencing
+
+LOCATION CORE:
+
+- owned client delivery address;
+- Store delivery origin;
+- canonical persistence, ownership and readback;
+- may be implemented before a serviceability policy exists.
+
+SERVICEABILITY DECISION:
+
+- requires an admitted DSH policy;
+- the policy defines measurement, boundary, unit, comparison semantics and immutable version;
+- no serviceable/unserviceable outcome exists before the policy exists.
+
+ABSENT POLICY:
+
+- does not invalidate stored addresses;
+- does not invalidate Store delivery origin;
+- means the serviceability decision is unavailable/not-yet-admitted;
+- blocks Cart/Checkout confirmation that requires serviceability evidence.
+
 ## Failure and recovery
 
 Invalid coordinates, missing Store origin or policy, provider outage/uncertainty, evaluation failure, unserviceable address, stale evidence and offline state fail truthfully and recover by rereading/re-evaluating canonical owner state. A successful user-facing result requires canonical committed readback.
