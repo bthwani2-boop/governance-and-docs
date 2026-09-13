@@ -29,9 +29,14 @@ const required = [
   "governance/product/CAPABILITIES.md",
   "governance/product/JOURNEYS.md",
   "governance/system/SYSTEM.md",
+  "governance/policy/QUALITY.md",
+  "governance/policy/EXPERIENCE.md",
   "docs/README.md",
   "docs/DEVELOPMENT.md",
   "docs/OPERATIONS.md",
+  ".github/pull_request_template.md",
+  ".github/workflows/knowledge-integrity.yml",
+  ".github/workflows/governance-pr-policy.yml",
 ];
 for (const p of required) if (!exists(p)) fail(`missing required knowledge entrypoint: ${p}`);
 
@@ -94,6 +99,27 @@ for (const f of docsFiles) {
   if (/^SEMANTIC_OWNER:/m.test(text)) fail(`${r} must not be a semantic owner`);
 }
 
+const quality = read("governance/policy/QUALITY.md");
+const qualityDimensions = [...quality.matchAll(/^QUALITY_DIMENSION:\s*([A-Z0-9_]+)\s*$/gm)].map((m) => m[1]);
+const uniqueQualityDimensions = new Set(qualityDimensions);
+if (qualityDimensions.length < 10) fail("QUALITY.md must expose the canonical material-quality dimension census");
+if (uniqueQualityDimensions.size !== qualityDimensions.length) fail("QUALITY.md contains duplicate QUALITY_DIMENSION identifiers");
+for (const token of ["AFFECTED", "PROVEN_UNAFFECTED", "N/A_WITH_REASON", "UNEXAMINED"]) {
+  if (!quality.includes(token)) fail(`QUALITY.md missing material-census state contract: ${token}`);
+}
+
+const agent = read("AGENTS.md");
+for (const token of [
+  "main` is the only canonical durable-knowledge branch",
+  "Direct material mutation of `main` is forbidden",
+  "governance/policy/QUALITY.md",
+  "AFFECTED",
+  "PROVEN_UNAFFECTED",
+  "N/A_WITH_REASON",
+  "GOVERNANCE_IMPACT=UPDATE_REQUIRED",
+  "GOVERNANCE_IMPACT=DEFECT_FOUND",
+]) if (!agent.includes(token)) fail(`AGENTS.md missing durable review/quality law: ${token}`);
+
 const capabilityRoot = path.join(root, "governance/product/capabilities");
 const capabilityFiles = collect(capabilityRoot).filter((p) => p.endsWith(".md"));
 const capabilityIds = new Map();
@@ -128,25 +154,32 @@ const routedIds = new Set([...router.matchAll(/`([A-Z][A-Z0-9_]+)`\s*→/g)].map
 for (const id of routedIds) if (!capabilityIds.has(id)) fail(`capability router contains non-owner ID: ${id}`);
 
 const journeys = read("governance/product/JOURNEYS.md");
-const journeyNumbers = [...journeys.matchAll(/^##\s+J(\d+)\s+/gm)].map((m) => Number(m[1]));
+const journeyNumbers = [...journeys.matchAll(/^##\s+J(\d+)\s+—.*$/gm)].map((m) => Number(m[1]));
 for (let i = 0; i < journeyNumbers.length; i += 1) if (journeyNumbers[i] !== i) fail(`journeys must be sequential J0..Jn; found ${journeyNumbers.join(",")}`);
 for (const id of admittedIds) if (!journeys.includes(`\`${id}\``)) fail(`admitted capability has no current journey coverage: ${id}`);
 
 const referenceFiles = docsFiles.filter((p) => rel(p).startsWith("docs/reference/"));
 if (!referenceFiles.length) fail("no external reference routing exists");
 const urlOwners = new Map();
+const referenceClasses = new Map();
 for (const f of referenceFiles) {
   const r = rel(f);
   const text = fs.readFileSync(f, "utf8");
-  for (const token of ["ADOPTION_AUTHORITY: NONE", "REFERENCE_FRESHNESS: REVALIDATE_AT_USE", "REFERENCE_CLASS:"]) {
+  for (const token of ["ADOPTION_AUTHORITY: NONE", "REFERENCE_FRESHNESS: REVALIDATE_AT_USE"]) {
     if (!text.includes(token)) fail(`${r} missing reference boundary: ${token}`);
   }
+  const classes = [...text.matchAll(/^REFERENCE_CLASS:\s*(\S+)\s*$/gm)].map((m) => m[1]);
+  if (classes.length !== 1) fail(`${r} must declare exactly one REFERENCE_CLASS`);
+  else if (referenceClasses.has(classes[0])) fail(`duplicate REFERENCE_CLASS: ${classes[0]} in ${referenceClasses.get(classes[0])} and ${r}`);
+  else referenceClasses.set(classes[0], r);
   for (const m of text.matchAll(/https?:\/\/[^\s)>`]+/g)) {
     const url = m[0].replace(/[.,;:]$/, "");
     if (urlOwners.has(url) && urlOwners.get(url) !== r) fail(`duplicate curated external URL: ${url} in ${urlOwners.get(url)} and ${r}`);
     else urlOwners.set(url, r);
   }
 }
+
+if (!exists("docs/reference/experience.md")) fail("experience/design evidence route is missing");
 
 const docsIndex = read("docs/README.md");
 for (const f of docsFiles) {
@@ -155,6 +188,17 @@ for (const f of docsFiles) {
   const local = r.slice("docs/".length);
   if (!docsIndex.includes(`\`${local}\``)) fail(`docs/README.md does not route ${local}`);
 }
+
+const prTemplate = read(".github/pull_request_template.md");
+for (const heading of [
+  "## Exact candidate and material question",
+  "## Governance impact",
+  "## Material quality census",
+  "## Evidence and freshness",
+  "## Verification",
+  "## Negative space and consumer impact",
+]) if (!prTemplate.includes(heading)) fail(`pull request template missing canonical evidence section: ${heading}`);
+for (const dimension of qualityDimensions) if (!prTemplate.includes(`- ${dimension}:`)) fail(`pull request template missing quality dimension: ${dimension}`);
 
 const liveKnowledge = [...governanceFiles, ...docsFiles, path.join(root, "AGENTS.md"), path.join(root, "README.md")].filter(fs.existsSync);
 const stalePathTokens = ["governance/project/", "governance/architecture/", "governance/policies/", "docs/method/", "docs/development/", "docs/runbooks/"];
@@ -173,5 +217,7 @@ if (failures.length) {
 console.log("KNOWLEDGE_INTEGRITY=PASS");
 console.log(`SEMANTIC_OWNERS=${owners.size}`);
 console.log(`ADMITTED_CAPABILITIES=${capabilityIds.size}`);
+console.log(`QUALITY_DIMENSIONS=${qualityDimensions.length}`);
 console.log(`REFERENCE_FILES=${referenceFiles.length}`);
+console.log(`REFERENCE_CLASSES=${referenceClasses.size}`);
 console.log(`CURATED_EXTERNAL_URLS=${urlOwners.size}`);
