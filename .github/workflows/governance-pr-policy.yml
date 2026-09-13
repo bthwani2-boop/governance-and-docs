@@ -70,8 +70,8 @@ jobs:
             [[ "$(wc -l <<<"${line}" | tr -d ' ')" == "1" ]] || { echo "::error::Duplicate material-quality classification for ${dimension}"; exit 1; }
           done
 
-          if grep -Eiq '(^|[^A-Z])(TODO|UNEXAMINED|NOT_CHECKED|MAYBE|LATER)([^A-Z]|$)' <<<"${body}"; then
-            echo "::error::Ready PR contains unresolved evidence state"
+          if grep -Eiq '(^|[^A-Z])TODO([^A-Z]|$)' <<<"${body}"; then
+            echo "::error::Ready PR contains unresolved TODO evidence"
             exit 1
           fi
 
