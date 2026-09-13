@@ -21,6 +21,7 @@ DSH owns delivery-address operational truth, the Store delivery-origin fact requ
 - an address belongs to exactly one authorized client, derived from the verified client session;
 - serviceability is Store-scoped, not a global address-only decision;
 - the canonical evaluation input is the target canonical Store, its current DSH-owned delivery origin, the owned client address, and the current versioned DSH policy;
+- the DSH policy must define its measurement, boundary, unit, comparison semantics and immutable policy version before implementation; this capability does not invent those values;
 - Store publication/customer visibility remains J1 truth; delivery-origin and serviceability readiness are J2 prerequisites and do not redefine publication;
 - provider results are technical evidence normalized by DSH, and provider uncertainty or evaluation failure never becomes false success;
 - missing origin or policy produces an unavailable/not-ready result, not serviceable or unserviceable;
