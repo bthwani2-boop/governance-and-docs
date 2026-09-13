@@ -8,14 +8,15 @@ ADOPTION_AUTHORITY: NONE
 REFERENCE_FRESHNESS: REVALIDATE_AT_USE
 REFERENCE_CLASS: NORMATIVE_AND_SECURITY_STANDARD
 
-Use for protocol/security/accessibility facts within exact scope; never for Product breadth.
+Use for protocol/security identity and application-security facts within exact scope; never for Product breadth.
 
 - W3C Web Authentication Level 3 — https://www.w3.org/TR/webauthn-3/
 - NIST SP 800-63B-4 — https://csrc.nist.gov/pubs/sp/800/63/b/4/final
-- OWASP ASVS — https://owasp.org/www-project-application-security-verification-standard/
+- OWASP ASVS 5.0.0 baseline — https://owasp.org/www-project-application-security-verification-standard/
 - OWASP API Security — https://owasp.org/www-project-api-security/
-- OWASP MASVS/MASTG — https://mas.owasp.org/
-- W3C WCAG 2.2 — https://www.w3.org/TR/WCAG22/
+- OWASP Mobile Application Security project (MASVS / MASWE / MASTG) — https://mas.owasp.org/
 - OpenAPI Specification — https://spec.openapis.org/oas/latest.html
 
-Revalidate version/status at use. Extract requirements and invariants; do not copy another system's topology.
+Experience/accessibility standards and platform interaction guidance are routed through `experience.md` so that UI/UX evidence is reviewed as a first-class quality domain rather than incidental security/engineering material.
+
+Revalidate version/status at use. Current stable/final status matters: do not silently treat a draft, archived guide or community report as a final normative standard. Extract requirements and invariants; do not copy another system's topology.
