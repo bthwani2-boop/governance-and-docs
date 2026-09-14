@@ -63,7 +63,7 @@ A disabled Central Product is never customer-visible through an assortment. An a
 
 Public readback composes the live Central Product identity with the live Store Assortment facts. It does not copy Product identity into the assortment. Therefore a central name or image change appears in every Store immediately, an offer-price change affects only its Store, disabling a Product hides it everywhere, and hiding an assortment hides it only in its Store.
 
-Customer visibility requires a published Store, eligible Partner identity, and at least one assortment that is published, available, priced above zero, and linked to an active Product. Stale versions and materially different idempotent retries are rejected. Duplicate barcode, invalid Product relation, authorization failure and publication-gate failure recover through canonical DSH readback; derived consumers are rebuildable.
+Customer-visible catalog eligibility requires a published Store, eligible Partner identity, and at least one assortment that is published, available, priced above zero, and linked to an active Product. Customer discovery and serviceability remain constrained by the Store's assigned Service City under `SERVICEABILITY_ADDRESSES`; Central Catalog owns product and assortment eligibility, not geography or city scope. Stale versions and materially different idempotent retries are rejected. Duplicate barcode, invalid Product relation, authorization failure and publication-gate failure recover through canonical DSH readback; derived consumers are rebuildable.
 
 ## Material surfaces
 
