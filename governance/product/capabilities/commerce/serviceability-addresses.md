@@ -13,44 +13,59 @@ A client can maintain an owned delivery address and receive one canonical DSH se
 
 ## Ownership
 
-DSH owns delivery-address operational truth, the Store delivery-origin fact required for evaluation, and serviceability policy/result. Map/geocoding/routing providers are technical adapters only.
+DSH owns delivery-address operational truth, Store delivery-origin operational location truth, canonical Service City operational truth, and serviceability policy/evaluation result. Map/geocoding/routing providers are technical adapters for physical delivery and are not serviceability authorities.
+
+## Admitted policy: CITY_SCOPE_V1
+
+The admitted serviceability policy is:
+
+- `POLICY_VERSION = CITY_SCOPE_V1`
+- `MEASUREMENT`: canonical Service City identity
+- `BOUNDARY`: same active canonical Service City
+- `UNIT`: Service City identity
+- `COMPARISON`: exact canonical Service City identity equality
+
+Canonical evaluation inputs for `CITY_SCOPE_V1` are:
+
+- target canonical customer-visible Store and its assigned Service City (`Store.service_city_id`);
+- owned client delivery address and its assigned Service City (`DeliveryAddress.service_city_id`);
+- canonical active Service City state;
+- immutable `CITY_SCOPE_V1` policy identity and version.
+
+Canonical decision semantics:
+
+- `SERVICEABLE`: Store and owned Address reference the same active canonical Service City, and the target Store satisfies customer-visible Store eligibility;
+- `UNSERVICEABLE`: Store and owned Address are valid and active but belong to different active canonical Service Cities;
+- `UNAVAILABLE`: required City assignment missing, required City inactive or unknown, legacy unassigned state, target Store not customer-visible, or required canonical dependency unavailable.
+
+Store delivery origin and exact DeliveryAddress coordinates are preserved as purpose-limited operational location facts for physical delivery and routing, but they are explicitly not evaluation inputs for `CITY_SCOPE_V1`. Distance, radius, polygons, geofences, and map/routing provider measurements are not part of `CITY_SCOPE_V1`.
 
 ## Invariants
 
-- client input supplies address/location intent, never authoritative serviceability;
+- client input supplies address/location intent and discovery preferences, never authoritative serviceability;
 - an address belongs to exactly one authorized client, derived from the verified client session;
-- serviceability is Store-scoped, not a global address-only decision;
-- the canonical evaluation input is the target canonical Store, its current DSH-owned delivery origin, the owned client address, and the current versioned DSH policy;
-- the DSH policy must define its measurement, boundary, unit, comparison semantics and immutable policy version before implementation; this capability does not invent those values;
-- Store publication/customer visibility remains J1 truth; delivery-origin and serviceability readiness are J2 prerequisites and do not redefine publication;
-- provider results are technical evidence normalized by DSH, and provider uncertainty or evaluation failure never becomes false success;
-- missing origin or policy produces an unavailable/not-ready result, not serviceable or unserviceable;
-- the canonical result exposes sufficient Store, address and policy version evidence for later Cart freshness validation;
+- serviceability is Store-scoped, evaluated by DSH server-side from canonical Store and Address records;
+- client activeServiceCityId is local client discovery preference only and is never serviceability authority;
+- Store publication/customer visibility remains J1 truth; serviceability readiness is a J2 customer-journey prerequisite and does not redefine publication;
+- the canonical result exposes sufficient Store, Address, and Service City version evidence for later Cart freshness validation without exposing raw coordinates;
 - no alternate fulfillment lane can be selected through address/serviceability input;
 - exact location is purpose-limited operational data and must be minimized.
 
-## Implementation sequencing
+## Location Core and Service City relationship
 
 LOCATION CORE:
 
-- owned client delivery address;
-- Store delivery origin;
-- canonical persistence, ownership and readback;
-- may be implemented before a serviceability policy exists.
+- owned client delivery address with exact coordinates and text;
+- Store delivery origin with exact coordinates;
+- canonical persistence, ownership, and readback for delivery execution.
 
-SERVICEABILITY DECISION:
+SERVICE CITY SCOPE:
 
-- requires an admitted DSH policy;
-- the policy defines measurement, boundary, unit, comparison semantics and immutable version;
-- no serviceable/unserviceable outcome exists before the policy exists.
-
-ABSENT POLICY:
-
-- does not invalidate stored addresses;
-- does not invalidate Store delivery origin;
-- means the serviceability decision is unavailable/not-yet-admitted;
-- blocks Cart/Checkout confirmation that requires serviceability evidence.
+- DSH owns canonical Service City identity and lifecycle (active/inactive);
+- Store belongs to exactly one canonical Service City;
+- DeliveryAddress belongs to exactly one canonical Service City;
+- `CITY_SCOPE_V1` evaluates equality of active Service City identities.
 
 ## Failure and recovery
 
-Invalid coordinates, missing Store origin or policy, provider outage/uncertainty, evaluation failure, unserviceable address, stale evidence and offline state fail truthfully and recover by rereading/re-evaluating canonical owner state. A successful user-facing result requires canonical committed readback.
+Missing City assignment, inactive City, unserviceable address, stale evidence, or DSH offline state fail truthfully and distinguish `UNSERVICEABLE` from `UNAVAILABLE`. Recovery occurs by rereading or re-evaluating canonical owner state. A successful user-facing result requires canonical committed readback.
