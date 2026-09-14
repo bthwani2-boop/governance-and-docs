@@ -20,6 +20,24 @@ Use exemplars to recover edge cases, state machines, failure/recovery patterns a
 - Valhalla — https://github.com/valhalla/valhalla
 - VROOM — https://github.com/VROOM-Project/vroom
 
+### Yemen delivery market product exemplars
+
+Use these products only when current Yemen-market evidence can materially change the question being decided. This is a curated routing set, not an exhaustive competitor catalog, market ranking, backlog, feature matrix or Product-requirements source. Absence from this list does not imply irrelevance.
+
+At use, revalidate current product status, public surfaces/package identity, city coverage, capabilities, pricing, payment methods, policies, reviews and release behavior. Popularity, repetition across competitors or presence in a competitor does not establish a BThwani requirement. Extract only decision-relevant edge cases, state machines, failure/recovery behavior, experience evidence and test-oracle value; map proven value to the current BThwani owner. Do not preserve research transcripts, APK/decompiled output, screenshots or mutable competitor inventories as live durable knowledge.
+
+- Tawseel One — Android customer surface `com.smartapps.tawseel` — https://play.google.com/store/apps/details?id=com.smartapps.tawseel — broad Yemen delivery-commerce, customer ordering/tracking and cross-surface delivery behavior; discover other current public Tawseel surfaces when the material question requires them.
+- Etlobni — Android customer surface `com.etlobni` — https://play.google.com/store/apps/details?id=com.etlobni — Sana'a delivery-commerce, ordering, payment and customer-experience evidence.
+- Talqh — Android customer surface `com.talka.express.customer` — https://play.google.com/store/apps/details?id=com.talka.express.customer — multi-vertical delivery, parcel/task patterns and delivery-commerce experience evidence.
+- Nass — Android customer surface `com.teknokeys.nass` — https://play.google.com/store/apps/details?id=com.teknokeys.nass — Sana'a ordering, delivery execution and customer-experience evidence.
+- On Time — Android customer surface `com.ontime.application` — https://play.google.com/store/apps/details?id=com.ontime.application — Sana'a multi-vertical delivery, location/tracking, payment and failure/recovery evidence.
+- Safir — Android customer surface `com.safir.safirappye` — https://play.google.com/store/apps/details?id=com.safir.safirappye — Aden commerce/delivery, payment and support-experience evidence.
+- Wssy — Android customer surface `com.wssy.wssy_app` — https://play.google.com/store/apps/details?id=com.wssy.wssy_app — Aden restaurant/customer ordering and delivery-experience evidence.
+- Bajilek — Android customer surface `com.bajilek.bajilekuserapp` — https://play.google.com/store/apps/details?id=com.bajilek.bajilekuserapp — Aden local-commerce discovery, ordering, location and delivery-tracking evidence.
+- Alhodhod City — Android customer surface `com.hodhod_plus.user` — https://play.google.com/store/apps/details?id=com.hodhod_plus.user — multi-service local delivery, grocery/parcel patterns and customer-experience evidence.
+
+For a material Yemen-market question, discover additional current competitors at use when they may change the decision rather than expanding this file into a standing market inventory.
+
 ## Identity and authorization
 - Keycloak — https://github.com/keycloak/keycloak
 - ZITADEL — https://github.com/zitadel/zitadel
