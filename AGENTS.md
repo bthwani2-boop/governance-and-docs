@@ -56,6 +56,8 @@ DONOR / HISTORY
 ```
 
 No source has global precedence. Documented, implemented, popular, repeated or green does not mean correct.
+SOURCE AGREEMENT != INDEPENDENT CORROBORATION. SOURCE COUNT != EVIDENCE STRENGTH. TRIANGULATION != VOTING.
+Corroboration gains weight only from fact-specific authority, independence, directness, currentness and applicability; sources inheriting the same claim do not become stronger merely by repetition.
 
 ## 3. Mandatory material-task law
 
@@ -70,6 +72,8 @@ PIN EXACT STATE
 → CLASSIFY FACT / INFERENCE / UNKNOWN
 → FALSIFY CURRENT GOVERNANCE
 → RESOLVE EVERY QUALITY_DIMENSION DECLARED BY governance/policy/QUALITY.md
+→ CLASSIFY REVERSIBILITY / EVOLUTION COST FOR MATERIALLY COSTLY-TO-REVERSE DECISIONS
+→ TEST SEMANTIC SUFFICIENCY + MATERIAL EVOLUTION SAFETY
 → SELECT SIMPLEST COMPLETE BTHWANI-FIT MODEL
 → CLASSIFY GOVERNANCE_IMPACT
 → TREAT REQUIRED KNOWLEDGE CHANGE
@@ -88,7 +92,7 @@ N/A_WITH_REASON
 
 `UNEXAMINED`, `MAYBE`, `LATER` and silent omission are forbidden. `AFFECTED` requires an owner/invariant and fit evidence plan; `PROVEN_UNAFFECTED` and `N/A_WITH_REASON` require a concrete reason.
 
-Research stops when additional evidence can no longer change owner, boundary, invariant, failure/recovery model, solution or proof.
+Research stops when additional evidence can no longer change owner, boundary, invariant, failure/recovery model, solution or proof. Evolution inquiry is likewise risk-scaled: inspect materially plausible high-cost or hard-to-reverse consequences that can change the current decision; do not design speculative future capability trees.
 
 ## 4. Mandatory Governance impact
 
@@ -128,11 +132,19 @@ Preserve required meaning, not historical shapes. Git is the archive. Restructur
 
 ```text
 CURRENT DURABLE NEED → ADMIT
+CURRENT MATERIAL DISTINCTION → PRESERVE AT THE CORRECT OWNER
 COHESIVE OWNER → EXTEND
 NONCOHESIVE OWNER → SPLIT / REHOME
 NO CURRENT NEED → ABSENT
-FUTURE IDEA → GIT / BACKLOG, NOT LIVE GOVERNANCE
+FUTURE CAPABILITY / IDEA → ABSENT FROM LIVE GOVERNANCE UNTIL PROVEN
+MATERIAL HIGH-COST EVOLUTION RISK → PRESERVE CORRECT CURRENT MEANING / BOUNDARIES / MIGRATABILITY; DO NOT PREBUILD THE FUTURE
 ```
+
+MINIMIZE LIVE STRUCTURE, NOT REQUIRED MEANING.
+PRESERVE CHANGEABILITY, NOT SPECULATIVE FUTURE STRUCTURE.
+CURRENT COMPLETE != PERMANENTLY FINAL.
+
+An omission, merge or simplification is valid only when the surviving canonical model remains losslessly sufficient for current Product/System/Policy truth and does not create an avoidable evidence-backed evolution dead end. Future extensibility is preserved through correct current meaning, stable identities, ownership boundaries and feasible migration/cutover paths—not placeholder capabilities, speculative abstractions or partial future implementations.
 
 A new capability, policy, owner, file, reference class, registry, abstraction or verifier must prove unique current responsibility and absence of a stronger existing owner.
 
@@ -169,7 +181,7 @@ A verifier is evidence, not authority. Prefer deterministic checks of relationsh
 
 Do not freeze incidental prose, arbitrary file sizes/line counts or temporary cutover vocabulary. Exact wording is protected only when wording itself is the durable contract.
 
-If a recurring material defect class can be detected deterministically, harden the verifier in the same coherent change when proportionate.
+If a recurring material defect class can be detected deterministically, harden the verifier in the same coherent change when proportionate. Semantic sufficiency or evolution safety must not be reduced to token-presence checks that manufacture false confidence.
 
 ## 9. Cross-repository consumption
 
@@ -179,7 +191,7 @@ A consumer binding manifest is provenance only, never a second knowledge registr
 
 ## 10. Closure
 
-`100% CURRENT MATERIAL CLOSURE` means complete examination and zero known material defect for the exact authorized candidate/cone; it never means permanent software infallibility.
+`100% CURRENT MATERIAL CLOSURE` means complete examination and zero known material defect for the exact authorized candidate/cone; it never means permanent software infallibility, capability exhaustion, a permanently final domain model or permanent rejection of unexamined future Product breadth.
 
 Closure requires:
 
@@ -199,6 +211,7 @@ KNOWN_VERIFIER_FALSE_GREEN=0
 UNJUSTIFIED_KNOWLEDGE_STRUCTURE=0
 DECISION_CRITICAL_UNKNOWNS=0
 UNJUSTIFIED_FUTURE_PRODUCT_BREADTH=0
+KNOWN_MATERIAL_EVOLUTION_DEAD_ENDS=0
 KNOWN_GOVERNANCE_DRIFT=0
 UNJUSTIFIED_RESIDUE=0
 ```

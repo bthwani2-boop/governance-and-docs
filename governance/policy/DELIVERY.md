@@ -8,9 +8,11 @@ IMPLEMENTATION_STATE_AUTHORITY: NONE
 - Current user/business outcome drives work order; do not exhaust one surface/domain backlog.
 - Implement the smallest coherent journey/increment that proves the earliest unresolved shared boundary.
 - Core-first does not mean speculative foundation first.
+- Preserve changeability, not speculative machinery: future capability or scaffolding is not implemented without current need, while materially costly-to-reverse current identities, boundaries, persistent data shapes and external contracts require explicit reversibility/evolution-cost classification and a defensible migration/extension/cutover path for evidence-backed evolution risks.
 - Readiness precedes mutation when a decision-critical unknown can change owner, migration, safety or proof.
 - A cutover includes all material consumers, migrations/contracts/config/tests/verifiers and deletion of losing paths.
 - Smallest diff is not the goal; simplest complete canonical system is.
 - Structural/refoundation cleanup preserves externally registered deployable identity such as app package/bundle IDs, Expo/EAS project identity, URI/deep-link schemes, signing relationships and provider app/client bindings unless changing that identity is itself explicitly authorized.
 - A candidate closes only from exact-state evidence with zero known material defect in its authorized cone.
+- Current increment closure proves the admitted current outcome; it does not imply capability exhaustion, a permanently final domain model or permanent rejection of future Product breadth that has not yet been examined or admitted.
 - Repository mutation authority never implies build distribution, store submission, release, staging or Production authority.

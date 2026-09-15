@@ -36,6 +36,12 @@ ONE MUTABLE FACT
 
 Caches, search, analytics, local state, generated clients and projections are derived.
 
+## Canonical identity evolution law
+
+Canonical identity is semantic, not incidental. A durable identifier must retain one stable meaning across evolution. Later relationships, classifications or capabilities may be added around an existing identity when evidence admits them, but they must not silently redefine what historical instances of that identifier meant.
+
+If a materially necessary evolution would change identity semantics, ownership or historical interpretation, perform an explicit governed migration/cutover with affected contracts, data and consumers. Compatibility-by-reinterpretation is noncanonical.
+
 ## Cross-boundary contracts
 
 Each service-owned public/internal contract has one executable provenance. Generated clients/types are derived and regenerated; they are never hand-maintained competing authority.

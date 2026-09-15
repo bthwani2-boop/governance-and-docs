@@ -38,7 +38,9 @@ QUALITY_DIMENSION: GOVERNANCE_DOCS_RESIDUE
 As applicable, prove:
 
 - Product/business state-machine correctness and user/business outcome;
+- semantic sufficiency: simplification preserves every current material distinction without overloaded fields, encoded naming conventions, UI-only semantics, hidden exceptions, duplicate logic or shadow truth;
 - semantic owner, canonical writer/readback and architecture/boundary correctness;
+- reversibility/evolution safety for materially costly-to-reverse identities, boundaries, persistent data shapes and contracts: classify evolution cost and prove a viable migration/extension/cutover path for current evidence-backed risks without implementing speculative future capability;
 - database/migration/retention/concurrency integrity;
 - contract/event/generated-client and compatibility consistency;
 - authentication, authorization, abuse resistance and negative security cases;
@@ -57,7 +59,7 @@ As applicable, prove:
 - fit static/unit/contract/database/integration/browser/device/runtime evidence for each material claim;
 - Governance/Docs convergence and absence of obsolete/shadow/losing paths after cutover.
 
-A quality dimension being unaffected never weakens another affected dimension. A single tool may cover several dimensions; tool count is not assurance strength.
+A quality dimension being unaffected never weakens another affected dimension. A single tool may cover several dimensions; tool count is not assurance strength. Evolution safety is risk-scaled: cheap, reversible decisions do not require speculative future analysis, while materially hard-to-reverse decisions require proportionately deeper falsification.
 
 ## Real-device and rendered proof
 
@@ -71,4 +73,4 @@ Use current primary standards and assurance references from `docs/reference/` wh
 
 ## Closure
 
-For the exact authorized candidate/cone, quality closure requires zero unexamined material dimensions, zero affected dimensions without owner/rule/required proof, zero known material defect or contradiction, zero decision-critical unknown, zero stale required evidence and zero unjustified shadow/residue within the affected cone. This is current material closure, not a claim of permanent infallibility.
+For the exact authorized candidate/cone, quality closure requires zero unexamined material dimensions, zero affected dimensions without owner/rule/required proof, zero known material defect or contradiction, zero decision-critical unknown, zero stale required evidence, zero known material evolution dead end and zero unjustified shadow/residue within the affected cone. This is current material closure, not a claim of permanent infallibility or permanent domain finality.

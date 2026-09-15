@@ -8,7 +8,7 @@ ADOPTION_AUTHORITY: NONE
 REFERENCE_FRESHNESS: REVALIDATE_AT_USE
 REFERENCE_CLASS: ENGINEERING_ASSURANCE
 
-Use to challenge lifecycle, security, testing, reliability, delivery, review quality, observability and supply-chain assurance.
+Use to challenge lifecycle, security, testing, reliability, delivery, review quality, observability, supply-chain assurance and materially costly-to-reverse architecture decisions.
 
 - NIST SSDF SP 800-218 v1.1 (current final baseline) — https://csrc.nist.gov/pubs/sp/800/218/final
 - NIST SSDF Version 1.2 / SP 800-218 Rev. 1 (initial public draft; not final baseline) — https://csrc.nist.gov/pubs/sp/800/218/r1/ipd
@@ -20,5 +20,9 @@ Use to challenge lifecycle, security, testing, reliability, delivery, review qua
 - Testcontainers — https://testcontainers.com/
 - OpenTelemetry — https://opentelemetry.io/docs/
 - k6 — https://grafana.com/docs/k6/latest/
+- Martin Fowler, Yagni — https://martinfowler.com/bliki/Yagni.html
+- Martin Fowler, Foreword to Building Evolutionary Architectures — https://martinfowler.com/articles/evo-arch-forward.html
+- Thoughtworks, Building Evolutionary Architectures (2nd Edition) — https://www.thoughtworks.com/insights/books/building-evolutionaryarchitectures-second-edition
+- AWS Well-Architected Framework, The review process (one-way/two-way door guidance) — https://docs.aws.amazon.com/wellarchitected/latest/framework/the-review-process.html
 
-Apply only material controls. Assurance frameworks challenge BThwani decisions; they do not create Product scope. Do not silently promote a draft/framework maturity level into a BThwani requirement. Translate adopted assurance value into concrete invariants, tests, constraints, runtime proof or CI gates where proportionate.
+Apply only material controls. Assurance frameworks challenge BThwani decisions; they do not create Product scope. Do not silently promote a draft/framework maturity level into a BThwani requirement. YAGNI/evolutionary-architecture guidance means do not build speculative future capability while preserving proportionate changeability around materially costly-to-reverse current decisions; it does not authorize placeholder architecture. Translate adopted assurance value into concrete invariants, tests, constraints, runtime proof or CI gates where proportionate.

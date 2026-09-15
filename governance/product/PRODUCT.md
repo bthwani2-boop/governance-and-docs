@@ -17,6 +17,26 @@ IDENTITY / ROLE ACCESS → PARTNER + STORE ADMISSION → CENTRAL CATALOG / STORE
 
 The active implementation slice may be narrower, but live Governance must not contain unproven future Product breadth.
 
+## Minimum complete and evolvable current Product model
+
+MINIMUM COMPLETE != MINIMAL SHAPE.
+CURRENT COMPLETE != PERMANENTLY FINAL.
+
+The current Product model must be the smallest model that represents every current material user/business truth losslessly. A materially required concept may be a capability, entity, relation, state, identity, invariant or boundary; it must not be omitted merely to reduce tables, files, types, services, states or vocabulary.
+
+A concept is materially required when omitting or collapsing it would lose or blur current meaning, ownership, lifecycle, authorization, contract, user/business behavior, commercial truth, failure/recovery or canonical readback, or would require overloaded fields, encoded naming conventions, UI-only semantics, hidden exceptions, duplicate logic or shadow truth.
+
+A concept may be omitted only when the current admitted journeys remain fully representable, executable and provable without it. Future capability breadth remains absent until proven by current need.
+
+When a durable identity, relation, state boundary or ownership boundary is materially costly to reverse, the current model must avoid an evidence-backed evolution dead end when the same present requirement can be modeled with comparable current simplicity and materially better evolvability. Preserve correct current meaning and a defensible migration/extension/cutover path; do not prebuild the future capability itself.
+
+COMMON ELSEWHERE != REQUIRED HERE.
+ABSENT ELSEWHERE != PROOF UNNEEDED HERE.
+FUTURE NEED != CURRENT IMPLEMENTATION.
+NO SCAFFOLD != NO EVOLUTION PATH.
+
+Future extensibility is preserved through correct current semantics, stable identities, ownership boundaries and feasible migration/cutover—not speculative abstractions, placeholder capabilities, unused extension points or partial future implementations.
+
 ## Admitted capabilities
 
 - `IDENTITY_ACTIVATION_SESSIONS`
@@ -49,7 +69,7 @@ Each ID has exactly one owner file under `capabilities/**`.
 
 Not admitted now: loyalty/marketing campaigns, coupons/promotions funding, ratings/reviews, general support/rescue subsystem, special-request marketplace, analytics as Product capability, notification subsystem, broad customer-profile/privacy orchestration, settlement/payout/collateral/pricing Product capabilities, alternate fulfillment modes, Partner organization/member/team abstractions and generic multi-tenant SaaS architecture.
 
-A future objective must re-admit any such capability from current evidence rather than restore historical text.
+A future objective must re-admit any such capability from current evidence rather than restore historical text. Current absence is not a permanent declaration that a capability can never become necessary.
 
 ## Capability admission law
 
