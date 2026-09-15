@@ -8,17 +8,19 @@ CAPABILITY_ID: PARTNER_ONBOARDING_STORE_PUBLICATION
 
 ## Outcome
 
-A prospective Partner progresses through one DSH-owned joining lifecycle to one canonically bound Partner actor and one governed Store-publication result.
+A prospective Partner progresses through one DSH-owned joining lifecycle to one canonically bound Partner actor and one governed Store-publication result, including the required primary Commerce Vertical for the first Store.
 
 ## Ownership
 
-DSH owns joining-case, assignment, Partner/Store readiness, review/correction, canonical Service City assignment, and Store-publication truth. Identity alone creates or resolves `actor_id` and admits role `partner`. Catalog publication remains with `CENTRAL_CATALOG`.
+DSH owns joining-case, assignment, Partner/Store readiness, review/correction, canonical Service City and primary Commerce Vertical assignment, and Store-publication truth. Identity alone creates or resolves `actor_id` and admits role `partner`. Catalog publication remains with `CENTRAL_CATALOG`.
 
 ## Invariants
 
 - a joining case may exist before `partner` role admission and is never a second Partner identity;
 - canonical Service City is required first-Store data on the joining case;
+- primary Commerce Vertical is required first-Store data on the joining case and is transferred to the Store atomically;
 - JoiningCase first-Store Service City is preserved through review, correction, and resubmission, and becomes canonical `Store.service_city_id` atomically upon Store creation;
+- JoiningCase first-Store Commerce Vertical is preserved through review, correction, and resubmission, and becomes canonical `Store.primary_vertical_id` atomically upon Store creation;
 - Partner itself is not city-scoped; a Partner may own multiple Stores in the same or different Service Cities;
 - a new Store cannot be created without its required canonical active Service City;
 - the initial operator admission/submit transition is the DSH-owned eligibility point that may request Identity `partner` role admission; a generic accounts action cannot create that role;
@@ -34,7 +36,7 @@ DSH owns joining-case, assignment, Partner/Store readiness, review/correction, c
 
 ## Minimal lifecycle
 
-PROSPECTIVE PARTNER → JOINING CASE (WITH FIRST-STORE SERVICE CITY) → REQUIRED BUSINESS / FIRST-STORE DATA → DSH ADMISSION/ELIGIBILITY → authorized Identity request → Identity resolution + partner ROLE ADMISSION → CANONICAL actor_id BINDING → SUBMISSION → OWNER REVIEW → bound Partner atomic CORRECT-AND-RESUBMIT (PRESERVING/UPDATING SERVICE CITY) when required → STORE READINESS WITH CANONICAL SERVICE CITY → STORE PUBLICATION.
+PROSPECTIVE PARTNER → JOINING CASE (WITH FIRST-STORE SERVICE CITY + PRIMARY COMMERCE VERTICAL) → REQUIRED BUSINESS / FIRST-STORE DATA → DSH ADMISSION/ELIGIBILITY → authorized Identity request → Identity resolution + partner ROLE ADMISSION → CANONICAL actor_id BINDING → SUBMISSION → OWNER REVIEW → bound Partner atomic CORRECT-AND-RESUBMIT (PRESERVING/UPDATING SERVICE CITY + VERTICAL) when required → STORE READINESS WITH CANONICAL SERVICE CITY + VERTICAL → STORE PUBLICATION.
 
 Documents, evidence and visit checks exist only when current onboarding policy requires them; they are not separate capabilities.
 

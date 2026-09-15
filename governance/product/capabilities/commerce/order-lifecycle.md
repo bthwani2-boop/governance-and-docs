@@ -9,7 +9,7 @@ STATUS: ADMITTED
 
 ## Outcome
 
-One eligible confirmed checkout creates at most one canonical DSH order, then the owning Partner can accept, reject and prepare it to one governed ready-for-dispatch boundary.
+One eligible confirmed checkout creates at most one canonical DSH order, preserving the purchased catalog evidence, then the owning Partner can accept, reject and prepare it to one governed ready-for-dispatch boundary.
 
 ## Ownership
 
@@ -18,12 +18,16 @@ DSH owns operational order truth. WLT owns any later-admitted financial truth. C
 ## Invariants
 
 - one canonical checkout scope yields at most one order;
-- required item/address/serviceability/commercial snapshots remain stable after creation unless an explicit legal transition changes a defined field;
+- required StoreOffer/ProductVariant/display-name/variant-attribute/modifier/quantity/pricing-basis/amount/address/serviceability snapshots remain stable after creation unless an explicit legal transition changes a defined field;
 - Partner acts only on orders for authorized owned Stores;
 - Partner acceptance, rejection, preparation and readiness are canonical DSH transitions, never local UI state;
 - one standard order remains on the BThwani delivery path;
 - no client or Partner can select another final-mile owner or mutate WLT truth;
 - canonical readback is required after mutation.
+
+## Commercial snapshot
+
+An OrderLine references the canonical `variant_id` and `store_offer_id` and also stores the immutable display-name, variant facts required for purchase, selected modifier snapshot, requested/final quantity, pricing basis, exact line amount, currency and address/serviceability evidence. Later Catalog edits cannot rewrite historical Order truth; the snapshot is historical transaction evidence, not a second live Product authority.
 
 ## Minimal lifecycle
 
