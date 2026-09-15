@@ -4,7 +4,7 @@
 
 ## Exact candidate and material question
 
-<!-- Record the exact base main SHA, exact candidate SHA, authorized material question and affected knowledge cone. -->
+<!-- Record the exact base main SHA, exact candidate SHA, authorized material question and affected knowledge cone. Identify any materially costly-to-reverse identity, boundary, persistent-data or contract decision that requires explicit evolution-safety reasoning. -->
 
 ## Governance impact
 
@@ -40,11 +40,11 @@
 
 ## Evidence and freshness
 
-<!-- Which current implementation evidence and external primary/normative/assurance/experience/exemplar/donor sources materially changed or falsified the decision? Which mutable facts were revalidated now? -->
+<!-- Which current implementation evidence and external primary/normative/assurance/experience/exemplar/donor sources materially changed or falsified the decision? Which mutable facts were revalidated now? Distinguish independent corroboration from repeated/inherited claims. -->
 
 ## Verification
 
-<!-- Exact-candidate checks and adversarial evidence. A green verifier proves structure/invariants only to the extent it exercises them. -->
+<!-- Exact-candidate checks and adversarial evidence. A green verifier proves structure/invariants only to the extent it exercises them. For materially costly-to-reverse decisions, record the reversibility/evolution-cost assessment and the defensible migration/extension/cutover path; do not claim speculative future implementation as proof. -->
 
 `MATERIAL_DIMENSIONS_UNEXAMINED=0`
 `AFFECTED_DIMENSIONS_WITHOUT_OWNER=0`
@@ -53,8 +53,9 @@
 `KNOWN_MATERIAL_DEFECTS=0`
 `KNOWN_MATERIAL_CONTRADICTIONS=0`
 `DECISION_CRITICAL_UNKNOWNS=0`
+`KNOWN_MATERIAL_EVOLUTION_DEAD_ENDS=0`
 `KNOWN_GOVERNANCE_DRIFT=0`
 
 ## Negative space and consumer impact
 
-<!-- What duplicate/stale/future/residue/losing owners or reference paths were searched for or deleted? Which consumers must deliberately repin after this PR merges, and which must remain pinned to older knowledge? -->
+<!-- What duplicate/stale/future/residue/losing owners or reference paths were searched for or deleted? What speculative future machinery was deliberately rejected, and what material evolution dead ends were actively checked for? Which consumers must deliberately repin after this PR merges, and which must remain pinned to older knowledge? -->
