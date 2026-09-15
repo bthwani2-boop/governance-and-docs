@@ -5,66 +5,233 @@ SEMANTIC_OWNER: governance/product/capabilities/partner/central-catalog.md
 EXECUTION_AUTHORITY: NONE
 IMPLEMENTATION_STATE_AUTHORITY: NONE
 CAPABILITY_ID: CENTRAL_CATALOG
+STATUS: REFOUNDED
 
 ## Outcome
 
-DSH owns one canonical Central Product identity and one canonical Store Assortment truth. Partner operations select existing Products and manage only the offer facts for Stores they own; customer discovery reads the live composition of both records.
+DSH owns one canonical catalog of commerce identities and one canonical Store
+offer truth. The same capability serves restaurants, groceries, pharmacies,
+fresh goods and other currently admitted Store verticals without collapsing a
+sellable package, a product family, a Store offer or a storefront section into
+one record. `control-panel` hosts Operator work; `app-partner` hosts authorized
+Store work; `app-client` reads a DSH-composed customer-safe storefront.
 
-## Central Product
+This is the current Central Catalog capability. It is not a second
+`CATALOG_V2` capability and it does not admit a full PIM, ERP, POS or marketing
+system.
 
-DSH owns the single canonical identity of each current sellable Product:
+## Ownership and verticals
 
-- `product_id`
-- `canonical_name` (required)
-- `brand` (optional)
-- `barcode` (optional; unique when present)
-- `canonical_image_url` (optional; centrally controlled)
-- `sell_unit` (`piece` or `kg`)
-- `active`
-- `version`
-- creation and update timestamps
+`CommerceVertical` is the canonical classification of the commercial activity
+of a Store. A Store has exactly one `primary_vertical_id` in this slice. A
+Partner is not vertical-scoped and may own Stores in different verticals.
 
-Packaged goods such as `Coca Cola 330ml` are independent Products with `sell_unit=piece`. Goods sold by weight such as apples are Products with `sell_unit=kg`. Product families, variants, unit conversions and SKU hierarchies are not admitted in this slice. `sell_unit` is identity-defining: a change of commercial unit requires a new Product identity and disabling the old one.
+The joining case requires the first-Store vertical before admission. The value
+is preserved through review, correction and resubmission and is transferred to
+the Store atomically with Store creation. An existing Store with no vertical
+is retained for history but is not vertical-discoverable or customer-visible
+until an authorized Operator assigns one through the DSH owner path. No legacy
+Store receives a guessed vertical.
 
-Central Product lifecycle is only:
+The registry is data, not a hard-coded complete list. Current examples include
+`RESTAURANT`, `GROCERY`, `PHARMACY`, `FRESH_PRODUCE`, `ELECTRONICS`,
+`GIFTS_FLOWERS` and `DESSERTS_JUICES`; additions require normal DSH-authorized
+registry mutation and readback.
+
+## Product taxonomy
+
+`CatalogCategory` is a flexible tree with `parent_category_id`. It is not a
+fixed L1/L2/L3/L4 model and it is not a `CommerceVertical` or a local
+`StorefrontSection`. A category belongs to one vertical in this slice. A
+Product may have multiple category assignments when each assignment is
+explicitly valid for its vertical. Parent links must remain in the same
+vertical and cycles are rejected.
+
+Category rules are owned by the category through typed
+`CategoryAttributeRule` records. A rule may be required, filterable or a
+variant axis. The rule model is bounded to the data types needed by current
+catalog journeys: text, number, boolean, enum, measurement and date. Values
+are typed records, never an opaque options JSON blob, encoded names or a
+vertical-specific column explosion.
+
+## Product and ProductVariant
+
+`Product` is the common commercial identity. `ProductVariant` is the concrete
+sellable/package identity. Every Product has at least one Variant; a simple
+Product has one default Variant. A Product family and its sellable packages
+are therefore distinct, while CartLine, StoreOffer and OrderLine always refer
+to `variant_id` as the sellable identity.
+
+Product owns common identity facts: canonical name, optional brand, scope,
+category assignments, common typed attributes, bounded media relations,
+active state, version and timestamps. Variant owns sellable facts: display
+name, measurement identity, variant typed attributes, identifiers, active
+state, version and timestamps. A variant cannot be nested under another
+variant.
+
+Product scope is explicit:
+
+- `SHARED`: Operator/catalog-governed identity reusable by authorized Stores.
+- `STORE_SCOPED`: identity belonging to exactly one Store; its Partner may
+  manage it only through DSH and it never silently becomes shared.
+
+Partners cannot create or mutate a Shared Product directly. If a required
+Shared Product is missing, the Partner submits a `ProductProposal`. A proposal
+is attributable, reviewable and never sellable; only the authorized DSH
+acceptance transition may create the Shared identity. Store-scoped Products do
+not require a proposal.
+
+## Identifiers and media
+
+Identifiers belong to Variants, not Products. DSH supports a bounded typed
+identifier relation for `GTIN`, `EAN`, `UPC` and `SKU`, with exact uniqueness
+rules. A migrated legacy barcode is preserved as a typed legacy identifier
+until its exact external type is known; it is never treated as the sole
+Product identity.
+
+Media is a bounded catalog-owned relation. Existing image meaning is migrated
+without loss into that relation. A verified HTTP(S) asset URL may remain the
+current transport adapter when no managed object-storage owner is admitted;
+this does not authorize a media provider or microservice. Media URL input is
+validated and never contains credentials.
+
+## StoreOffer and StorefrontSection
+
+`StoreOffer` is the Store-scoped commercial relation:
 
 ```text
-ACTIVE ↔ DISABLED
+store_id → variant_id → Product
+price_minor + currency=YER
+pricing_basis
+quantity_policy
+inventory_policy
+availability
+publication
+version + attributable audit
 ```
 
-There is no Partner-created Product, proposal, approval workflow, marketing review or `PROPOSED` state in the current capability.
+An offer does not copy canonical Product name, taxonomy, variant attributes,
+identifiers or canonical media. Partners may create and manage offers only for
+Stores they own. The old product-level `StoreAssortment` writer is not a
+parallel authority after cutover; the aggregate name may remain in historical
+audit only.
 
-The active operator is the only Central Product mutation authority. Partner must not create or mutate central Product name, image, brand, barcode or sell unit. No Store-local copy of Product name or image, search result, cache or UI value may become mutation authority.
+Quantity has exact integer base units and separate requested quantity,
+pricing basis, minimum, maximum and step semantics. Discrete quantities use a
+count base unit; measured quantities use a dimension base unit such as grams.
+`VARIABLE_MEASURE` is distinct from `DISCRETE` and `MEASURED`; where it is
+customer-sellable, the confirmed request range and the actual fulfilled amount
+are explicit facts. No floating-point business quantity, fake `half`/`quarter`
+unit or display label is an authority.
 
-## Store Assortment
+This slice admits `AVAILABILITY_ONLY` inventory for current offers. It does not
+invent stock numbers for restaurants or stores without finite-stock evidence.
+Finite count/measure inventory may be admitted only with an atomic reserve,
+release, duplicate-retry and unknown-outcome rule owned by DSH; an enum or
+unused stock table alone is not an implementation of that capability.
 
-DSH owns the Store-scoped offer relation:
+`StorefrontSection` is a Store-local presentation grouping such as main meals,
+drinks or family offers. It is not Product taxonomy. A section placement may
+reference only an eligible StoreOffer.
 
-- `store_id`
-- `product_id`
-- `price_minor` (exact integer)
-- `currency=YER`
-- `availability`
-- `publication_state`
-- `version`
-- creation and update timestamps
+## Restaurant modifiers
 
-`(store_id, product_id)` is unique. A Store Assortment must reference an existing active Central Product when selected or published. Partner may, for a server-authorized Store it owns, select an existing Product, set or update `price_minor`, set availability, and publish or hide the assortment. Price is a DSH Store offer fact, not WLT ledger truth or Checkout total truth.
+Where the current Store vertical requires customization, DSH owns bounded
+`ModifierGroup` and `ModifierOption` records with required/optional selection
+constraints, min/max selections, availability, price delta and ordering.
+Modifier options customize an order instance; they are not ProductVariants.
+Cart and Order store canonical option IDs plus the frozen snapshot required for
+the transaction. Free-text line notes, if admitted, are separate bounded
+fields. Customization is never an opaque `cart.options` JSON authority.
 
-Store Assortment lifecycle is only:
+## Customer visibility and read model
+
+DSH owns one `CUSTOMER_VISIBLE_OFFER` evaluator. It is the only eligibility
+rule used by storefront catalog, cart and checkout. At minimum it requires:
 
 ```text
-DRAFT → PUBLISHED ↔ HIDDEN
+published Store
+active primary CommerceVertical
+valid Service City / Store scope where applicable
+active Product and Variant
+complete required category classification/attributes
+published and available StoreOffer
+positive exact price and valid quantity policy
+valid modifier configuration where applicable
 ```
 
-A disabled Central Product is never customer-visible through an assortment. An assortment may remain historically referenced while the Product is disabled, and Partner may hide it for recovery/control.
+`app-client` never composes Product, Variant, Offer, category, modifier or
+inventory requests to decide visibility. DSH returns a composed storefront
+read model, with bounded pagination/search and category/section filters when
+material. Direct IDs cannot bypass the evaluator and a Store detail response
+does not inline an unbounded catalog.
 
-## Customer readback and failure recovery
+## Operator and Partner operations
 
-Public readback composes the live Central Product identity with the live Store Assortment facts. It does not copy Product identity into the assortment. Therefore a central name or image change appears in every Store immediately, an offer-price change affects only its Store, disabling a Product hides it everywhere, and hiding an assortment hides it only in its Store.
+The Operator workspace may manage verticals, taxonomy, typed attribute rules,
+Shared Products, Variants, identifiers, bounded media, proposals, legacy
+classification recovery and import preview/commit. Every mutation goes to DSH
+for validation, authorization, idempotency, concurrency control, audit and
+canonical readback; the Control Panel is not a business owner.
 
-Customer-visible catalog eligibility requires a published Store, eligible Partner identity, and at least one assortment that is published, available, priced above zero, and linked to an active Product. Customer discovery and serviceability remain constrained by the Store's assigned Service City under `SERVICEABILITY_ADDRESSES`; Central Catalog owns product and assortment eligibility, not geography or city scope. Stale versions and materially different idempotent retries are rejected. Duplicate barcode, invalid Product relation, authorization failure and publication-gate failure recover through canonical DSH readback; derived consumers are rebuildable.
+The existing central-product importer is the single importer. Its operational
+flow is:
 
-## Material surfaces
+```text
+parse → validate → classify duplicate/conflict → preview
+→ explicit commit → attributable audit → canonical readback
+```
 
-`app-partner`, `control-panel`, `app-client` read-only discovery, and DSH backend/database.
+Missing input rows never delete identities, blind upsert is forbidden, and a
+failed partial import is resumable without silently creating a different
+identity.
+
+Partners can browse/search Shared Products, inspect Variants and identifiers,
+select Variants, create StoreOffers, manage price/quantity/availability/
+publication and manage their Store sections/modifiers. Cross-Store access,
+Shared Product mutation and direct Shared Product creation are denied.
+
+## Migration and historical truth
+
+The catalog cutover is data-preserving and uses the next immutable DSH
+migration after the current graph. Applied migrations `001..009` remain
+immutable. For each existing central Product, preserve its identity and
+history, create one deterministic default Variant, move the legacy barcode to
+the Variant identifier relation and preserve image meaning through the media
+relation. `piece` may become discrete count semantics only when the current
+record proves it; `kg` proves mass/pricing-by-kg but does not prove a minimum or
+step, so the migrated offer remains closed until its quantity policy is
+configured.
+
+Each existing StoreAssortment becomes a StoreOffer referencing that default
+Variant while preserving Store, price, currency, availability, publication
+history, versions and audit attribution. Existing Products without categories
+and Stores without verticals retain identity/history but fail customer
+eligibility closed until authorized recovery classification. No old current
+writer, flat storefront endpoint, Product-level barcode authority or copied
+Product identity survives the cutover. If an old relation is retained, it is
+immutable historical evidence only and has no current reader or writer.
+
+## Failure, security and proof invariants
+
+- Operator-only Shared Catalog mutations and Partner-own-Store authorization
+  are enforced at DSH using trusted actor/session context.
+- Client input never grants Store scope, Product scope, vertical, eligibility,
+  price, quantity, inventory or publication authority.
+- Exact identifier conflict, duplicate request with different facts, stale
+  version, invalid category cycle, invalid typed value, unavailable offer,
+  cross-Store access and direct-ID bypass fail closed.
+- Mutations are idempotent, attributable and read back from committed DSH
+  state. Unknown outcomes reconcile before retry.
+- Public responses minimize private Partner data and do not expose credentials,
+  service tokens or unnecessary precise location.
+- The proof set includes migration/readback, API/generated-client drift,
+  Operator and Partner negative authorization, importer preview/commit,
+  duplicate/stale/conflict/retry, category/variant/identifier rules,
+  customer visibility, bounded catalog pagination, RTL real-device customer
+  flow and real-device Partner flow.
+
+The capability does not admit marketing campaigns, promotions, recommendations,
+loyalty, advanced search infrastructure, POS/ERP/SFTP integration,
+multi-warehouse, multi-currency, WLT/payment, Captain dispatch or placeholder
+future catalog capabilities.
