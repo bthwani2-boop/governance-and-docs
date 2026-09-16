@@ -33,6 +33,22 @@ QUALITY_DIMENSION: GOVERNANCE_DOCS_RESIDUE
 
 `AFFECTED` requires the applicable owner, invariant/failure condition and evidence class. `PROVEN_UNAFFECTED` requires evidence-backed reasoning. `N/A_WITH_REASON` requires a scope-specific reason. `UNEXAMINED`, `MAYBE`, `LATER` and silent omission are not closure states.
 
+For user-facing quality, the durable owner split is explicit:
+
+```text
+UX_IA_CONTENT
+ACCESSIBILITY_RTL_LOCALIZATION
+→ governance/policy/EXPERIENCE.md
+
+VISUAL_IDENTITY_DESIGN_SYSTEM
+→ governance/policy/DESIGN.md
+
+RENDERED / INTERACTION / DEVICE PROOF OBLIGATION
+→ this QUALITY.md evidence model, using the applicable semantic owners above
+```
+
+The owner split does not permit independent local systems. Visual implementation must conform to the durable Design policy through the consuming repository's canonical executable Design System where reusable meaning is admitted; app-specific composition remains local to the owning surface.
+
 ## Proof model
 
 As applicable, prove:
@@ -49,9 +65,9 @@ As applicable, prove:
 - retry/timeout/recovery/restart/resume and concurrent-state correctness;
 - performance, resource use and capacity claims at the scale materially asserted;
 - logs/metrics/traces/audit attribution sufficient to prove and operate the affected outcome without leaking unnecessary sensitive data;
-- UX/information architecture/content clarity, interaction states and recovery;
+- UX/information architecture/content clarity, coherent application shell/navigation where material, interaction states and recovery;
 - accessibility, RTL/localization semantics, text scaling, keyboard/screen-reader/touch behavior as applicable;
-- brand/visual-system consistency through canonical Design System roles/components/patterns;
+- brand/visual-system consistency through the canonical Design policy and executable Design System roles/components/patterns;
 - native platform/device behavior and adaptive/responsive behavior;
 - runtime/config/infrastructure ownership and parity for the authorized environment;
 - dependency license/security/provenance/maintenance and supply-chain controls when dependencies change;
@@ -65,7 +81,7 @@ A quality dimension being unaffected never weakens another affected dimension. A
 
 When correctness depends on OS/device behavior, use representative real-device evidence for the material claim, including process restart/resume, foreground/background behavior, weak/offline reconnect, permissions, location/background restrictions, deep-link/notification handoff, text scaling/accessibility and post-recovery canonical readback as applicable. Export/build success alone does not prove these behaviors.
 
-For user-facing work, rendered quality is part of correctness. Representative evidence covers the materially affected responsive/adaptive sizes, RTL, light/dark appearance, accessibility, loading/empty/forbidden/conflict/offline/error/recovery states, and actual user interaction path. A screenshot alone is not journey proof.
+For user-facing work, rendered quality is part of correctness. Representative evidence covers the materially affected information architecture/shell/navigation, responsive/adaptive sizes, RTL, light/dark appearance, accessibility, loading/empty/forbidden/conflict/offline/error/recovery states, and actual user interaction path. A screenshot alone is not journey proof.
 
 ## External assurance
 
