@@ -31,6 +31,7 @@ const required = [
   "governance/system/SYSTEM.md",
   "governance/policy/QUALITY.md",
   "governance/policy/EXPERIENCE.md",
+  "governance/policy/DESIGN.md",
   "docs/README.md",
   "docs/DEVELOPMENT.md",
   "docs/OPERATIONS.md",
