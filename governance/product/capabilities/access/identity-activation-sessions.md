@@ -12,7 +12,7 @@ One Human Actor resolves to one permanent `actor_id`; verification, role admissi
 
 ## Ownership
 
-Identity owns `actor_id`, verified identifiers, credentials, high-level role admission, first-Operator bootstrap state, authentication proofs and role-scoped sessions. For a domain-managed role, the owning domain first establishes admission/eligibility and then sends an authorized role-admission request to Identity; Identity alone resolves or creates the `actor_id` and persists the role admission. DSH may request governed `partner`, `captain` and `field` role admission only from DSH-owned eligibility/onboarding truth. Surfaces never grant roles themselves.
+Identity owns `actor_id`, verified identifiers, credentials, high-level role admission, first-Operator bootstrap state, authentication proofs and role-scoped sessions. For a domain-managed role, the owning domain first establishes admission/eligibility and then sends an authorized role-admission request to Identity; Identity alone resolves or creates the `actor_id` and persists the role admission. DSH may request governed `partner`, `captain` and `field` role admission only from DSH-owned eligibility/onboarding truth. For `field`, that truth is the distinct DSH standing Field admission, not a joining-case field, phone number, or surface assertion. Surfaces never grant roles themselves.
 
 ## Current roles
 
