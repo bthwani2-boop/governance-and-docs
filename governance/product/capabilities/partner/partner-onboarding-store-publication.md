@@ -12,7 +12,7 @@ A prospective Partner progresses through one DSH-owned joining lifecycle to one 
 
 ## Ownership
 
-DSH owns joining-case, assignment, Partner/Store readiness, review/correction, canonical Service City and primary Commerce Vertical assignment, and Store-publication truth. Identity alone creates or resolves `actor_id` and admits role `partner`. Catalog publication remains with `CENTRAL_CATALOG`.
+DSH owns joining-case, Field standing admission/eligibility, assignment, Partner/Store readiness, review/correction, canonical Service City and primary Commerce Vertical assignment, and Store-publication truth. Identity alone creates or resolves `actor_id` and admits roles `partner` and `field` after an authorized DSH request. Catalog publication remains with `CENTRAL_CATALOG`.
 
 ## Invariants
 
@@ -26,6 +26,7 @@ DSH owns joining-case, assignment, Partner/Store readiness, review/correction, c
 - the initial operator admission/submit transition is the DSH-owned eligibility point that may request Identity `partner` role admission; a generic accounts action cannot create that role;
 - once bound to canonical `actor_id`, retries cannot silently rebind the case;
 - `field` is Partner Acquisition and Onboarding Representative only;
+- Field standing admission is a distinct DSH-owned fact: an Operator creates a candidate and may suspend or restore it; DSH may request Identity `field` role admission only for an eligible, unbound candidate, and the candidate binds to one canonical Field `actor_id`;
 - Field may originate/progress authorized joining work but cannot create Identity actors/roles, approve its own submission or publish a Store;
 - Store is not a tenant or actor; publication is its own lifecycle distinct from serviceability;
 - owner review is distinct from Field submission;
@@ -36,13 +37,15 @@ DSH owns joining-case, assignment, Partner/Store readiness, review/correction, c
 
 ## Minimal lifecycle
 
+FIELD CANDIDATE → DSH FIELD ADMISSION/ELIGIBILITY → authorized Identity request → Identity resolution + field ROLE ADMISSION → CANONICAL Field actor_id BINDING → authorized Field-originated joining work → owner review.
+
 PROSPECTIVE PARTNER → JOINING CASE (WITH FIRST-STORE SERVICE CITY + PRIMARY COMMERCE VERTICAL) → REQUIRED BUSINESS / FIRST-STORE DATA → DSH ADMISSION/ELIGIBILITY → authorized Identity request → Identity resolution + partner ROLE ADMISSION → CANONICAL actor_id BINDING → SUBMISSION → OWNER REVIEW → bound Partner atomic CORRECT-AND-RESUBMIT (PRESERVING/UPDATING SERVICE CITY + VERTICAL) when required → STORE READINESS WITH CANONICAL SERVICE CITY + VERTICAL → STORE PUBLICATION.
 
 Documents, evidence and visit checks exist only when current onboarding policy requires them; they are not separate capabilities.
 
 ## Failure and recovery
 
-Duplicate logical case, duplicate-actor risk, missing required Service City, stale version, unauthorized cross-case access, incomplete prerequisites, correction loop and retry conflict recover through canonical DSH/Identity readback.
+Duplicate logical case, duplicate-actor risk, missing required Service City, stale version, unauthorized cross-case access, incomplete prerequisites, correction loop and retry conflict recover through canonical DSH/Identity readback. A suspended or stale Field admission cannot originate joining work; restoring the DSH admission and its Identity role is an explicit Operator-owned recovery, and no retry may rebind a Field admission to a different actor.
 
 ## Material surfaces
 
