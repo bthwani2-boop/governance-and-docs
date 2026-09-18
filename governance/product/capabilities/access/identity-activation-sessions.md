@@ -21,7 +21,7 @@ The canonical current role set is owned by `governance/platform/PLATFORM.md`. Id
 
 - Client uses governed self-registration/login/recovery.
 - Partner/Captain/Field require domain admission/eligibility, governed Identity role admission, then one-time activation/enrollment and normal role-scoped session behavior. A current dispatch assignment is not a prerequisite for standing Captain admission.
-- Operator is the only control-panel human role. First bootstrap is one-time. Normal Operator login requires user-verified WebAuthn/Passkey; Operator password login and SMS-as-normal-login-MFA are not admitted.
+- Operator is the only Operator-workspace human role. First bootstrap is one-time. Normal Operator login requires user-verified WebAuthn/Passkey; Operator password login and SMS-as-normal-login-MFA are not admitted.
 
 ## Invariants
 

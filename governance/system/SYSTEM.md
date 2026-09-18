@@ -23,7 +23,7 @@ A service existing in source does not automatically admit Product breadth.
 
 ## Surface boundary
 
-`app-client`, `app-partner`, `app-captain`, `app-field`, and `control-panel` are deployable presentation/composition hosts. A host never becomes canonical owner because it renders or invokes a fact.
+Actor-facing Client, Partner, Captain, Field and Operator surfaces are presentation/composition hosts. A host never becomes canonical owner because it renders or invokes a fact. Exact deployable host names and repository paths remain implementation truth.
 
 ## Canonical writer/readback law
 

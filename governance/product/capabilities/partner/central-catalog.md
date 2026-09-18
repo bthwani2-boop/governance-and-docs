@@ -12,8 +12,7 @@ DSH owns one canonical catalog of commerce identities and one canonical Store
 offer truth. The same capability serves restaurants, groceries, pharmacies,
 fresh goods and other currently admitted Store verticals without collapsing a
 sellable package, a product family, a Store offer or a storefront section into
-one record. `control-panel` hosts Operator work; `app-partner` hosts authorized
-Store work; `app-client` reads a DSH-composed customer-safe storefront.
+one record. The Operator workspace hosts authorized catalog-governance work; the Partner surface hosts authorized Store work; the Client surface reads a DSH-composed customer-safe storefront.
 
 This is the current Central Catalog capability. It is not a second
 `CATALOG_V2` capability and it does not admit a full PIM, ERP, POS or marketing
