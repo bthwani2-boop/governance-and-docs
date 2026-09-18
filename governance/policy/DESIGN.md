@@ -51,7 +51,7 @@ Color alone never carries material state or action meaning.
 
 Typography prioritizes Arabic readability, clear hierarchy, stable shaping, legible numerals and platform-quality rendering. Screen titles identify the current job or context; supporting text clarifies state, consequence and recovery without backend vocabulary.
 
-The current system-font approach is an implementation baseline, not a permanent brand-font decision. A custom typeface is admitted only after Arabic shaping/RTL, weights, numerals, small-size legibility, Android/iOS/web rendering, text scaling, performance and licensing are proven.
+No custom brand typeface is currently admitted as a durable visual-identity decision. If a custom typeface is proposed, admission requires proven Arabic shaping/RTL, weights, numerals, small-size legibility, Android/iOS/web rendering, text scaling, performance and licensing. The font mechanism currently used by any surface is implementation truth.
 
 Exact font sizes, line heights, weights and platform mappings are executable Design System concerns unless a value itself becomes a durable brand decision.
 
