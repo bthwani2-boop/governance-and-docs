@@ -44,6 +44,6 @@ A transient delivery assignment is not standing role admission and is not requir
 
 No eligible Captain, timeout, decline, stale offer, concurrent assignment, reassignment conflict and offline state preserve one assignment truth. Expired offers cannot be accepted.
 
-## Material surfaces
+## Material participants
 
-`app-captain`, `control-panel`, `app-client` customer-safe tracking, DSH backend/database.
+Captain operations, Operator dispatch work, customer-safe Client tracking consequences and the DSH owner runtime/persistence are material consumers of this capability. Deployable host names and repository paths remain implementation truth.
