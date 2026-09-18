@@ -78,17 +78,10 @@ not require a proposal.
 
 ## Identifiers and media
 
-Identifiers belong to Variants, not Products. DSH supports a bounded typed
-identifier relation for `GTIN`, `EAN`, `UPC` and `SKU`, with exact uniqueness
-rules. A migrated legacy barcode is preserved as a typed legacy identifier
-until its exact external type is known; it is never treated as the sole
-Product identity.
+Identifiers belong to Variants, not Products. DSH supports a bounded typed identifier relation for `GTIN`, `EAN`, `UPC` and `SKU`, with exact uniqueness rules. An identifier whose external type is not verified must remain explicitly represented without inventing a more specific external type; no barcode or provider identifier becomes the sole Product identity.
 
-Media is a bounded catalog-owned relation. Existing image meaning is migrated
-without loss into that relation. A verified HTTP(S) asset URL may remain the
-current transport adapter when no managed object-storage owner is admitted;
-this does not authorize a media provider or microservice. Media URL input is
-validated and never contains credentials.
+Media is a bounded catalog-owned relation. Product media identity, role, ordering and authorization remain DSH catalog truth. Storage/provider/transport choice is an integration concern and does not become Product authority. External media references are validated, contain no credentials and are replaceable without redefining catalog identity.
+
 
 ## StoreOffer and StorefrontSection
 
@@ -107,9 +100,7 @@ version + attributable audit
 
 An offer does not copy canonical Product name, taxonomy, variant attributes,
 identifiers or canonical media. Partners may create and manage offers only for
-Stores they own. The old product-level `StoreAssortment` writer is not a
-parallel authority after cutover; the aggregate name may remain in historical
-audit only.
+Stores they own. `StoreOffer` is the sole current Store-assortment writer. Historical aggregate names or representations have no current mutation/readback authority.
 
 Quantity has exact integer base units and separate requested quantity,
 pricing basis, minimum, maximum and step semantics. Discrete quantities use a
@@ -155,7 +146,7 @@ positive exact price and valid quantity policy
 valid modifier configuration where applicable
 ```
 
-`app-client` never composes Product, Variant, Offer, category, modifier or
+The Client surface never composes Product, Variant, Offer, category, modifier or
 inventory requests to decide visibility. DSH returns a composed storefront
 read model, with bounded pagination/search and category/section filters when
 material. Direct IDs cannot bypass the evaluator and a Store detail response

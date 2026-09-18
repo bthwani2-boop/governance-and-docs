@@ -37,9 +37,9 @@ Financial/earnings semantics are not admitted in this minimum Product breadth an
 
 ## J4 — Operator-owned-domain operations
 
-OPERATOR SESSION → CONTROL-PANEL INTENT → APPLICABLE OWNER AUTHORIZATION → OWNER MUTATION OR READ → ATTRIBUTABLE EVIDENCE → CANONICAL READBACK.
+OPERATOR SESSION → OPERATOR-WORKSPACE INTENT → APPLICABLE OWNER AUTHORIZATION → OWNER MUTATION OR READ → ATTRIBUTABLE EVIDENCE → CANONICAL READBACK.
 
-`control-panel` is a host only. The capability protecting the fact owns the action.
+The Operator workspace is a host only. The capability protecting the fact owns the action.
 
 ## Journey completeness
 
