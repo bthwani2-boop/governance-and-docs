@@ -5,11 +5,11 @@ SEMANTIC_OWNER: governance/policy/QUALITY.md
 EXECUTION_AUTHORITY: NONE
 IMPLEMENTATION_STATE_AUTHORITY: NONE
 
-Quality is proven against the affected cone, not by one green test. Every material task must examine the complete material-quality census below; no dimension may disappear merely because the task began in a different layer.
+Quality is proven against the material affected cone and the claims being made, not by a universal checklist or one green command.
 
-## Material quality dimensions
+## Material quality discovery taxonomy
 
-Each `QUALITY_DIMENSION` below is a durable review dimension. For every material task, classify every one as `AFFECTED`, `PROVEN_UNAFFECTED`, or `N/A_WITH_REASON`.
+The following identifiers are durable discovery dimensions. They help agents find what may matter; they are not a requirement to manufacture an entry for every clearly irrelevant dimension in every task.
 
 QUALITY_DIMENSION: PRODUCT_BUSINESS
 QUALITY_DIMENSION: OWNERSHIP_ARCHITECTURE
@@ -31,9 +31,28 @@ QUALITY_DIMENSION: RELEASE_STORE_DEPLOYABLE_IDENTITY
 QUALITY_DIMENSION: VERIFICATION_EVIDENCE
 QUALITY_DIMENSION: GOVERNANCE_DOCS_RESIDUE
 
-`AFFECTED` requires the applicable owner, invariant/failure condition and evidence class. `PROVEN_UNAFFECTED` requires evidence-backed reasoning. `N/A_WITH_REASON` requires a scope-specific reason. `UNEXAMINED`, `MAYBE`, `LATER` and silent omission are not closure states.
+For each material task:
 
-For user-facing quality, the durable owner split is explicit:
+```text
+MATERIAL QUESTION
+→ DISCOVER DIMENSIONS THAT CAN PLAUSIBLY CHANGE CORRECTNESS OR CLOSURE
+→ RESOLVE EVERY SUCH DIMENSION
+→ STOP ENUMERATING DIMENSIONS THAT ARE CLEARLY IRRELEVANT
+```
+
+A plausibly material dimension is resolved as one of:
+
+```text
+AFFECTED
+PROVEN_UNAFFECTED
+N/A_WITH_REASON
+```
+
+`UNEXAMINED`, `MAYBE`, `LATER` and silent omission are forbidden for a plausibly material dimension.
+
+A ready Governance PR records the dimensions actually examined and the concrete reason/evidence for each. It does not repeat the entire catalog merely for ceremony.
+
+## Durable owner split for user-facing quality
 
 ```text
 UX_IA_CONTENT
@@ -44,49 +63,60 @@ VISUAL_IDENTITY_DESIGN_SYSTEM
 → governance/policy/DESIGN.md
 
 RENDERED / INTERACTION / DEVICE PROOF OBLIGATION
-→ this QUALITY.md evidence model, using the applicable semantic owners above
+→ this QUALITY.md evidence model using the applicable semantic owners above
 ```
 
-The owner split does not permit independent local systems. Visual implementation must conform to the durable Design policy through the consuming repository's canonical executable Design System where reusable meaning is admitted; app-specific composition remains local to the owning surface.
+Visual implementation conforms to the durable Design policy through the consuming repository's canonical executable Design System where reusable meaning is admitted. App-specific composition remains local to the owning surface.
 
 ## Proof model
 
 As applicable, prove:
 
-- Product/business state-machine correctness and user/business outcome;
-- semantic sufficiency: simplification preserves every current material distinction without overloaded fields, encoded naming conventions, UI-only semantics, hidden exceptions, duplicate logic or shadow truth;
+- Product/business state-machine correctness and current user/business outcome;
 - semantic owner, canonical writer/readback and architecture/boundary correctness;
-- reversibility/evolution safety for materially costly-to-reverse identities, boundaries, persistent data shapes and contracts: classify evolution cost and prove a viable migration/extension/cutover path for current evidence-backed risks without implementing speculative future capability;
+- semantic sufficiency without overloaded fields, encoded naming conventions, UI-only business semantics, hidden exceptions or shadow truth;
+- reversibility/evolution safety for materially costly-to-reverse identities, boundaries, persistent data shapes and public contracts;
 - database/migration/retention/concurrency integrity;
-- contract/event/generated-client and compatibility consistency;
+- contract/event/generated-client consistency;
 - authentication, authorization, abuse resistance and negative security cases;
-- privacy/PII/location minimization, purpose limitation and disclosure boundaries;
-- money precision, idempotency, unknown-outcome and reconciliation semantics;
-- retry/timeout/recovery/restart/resume and concurrent-state correctness;
-- performance, resource use and capacity claims at the scale materially asserted;
-- logs/metrics/traces/audit attribution sufficient to prove and operate the affected outcome without leaking unnecessary sensitive data;
-- UX/information architecture/content clarity, coherent application shell/navigation where material, interaction states and recovery;
-- accessibility, RTL/localization semantics, text scaling, keyboard/screen-reader/touch behavior as applicable;
-- brand/visual-system consistency through the canonical Design policy and executable Design System roles/components/patterns;
-- native platform/device behavior and adaptive/responsive behavior;
+- privacy/PII/location minimization and purpose limitation;
+- money precision, idempotency, unknown-outcome and reconciliation semantics when financial effects exist;
+- retry/timeout/recovery/restart/resume/concurrent-state correctness;
+- performance/resource/capacity only to the scale materially claimed;
+- observability/audit attribution sufficient for the affected outcome without unnecessary sensitive data;
+- UX/information architecture/content clarity, shell/navigation where material, interaction states and recovery;
+- accessibility, RTL/localization, text scaling, keyboard/screen-reader/touch behavior as applicable;
+- brand/visual-system consistency through the canonical Design policy and executable Design System;
+- native platform/device and responsive/adaptive behavior where claimed;
 - runtime/config/infrastructure ownership and parity for the authorized environment;
-- dependency license/security/provenance/maintenance and supply-chain controls when dependencies change;
-- package/bundle/EAS/signing/deep-link/provider/store/release identity where deployable identity or release is affected;
-- fit static/unit/contract/database/integration/browser/device/runtime evidence for each material claim;
+- dependency maturity/license/security/provenance/maintenance when dependencies change;
+- deployable identity when package/bundle/EAS/signing/deep-link/provider/store identity is affected;
+- claim-fit static/unit/contract/database/integration/browser/device/runtime evidence;
 - Governance/Docs convergence and absence of obsolete/shadow/losing paths after cutover.
 
-A quality dimension being unaffected never weakens another affected dimension. A single tool may cover several dimensions; tool count is not assurance strength. Evolution safety is risk-scaled: cheap, reversible decisions do not require speculative future analysis, while materially hard-to-reverse decisions require proportionately deeper falsification.
+A single tool may cover multiple dimensions. Tool count is not assurance strength.
 
 ## Real-device and rendered proof
 
-When correctness depends on OS/device behavior, use representative real-device evidence for the material claim, including process restart/resume, foreground/background behavior, weak/offline reconnect, permissions, location/background restrictions, deep-link/notification handoff, text scaling/accessibility and post-recovery canonical readback as applicable. Export/build success alone does not prove these behaviors.
+When correctness depends on OS/device behavior, use representative real-device evidence for the material claim, including restart/resume, foreground/background behavior, weak/offline reconnect, permissions, location/background restrictions, deep-link/notification handoff, text scaling/accessibility and canonical readback as applicable.
 
-For user-facing work, rendered quality is part of correctness. Representative evidence covers the materially affected information architecture/shell/navigation, responsive/adaptive sizes, RTL, light/dark appearance, accessibility, loading/empty/forbidden/conflict/offline/error/recovery states, and actual user interaction path. A screenshot alone is not journey proof.
+For user-facing work, rendered quality is correctness. Representative evidence covers the materially affected IA/shell/navigation, adaptive sizes, RTL, appearance, accessibility, applicable loading/empty/forbidden/conflict/offline/error/recovery states and actual interaction path.
+
+A screenshot alone is not journey proof. Static type/source checks do not override visibly, structurally or interactively defective behavior.
 
 ## External assurance
 
-Use current primary standards and assurance references from `docs/reference/` when they can change the proof model. Mutable upstream versions/status are revalidated at use. Best practice is evidence, not automatic architecture authority.
+Use current primary/assurance/experience evidence from `docs/reference/**` only when it can materially change the decision or proof. Mutable upstream status is revalidated at use.
 
 ## Closure
 
-For the exact authorized candidate/cone, quality closure requires zero unexamined material dimensions, zero affected dimensions without owner/rule/required proof, zero known material defect or contradiction, zero decision-critical unknown, zero stale required evidence, zero known material evolution dead end and zero unjustified shadow/residue within the affected cone. This is current material closure, not a claim of permanent infallibility or permanent domain finality.
+For the exact authorized candidate/cone, closure requires:
+- zero plausibly material dimensions left unresolved;
+- zero affected dimensions without owner/invariant/required proof;
+- zero known material defect or contradiction;
+- zero decision-critical unknown;
+- zero stale required evidence;
+- zero known material evolution dead end;
+- zero unjustified shadow/residue.
+
+This is current material closure, not permanent infallibility.

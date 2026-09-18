@@ -5,98 +5,99 @@ SEMANTIC_AUTHORITY: NONE
 PRODUCT_AUTHORITY: NONE
 CURRENT_IMPLEMENTATION_AUTHORITY: NONE
 
-This file is the repository-local operating law for maintaining BThwani durable knowledge. It owns execution and safety constraints only; it does not own Product semantics or implementation state.
+This file owns only how an agent safely judges and changes BThwani durable knowledge.
 
-`GOVERNANCE-STANDARDS.md` is the canonical project-neutral acceptance standard for the integrity of this governance repository and its agent constitution. It owns no BThwani Product/System/Policy meaning and its presence does not itself claim repository conformance.
+`GOVERNANCE-STANDARDS.md` is the project-neutral integrity acceptance standard. It owns no BThwani Product/System/Policy truth. `governance/**` owns current durable BThwani meaning. Exact source/config/schema/runtime/readback owns current implementation state. Git owns history.
 
-## 1. Canonical state, review lane and atomic candidates
+## 1. Canonical lane and exact state
 
 `main` is the only canonical durable-knowledge branch.
 
-Every material change is prepared on one short-lived candidate branch cut from the exact live `main` HEAD and is promoted only through a pull request back to `main`. Direct material mutation of `main` is forbidden. A candidate branch has no durable semantic authority before successful verification and merge to `main`.
+Every material change:
+- starts from the exact live remote `main` HEAD on one short-lived candidate branch;
+- is verified on an exact candidate SHA;
+- is promoted only by pull request to `main`;
+- re-reads live `main` immediately before merge;
+- reconciles and invalidates affected evidence if the target moved;
+- closes only from the resulting verified canonical `main` state.
 
-- Pin live remote `main` before material reasoning.
-- Pin the exact candidate SHA while mutating/verifying a cutover.
-- Keep one candidate branch for one coherent material knowledge change; never maintain parallel long-lived knowledge branches.
-- A ready-for-review PR must carry the exact candidate, affected cone, `GOVERNANCE_IMPACT`, material-quality census, external-evidence/freshness impact, verification evidence and negative-space/residue census.
-- Required repository knowledge checks must pass on the exact candidate before merge. Green CI is necessary evidence, never semantic authority.
-- Re-read live remote `main` immediately before merge; if it moved, reconcile and invalidate affected evidence.
-- Retire/delete the candidate branch after merge when tooling permits; regardless, it has no authority after merge.
-- Final closure is claimed only from the verified resulting `main` HEAD.
-
-Repository protection/ruleset configuration should enforce the same lane where the hosting platform permits it: no force-push/delete of `main`, PR promotion for material changes, and required knowledge checks with no routine bypass.
+Direct material mutation, force-push/delete, routine bypass and parallel long-lived knowledge branches are noncanonical.
 
 ## 2. Fact-specific authority
 
 ```text
 HUMAN AUTHORIZATION
-→ current objective / mutation scope / accepted risk
+→ current objective / scope / accepted consequential change
 
-EXACT SOURCE / CONFIG / DB / RUNTIME / READBACK
-→ what currently exists, executes, persists or happened
+SOURCE / CONFIG / SCHEMA / DATABASE / RUNTIME / READBACK
+→ what currently exists, executes and persists
 
-GOVERNANCE
-→ current durable BThwani Product/System/Policy baseline
+GOVERNANCE-STANDARDS.md
+→ integrity rules for Governance and agent constitutions
 
-DOCS
-→ non-authoritative development / operations guidance
+governance/**
+→ current durable BThwani Product/System/Policy meaning
 
-PRIMARY / NORMATIVE
-→ external technical facts within exact scope
+docs/reference/**
+→ non-authoritative evidence routing
 
-ASSURANCE
-→ security / quality / reliability falsification frameworks
-
-OSS / PRODUCT EXEMPLARS
-→ edge cases / state machines / failure-recovery / test-oracle value
-
-DISCOVERY CATALOGS
-→ candidates only; never adoption authority
+PRIMARY / NORMATIVE / ASSURANCE / EXPERIENCE / OSS / PRODUCT EXEMPLARS
+→ question-specific external evidence
 
 DONOR / HISTORY
-→ historical intent / lost semantics / forensic value; lowest authority
+→ historical intent / lost semantics / forensic evidence
+
+GIT
+→ history and rationale
 ```
 
-No source has global precedence. Documented, implemented, popular, repeated or green does not mean correct.
-SOURCE AGREEMENT != INDEPENDENT CORROBORATION. SOURCE COUNT != EVIDENCE STRENGTH. TRIANGULATION != VOTING.
-Corroboration gains weight only from fact-specific authority, independence, directness, currentness and applicability; sources inheriting the same claim do not become stronger merely by repetition.
+No source has global precedence. Repetition, implementation, popularity or a green check never makes a claim correct by itself.
 
-## 3. Mandatory material-task law
+## 3. Material-task law
 
 For every material task:
 
 ```text
 PIN EXACT STATE
 → ESTABLISH MATERIAL QUESTION
-→ INSPECT CURRENT BTHWANI REALITY WHEN RELEVANT
-→ LOAD ONLY DECISION-RELEVANT KNOWLEDGE / REFERENCES
-→ BUILD MATERIAL AFFECTED CONE
-→ CLASSIFY FACT / INFERENCE / UNKNOWN
+→ INSPECT CURRENT BTHWANI REALITY WHEN IT CAN CHANGE THE DECISION
+→ DISCOVER PLAUSIBLY MATERIAL QUALITY DIMENSIONS
+→ LOAD ONLY EVIDENCE CLASSES THAT CAN CHANGE NEED / OWNER / BOUNDARY / RISK / SOLUTION / PROOF
+→ CLASSIFY CLAIMS BY DURABILITY
 → FALSIFY CURRENT GOVERNANCE
-→ RESOLVE EVERY QUALITY_DIMENSION DECLARED BY governance/policy/QUALITY.md
-→ CLASSIFY REVERSIBILITY / EVOLUTION COST FOR MATERIALLY COSTLY-TO-REVERSE DECISIONS
-→ TEST SEMANTIC SUFFICIENCY + MATERIAL EVOLUTION SAFETY
-→ SELECT SIMPLEST COMPLETE BTHWANI-FIT MODEL
+→ DESIGN THE SIMPLEST COMPLETE BTHWANI-FIT OWNER MODEL
 → CLASSIFY GOVERNANCE_IMPACT
-→ TREAT REQUIRED KNOWLEDGE CHANGE
-→ VERIFY THE WHOLE MATERIAL CONE
-→ FRESH ADVERSARIAL RE-CENSUS
+→ TREAT THE CANONICAL OWNER
+→ VERIFY CLAIM-SPECIFICALLY
+→ FRESH NEGATIVE-SPACE / LOSSLESSNESS CENSUS
 → CLOSE
 ```
 
-For each `QUALITY_DIMENSION` the task records exactly one of:
+The quality-dimension catalog in `governance/policy/QUALITY.md` is a discovery taxonomy, not a requirement to manufacture commentary about clearly irrelevant dimensions. Every plausibly material dimension must be resolved; silent omission of a plausibly material dimension is forbidden.
+
+Research stops when additional evidence can no longer materially change the current decision.
+
+## 4. Evidence council
+
+For a material question, consider these evidence lanes for applicability:
 
 ```text
-AFFECTED
-PROVEN_UNAFFECTED
-N/A_WITH_REASON
+LIVE BTHWANI
+CURRENT GOVERNANCE
+DONOR / HISTORY
+OSS / PRODUCT EXEMPLARS
+YEMEN-MARKET / COMPETITOR EVIDENCE
+PRIMARY TECHNOLOGY SOURCES
+NORMATIVE / ASSURANCE SOURCES
+EXPERIENCE / DESIGN SOURCES
+CURRENT ECOSYSTEM / TOOLING DISCOVERY
 ```
 
-`UNEXAMINED`, `MAYBE`, `LATER` and silent omission are forbidden. `AFFECTED` requires an owner/invariant and fit evidence plan; `PROVEN_UNAFFECTED` and `N/A_WITH_REASON` require a concrete reason.
+Inspect a lane when it can materially change the decision. Do not repeatedly reopen an already-proven reusable decision without new disconfirming evidence or changed constraints.
 
-Research stops when additional evidence can no longer change owner, boundary, invariant, failure/recovery model, solution or proof. Evolution inquiry is likewise risk-scaled: inspect materially plausible high-cost or hard-to-reverse consequences that can change the current decision; do not design speculative future capability trees.
+External evidence is distilled into the correct BThwani owner or discarded; research transcripts and mutable market/tool inventories do not become live Governance.
 
-## 4. Mandatory Governance impact
+## 5. Governance impact
 
 Every material task classifies exactly one:
 
@@ -107,115 +108,85 @@ GOVERNANCE_IMPACT=UPDATE_REQUIRED
 GOVERNANCE_IMPACT=DEFECT_FOUND
 ```
 
-`NOT_CHECKED`, `LATER`, `MAYBE` and silent implementation-only drift are forbidden closure states.
+- `NONE`: the affected cone cannot materially change durable Governance meaning.
+- `REVALIDATE_ONLY`: relevant durable meaning was actively challenged and remains correct.
+- `UPDATE_REQUIRED`: the authorized outcome changes durable meaning.
+- `DEFECT_FOUND`: current Governance is stale, wrong, incomplete, duplicated or otherwise defective.
 
-`UPDATE_REQUIRED` or `DEFECT_FOUND` means closure requires correction of the canonical owner, removal of obsolete/duplicate meaning, successful knowledge verification and deliberate consumer repin when the current authorized implementation outcome needs the new knowledge.
+`NOT_CHECKED`, `MAYBE`, `LATER` and silent implementation-only drift are forbidden.
 
-When an implementation task discovers required durable knowledge change, the durable-knowledge change is merged to canonical `governance-and-docs/main` first; only then may an implementation candidate deliberately repin the resulting exact Governance SHA. A consuming implementation never pins a temporary Governance candidate branch.
+When implementation work requires `UPDATE_REQUIRED` or `DEFECT_FOUND`, correct and merge the canonical Governance owner first. Only then may a consumer deliberately pin the resulting immutable Governance SHA.
 
-## 5. Full restructuring authority
+## 6. Semantic conservation and restructuring
 
-KNOWLEDGE STRUCTURE HAS NO PRESERVATION RIGHT.
+Knowledge structure has no preservation right; required durable meaning does.
 
-When evidence proves that tree shape, folder taxonomy, document split, owner placement, reference organization or verifier topology creates duplicate authority, ambiguity, future breadth, stale ownership or higher whole-system entropy, the agent is authorized and obligated to merge, split, rehome, rename, delete or restructure the full affected knowledge tree.
+For refoundation or material restructuring:
 
 ```text
-SEMANTIC CENSUS
+CLAIM-BY-CLAIM CENSUS
+→ CLASSIFY DURABLE / IMPLEMENTATION / HISTORY / MUTABLE EXTERNAL FACT
 → TARGET OWNER MODEL
-→ PRESERVE REQUIRED DURABLE MEANING
-→ MIGRATE MATERIAL REFERENCES / CONSUMERS / VERIFIERS
-→ DELETE LOSING TOPOLOGY
-→ VERIFY ZERO BROKEN / DUPLICATE / ORPHAN AUTHORITY
+→ KEEP / MOVE / MERGE / REWRITE / DELETE
+→ MAP EVERY SURVIVING DURABLE MEANING TO ONE OWNER
+→ EXPLICITLY JUSTIFY EVERY MATERIAL SEMANTIC REMOVAL
+→ MIGRATE REFERENCES / CONSUMERS / VERIFIERS
+→ DELETE LOSING TOPOLOGY / DUPLICATE AUTHORITY / HISTORY RESIDUE
+→ PROVE NO MATERIAL MEANING LOST
 ```
 
-Preserve required meaning, not historical shapes. Git is the archive. Restructure for evidence-backed correctness and simplicity, never aesthetics.
+Git is the archive. Do not preserve historical cutover state, implementation snapshots or future placeholders as current Governance.
 
-## 6. Demand-created durable knowledge
+A new file, owner, policy, capability, registry, verifier or abstraction must prove a unique current responsibility that a simpler existing owner cannot satisfy.
 
-```text
-CURRENT DURABLE NEED → ADMIT
-CURRENT MATERIAL DISTINCTION → PRESERVE AT THE CORRECT OWNER
-COHESIVE OWNER → EXTEND
-NONCOHESIVE OWNER → SPLIT / REHOME
-NO CURRENT NEED → ABSENT
-FUTURE CAPABILITY / IDEA → ABSENT FROM LIVE GOVERNANCE UNTIL PROVEN
-MATERIAL HIGH-COST EVOLUTION RISK → PRESERVE CORRECT CURRENT MEANING / BOUNDARIES / MIGRATABILITY; DO NOT PREBUILD THE FUTURE
-```
+## 7. External change and technology evolution
 
-MINIMIZE LIVE STRUCTURE, NOT REQUIRED MEANING.
-PRESERVE CHANGEABILITY, NOT SPECULATIVE FUTURE STRUCTURE.
-CURRENT COMPLETE != PERMANENTLY FINAL.
+Mutable external facts are revalidated at actual use.
 
-An omission, merge or simplification is valid only when the surviving canonical model remains losslessly sufficient for current Product/System/Policy truth and does not create an avoidable evidence-backed evolution dead end. Future extensibility is preserved through correct current meaning, stable identities, ownership boundaries and feasible migration/cutover paths—not placeholder capabilities, speculative abstractions or partial future implementations.
+When a materially affected technology, platform, provider or tooling boundary is extended or refounded, inspect current primary sources for stable capabilities, deprecations, security/reliability changes or simpler mechanisms that can materially alter the solution.
 
-A new capability, policy, owner, file, reference class, registry, abstraction or verifier must prove unique current responsibility and absence of a stronger existing owner.
+Newer is not automatically better. Adoption is a decision, not a discovery result. Evaluate current need, maturity/status, compatibility, regression evidence, security/license/provenance, operational cost, migration/rollback, complexity removed and claim-specific proof. Pre-release novelty does not enter the canonical baseline merely because it is newer.
 
-No future-status capability files, placeholder Product breadth, duplicate handbook, shadow registry, live ADR tree, research transcript archive or manual implementation inventory.
-
-## 7. External evidence and distillation
-
-Select source class by the question:
-
-```text
-protocol/platform fact → PRIMARY / NORMATIVE
-security/quality/SDLC → ASSURANCE
-experience/platform interaction/accessibility/design-system question → EXPERIENCE / DESIGN EVIDENCE
-domain/product edge case → OSS / PRODUCT EXEMPLAR
-commodity capability search → DISCOVERY CATALOG
-historical intent/lost semantic → DONOR / HISTORY
-```
-
-Reference existence never authorizes adoption.
-
-```text
-EXACT QUESTION
-→ EXTRACT INVARIANTS / EDGE CASES / FAILURE-RECOVERY / SECURITY / EXPERIENCE / TEST VALUE
-→ MAP PROVEN VALUE TO CURRENT BTHWANI OWNER
-→ PRESERVE / REFINE / REIMPLEMENT / REJECT
-→ DISCARD NON-DURABLE RESEARCH RESIDUE
-```
-
-Mutable versions, licenses, security posture, provider behavior, platform requirements and store/release policies are revalidated at use. A proven durable BThwani invariant is stored once at its canonical owner and reused without repeating the original research unless disconfirming evidence or changed constraints appear.
+Do not create a permanent market, dependency or technology-news inventory in Governance.
 
 ## 8. Verifier law
 
-A verifier is evidence, not authority. Prefer deterministic checks of relationships and invariants: unique ownership, capability identity/admission, reference integrity/classification, forbidden retired topology, authority boundaries, orphan knowledge, duplicate external-reference URLs, journey-to-capability coverage, quality-dimension coverage and PR evidence structure.
+A verifier is deterministic evidence, not semantic authority.
 
-Do not freeze incidental prose, arbitrary file sizes/line counts or temporary cutover vocabulary. Exact wording is protected only when wording itself is the durable contract.
+Prefer checks for relationships and mechanically detectable forbidden states: unique ownership, required authority metadata, capability admission/identity relationships, reference integrity, orphan knowledge, retired topology and low-false-positive implementation/history snapshots.
 
-If a recurring material defect class can be detected deterministically, harden the verifier in the same coherent change when proportionate. Semantic sufficiency or evolution safety must not be reduced to token-presence checks that manufacture false confidence.
+Do not encode semantic correctness as brittle prose matching. Exact wording is protected only when wording itself is intentionally the contract.
 
 ## 9. Cross-repository consumption
 
-`governance-and-docs/main` is the latest canonical durable knowledge. A consuming implementation binds it through an exact immutable full commit SHA. Moving `main` never silently changes an already-pinned implementation candidate. Repin deliberately only when the authorized outcome requires the newer knowledge.
+A consuming repository binds Governance through one exact immutable full commit SHA.
 
-A consumer binding manifest is provenance only, never a second knowledge registry. A consumer that repins must migrate affected knowledge queries/verifiers/PR evidence and other material consumers in the same coherent cutover; SHA-only repin with known consumer incompatibility is forbidden.
+A moving Governance `main` never silently changes a pinned implementation state. Repin only when the authorized outcome needs the newer durable meaning, and migrate affected consumers/verifiers in the same coherent cutover.
 
-## 10. Closure
+The pin is provenance, not a second knowledge registry.
 
-`100% CURRENT MATERIAL CLOSURE` means complete examination and zero known material defect for the exact authorized candidate/cone; it never means permanent software infallibility, capability exhaustion, a permanently final domain model or permanent rejection of unexamined future Product breadth.
+## 10. Current-material closure
 
-Closure requires:
+`100% CURRENT MATERIAL CLOSURE` is exact-state closure, not permanent infallibility.
+
+As applicable, closure requires:
 
 ```text
-MATERIAL_DIMENSIONS_UNEXAMINED=0
-AFFECTED_DIMENSIONS_WITHOUT_OWNER=0
-AFFECTED_DIMENSIONS_WITHOUT_RULE=0
-AFFECTED_DIMENSIONS_WITHOUT_REQUIRED_PROOF=0
-KNOWN_MATERIAL_DEFECTS=0
-KNOWN_MATERIAL_CONTRADICTIONS=0
-DUPLICATE_DURABLE_AUTHORITIES=0
+AUTHORIZED_OUTCOME_PROVEN=1
+PLAUSIBLY_MATERIAL_DIMENSIONS_UNRESOLVED=0
+APPLICABLE_EVIDENCE_CLASSES_IGNORED=0
+MATERIAL_DURABLE_MEANING_LOST=0
+DUPLICATE_OR_AMBIGUOUS_DURABLE_AUTHORITY=0
 UNOWNED_DURABLE_MEANING=0
-KNOWN_STALE_DURABLE_MEANING=0
-HISTORICAL_RESIDUE_AS_CURRENT_TRUTH=0
-CURRENT_IMPLEMENTATION_INVENTORY_AS_GOVERNANCE=0
-KNOWN_VERIFIER_FALSE_GREEN=0
-UNJUSTIFIED_KNOWLEDGE_STRUCTURE=0
+DISCOVERABLE_IMPLEMENTATION_STATE_AS_GOVERNANCE=0
+HISTORICAL_OR_CUTOVER_STATE_AS_CURRENT_GOVERNANCE=0
+STALE_REQUIRED_EXTERNAL_EVIDENCE=0
+KNOWN_GOVERNANCE_IMPLEMENTATION_CONTRADICTIONS=0
+KNOWN_SILENT_GOVERNANCE_DRIFT=0
+KNOWN_PARTIAL_CUTOVERS=0
 DECISION_CRITICAL_UNKNOWNS=0
-UNJUSTIFIED_FUTURE_PRODUCT_BREADTH=0
-KNOWN_MATERIAL_EVOLUTION_DEAD_ENDS=0
-KNOWN_GOVERNANCE_DRIFT=0
-UNJUSTIFIED_RESIDUE=0
+UNJUSTIFIED_KNOWLEDGE_COMPLEXITY_OR_RESIDUE=0
+INVALIDATED_REQUIRED_EVIDENCE=0
 ```
 
-Final closure requires a fresh adversarial re-census and verification of the resulting `main` HEAD.
+A fresh adversarial census of the resulting exact state is mandatory before closure.
