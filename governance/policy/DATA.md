@@ -10,5 +10,6 @@ IMPLEMENTATION_STATE_AUTHORITY: NONE
 - Migrations are deterministic, ordered, reviewable and fail closed on incompatible preconditions.
 - Idempotency, ownership integrity and concurrency invariants belong in durable constraints where reliable.
 - Generated/derived/read-model state is rebuildable and never mutation authority.
+- Synthetic/non-production proof data is disposable environment state. It never becomes migration/bootstrap Product data, and test convenience alone never justifies durable test-only schema or parallel fact ownership. Prefer environment isolation to polluting domain models with test flags.
 - Personal data is minimized, purpose-limited and exposed only to materially authorized consumers.
 - Retention/deletion/anonymization obligations stay with the fact owner; no global shortcut destroys another owner's required retained truth.
