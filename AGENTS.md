@@ -7,6 +7,8 @@ CURRENT_IMPLEMENTATION_AUTHORITY: NONE
 
 This file is the repository-local operating law for maintaining BThwani durable knowledge. It owns execution and safety constraints only; it does not own Product semantics or implementation state.
 
+`GOVERNANCE-STANDARDS.md` is the canonical project-neutral acceptance standard for the integrity of this governance repository and its agent constitution. It owns no BThwani Product/System/Policy meaning and its presence does not itself claim repository conformance.
+
 ## 1. Canonical state, review lane and atomic candidates
 
 `main` is the only canonical durable-knowledge branch.

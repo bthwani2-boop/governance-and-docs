@@ -22,6 +22,7 @@ function collect(dir) {
 
 const required = [
   "AGENTS.md",
+  "GOVERNANCE-STANDARDS.md",
   "README.md",
   "governance/GOVERNANCE.md",
   "governance/platform/PLATFORM.md",
@@ -40,6 +41,14 @@ const required = [
   ".github/workflows/governance-pr-policy.yml",
 ];
 for (const p of required) if (!exists(p)) fail(`missing required knowledge entrypoint: ${p}`);
+
+const metaStandard = read("GOVERNANCE-STANDARDS.md");
+for (const token of [
+  "ARTIFACT_CLASS: GOVERNANCE_AND_AGENT_META_STANDARD",
+  "PROJECT_SEMANTIC_AUTHORITY: NONE",
+  "CURRENT_IMPLEMENTATION_AUTHORITY: NONE",
+  "EXECUTION_AUTHORITY: NONE",
+]) if (!metaStandard.includes(token)) fail(`GOVERNANCE-STANDARDS.md missing meta-authority boundary: ${token}`);
 
 const retiredRoots = [
   "governance/project",

@@ -3,6 +3,7 @@
 This repository is BThwani's compact, challengeable, durable knowledge base.
 
 - `AGENTS.md` — repository-local operating law.
+- `GOVERNANCE-STANDARDS.md` — project-neutral acceptance standard for Governance/AGENTS integrity; it owns no BThwani semantics.
 - `governance/GOVERNANCE.md` — semantic-owner router.
 - `governance/platform/` — what BThwani is.
 - `governance/product/` — what BThwani currently does.
