@@ -5,7 +5,6 @@ SEMANTIC_OWNER: governance/product/capabilities/fulfillment/final-mile-delivery.
 EXECUTION_AUTHORITY: NONE
 IMPLEMENTATION_STATE_AUTHORITY: NONE
 CAPABILITY_ID: FINAL_MILE_DELIVERY
-STATUS: ADMITTED
 
 ## Outcome
 
@@ -31,6 +30,6 @@ DSH owns the operational delivery lifecycle and delivery result. Any financial e
 
 Connectivity loss, stale version, duplicate submission and delivery failure must preserve one canonical state and a safe resume/retry path. A failed delivery has no ordinary reassignment path after custody; an Operator must perform the explicit recovery transition before the current Captain can resume, or a separately governed exception must be admitted before any other custody change.
 
-## Material surfaces
+## Material participants
 
-`app-captain`, `app-client`, `app-partner`, `control-panel`, DSH backend/database.
+Captain delivery execution, Client tracking/readback, Partner operational readback, Operator recovery work and the DSH owner runtime/persistence are material consumers of this capability. Deployable host names and repository paths remain implementation truth.

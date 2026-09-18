@@ -14,13 +14,14 @@ One Human Actor resolves to one permanent `actor_id`; verification, role admissi
 
 Identity owns `actor_id`, verified identifiers, credentials, high-level role admission, first-Operator bootstrap state, authentication proofs and role-scoped sessions. For a domain-managed role, the owning domain first establishes admission/eligibility and then sends an authorized role-admission request to Identity; Identity alone resolves or creates the `actor_id` and persists the role admission. DSH may request governed `partner`, `captain` and `field` role admission only from DSH-owned eligibility/onboarding truth. For `field`, that truth is the distinct DSH standing Field admission, not a joining-case field, phone number, or surface assertion. Surfaces never grant roles themselves.
 
-## Current roles
+## Role-specific lifecycle
 
-Exactly `client`, `partner`, `captain`, `field`, `operator`. Every session has one role.
+The canonical current role set is owned by `governance/platform/PLATFORM.md`. Identity applies the following lifecycle distinctions to that set; this section does not independently admit roles.
+
 
 - Client uses governed self-registration/login/recovery.
 - Partner/Captain/Field require domain admission/eligibility, governed Identity role admission, then one-time activation/enrollment and normal role-scoped session behavior. A current dispatch assignment is not a prerequisite for standing Captain admission.
-- Operator is the only control-panel human role. First bootstrap is one-time. Normal Operator login requires user-verified WebAuthn/Passkey; Operator password login and SMS-as-normal-login-MFA are not admitted.
+- Operator is the only Operator-workspace human role. First bootstrap is one-time. Normal Operator login requires user-verified WebAuthn/Passkey; Operator password login and SMS-as-normal-login-MFA are not admitted.
 
 ## Invariants
 
@@ -43,6 +44,6 @@ Bootstrap creates the first `operator` exactly once. Subsequent Operator admissi
 
 Reject duplicate identity, self-granted managed role, repeated activation-as-login, cross-role credential use, challenge/session replay, invalid Passkey ceremony, unauthorized re-enrollment and caller-authored authority. Recovery preserves one canonical actor and role isolation.
 
-## Material surfaces
+## Material participants
 
-`app-client`, `app-partner`, `app-captain`, `app-field`, `control-panel`, Identity backend/database.
+Client self-access, managed Partner/Captain/Field access, Operator access and the Identity owner runtime/persistence are material consumers of this capability. Deployable host names and repository paths remain implementation truth.

@@ -21,10 +21,24 @@ jobs:
       - name: Checkout exact candidate
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
         with:
+          ref: ${{ github.event.pull_request.head.sha }}
           persist-credentials: false
-          fetch-depth: 2
+          fetch-depth: 0
 
-      - name: Validate material review evidence
+      - name: Prove candidate includes current canonical main
+        shell: bash
+        run: |
+          set -euo pipefail
+          git fetch --no-tags origin main
+          latest_main="$(git rev-parse origin/main)"
+          candidate="$(git rev-parse HEAD)"
+          git merge-base --is-ancestor "${latest_main}" "${candidate}" || {
+            echo "::error::Candidate does not include current governance main: main=${latest_main} candidate=${candidate}"
+            exit 1
+          }
+          echo "CURRENT_MAIN_INCLUDED=PASS main=${latest_main} candidate=${candidate}"
+
+      - name: Validate proportional material evidence
         shell: bash
         env:
           PR_BODY: ${{ github.event.pull_request.body }}
@@ -43,13 +57,13 @@ jobs:
           fi
 
           body="${PR_BODY:-}"
-          (( ${#body} >= 500 )) || { echo "::error::Ready Governance PR lacks material evidence"; exit 1; }
+          (( ${#body} >= 400 )) || { echo "::error::Ready Governance PR lacks material evidence"; exit 1; }
 
           required_headings=(
             '## Summary'
             '## Exact candidate and material question'
             '## Governance impact'
-            '## Material quality census'
+            '## Material quality scope'
             '## Evidence and freshness'
             '## Verification'
             '## Negative space and consumer impact'
@@ -61,13 +75,18 @@ jobs:
           mapfile -t impacts < <(grep -Eo 'GOVERNANCE_IMPACT=(NONE|REVALIDATE_ONLY|UPDATE_REQUIRED|DEFECT_FOUND)' <<<"${body}" || true)
           [[ ${#impacts[@]} -eq 1 ]] || { echo "::error::Ready PR must declare exactly one GOVERNANCE_IMPACT"; exit 1; }
 
-          mapfile -t dimensions < <(sed -n 's/^QUALITY_DIMENSION:[[:space:]]*\([A-Z0-9_]*\)[[:space:]]*$/\1/p' governance/policy/QUALITY.md)
-          [[ ${#dimensions[@]} -gt 0 ]] || { echo "::error::No canonical QUALITY_DIMENSION values found"; exit 1; }
+          mapfile -t canonical_dimensions < <(sed -n 's/^QUALITY_DIMENSION:[[:space:]]*\([A-Z0-9_]*\)[[:space:]]*$/\1/p' governance/policy/QUALITY.md)
+          [[ ${#canonical_dimensions[@]} -gt 0 ]] || { echo "::error::No canonical QUALITY_DIMENSION values found"; exit 1; }
 
-          for dimension in "${dimensions[@]}"; do
-            line="$(grep -E "^- ${dimension}: (AFFECTED|PROVEN_UNAFFECTED|N/A_WITH_REASON)([[:space:]]+[-—][[:space:]].+)$" <<<"${body}" || true)"
-            [[ -n "${line}" ]] || { echo "::error::Missing resolved material-quality classification for ${dimension}"; exit 1; }
-            [[ "$(wc -l <<<"${line}" | tr -d ' ')" == "1" ]] || { echo "::error::Duplicate material-quality classification for ${dimension}"; exit 1; }
+          mapfile -t classified < <(grep -E '^- [A-Z0-9_]+: (AFFECTED|PROVEN_UNAFFECTED|N/A_WITH_REASON)[[:space:]]+[-—][[:space:]].+$' <<<"${body}" || true)
+          [[ ${#classified[@]} -gt 0 ]] || { echo "::error::Ready PR must record at least one plausibly material quality dimension"; exit 1; }
+
+          declare -A seen=()
+          for line in "${classified[@]}"; do
+            dim="$(sed -E 's/^- ([A-Z0-9_]+):.*/\1/' <<<"${line}")"
+            printf '%s\n' "${canonical_dimensions[@]}" | grep -Fxq "${dim}" || { echo "::error::Unknown quality dimension: ${dim}"; exit 1; }
+            [[ -z "${seen[${dim}]:-}" ]] || { echo "::error::Duplicate quality dimension classification: ${dim}"; exit 1; }
+            seen["${dim}"]=1
           done
 
           if grep -Eiq '(^|[^A-Z])TODO([^A-Z]|$)' <<<"${body}"; then
@@ -75,17 +94,9 @@ jobs:
             exit 1
           fi
 
-          for closure in \
-            MATERIAL_DIMENSIONS_UNEXAMINED=0 \
-            AFFECTED_DIMENSIONS_WITHOUT_OWNER=0 \
-            AFFECTED_DIMENSIONS_WITHOUT_RULE=0 \
-            AFFECTED_DIMENSIONS_WITHOUT_REQUIRED_PROOF=0 \
-            KNOWN_MATERIAL_DEFECTS=0 \
-            KNOWN_MATERIAL_CONTRADICTIONS=0 \
-            DECISION_CRITICAL_UNKNOWNS=0 \
-            KNOWN_GOVERNANCE_DRIFT=0; do
+          for closure in             PLAUSIBLY_MATERIAL_DIMENSIONS_UNRESOLVED=0             AFFECTED_DIMENSIONS_WITHOUT_OWNER=0             AFFECTED_DIMENSIONS_WITHOUT_REQUIRED_PROOF=0             MATERIAL_DURABLE_MEANING_LOST=0             DUPLICATE_DURABLE_AUTHORITIES=0             DISCOVERABLE_IMPLEMENTATION_STATE_AS_GOVERNANCE=0             HISTORICAL_OR_CUTOVER_STATE_AS_CURRENT_GOVERNANCE=0             KNOWN_MATERIAL_DEFECTS=0             KNOWN_MATERIAL_CONTRADICTIONS=0             DECISION_CRITICAL_UNKNOWNS=0             KNOWN_GOVERNANCE_DRIFT=0             UNJUSTIFIED_KNOWLEDGE_COMPLEXITY_OR_RESIDUE=0; do
             grep -Fq -- "${closure}" <<<"${body}" || { echo "::error::Ready PR missing closure assertion: ${closure}"; exit 1; }
           done
 
           echo "GOVERNANCE_PR_POLICY=PASS"
-          echo "QUALITY_DIMENSIONS=${#dimensions[@]}"
+          echo "MATERIAL_QUALITY_DIMENSIONS=${#classified[@]}"

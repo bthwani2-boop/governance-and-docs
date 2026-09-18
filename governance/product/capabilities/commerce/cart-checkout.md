@@ -31,6 +31,6 @@ The server owns one exact integer monetary calculator. WLT/payment authorization
 
 Stale cart, unavailable or unpublished Offer, inactive Product/Variant, invalid modifier selection, invalid quantity policy, unserviceable address, conflict, offline state and ambiguous retry recover through canonical reread/revalidation. No success is reported before committed readback.
 
-## Material surfaces
+## Material participants
 
-`app-client`, DSH backend/database.
+The Client ordering experience and the DSH owner runtime/persistence are material consumers of this capability. Deployable host names and repository paths remain implementation truth.

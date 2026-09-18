@@ -7,82 +7,46 @@ IMPLEMENTATION_STATE_AUTHORITY: NONE
 
 ## Platform definition
 
-BThwani is one unified multi-surface delivery-commerce platform operated as one Product, not a collection of independent applications or Partner-specific platform instances.
+BThwani is one unified multi-surface delivery-commerce Product. Its actor-facing surfaces are hosts for role-specific work and presentation; they are not independent Products, tenants or business-truth owners.
 
-Current deployable surfaces are:
-- `app-client`
-- `app-partner`
-- `app-captain`
-- `app-field`
-- `control-panel`
-
-Surface hosts own shell/navigation/composition/presentation. They never own the business truth they display.
+Deployable host names, repository paths, package identities and current runtime composition are implementation truth and do not belong in this semantic owner.
 
 ## Human Actor model
 
-One human identity is represented cross-boundary by one permanent `actor_id`.
+One natural person is represented cross-boundary by one permanent `actor_id`.
 
-Current high-level roles/personas are exactly:
-- `client` → `app-client`
-- `partner` → `app-partner`
-- `captain` → `app-captain`
-- `field` → `app-field`
-- `operator` → `control-panel`
+The current high-level BThwani roles/personas are exactly:
+
+- `client`;
+- `partner`;
+- `captain`;
+- `field`;
+- `operator`.
 
 One Human Actor may hold multiple roles. Role admission, credentials and sessions never create a second human identity.
 
 `field` means Partner Acquisition and Onboarding Representative only. It does not create a generic field-operations domain.
 
-`operator` is the only control-panel human role. First-Operator bootstrap is a one-time Identity lifecycle, not a second role or Product layer.
+`operator` is the human persona for the Operator workspace. First-Operator bootstrap is a one-time Identity lifecycle, not a second role or Product layer.
 
-## Current domain owners
+Detailed role admission/authentication/session semantics belong to `IDENTITY_ACTIVATION_SESSIONS`. Bounded domain ownership belongs to `governance/system/SYSTEM.md`. Current Product breadth belongs to `governance/product/PRODUCT.md`.
 
-```text
-Identity
-→ actor_id / identifiers / credentials / high-level role admission / authentication / sessions
+## Surface model
 
-DSH
-→ Partner joining / Partner-Store / catalog / serviceability / cart / order / dispatch / custody / delivery operational truth
+A Surface is an actor-facing deployable presentation/composition host for admitted Product work.
 
-WLT
-→ financial truth when a financial capability is explicitly admitted
-```
+A Surface may own its shell, navigation, composition, transient presentation state and platform adapters. It never becomes the canonical owner of the business facts it renders or mutates.
 
-WLT remains a bounded system owner, but no financial Product capability is admitted merely because WLT exists.
-
-## Current Product breadth
-
-The current durable minimum Product breadth is the smallest coherent BThwani delivery core:
-- identity and role-scoped access;
-- Partner joining and Store publication;
-- central catalog and Store assortment publication;
-- customer address/serviceability;
-- cart/checkout;
-- canonical order lifecycle including Partner preparation;
-- captain dispatch;
-- Store↔Captain custody handoff;
-- final-mile delivery execution and customer readback.
-
-Everything else is absent from live Product governance until a current requirement proves it.
-
-## Current fulfillment invariant
-
-```text
-CURRENT_FULFILLMENT_MODEL = BTHWANI_DELIVERY
-ONE_STANDARD_ORDER → ONE_BTHWANI_FINAL_MILE_PATH
-NO_CLIENT_SELECTED_EXECUTION_LANE
-NO_PARTNER_OWNED_PARALLEL_FINAL_MILE_FLEET
-NO_DORMANT_ALTERNATE_FULFILLMENT_MODEL
-```
+Brand unity does not imply identical information architecture or shell across roles.
 
 ## Canonical terms
 
 - **Human Actor** — one natural person represented by `actor_id`.
-- **Role** — high-level Identity admission such as client/partner/captain/field/operator.
-- **Surface** — deployable host; never a domain owner by itself.
-- **Partner** — authenticated Human Actor with role `partner`.
+- **Role** — high-level Identity admission such as client, partner, captain, field or operator.
+- **Surface** — actor-facing presentation/composition host; never a business owner by itself.
+- **Partner** — authenticated Human Actor with the `partner` role.
 - **Store** — DSH business resource belonging to a Partner; not a tenant or Human Actor.
-- **Joining Case** — DSH pre/post-admission Partner onboarding workflow; never a second Partner identity.
+- **Joining Case** — DSH Partner-onboarding workflow; never a second Partner identity.
 - **Canonical owner** — bounded owner of durable meaning and authoritative mutation.
 - **Canonical readback** — owner-backed observable committed state after mutation.
 - **Derived projection** — rebuildable/read-optimized state with no mutation authority.

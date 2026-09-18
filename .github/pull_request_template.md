@@ -4,7 +4,7 @@
 
 ## Exact candidate and material question
 
-<!-- Record the exact base main SHA, exact candidate SHA, authorized material question and affected knowledge cone. Identify any materially costly-to-reverse identity, boundary, persistent-data or contract decision that requires explicit evolution-safety reasoning. -->
+<!-- Record exact base main SHA, exact candidate SHA, authorized material question and material affected knowledge cone. -->
 
 ## Governance impact
 
@@ -14,48 +14,36 @@
 
 <!-- Or NONE / REVALIDATE_ONLY / DEFECT_FOUND when that is the evidence-backed classification. -->
 
-## Material quality census
+## Material quality scope
 
-<!-- Replace every placeholder with exactly AFFECTED, PROVEN_UNAFFECTED, or N/A_WITH_REASON plus a concrete reason/evidence. No dimension may remain unexamined. -->
+<!-- List only quality dimensions that were plausibly material and actually examined. Do not manufacture entries for clearly irrelevant dimensions. Use one line per examined dimension: -->
 
-- PRODUCT_BUSINESS: TODO — reason/evidence
-- OWNERSHIP_ARCHITECTURE: TODO — reason/evidence
-- DATA_MIGRATION: TODO — reason/evidence
-- CONTRACT_API_EVENT: TODO — reason/evidence
-- SECURITY_AUTHORIZATION: TODO — reason/evidence
-- PRIVACY_PII_LOCATION: TODO — reason/evidence
-- FINANCE: TODO — reason/evidence
-- RELIABILITY_RECOVERY: TODO — reason/evidence
-- PERFORMANCE_CAPACITY: TODO — reason/evidence
-- OBSERVABILITY_AUDIT: TODO — reason/evidence
-- UX_IA_CONTENT: TODO — reason/evidence
-- ACCESSIBILITY_RTL_LOCALIZATION: TODO — reason/evidence
-- VISUAL_IDENTITY_DESIGN_SYSTEM: TODO — reason/evidence
-- PLATFORM_DEVICE: TODO — reason/evidence
-- RUNTIME_CONFIG_INFRA: TODO — reason/evidence
-- DEPENDENCY_SUPPLY_CHAIN: TODO — reason/evidence
-- RELEASE_STORE_DEPLOYABLE_IDENTITY: TODO — reason/evidence
-- VERIFICATION_EVIDENCE: TODO — reason/evidence
-- GOVERNANCE_DOCS_RESIDUE: TODO — reason/evidence
+- OWNERSHIP_ARCHITECTURE: AFFECTED — reason/evidence
+- GOVERNANCE_DOCS_RESIDUE: AFFECTED — reason/evidence
+
+<!-- Allowed states: AFFECTED / PROVEN_UNAFFECTED / N/A_WITH_REASON. Every plausibly material dimension must be resolved even though the full catalog is not repeated here. -->
 
 ## Evidence and freshness
 
-<!-- Which current implementation evidence and external primary/normative/assurance/experience/exemplar/donor sources materially changed or falsified the decision? Which mutable facts were revalidated now? Distinguish independent corroboration from repeated/inherited claims. -->
+<!-- Which live BThwani, Governance, donor/history, OSS/product exemplar, Yemen-market/competitor, primary technology, normative/assurance, experience/design or ecosystem evidence lanes were material? Which mutable facts were revalidated now? Which lanes were clearly irrelevant? -->
 
 ## Verification
 
-<!-- Exact-candidate checks and adversarial evidence. A green verifier proves structure/invariants only to the extent it exercises them. For materially costly-to-reverse decisions, record the reversibility/evolution-cost assessment and the defensible migration/extension/cutover path; do not claim speculative future implementation as proof. -->
+<!-- Exact-candidate proof. A green verifier proves only the deterministic relationships it exercises. -->
 
-`MATERIAL_DIMENSIONS_UNEXAMINED=0`
+`PLAUSIBLY_MATERIAL_DIMENSIONS_UNRESOLVED=0`
 `AFFECTED_DIMENSIONS_WITHOUT_OWNER=0`
-`AFFECTED_DIMENSIONS_WITHOUT_RULE=0`
 `AFFECTED_DIMENSIONS_WITHOUT_REQUIRED_PROOF=0`
+`MATERIAL_DURABLE_MEANING_LOST=0`
+`DUPLICATE_DURABLE_AUTHORITIES=0`
+`DISCOVERABLE_IMPLEMENTATION_STATE_AS_GOVERNANCE=0`
+`HISTORICAL_OR_CUTOVER_STATE_AS_CURRENT_GOVERNANCE=0`
 `KNOWN_MATERIAL_DEFECTS=0`
 `KNOWN_MATERIAL_CONTRADICTIONS=0`
 `DECISION_CRITICAL_UNKNOWNS=0`
-`KNOWN_MATERIAL_EVOLUTION_DEAD_ENDS=0`
 `KNOWN_GOVERNANCE_DRIFT=0`
+`UNJUSTIFIED_KNOWLEDGE_COMPLEXITY_OR_RESIDUE=0`
 
 ## Negative space and consumer impact
 
-<!-- What duplicate/stale/future/residue/losing owners or reference paths were searched for or deleted? What speculative future machinery was deliberately rejected, and what material evolution dead ends were actively checked for? Which consumers must deliberately repin after this PR merges, and which must remain pinned to older knowledge? -->
+<!-- What duplicate/stale/history/implementation/future/losing owners or paths were searched for or deleted? What consumers must deliberately repin after merge? -->

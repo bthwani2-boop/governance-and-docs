@@ -30,6 +30,6 @@ DSH owns custody/handoff and operational handoff-exception truth. Financial cons
 
 Stale assignment, wrong Store/Captain, duplicate attempt, retry conflict, mismatch/shortage and offline state recover from DSH canonical readback.
 
-## Material surfaces
+## Material participants
 
-`app-partner`, `app-captain`, `control-panel` for authorized exception handling, `app-client` tracking consequence, DSH backend/database.
+Partner handoff work, Captain pickup work, Operator exception handling, Client tracking consequences and the DSH owner runtime/persistence are material consumers of this capability. Deployable host names and repository paths remain implementation truth.

@@ -5,7 +5,6 @@ SEMANTIC_OWNER: governance/product/capabilities/partner/central-catalog.md
 EXECUTION_AUTHORITY: NONE
 IMPLEMENTATION_STATE_AUTHORITY: NONE
 CAPABILITY_ID: CENTRAL_CATALOG
-STATUS: REFOUNDED
 
 ## Outcome
 
@@ -13,8 +12,7 @@ DSH owns one canonical catalog of commerce identities and one canonical Store
 offer truth. The same capability serves restaurants, groceries, pharmacies,
 fresh goods and other currently admitted Store verticals without collapsing a
 sellable package, a product family, a Store offer or a storefront section into
-one record. `control-panel` hosts Operator work; `app-partner` hosts authorized
-Store work; `app-client` reads a DSH-composed customer-safe storefront.
+one record. The Operator workspace hosts authorized catalog-governance work; the Partner surface hosts authorized Store work; the Client surface reads a DSH-composed customer-safe storefront.
 
 This is the current Central Catalog capability. It is not a second
 `CATALOG_V2` capability and it does not admit a full PIM, ERP, POS or marketing
@@ -33,10 +31,7 @@ is retained for history but is not vertical-discoverable or customer-visible
 until an authorized Operator assigns one through the DSH owner path. No legacy
 Store receives a guessed vertical.
 
-The registry is data, not a hard-coded complete list. Current examples include
-`RESTAURANT`, `GROCERY`, `PHARMACY`, `FRESH_PRODUCE`, `ELECTRONICS`,
-`GIFTS_FLOWERS` and `DESSERTS_JUICES`; additions require normal DSH-authorized
-registry mutation and readback.
+The Commerce Vertical registry is canonical DSH data, not a hard-coded Governance inventory. Registry members change only through authorized DSH mutation and canonical readback; this capability owns the classification semantics, not the current registry contents.
 
 ## Product taxonomy
 
@@ -83,17 +78,10 @@ not require a proposal.
 
 ## Identifiers and media
 
-Identifiers belong to Variants, not Products. DSH supports a bounded typed
-identifier relation for `GTIN`, `EAN`, `UPC` and `SKU`, with exact uniqueness
-rules. A migrated legacy barcode is preserved as a typed legacy identifier
-until its exact external type is known; it is never treated as the sole
-Product identity.
+Identifiers belong to Variants, not Products. DSH supports a bounded typed identifier relation for `GTIN`, `EAN`, `UPC` and `SKU`, with exact uniqueness rules. An identifier whose external type is not verified must remain explicitly represented without inventing a more specific external type; no barcode or provider identifier becomes the sole Product identity.
 
-Media is a bounded catalog-owned relation. Existing image meaning is migrated
-without loss into that relation. A verified HTTP(S) asset URL may remain the
-current transport adapter when no managed object-storage owner is admitted;
-this does not authorize a media provider or microservice. Media URL input is
-validated and never contains credentials.
+Media is a bounded catalog-owned relation. Product media identity, role, ordering and authorization remain DSH catalog truth. Storage/provider/transport choice is an integration concern and does not become Product authority. External media references are validated, contain no credentials and are replaceable without redefining catalog identity.
+
 
 ## StoreOffer and StorefrontSection
 
@@ -112,9 +100,7 @@ version + attributable audit
 
 An offer does not copy canonical Product name, taxonomy, variant attributes,
 identifiers or canonical media. Partners may create and manage offers only for
-Stores they own. The old product-level `StoreAssortment` writer is not a
-parallel authority after cutover; the aggregate name may remain in historical
-audit only.
+Stores they own. `StoreOffer` is the sole current Store-assortment writer. Historical aggregate names or representations have no current mutation/readback authority.
 
 Quantity has exact integer base units and separate requested quantity,
 pricing basis, minimum, maximum and step semantics. Discrete quantities use a
@@ -160,7 +146,7 @@ positive exact price and valid quantity policy
 valid modifier configuration where applicable
 ```
 
-`app-client` never composes Product, Variant, Offer, category, modifier or
+The Client surface never composes Product, Variant, Offer, category, modifier or
 inventory requests to decide visibility. DSH returns a composed storefront
 read model, with bounded pagination/search and category/section filters when
 material. Direct IDs cannot bypass the evaluator and a Store detail response
@@ -174,43 +160,23 @@ classification recovery and import preview/commit. Every mutation goes to DSH
 for validation, authorization, idempotency, concurrency control, audit and
 canonical readback; the Control Panel is not a business owner.
 
-The existing central-product importer is the single importer. Its operational
-flow is:
-
-```text
-parse → validate → classify duplicate/conflict → preview
-→ explicit commit → attributable audit → canonical readback
-```
-
-Missing input rows never delete identities, blind upsert is forbidden, and a
-failed partial import is resumable without silently creating a different
-identity.
+Catalog bulk/import mutation has one canonical DSH writer path. Any admitted import mechanism must validate before mutation, distinguish duplicate/conflict from new identity, require an explicit commit boundary, preserve attributable audit and finish with canonical readback. Missing input never implies deletion, blind upsert is forbidden, and retry/resume cannot silently create a different identity.
 
 Partners can browse/search Shared Products, inspect Variants and identifiers,
 select Variants, create StoreOffers, manage price/quantity/availability/
 publication and manage their Store sections/modifiers. Cross-Store access,
 Shared Product mutation and direct Shared Product creation are denied.
 
-## Migration and historical truth
+## Evolution and migration invariants
 
-The catalog cutover is data-preserving and uses the next immutable DSH
-migration after the current graph. Applied migrations `001..009` remain
-immutable. For each existing central Product, preserve its identity and
-history, create one deterministic default Variant, move the legacy barcode to
-the Variant identifier relation and preserve image meaning through the media
-relation. `piece` may become discrete count semantics only when the current
-record proves it; `kg` proves mass/pricing-by-kg but does not prove a minimum or
-step, so the migrated offer remains closed until its quantity policy is
-configured.
+Catalog representation may evolve only through the DSH-owned migration history under `governance/policy/DATA.md`.
 
-Each existing StoreAssortment becomes a StoreOffer referencing that default
-Variant while preserving Store, price, currency, availability, publication
-history, versions and audit attribution. Existing Products without categories
-and Stores without verticals retain identity/history but fail customer
-eligibility closed until authorized recovery classification. No old current
-writer, flat storefront endpoint, Product-level barcode authority or copied
-Product identity survives the cutover. If an old relation is retained, it is
-immutable historical evidence only and has no current reader or writer.
+- already-applied migrations remain immutable without copying their current ordinal/range into Governance;
+- representation changes preserve current canonical Product, Variant, StoreOffer, identifier, media, category and audit meaning unless an explicitly authorized Product decision changes that meaning;
+- legacy/historical records are never guessed into a current classification merely to satisfy a newer model;
+- a migration/cutover has one winning current writer/readback path; losing writers and compatibility residue are removed when their bounded coexistence need ends;
+- historical cutover details belong to Git and executable migrations, not live capability truth.
+
 
 ## Failure, security and proof invariants
 
