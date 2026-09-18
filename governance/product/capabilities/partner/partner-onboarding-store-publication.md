@@ -47,6 +47,6 @@ Documents, evidence and visit checks exist only when current onboarding policy r
 
 Duplicate logical case, duplicate-actor risk, missing required Service City, stale version, unauthorized cross-case access, incomplete prerequisites, correction loop and retry conflict recover through canonical DSH/Identity readback. A suspended or stale Field admission cannot originate joining work; restoring the DSH admission and its Identity role is an explicit Operator-owned recovery, and no retry may rebind a Field admission to a different actor.
 
-## Material surfaces
+## Material participants
 
-`app-field`, `control-panel`, `app-partner` after admission, `app-client` after publication, DSH/Identity backends/databases.
+Field acquisition/onboarding work, Operator review/admission work, Partner post-admission work, Client publication consequences and the DSH/Identity owner runtimes/persistence are material consumers of this capability. Deployable host names and repository paths remain implementation truth.
