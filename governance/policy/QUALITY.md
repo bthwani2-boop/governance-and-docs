@@ -31,6 +31,14 @@ QUALITY_DIMENSION: RELEASE_STORE_DEPLOYABLE_IDENTITY
 QUALITY_DIMENSION: VERIFICATION_EVIDENCE
 QUALITY_DIMENSION: GOVERNANCE_DOCS_RESIDUE
 
+## Synthetic operational proof environment
+
+Synthetic runtime proof state is evidence/development state, not Product truth. When an operational journey is claimed, its business state is created through the canonical owner and writer paths. A synthetic proof environment is isolated, reproducible and disposable; valid proven proof state may be reused, while untrusted state is discarded and rebuilt through canonical owners rather than repaired manually to manufacture a green result.
+
+Material cross-role journey proof connects the affected real surfaces to the same canonical identities and business state. Synthetic proof does not authorize Product or schema exceptions and must not create uncontrolled real-world effects. Direct persistence mutation does not substitute for a business journey; it is limited to cases where persistence is the correct evidence producer for a database or fault/recovery claim.
+
+The durable meanings for data, security, integrations and reliability remain owned by `DATA.md`, `SECURITY.md`, `INTEGRATIONS.md` and `RELIABILITY.md`; this policy defines only the cross-cutting proof-environment boundary.
+
 For each material task:
 
 ```text
