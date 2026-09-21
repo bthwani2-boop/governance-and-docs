@@ -11,6 +11,7 @@ Routing only; behavior remains in each capability owner.
 `PARTNER_ONBOARDING_STORE_PUBLICATION` → `capabilities/partner/partner-onboarding-store-publication.md`
 `CENTRAL_CATALOG` → `capabilities/partner/central-catalog.md`
 `STORE_CAPTAIN_MEMBERSHIP` → `capabilities/partner/store-captain-membership.md`
+`STORE_SCOPED_ACCESS_DELEGATION` → `capabilities/partner/store-scoped-access-delegation.md`
 `SERVICEABILITY_ADDRESSES` → `capabilities/commerce/serviceability-addresses.md`
 `CART_CHECKOUT` → `capabilities/commerce/cart-checkout.md`
 `ORDER_LIFECYCLE` → `capabilities/commerce/order-lifecycle.md`

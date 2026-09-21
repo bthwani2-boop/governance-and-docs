@@ -89,7 +89,7 @@ Risk policy may require full collateral at one stage and a different exposure li
 
 Commercial fee bearer is versioned policy rather than an architectural constant. Where an external funding provider charges a fee, the policy may designate platform, customer or campaign funding as bearer.
 
-Field acquisition reward has an explicit attributable eligibility/earning event. Publication alone does not automatically imply the permanent economic earning rule. The current commercial policy must define the qualifying event exactly and WLT records the result exactly once.
+Field acquisition reward has an explicit attributable eligibility/earning event. For the current approved target, the qualifying event is canonical `STORE_CLIENT_VISIBLE`; DSH proves that event and WLT records the resulting earning exactly once. Any later change requires an explicit versioned commercial policy and must not reinterpret historical earnings.
 
 ## Refunds, payouts and settlement
 
@@ -107,7 +107,7 @@ eligible amount
 → completion or explicit exception
 ```
 
-Partner/Captain/Field may submit a destination candidate where the Product permits it, but activation/approval remains an authorized financial control. A destination change cannot rewrite an already approved payout snapshot.
+For the current approved target, Partner/Captain/Field surfaces are read-only for official-wallet destination master data. Finance creates or changes a destination through the authorized verification/approval workflow; beneficiaries cannot create, update, deactivate, replace or select a destination for payout. A destination change cannot rewrite an already approved payout snapshot.
 
 ## Cross-owner reliability
 

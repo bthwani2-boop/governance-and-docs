@@ -17,6 +17,8 @@ DSH owns content identity, placement/eligibility, target relation, publication l
 ## Invariants
 
 - content targets canonical Store/Catalog/promotion destinations or explicit bounded informational targets;
+- admitted short-form/catalog media may target a canonical `STORE`, `PRODUCT` or `CATEGORY`; DSH validates the relation and scope;
+- customer visibility requires the applicable review/approval and publication transition;
 - app-local hard-coded content is not publication authority;
 - media provider identity is replaceable without redefining content identity;
 - publication/expiry/scope are explicit and server-owned;

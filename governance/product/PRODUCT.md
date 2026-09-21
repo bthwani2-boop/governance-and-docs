@@ -60,6 +60,7 @@ For materially costly-to-reverse identity, relation, state, ownership or public-
 - `CUSTOMER_BALANCE_FUNDING`
 - `BENEFICIARY_EARNINGS_SETTLEMENT`
 - `STORE_CAPTAIN_MEMBERSHIP`
+- `STORE_SCOPED_ACCESS_DELEGATION`
 - `CUSTOMER_PICKUP`
 - `ORDER_CONVERSATION`
 - `COMMERCE_PROMOTIONS`
@@ -77,7 +78,7 @@ Each ID has exactly one capability owner under `capabilities/**`.
 - Partner Captain affiliation never creates a sixth high-level Identity role;
 - customer payment allocation is distinct from beneficiary/settlement allocation;
 - an external provider wallet or payment rail is never the internal BThwani balance or ledger;
-- Store is not a tenant and Partner is not an organization/member hierarchy;
+- Store is not a tenant and Partner is not a generic organization/member hierarchy; bounded Store-scoped access delegation is a DSH relationship capability;
 - surfaces never become business owners;
 - client input never grants identity, role, business scope or owner authority;
 - system-owner boundaries follow `governance/system/SYSTEM.md`;
@@ -87,7 +88,7 @@ Each ID has exactly one capability owner under `capabilities/**`.
 
 ## Explicit current non-goals
 
-Not admitted now: loyalty as a standalone Product, a social review/community network, a generic support/ticketing platform, advanced route-optimization Product, generic analytics Product, a standalone notification Product, broad customer-profile/privacy orchestration, Partner organization/member/team abstractions, generic multi-tenant SaaS architecture, ERP/POS replacement and speculative multi-currency breadth.
+Not admitted now: loyalty as a standalone Product, a social review/community network, a generic support/ticketing platform, advanced route-optimization Product, generic analytics Product, a standalone notification Product, broad customer-profile/privacy orchestration, generic Partner organization/member/team abstractions beyond bounded Store-scoped access delegation, generic multi-tenant SaaS architecture, ERP/POS replacement and speculative multi-currency breadth.
 
 Transactional notifications may exist as bounded projections of owner facts. Basic order rating/feedback may remain a bounded order fact without becoming a social review capability.
 
