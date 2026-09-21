@@ -8,29 +8,32 @@ CAPABILITY_ID: CART_CHECKOUT
 
 ## Outcome
 
-A client builds one owned Store cart and confirms one checkout intent from canonical Central Catalog, Store and serviceability evidence without client-authoritative eligibility or duplicate operational effects.
+A client builds one owned Store cart and confirms one Store-scoped checkout intent from canonical Catalog, Store and serviceability evidence without client-authoritative eligibility or duplicate operational/financial effects.
 
 ## Ownership
 
-DSH owns cart/checkout operational truth. Catalog, Store and serviceability owners provide canonical evidence. Financial authorization is not part of this minimum capability until separately admitted; DSH never invents financial truth.
+DSH owns cart/checkout operational truth. Catalog, Store and serviceability owners provide canonical evidence. WLT owns the admitted financial intent/allocation. Multi-Store composition belongs to `MULTI_STORE_CHECKOUT`.
 
 ## Invariants
 
-- one logical cart is scoped to the authenticated client and Store;
-- each CartLine identifies one canonical `StoreOffer` and one canonical `ProductVariant`, plus exact requested quantity and canonical selected modifier option IDs;
-- item identity, availability and authoritative commercial evidence come from the DSH customer-visible-offer evaluator and canonical server owners;
+- one logical cart is scoped to authenticated client and Store;
+- each CartLine identifies one canonical StoreOffer and ProductVariant plus exact requested quantity and selected modifier option IDs;
+- item identity, availability and commercial evidence come from canonical DSH owners;
 - mutation is versioned/idempotent and one retry identity cannot represent a different payload;
-- checkout uses only the current BThwani delivery path;
-- confirmed checkout snapshots the address/serviceability/item, variant, quantity, pricing-basis and modifier evidence required by `ORDER_LIFECYCLE`;
+- checkout carries an explicit fulfillment intent independent from payment method;
+- checkout establishes one stable logical operation identity before cross-owner financial effects; an ambiguous commit/retry cannot silently allocate another logical order identity;
+- confirmed checkout snapshots the address/serviceability/item/variant/quantity/pricing/modifier evidence required by `ORDER_LIFECYCLE`;
 - stale or invalidated evidence blocks confirmation;
-- client-supplied totals, Product/Variant/Offer facts, eligibility, Store scope, quantity validity, inventory, serviceability or execution-lane choice are not authoritative.
+- client-supplied totals, Product/Variant/Offer facts, eligibility, Store scope, quantity validity, inventory, serviceability, fulfillment authority or financial result are not authoritative.
 
-The server owns one exact integer monetary calculator. WLT/payment authorization is not part of this slice; DSH does not invent financial truth.
+## Financial boundary
+
+DSH derives the authoritative commercial basis from owner facts and asks WLT to establish the applicable payment/collection intent through `ORDER_PAYMENT_COLLECTION`. Customer payment allocation and later settlement allocation remain separate.
 
 ## Failure and recovery
 
-Stale cart, unavailable or unpublished Offer, inactive Product/Variant, invalid modifier selection, invalid quantity policy, unserviceable address, conflict, offline state and ambiguous retry recover through canonical reread/revalidation. No success is reported before committed readback.
+Stale cart, unavailable/unpublished Offer, invalid modifier/quantity, unserviceable address, financial refusal, conflict, offline state and ambiguous cross-owner outcome recover through canonical reread/reconciliation. No success is reported before committed owner readback.
 
 ## Material participants
 
-The Client ordering experience and the DSH owner runtime/persistence are material consumers of this capability. Deployable host names and repository paths remain implementation truth.
+Client ordering experience plus DSH/WLT owner runtimes and persistence are material consumers. Deployable host names and repository paths remain implementation truth.

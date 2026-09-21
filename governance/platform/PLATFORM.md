@@ -29,7 +29,9 @@ One Human Actor may hold multiple roles. Role admission, credentials and session
 
 `operator` is the human persona for the Operator workspace. First-Operator bootstrap is a one-time Identity lifecycle, not a second role or Product layer.
 
-Detailed role admission/authentication/session semantics belong to `IDENTITY_ACTIVATION_SESSIONS`. Bounded domain ownership belongs to `governance/system/SYSTEM.md`. Current Product breadth belongs to `governance/product/PRODUCT.md`.
+A Partner Captain is not a sixth Identity role. The Human Actor remains a canonical `captain`; Store-scoped affiliation/membership/eligibility is a DSH-owned relationship around that actor. The same Captain actor may hold multiple permitted relationships without creating duplicate identity.
+
+Detailed role admission/authentication/session semantics belong to `IDENTITY_ACTIVATION_SESSIONS`. Store-scoped Captain relationship semantics belong to `STORE_CAPTAIN_MEMBERSHIP`. Bounded domain ownership belongs to `governance/system/SYSTEM.md`. Current Product breadth belongs to `governance/product/PRODUCT.md`.
 
 ## Surface model
 
@@ -45,7 +47,9 @@ Brand unity does not imply identical information architecture or shell across ro
 - **Role** — high-level Identity admission such as client, partner, captain, field or operator.
 - **Surface** — actor-facing presentation/composition host; never a business owner by itself.
 - **Partner** — authenticated Human Actor with the `partner` role.
+- **Captain** — authenticated Human Actor with the `captain` role; operational relationships are separate DSH facts.
 - **Store** — DSH business resource belonging to a Partner; not a tenant or Human Actor.
+- **Store Captain Membership** — DSH-owned Store-scoped relation between a Store and canonical Captain actor; not a role.
 - **Joining Case** — DSH Partner-onboarding workflow; never a second Partner identity.
 - **Canonical owner** — bounded owner of durable meaning and authoritative mutation.
 - **Canonical readback** — owner-backed observable committed state after mutation.
