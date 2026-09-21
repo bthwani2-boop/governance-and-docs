@@ -23,6 +23,7 @@ DSH owns parent checkout composition and child Store Order relations. Each child
 - partial failure/cancellation/refund is explicit and idempotently reconciled;
 - parent cannot appear fully complete while an accepted child or associated financial effect remains unresolved;
 - grouped delivery/pickup optimization may coordinate children but cannot merge their ownership or settlement truth.
+- grouped planning is bounded operational coordination; advanced route-optimization is not admitted by this capability.
 
 ## Failure and recovery
 

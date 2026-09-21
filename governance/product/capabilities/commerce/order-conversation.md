@@ -21,7 +21,7 @@ DSH owns conversation membership, message identity/content relation, read state,
 - text is the baseline message type; admitted media remains bounded and provider-independent;
 - messages cannot mutate Order/payment/custody truth;
 - notification delivery is a projection of message/owner events, not message authority;
-- after operational completion the conversation follows a governed grace period then becomes read-only;
+- after operational completion the conversation follows a versioned governed grace period then becomes read-only;
 - rating submission does not control conversation closure;
 - deletion/redaction, where legally admitted, preserves required audit meaning.
 

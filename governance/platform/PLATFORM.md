@@ -33,6 +33,8 @@ A Partner Captain is not a sixth Identity role. The Human Actor remains a canoni
 
 Detailed role admission/authentication/session semantics belong to `IDENTITY_ACTIVATION_SESSIONS`. Store-scoped Captain relationship semantics belong to `STORE_CAPTAIN_MEMBERSHIP`. Bounded domain ownership belongs to `governance/system/SYSTEM.md`. Current Product breadth belongs to `governance/product/PRODUCT.md`.
 
+Store-scoped delegated access is not a new high-level Identity role. It is an explicit DSH-owned grant from an authorized Store owner to a bounded actor, with Store scope, an allowlisted permission set, expiry/revocation and audit. It cannot create a generic Partner organization or team hierarchy.
+
 ## Surface model
 
 A Surface is an actor-facing deployable presentation/composition host for admitted Product work.
@@ -50,6 +52,7 @@ Brand unity does not imply identical information architecture or shell across ro
 - **Captain** — authenticated Human Actor with the `captain` role; operational relationships are separate DSH facts.
 - **Store** — DSH business resource belonging to a Partner; not a tenant or Human Actor.
 - **Store Captain Membership** — DSH-owned Store-scoped relation between a Store and canonical Captain actor; not a role.
+- **Store-scoped access grant** — DSH-owned bounded permission grant within one Store; not a role, tenant or generic team membership.
 - **Joining Case** — DSH Partner-onboarding workflow; never a second Partner identity.
 - **Canonical owner** — bounded owner of durable meaning and authoritative mutation.
 - **Canonical readback** — owner-backed observable committed state after mutation.

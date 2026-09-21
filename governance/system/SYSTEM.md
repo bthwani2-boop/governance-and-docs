@@ -22,6 +22,7 @@ DSH
 → cart / checkout / Store Order
 → fulfillment mode
 → Store-Captain membership
+→ Store-scoped access grants / bounded delegated permissions
 → dispatch / custody / delivery / customer pickup
 → order-scoped conversation / feedback
 → promotion eligibility and discovery-content publication
