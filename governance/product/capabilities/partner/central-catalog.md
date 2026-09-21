@@ -197,7 +197,4 @@ Catalog representation may evolve only through the DSH-owned migration history u
   customer visibility, bounded catalog pagination, RTL real-device customer
   flow and real-device Partner flow.
 
-The capability does not admit marketing campaigns, promotions, recommendations,
-loyalty, advanced search infrastructure, POS/ERP/SFTP integration,
-multi-warehouse, multi-currency, WLT/payment, Captain dispatch or placeholder
-future catalog capabilities.
+Campaign/promotion eligibility and discovery-content publication are separately governed by `COMMERCE_PROMOTIONS` and `DISCOVERY_CONTENT`; they do not become Catalog mutation authority. The capability does not admit loyalty, advanced search infrastructure, POS/ERP/SFTP integration, multi-warehouse, multi-currency or placeholder catalog capabilities.

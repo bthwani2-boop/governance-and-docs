@@ -8,30 +8,30 @@ CAPABILITY_ID: ORDER_LIFECYCLE
 
 ## Outcome
 
-One eligible confirmed checkout creates at most one canonical DSH order, preserving the purchased catalog evidence, then the owning Partner can accept, reject and prepare it to one governed ready-for-dispatch boundary.
+One eligible confirmed Store-scoped checkout creates at most one canonical DSH Store Order, preserving purchased evidence, explicit fulfillment meaning and legal operational transitions through completion/exception.
 
 ## Ownership
 
-DSH owns operational order truth. WLT owns any later-admitted financial truth. Captain dispatch begins only after DSH order readiness.
+DSH owns operational order truth. WLT owns financial effects. Mode-specific execution is owned by the applicable fulfillment capability.
 
 ## Invariants
 
-- one canonical checkout scope yields at most one order;
-- required StoreOffer/ProductVariant/display-name/variant-attribute/modifier/quantity/pricing-basis/amount/address/serviceability snapshots remain stable after creation unless an explicit legal transition changes a defined field;
+- one canonical Store-scoped checkout operation yields at most one Store Order;
+- one Store Order belongs to exactly one Store;
+- a parent Multi-Store checkout never collapses multiple Stores into one Store Order;
+- the durable Order model distinguishes `BTHWANI_CAPTAIN`, `PARTNER_CAPTAIN` and `CUSTOMER_PICKUP`; fulfillment mode is distinct from payment method;
+- an implementation slice that currently executes only one mode may migrate/backfill its existing orders to that explicit mode, but another mode must not be introduced by reinterpreting old Order meaning;
+- required StoreOffer/ProductVariant/display-name/variant/modifier/quantity/pricing/amount/serviceability evidence remains a stable transaction snapshot unless an explicit legal transition changes a defined field;
 - Partner acts only on orders for authorized owned Stores;
-- Partner acceptance, rejection, preparation and readiness are canonical DSH transitions, never local UI state;
-- one standard order remains on the BThwani delivery path;
-- no client or Partner can select another final-mile owner or mutate WLT truth;
+- Partner acceptance, rejection, preparation and readiness are canonical DSH transitions;
+- cancellation/failure/refund eligibility derives from explicit canonical state, custody and policy rather than UI inference;
+- basic rating/feedback may be attached to a completed order as bounded feedback and remains independent from conversation closure;
 - canonical readback is required after mutation.
 
-## Commercial snapshot
+## Lifecycle boundary
 
-An OrderLine references the canonical `variant_id` and `store_offer_id` and also stores the immutable display-name, variant facts required for purchase, selected modifier snapshot, requested/final quantity, pricing basis, exact line amount, currency and address/serviceability evidence. Later Catalog edits cannot rewrite historical Order truth; the snapshot is historical transaction evidence, not a second live Product authority.
-
-## Minimal lifecycle
-
-CREATED → PARTNER_ACCEPTED → PREPARING → READY_FOR_DISPATCH → downstream dispatch/handoff/delivery. Rejection or cancellation is allowed only through explicitly legal pre-dispatch rules.
+The Partner preparation path is common until fulfillment readiness. Downstream state is mode-specific: platform Captain dispatch, Store-affiliated Captain fulfillment or Customer Pickup. Delivery/pickup completion and governed failures remain explicit.
 
 ## Failure and recovery
 
-Handle duplicate creation, stale version, unauthorized Store scope, rejection, preparation conflict, retry conflict and restart/resume without forking order truth.
+Handle duplicate creation, stale version, unauthorized Store scope, rejection, cancellation, preparation conflict, fulfillment failure, retry conflict and restart/resume without forking order truth. Cross-owner financial consequences reconcile through WLT rather than being inferred from DSH state alone.

@@ -9,17 +9,44 @@ IMPLEMENTATION_STATE_AUTHORITY: NONE
 
 ```text
 Identity
-→ Human Actor identity, verified identifiers, credentials, high-level role admission, authentication and sessions
+→ Human Actor identity
+→ verified identifiers
+→ credentials
+→ high-level role admission
+→ authentication / sessions
 
 DSH
-→ current delivery-commerce operational truth:
-  Partner joining / Partner / Store / catalog / serviceability / cart / order / dispatch / custody / delivery
+→ delivery-commerce operational truth
+→ Partner / Store / joining
+→ catalog / assortment / serviceability
+→ cart / checkout / Store Order
+→ fulfillment mode
+→ Store-Captain membership
+→ dispatch / custody / delivery / customer pickup
+→ order-scoped conversation / feedback
+→ promotion eligibility and discovery-content publication
+→ operational tracking / exception state
 
 WLT
-→ financial truth when a financial Product capability is explicitly admitted
+→ all internal financial truth
+→ payment intent / customer payment allocation
+→ internal customer balance / funding
+→ COD exposure / risk holds
+→ cash receivable / remittance
+→ fees / commissions / earnings
+→ refunds
+→ payout / settlement / reconciliation
 ```
 
-A service existing in source does not automatically admit Product breadth.
+A service existing in source does not automatically admit Product breadth; Product admission is owned by `governance/product/PRODUCT.md`.
+
+## Adapter boundary
+
+Media storage/delivery and notification delivery may use bounded technical adapters. An adapter owns transport/provider mechanics only.
+
+DSH remains owner of media relationships, publication eligibility, order conversation/message meaning, notification intent/read state and discovery-content semantics. A provider/device delivery adapter never becomes a semantic owner.
+
+External financial providers are rails around WLT-owned financial truth and never become internal ledger owners.
 
 ## Surface boundary
 
@@ -38,9 +65,9 @@ Caches, search, analytics, local state, generated clients and projections are de
 
 ## Canonical identity evolution law
 
-Canonical identity is semantic, not incidental. A durable identifier must retain one stable meaning across evolution. Later relationships, classifications or capabilities may be added around an existing identity when evidence admits them, but they must not silently redefine what historical instances of that identifier meant.
+Canonical identity is semantic, not incidental. A durable identifier retains one stable meaning across evolution. Later relationships, classifications or capabilities may be added around an existing identity but must not silently redefine historical identity meaning.
 
-If a materially necessary evolution would change identity semantics, ownership or historical interpretation, perform an explicit governed migration/cutover with affected contracts, data and consumers. Compatibility-by-reinterpretation is noncanonical.
+If a necessary evolution would change identity semantics, ownership or historical interpretation, perform an explicit governed migration/cutover with affected contracts, data and consumers. Compatibility-by-reinterpretation is noncanonical.
 
 ## Cross-boundary contracts
 
@@ -48,11 +75,21 @@ Each service-owned public/internal contract has one executable provenance. Gener
 
 Cross-service identifiers use canonical owner identities such as `actor_id`, not duplicate human/Partner identifiers.
 
+Cross-owner effects are not atomic merely because one service calls another synchronously.
+
+```text
+CANONICAL OWNER TRANSITION
+→ durable bounded handoff
+→ idempotent receiving-owner treatment
+→ canonical receiving-owner readback
+→ reconciliation of unknown/partial outcomes
+```
+
+The exact handoff mechanism is implementation-owned, but an unknown distributed outcome must never be hidden as local success or blindly retried with a different logical identity.
+
 ## Data ownership
 
 Each bounded owner owns its durable persistence and migration history. Another service may store a bounded reference/projection but cannot write the owner fact as parallel truth.
-
-Cross-owner changes require explicit handoff/idempotency/reconciliation semantics. Distributed transaction uncertainty must be represented and reconciled, never hidden as local success.
 
 ## Runtime/configuration
 
@@ -63,7 +100,7 @@ Governance owns durable runtime invariants only:
 - readiness means required dependencies/config/state are actually usable, not merely configured;
 - recovery procedures prove canonical readback.
 
-Exact ports, commands, package versions, containers and environment-specific composition belong to executable source/config and must not be copied here as current truth.
+Exact ports, commands, package versions, containers and environment-specific composition belong to executable source/config.
 
 ## Repository boundary
 

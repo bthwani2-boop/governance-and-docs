@@ -8,28 +8,23 @@ CAPABILITY_ID: FINAL_MILE_DELIVERY
 
 ## Outcome
 
-After the governed Store-to-Captain handoff, the assigned Captain completes one BThwani final-mile delivery to one terminal DSH result with consistent customer, Partner, Captain and Operator readback. A reported delivery failure is an explicit recoverable operational state until the legal recovery path is completed.
+After governed Store-to-Captain custody transfer, the canonical Captain completes one Captain-delivered Store Order to one terminal DSH result with consistent participant readback.
 
 ## Ownership
 
-DSH owns the operational delivery lifecycle and delivery result. Any financial effect belongs to WLT only when separately admitted.
+DSH owns operational delivery lifecycle/result. WLT owns payment collection, COD exposure/cash custody, earnings and other financial effects. Customer Pickup is a separate fulfillment capability.
 
 ## Invariants
 
-- delivery begins only after canonical pickup;
-- only the current assigned Captain can advance the active delivery;
+- delivery begins only after canonical Captain pickup;
+- only the canonical current Captain may advance active delivery;
 - terminal completion is recorded once and cannot be duplicated by retry;
-- a failed or blocked attempt remains explicit canonical state until a legal recovery transition occurs;
-- `delivery_failed` preserves the current Captain's physical-custody responsibility and keeps that Captain unavailable for new dispatch;
-- only an authenticated active Operator may initiate delivery recovery through the DSH owner; recovery transitions the same assignment and order from failed/in-custody back to active `in_custody`, clears the prior terminal result, and never reassigns custody;
-- recovery is attributable, version-checked and idempotent; retries converge on one assignment state, and only a later successful delivery releases Captain availability once;
-- customer tracking is a projection of DSH truth, not a writer;
-- restart and retry use canonical readback rather than local surface state.
+- delivery proof and payment collection are distinct owner-backed facts even when one user action triggers both;
+- failed/blocked attempt remains explicit canonical state until legal recovery;
+- a recoverable failure preserves physical-custody responsibility until a governed recovery/custody transition resolves it;
+- customer tracking is a DSH projection, not a writer;
+- restart/retry use canonical readback rather than local state.
 
 ## Failure and recovery
 
-Connectivity loss, stale version, duplicate submission and delivery failure must preserve one canonical state and a safe resume/retry path. A failed delivery has no ordinary reassignment path after custody; an Operator must perform the explicit recovery transition before the current Captain can resume, or a separately governed exception must be admitted before any other custody change.
-
-## Material participants
-
-Captain delivery execution, Client tracking/readback, Partner operational readback, Operator recovery work and the DSH owner runtime/persistence are material consumers of this capability. Deployable host names and repository paths remain implementation truth.
+Connectivity loss, stale version, duplicate submission, payment-collection uncertainty and delivery failure preserve one canonical operational state and safe reconciliation/resume path. WLT effects must not be treated as atomically committed merely because DSH completion was attempted.

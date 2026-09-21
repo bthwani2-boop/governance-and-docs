@@ -115,6 +115,8 @@ GOVERNANCE_IMPACT=DEFECT_FOUND
 
 `NOT_CHECKED`, `MAYBE`, `LATER` and silent implementation-only drift are forbidden.
 
+Current approved Governance may intentionally be broader than the active implementation slice. An admitted capability that is not yet implemented is not by itself Governance drift or an implementation defect unless the authorized objective or current delivery gate requires its completion. Implemented durable meaning that contradicts the admitted model is `GOVERNANCE_IMPACT=DEFECT_FOUND` and blocks further semantic expansion of that affected capability until Governance and implementation converge.
+
 When implementation work requires `UPDATE_REQUIRED` or `DEFECT_FOUND`, correct and merge the canonical Governance owner first. Only then may a consumer deliberately pin the resulting immutable Governance SHA.
 
 ## 6. Semantic conservation and restructuring

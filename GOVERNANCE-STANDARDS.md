@@ -67,6 +67,8 @@ EXECUTION_INSTRUCTION that belongs to the agent/repository operating contract
 
 When classification is materially uncertain, resolve the uncertainty before admitting the claim.
 
+A current durable Product decision may precede its implementation. Governance must not mirror implementation progress, and implementation absence alone does not invalidate an admitted durable Product decision. Semantic admission and implementation completion are separate claims with separate proof.
+
 ## 4. One meaning, one editable owner
 
 Every material durable meaning has exactly one editable canonical semantic owner.
