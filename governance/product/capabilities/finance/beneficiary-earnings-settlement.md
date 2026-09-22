@@ -18,6 +18,9 @@ WLT owns earnings ledger, beneficiary availability/holds, payout intent, officia
 
 - earnings are created from one explicit qualifying owner event and are idempotent;
 - economic entitlement is distinct from the customer's payment-source allocation;
+- outstanding Partner commission receivables from Store-collected pickup cash reduce that Partner's later eligible earnings before payout; they never offset another Partner's entitlement;
+- a remaining Partner commission receivable may be cleared by a direct Partner remittance only after WLT records and reconciles the verified receipt;
+- Store-collected sale proceeds already retained by the Partner do not become a second WLT Partner wallet credit;
 - Partner/Captain/Field surfaces do not create, update, deactivate, replace or select official-wallet destination master data; Finance owns the governed provisioning/change workflow;
 - payout approval freezes an immutable beneficiary/destination/amount snapshot;
 - external execution evidence is verified/reconciled before completion;
