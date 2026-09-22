@@ -45,7 +45,7 @@ ACTOR / USER OUTCOME
 - A route or screen is composition, not durable Product truth. Presentation follows the capability and service owners rather than becoming a competing business model.
 - A missing or materially wrong shell, navigation hierarchy or screen relationship is incomplete implementation even when each isolated screen renders and its API calls work.
 
-For the Operator workspace, the durable top-level information architecture is organized around six centers: Leadership; Operations; Partners and Catalog; Marketing and Content; Finance; Platform Settings and Permissions. Profile, appearance, session and security controls are shell/account utilities rather than a seventh business center. A center is an information-architecture responsibility, not a new service or semantic owner.
+For the Operator workspace, the durable top-level information architecture is organized around seven centers: Leadership; Operations; Partners; Catalog; Marketing and Content; Finance; Platform Settings and Permissions. Partners and Catalog are separate centers because partner lifecycle, field acquisition, serviceability and store readiness are distinct from catalog products, categories, verticals, proposals and imports. Profile, appearance, session and security controls are shell/account utilities rather than an eighth business center. A center is an information-architecture responsibility, not a new service or semantic owner.
 
 ## Interaction and platform adaptation
 
