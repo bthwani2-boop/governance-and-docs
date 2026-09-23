@@ -20,6 +20,7 @@ DSH owns operational order truth. WLT owns financial effects. Mode-specific exec
 - one Store Order belongs to exactly one Store;
 - a parent Multi-Store checkout never collapses multiple Stores into one Store Order;
 - the durable Order model distinguishes `BTHWANI_CAPTAIN`, `PARTNER_CAPTAIN` and `CUSTOMER_PICKUP`; fulfillment mode is distinct from payment method;
+- the Client selects one fulfillment mode from the Store's canonical enabled modes; checkout rejects a disabled or unavailable mode and snapshots the selected mode without fallback;
 - an implementation slice that currently executes only one mode may migrate/backfill its existing orders to that explicit mode, but another mode must not be introduced by reinterpreting old Order meaning;
 - required StoreOffer/ProductVariant/display-name/variant/modifier/quantity/pricing/amount/serviceability evidence remains a stable transaction snapshot unless an explicit legal transition changes a defined field;
 - Partner acts only on orders for authorized owned Stores;
