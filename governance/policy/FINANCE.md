@@ -122,3 +122,7 @@ DSH proves canonical operational transition
 ```
 
 Synchronous calls are not treated as a distributed transaction. A retry must preserve the same logical operation identity and cannot allocate a new financial identity merely because a commit result was ambiguous.
+
+## Finance access
+
+Every Finance workspace read and mutation requires the current Identity `finance` permission on the Operator session. The `operator` role alone is insufficient. Missing, stale or invalid permission evidence fails closed. The Finance commission-policy editor follows this boundary; each financial mutation remains attributed to its acting Operator and audited by its canonical owner.

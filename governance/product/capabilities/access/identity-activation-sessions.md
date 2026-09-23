@@ -47,3 +47,7 @@ Reject duplicate identity, self-granted managed role, repeated activation-as-log
 ## Material participants
 
 Client self-access, managed Partner/Captain/Field access, Operator access and the Identity owner runtime/persistence are material consumers of this capability. Deployable host names and repository paths remain implementation truth.
+
+## Operator Finance permission
+
+Identity issues one bounded `finance` permission to an Operator identity. It controls Finance workspace access without creating a new high-level role or a generic permissions engine. The one-time bootstrapped first Operator receives this permission and is the initial Finance access administrator; it may grant or revoke the permission only for another enabled Operator. Later Operators receive no Finance permission by default. Grants and revocations are reasoned, versioned and audited, and revocation invalidates affected Operator sessions.
