@@ -38,11 +38,13 @@ Capabilities: `SERVICEABILITY_ADDRESSES`, `CART_CHECKOUT`, `ORDER_LIFECYCLE`, `C
 
 ## J3 — Order financial lifecycle
 
-CHECKOUT FINANCIAL INTENT → PAYMENT/COLLECTION ALLOCATION → applicable COD EXPOSURE/HOLD OR INTERNAL BALANCE DEBIT → OPERATIONAL COMPLETION → PARTNER/CAPTAIN/FIELD EARNINGS AS APPLICABLE → CASH CUSTODY/REMITTANCE → PAYOUT/SETTLEMENT → RECONCILIATION → CANONICAL FINANCIAL READBACK.
+CUSTOMER OR BTHWANI CAPTAIN BALANCE FUNDING THROUGH AN APPROVED EXTERNAL CASH-IN RAIL → CHECKOUT FINANCIAL INTENT → PAYMENT/COLLECTION ALLOCATION → applicable COD EXPOSURE/HOLD OR INTERNAL BALANCE DEBIT → OPERATIONAL COMPLETION → PARTNER/CAPTAIN/FIELD EARNINGS AS APPLICABLE → COD CASH CUSTODY/REMITTANCE AS A SEPARATE RECEIVABLE-CLOSURE FLOW → MANUAL OFFICIAL-WALLET BENEFICIARY PAYOUT/SETTLEMENT → RECONCILIATION → CANONICAL FINANCIAL READBACK.
 
 External provider funding is a rail into internal balance, not a substitute for the WLT ledger. Unknown cross-owner or provider outcomes reconcile before another movement is attempted.
 
-Capabilities: `ORDER_PAYMENT_COLLECTION`, `CUSTOMER_BALANCE_FUNDING`, `BENEFICIARY_EARNINGS_SETTLEMENT`, `ORDER_LIFECYCLE`.
+Captain COD cash remittance closes the corresponding cash receivable and exposure hold; it is not Cash-In, Captain earnings payout or a debit of collateral for an ordinary successful delivery.
+
+Capabilities: `ORDER_PAYMENT_COLLECTION`, `CUSTOMER_BALANCE_FUNDING`, `CAPTAIN_BALANCE_FUNDING`, `PARTNER_CAPTAIN_FIELD_EARNINGS_SETTLEMENT`, `ORDER_LIFECYCLE`.
 
 ## J4 — Order exception, cancellation, refund, conversation and feedback
 
@@ -50,7 +52,7 @@ ORDER-SCOPED COMMUNICATION → legal cancellation/failure/exception decision →
 
 Conversation closure is independent from rating submission.
 
-Capabilities: `ORDER_LIFECYCLE`, `ORDER_CONVERSATION`, `ORDER_PAYMENT_COLLECTION`, `BENEFICIARY_EARNINGS_SETTLEMENT`.
+Capabilities: `ORDER_LIFECYCLE`, `ORDER_CONVERSATION`, `ORDER_PAYMENT_COLLECTION`, `PARTNER_CAPTAIN_FIELD_EARNINGS_SETTLEMENT`.
 
 ## J5 — Promotions/content to customer discovery
 
@@ -68,7 +70,9 @@ Capabilities: `MULTI_STORE_CHECKOUT`, `CART_CHECKOUT`, `ORDER_LIFECYCLE`, `ORDER
 
 OPERATOR SESSION → bounded owner-authorized intent → applicable DSH/WLT mutation or read → attributable evidence → canonical readback. Operator surfaces host work; they never become owners.
 
-Capabilities: `PARTNER_ONBOARDING_STORE_PUBLICATION`, `CENTRAL_CATALOG`, `STORE_SCOPED_ACCESS_DELEGATION`, `CAPTAIN_DISPATCH`, `ORDER_PAYMENT_COLLECTION`, `BENEFICIARY_EARNINGS_SETTLEMENT`, `COMMERCE_PROMOTIONS`, `DISCOVERY_CONTENT`.
+Capabilities: `PARTNER_ONBOARDING_STORE_PUBLICATION`, `CENTRAL_CATALOG`, `STORE_SCOPED_ACCESS_DELEGATION`, `CAPTAIN_DISPATCH`, `ORDER_PAYMENT_COLLECTION`, `PARTNER_CAPTAIN_FIELD_EARNINGS_SETTLEMENT`, `CUSTOMER_BALANCE_MANUAL_WITHDRAWAL`, `COMMERCE_PROMOTIONS`, `DISCOVERY_CONTENT`.
+
+The rare Customer balance withdrawal exception is initiated through Operations, approved/executed by authorized Finance staff, and independently reconciled before WLT finalizes the liability reduction. It is not customer self-service.
 
 ## Journey completeness
 
