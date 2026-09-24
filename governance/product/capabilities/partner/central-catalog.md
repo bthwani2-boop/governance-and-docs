@@ -8,11 +8,13 @@ CAPABILITY_ID: CENTRAL_CATALOG
 
 ## Outcome
 
-DSH owns one canonical catalog of commerce identities and one canonical Store
-offer truth. The same capability serves restaurants, groceries, pharmacies,
-fresh goods and other currently admitted Store verticals without collapsing a
-sellable package, a product family, a Store offer or a storefront section into
-one record. The Operator workspace hosts authorized catalog-governance work; the Partner surface hosts authorized Store work; the Client surface reads a DSH-composed customer-safe storefront.
+DSH owns central shared commerce identities, Store-local catalog content and
+one canonical Store offer truth. The capability serves restaurants, groceries,
+pharmacies, fresh goods and other currently admitted Store verticals without
+collapsing a shared sellable package, a Store-owned menu item, a Store offer or
+a storefront grouping into one record. The Operator workspace manages the
+shared catalog; the Partner surface manages the Store's local catalog and
+assortment; the Client surface reads a DSH-composed customer-safe storefront.
 
 This is the current Central Catalog capability. It is not a second
 `CATALOG_V2` capability and it does not admit a full PIM, ERP, POS or marketing
@@ -31,16 +33,18 @@ is retained for history but is not vertical-discoverable or customer-visible
 until an authorized Operator assigns one through the DSH owner path. No legacy
 Store receives a guessed vertical.
 
-The Commerce Vertical registry is canonical DSH data, not a hard-coded Governance inventory. Registry members change only through authorized DSH mutation and canonical readback; this capability owns the classification semantics, not the current registry contents.
+The Commerce Vertical registry is canonical DSH data, not a hard-coded Governance inventory. Registry members change only through authorized DSH mutation and canonical readback; this capability owns the classification semantics, not the current registry contents. Each vertical has one explicit internal catalog model, `SHARED_CATALOG` or `STORE_LOCAL_CATALOG`, maintained with that vertical in the Operator Catalog center. It routes Partner product entry to the right workflow: groceries use shared identities; restaurant menus use Store-local items and groupings. An unset model blocks catalog entry/publication until an Operator assigns it. The model is an internal workflow fact and is not shown as a central/local choice to Partners or as a distinction to Clients. This vertical-level choice is sufficient for the currently admitted workflows; finer-grained mixing is not introduced without a demonstrated current need.
 
-## Product taxonomy
+## Shared catalog taxonomy and data definitions
 
-`CatalogCategory` is a flexible tree with `parent_category_id`. It is not a
-fixed L1/L2/L3/L4 model and it is not a `CommerceVertical` or a local
-`StorefrontSection`. A category belongs to one vertical in this slice. A
-Product may have multiple category assignments when each assignment is
-explicitly valid for its vertical. Parent links must remain in the same
-vertical and cycles are rejected.
+`CatalogCategory` is the shared catalog taxonomy: a flexible tree with
+`parent_category_id`. It is not a fixed L1/L2/L3/L4 model, a
+`CommerceVertical`, or a Store-local menu grouping. A category belongs to one
+vertical in this slice. A shared Product may have multiple category assignments
+when each assignment is explicitly valid for its vertical. Parent links must
+remain in the same vertical and cycles are rejected. Store-local items are
+organized by their Store's menu/grouping data; they do not need an invented
+assignment to the shared taxonomy.
 
 Category rules are owned by the category through typed
 `CategoryAttributeRule` records. A rule may be required, filterable or a
@@ -64,17 +68,21 @@ name, measurement identity, variant typed attributes, identifiers, active
 state, version and timestamps. A variant cannot be nested under another
 variant.
 
-Product scope is explicit:
+Product ownership is explicit:
 
 - `SHARED`: Operator/catalog-governed identity reusable by authorized Stores.
-- `STORE_SCOPED`: identity belonging to exactly one Store; its Partner may
-  manage it only through DSH and it never silently becomes shared.
+- `STORE_SCOPED`: identity and content belonging to exactly one Store, managed
+  by its Partner through DSH, and never silently made shared.
 
 Partners cannot create or mutate a Shared Product directly. If a required
 Shared Product is missing, the Partner submits a `ProductProposal`. A proposal
 is attributable, reviewable and never sellable; only the authorized DSH
-acceptance transition may create the Shared identity. Store-scoped Products do
-not require a proposal.
+acceptance transition may create the Shared identity. `STORE_SCOPED` items do
+not require a proposal and their name, description, media and menu grouping
+remain owned by that Store. The operational workflow follows the Store's admitted
+catalog model; Partner entry does not expose an internal shared-versus-local
+classification choice on every item, and the Client does not present this
+ownership distinction as a second set of customer categories.
 
 ## Identifiers and media
 
@@ -116,9 +124,12 @@ Finite count/measure inventory may be admitted only with an atomic reserve,
 release, duplicate-retry and unknown-outcome rule owned by DSH; an enum or
 unused stock table alone is not an implementation of that capability.
 
-`StorefrontSection` is a Store-local presentation grouping such as main meals,
-drinks or family offers. It is not Product taxonomy. A section placement may
-reference only an eligible StoreOffer.
+`StorefrontSection` is a Store-local menu/catalog grouping such as main meals,
+drinks or family offers. It organizes that Store's local items and eligible
+offers for presentation; it is not the shared `CatalogCategory` taxonomy. A
+section placement may reference only an eligible Store item or offer. The
+customer sees one coherent Store catalog organized for that Store, without
+separate headings that expose internal central/local ownership.
 
 ## Restaurant modifiers
 
@@ -140,7 +151,8 @@ published Store
 active primary CommerceVertical
 valid Service City / Store scope where applicable
 active Product and Variant
-complete required category classification/attributes
+complete required shared CatalogCategory classification/attributes for a Shared Product
+valid Store-local item facts for a STORE_SCOPED Product, without requiring a shared category
 published and available StoreOffer
 positive exact price and valid quantity policy
 valid modifier configuration where applicable
@@ -154,18 +166,21 @@ does not inline an unbounded catalog.
 
 ## Operator and Partner operations
 
-The Operator workspace may manage verticals, taxonomy, typed attribute rules,
-Shared Products, Variants, identifiers, bounded media, proposals, legacy
-classification recovery and import preview/commit. Every mutation goes to DSH
+The Operator Catalog workspace may manage verticals, shared taxonomy, typed
+attribute rules, Shared Products, Variants, identifiers, bounded media,
+proposals, legacy classification recovery and import preview/commit. Every mutation goes to DSH
 for validation, authorization, idempotency, concurrency control, audit and
 canonical readback; the Control Panel is not a business owner.
 
 Catalog bulk/import mutation has one canonical DSH writer path. Any admitted import mechanism must validate before mutation, distinguish duplicate/conflict from new identity, require an explicit commit boundary, preserve attributable audit and finish with canonical readback. Missing input never implies deletion, blind upsert is forbidden, and retry/resume cannot silently create a different identity.
 
-Partners can browse/search Shared Products, inspect Variants and identifiers,
-select Variants, create StoreOffers, manage price/quantity/availability/
-publication and manage their Store sections/modifiers. Cross-Store access,
-Shared Product mutation and direct Shared Product creation are denied.
+Partners can browse/search Shared Products where the Store's catalog model uses
+them, inspect Variants and identifiers, select Variants, create StoreOffers,
+manage price/quantity/availability/publication and manage their Store-local
+items, menu groupings and modifiers where applicable. The admitted vertical's
+catalog model determines the relevant workflow; the Partner does not choose
+the ownership model for each item. Cross-Store access, Shared Product mutation
+and direct Shared Product creation are denied.
 
 ## Evolution and migration invariants
 
