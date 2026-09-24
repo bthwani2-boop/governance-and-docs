@@ -25,6 +25,8 @@ Routing only; behavior remains in each capability owner.
 `CUSTOMER_PICKUP` → `capabilities/fulfillment/customer-pickup.md`
 `ORDER_PAYMENT_COLLECTION` → `capabilities/finance/order-payment-collection.md`
 `CUSTOMER_BALANCE_FUNDING` → `capabilities/finance/customer-balance-funding.md`
-`BENEFICIARY_EARNINGS_SETTLEMENT` → `capabilities/finance/beneficiary-earnings-settlement.md`
+`CAPTAIN_BALANCE_FUNDING` → `capabilities/finance/captain-balance-funding.md`
+`PARTNER_CAPTAIN_FIELD_EARNINGS_SETTLEMENT` → `capabilities/finance/partner-captain-field-earnings-settlement.md`
+`CUSTOMER_BALANCE_MANUAL_WITHDRAWAL` → `capabilities/finance/customer-balance-manual-withdrawal.md`
 
 New capability owners require authorized current Product need. An admitted capability may precede its implementation; admission never proves implementation completion.
