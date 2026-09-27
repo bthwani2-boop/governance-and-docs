@@ -9,6 +9,7 @@ IMPLEMENTATION_STATE_AUTHORITY: NONE
 - Schema and application changes cut over coherently; obsolete dual-write/shadow schemas require a proven bounded coexistence need.
 - Migrations are deterministic, ordered, reviewable and fail closed on incompatible preconditions.
 - Idempotency, ownership integrity and concurrency invariants belong in durable constraints where reliable.
+- Any durable invariant that is reliably expressible at the persistence boundary is enforced there through the strongest appropriate mechanism, such as `NOT NULL`, `UNIQUE`, foreign keys, `CHECK`, transaction atomicity, isolation or locking. Application/UI validation is complementary and must not be the sole protection for persistent truth when the database can enforce the invariant reliably.
 - Generated/derived/read-model state is rebuildable and never mutation authority.
 - Synthetic/non-production proof data is disposable environment state. It never becomes migration/bootstrap Product data, and test convenience alone never justifies durable test-only schema or parallel fact ownership. Prefer environment isolation to polluting domain models with test flags.
 - Personal data is minimized, purpose-limited and exposed only to materially authorized consumers.

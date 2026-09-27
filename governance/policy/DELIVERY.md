@@ -12,6 +12,7 @@ IMPLEMENTATION_STATE_AUTHORITY: NONE
 - Preserve changeability, not speculative machinery: future capability or scaffolding is not implemented without current need, while materially costly-to-reverse current identities, boundaries, persistent data shapes and external contracts require explicit reversibility/evolution-cost classification and a defensible migration/extension/cutover path for evidence-backed evolution risks.
 - Readiness precedes mutation when a decision-critical unknown can change owner, migration, safety or proof.
 - A cutover includes all material consumers, migrations/contracts/config/tests/verifiers and deletion of losing paths.
+- Temporary compatibility exists only for a proven current coexistence need and must have one owner, known consumers, a bounded lifetime or exit condition, and a deletion trigger. It must not become a second truth/writer or permanent default. Without those conditions, delete it rather than preserve it "just in case".
 - Smallest diff is not the goal; simplest complete canonical system is.
 - Structural/refoundation cleanup preserves externally registered deployable identity such as app package/bundle IDs, Expo/EAS project identity, URI/deep-link schemes, signing relationships and provider app/client bindings unless changing that identity is itself explicitly authorized.
 - A candidate closes only from exact-state evidence with zero known material defect in its authorized cone.

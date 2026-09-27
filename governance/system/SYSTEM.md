@@ -88,6 +88,23 @@ CANONICAL OWNER TRANSITION
 
 The exact handoff mechanism is implementation-owned, but an unknown distributed outcome must never be hidden as local success or blindly retried with a different logical identity.
 
+## Trust-boundary validation
+
+Every material untrusted input or cross-boundary payload is treated as untrusted until the receiving canonical owner has completed the applicable sequence:
+
+```text
+UNTRUSTED INPUT
+→ PARSE
+→ VALIDATE
+→ NORMALIZE
+→ AUTHORIZE
+→ DOMAIN TRANSITION
+```
+
+Parsing and normalization never grant authority or silently change business meaning. Authorization is decided at the canonical owner against trusted actor/service context plus object/business scope.
+
+TypeScript types, generated clients, DTO typing, UI validation and transport schemas improve developer correctness but do not by themselves constitute runtime trust validation. A trusted transport or authenticated caller does not make caller-authored business fields authoritative.
+
 ## Data ownership
 
 Each bounded owner owns its durable persistence and migration history. Another service may store a bounded reference/projection but cannot write the owner fact as parallel truth.
