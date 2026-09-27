@@ -16,6 +16,12 @@ Use:
 - `reference/experience.md` for accessibility, interaction, platform-experience and Design System evidence.
 - `reference/discovery.md` for capability/API discovery catalogs.
 - `reference/exemplars.md` for mature Product/OSS exemplars.
+- `reference/competitors/README.md` for the evidence-cache boundary and use rules.
+- `reference/competitors/tawseel-one.md` for captured Tawseel One app observations.
+- `reference/competitors/tasaheel.md` for captured Tasaheel app observations.
+- `reference/competitors/etlobni.md` for captured Etlobni app observations.
+- `reference/competitors/nass.md` for captured Nass app observations.
+- `reference/competitors/hungerstation.md` for captured HungerStation app observations.
 - `reference/donor.md` for historical donor forensics.
 
 For current executable facts, inspect the exact consuming repository source/config/runtime. Reference files route evidence; they are not a second Product/architecture authority.
