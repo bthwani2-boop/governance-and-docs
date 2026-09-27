@@ -60,6 +60,33 @@ N/A_WITH_REASON
 
 A ready Governance PR records the dimensions actually examined and the concrete reason/evidence for each. It does not repeat the entire catalog merely for ceremony.
 
+## Material closure matrix and evidence independence
+
+For a material outcome, closure reasoning covers the material cells produced by:
+
+```text
+CAPABILITY
+× JOURNEY
+× SURFACE / ACTOR
+× CANONICAL OWNER / WRITER / READBACK
+× MATERIAL FULL-STACK LAYER
+× REQUIRED PROOF
+```
+
+The matrix is a reasoning and proof model, not a permanent backlog or mandatory new artifact. Include only cells that can materially affect the authorized outcome. Every material cell at closure resolves to exactly one of:
+
+```text
+PROVEN
+PROVEN_UNAFFECTED
+N/A_WITH_REASON
+```
+
+`UNKNOWN`, `ASSUMED`, `LATER`, `NOT_CHECKED` and silent omission are forbidden for a material closure cell.
+
+Production implementation must not be the sole oracle for a material claim when an independent authority-appropriate oracle is available. Anchor expected truth in the applicable contract, invariant, canonical owner readback, independently derived expectation or external normative rule. Shared helpers may perform setup or transport, but a proof must not compute its expected result by reusing the same decision logic whose correctness it is meant to establish when that reuse could reproduce the same defect and create a false green.
+
+Higher-consequence claims require proportionally independent negative, boundary, cross-role, failure or recovery evidence where those cases can materially falsify correctness.
+
 ## Durable owner split for user-facing quality
 
 ```text
@@ -120,6 +147,7 @@ Use current primary/assurance/experience evidence from `docs/reference/**` only 
 
 For the exact authorized candidate/cone, closure requires:
 - zero plausibly material dimensions left unresolved;
+- zero material closure cells left unresolved;
 - zero affected dimensions without owner/invariant/required proof;
 - zero known material defect or contradiction;
 - zero decision-critical unknown;
