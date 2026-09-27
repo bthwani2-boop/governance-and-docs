@@ -121,7 +121,7 @@ Use only to challenge an active BThwani decision. Any candidate pattern must be 
 - Offline/error/retry/conflict, relaunch persistence, measured responsiveness and formal accessibility remain unreviewed.
 
 ## Local screenshots
-All 46 PNG captures below are under `local-photos/tawseel-one/`. That folder's `.gitignore` ignores every capture and allows only `.gitignore`; the screenshots are local evidence and must not be staged, committed, uploaded or pushed. Some account/checkout images may show private on-device content; keep them local.
+All 46 PNG captures below are under `local-photos/tawseel-one/`. The repository-root ``.gitignore`` explicitly excludes ``/docs/reference/competitors/local-photos/tawseel-one/``; the screenshots are local evidence and must not be staged, committed, uploaded or pushed. Some account/checkout images may show private on-device content; keep them local.
 
 ### Home, discovery, store, search and cart
 - [All categories](local-photos/tawseel-one/tawseel-one-all-categories.png)

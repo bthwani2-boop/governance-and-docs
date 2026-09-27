@@ -1,0 +1,6 @@
+# Competitor screenshots are local-only evidence; keep them out of commits and pushes.
+/docs/reference/competitors/local-photos/etlobni/
+/docs/reference/competitors/local-photos/hungerstation/
+/docs/reference/competitors/local-photos/nass/
+/docs/reference/competitors/local-photos/tasaheel/
+/docs/reference/competitors/local-photos/tawseel-one/

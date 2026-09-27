@@ -16,4 +16,4 @@ These five files record bounded observations from installed competitor apps. Use
 - [Nass](nass.md)
 - [HungerStation](hungerstation.md)
 
-Selected screenshots are kept beside these notes under `local-photos/` on the local development machine. The captures are ignored by Git and are not part of this repository's commits, pushes or pull requests. Markdown screenshot links resolve only on a machine that has those local captures.
+Selected screenshots are kept beside these notes under `local-photos/` on the local development machine. The repository-root `.gitignore` explicitly excludes each of the five app-specific capture directories. The captures are not part of this repository's commits, pushes or pull requests. Markdown screenshot links resolve only on a machine that has those local captures.
