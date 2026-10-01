@@ -8,17 +8,22 @@ CAPABILITY_ID: PARTNER_ONBOARDING_STORE_PUBLICATION
 
 ## Outcome
 
-A prospective Partner progresses through one DSH-owned joining lifecycle to one canonically bound Partner actor and one governed Store-publication result, including the required primary Commerce Vertical and initial fulfillment-mode availability for the first Store.
+A prospective Partner progresses through one DSH-owned joining lifecycle to one canonically bound Partner actor and one governed Store-publication result, including the required primary Commerce Vertical, commercial Store Type and initial fulfillment-mode availability for the first Store.
 
 ## Ownership
 
-DSH owns joining-case, Field standing admission/eligibility, assignment, Partner/Store readiness, review/correction, canonical Service City, primary Commerce Vertical and initial Store fulfillment-mode assignment, operator-authorized post-creation fulfillment-mode changes, and Store-publication truth. Identity alone creates or resolves `actor_id` and admits roles `partner` and `field` after an authorized DSH request. Catalog publication remains with `CENTRAL_CATALOG`.
+DSH owns joining-case, Field standing admission/eligibility, assignment, Partner/Store readiness, review/correction, canonical Service City, primary Commerce Vertical, commercial Store Type and initial Store fulfillment-mode assignment, operator-authorized post-creation fulfillment-mode changes, and Store-publication truth. Identity alone creates or resolves `actor_id` and admits roles `partner` and `field` after an authorized DSH request. Catalog publication remains with `CENTRAL_CATALOG`.
 
 ## Invariants
 
 - a joining case may exist before `partner` role admission and is never a second Partner identity;
 - canonical Service City is required first-Store data on the joining case;
 - primary Commerce Vertical is required first-Store data on the joining case and is transferred to the Store atomically;
+- commercial Store Type is required first-Store data, belongs to exactly one compatible primary Commerce Vertical, and is transferred from the joining case to the Store atomically;
+- DSH owns the active commercial Store Type registry and validates the selected type against its parent Commerce Vertical; type identity is a stable canonical code, not an Arabic label;
+- commercial Store Type describes the Store's business model and is independent of catalog product categories; it is never inferred from the Store's products or category assignments;
+- each Store has its own commercial Store Type; a Partner with multiple Stores may have different types and corresponding financial terms;
+- the first-Store commercial Store Type is preserved through review, correction and resubmission; it may be corrected before Store creation through the existing governed case correction path;
 - JoiningCase first-Store Service City is preserved through review, correction, and resubmission, and becomes canonical `Store.service_city_id` atomically upon Store creation;
 - JoiningCase first-Store Commerce Vertical is preserved through review, correction, and resubmission, and becomes canonical `Store.primary_vertical_id` atomically upon Store creation;
 - first-Store fulfillment-mode availability is selected once in the initial JoiningCase, preserved through review, correction, and resubmission, and transferred to the canonical Store atomically upon Store creation;
@@ -42,7 +47,7 @@ DSH owns joining-case, Field standing admission/eligibility, assignment, Partner
 
 FIELD CANDIDATE → DSH FIELD ADMISSION/ELIGIBILITY → authorized Identity request → Identity resolution + field ROLE ADMISSION → CANONICAL Field actor_id BINDING → authorized Field-originated joining work → owner review.
 
-PROSPECTIVE PARTNER → JOINING CASE (WITH FIRST-STORE SERVICE CITY + PRIMARY COMMERCE VERTICAL) → REQUIRED BUSINESS / FIRST-STORE DATA → DSH ADMISSION/ELIGIBILITY → authorized Identity request → Identity resolution + partner ROLE ADMISSION → CANONICAL actor_id BINDING → SUBMISSION → OWNER REVIEW → bound Partner atomic CORRECT-AND-RESUBMIT (PRESERVING/UPDATING SERVICE CITY + VERTICAL) when required → STORE READINESS WITH CANONICAL SERVICE CITY + VERTICAL → STORE PUBLICATION.
+PROSPECTIVE PARTNER → JOINING CASE (WITH FIRST-STORE SERVICE CITY + PRIMARY COMMERCE VERTICAL + COMMERCIAL STORE TYPE) → REQUIRED BUSINESS / FIRST-STORE DATA → DSH ADMISSION/ELIGIBILITY → authorized Identity request → Identity resolution + partner ROLE ADMISSION → CANONICAL actor_id BINDING → SUBMISSION → OWNER REVIEW → bound Partner atomic CORRECT-AND-RESUBMIT (PRESERVING/UPDATING SERVICE CITY + VERTICAL + STORE TYPE) when required → STORE READINESS WITH CANONICAL SERVICE CITY + VERTICAL + STORE TYPE → STORE PUBLICATION.
 
 Documents, evidence and visit checks exist only when current onboarding policy requires them; they are not separate capabilities.
 
