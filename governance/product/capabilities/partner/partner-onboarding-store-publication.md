@@ -17,19 +17,28 @@ DSH owns joining-case, Field standing admission/eligibility, assignment, Partner
 ## Invariants
 
 - a joining case may exist before `partner` role admission and is never a second Partner identity;
-- canonical Service City, primary Commerce Vertical and compatible commercial Store Type are required first-Store data and transfer atomically to the Store;
-- first-Store fulfillment-mode policy is preserved through review/correction/resubmission and transferred with Store creation;
+- canonical Service City is required first-Store data on the joining case;
+- primary Commerce Vertical is required first-Store data on the joining case and transfers to the Store atomically;
+- commercial Store Type is required first-Store data, belongs to exactly one compatible primary Commerce Vertical, and transfers from the joining case to the Store atomically;
+- DSH owns the active commercial Store Type registry and validates the selected type against its parent Commerce Vertical; type identity is a stable canonical code, not a localized label;
+- commercial Store Type describes the Store business model and is independent of catalog product categories; it is never inferred from products or category assignments;
+- each Store has its own commercial Store Type; one Partner may own multiple Stores with different types and corresponding financial terms;
+- first-Store Service City, Commerce Vertical, commercial Store Type and fulfillment-mode policy are preserved through review, correction and resubmission and become canonical Store facts atomically at Store creation;
+- first-Store Store Type may be corrected before Store creation only through the governed case-correction path;
 - after Store creation, only the currently authorized owner path may change Store fulfillment-mode policy; the surface hosting that work is not a second writer;
-- Partner is not city-scoped and may own multiple Stores;
+- fulfillment-mode policy mutation remains DSH-owned, versioned, attributable and auditable;
+- Partner is not city-scoped; a Partner may own multiple Stores in the same or different Service Cities;
 - a new Store cannot be created without an active canonical Service City;
 - DSH joining eligibility may request Identity `partner` role admission; generic account input cannot create that role;
 - `partner` role authenticates the Partner workspace, while Store ownership remains a separate DSH relationship;
 - once bound to canonical `actor_id`, retries cannot silently rebind the case;
 - `field` is Partner Acquisition and Onboarding Representative only;
-- Field standing admission is a distinct DSH-owned fact and may request Identity `field` role admission only for an eligible candidate;
-- Field may originate/progress authorized joining work but cannot create roles, approve its own submission or publish a Store;
-- only a bound Partner may correct and resubmit its `needs_correction` case through the governed transition;
+- Field standing admission is a distinct DSH-owned fact: an authorized Operator creates the candidate and may suspend/restore it; DSH may request Identity `field` role admission only for an eligible, unbound candidate, which binds to one canonical Field `actor_id`;
+- Field may originate/progress authorized joining work but cannot create Identity actors/roles, approve its own submission or publish a Store;
+- owner review is distinct from Field submission;
+- only a bound Partner may correct and resubmit its `needs_correction` case as one governed atomic business transition; Operator does not impersonate that resubmission;
 - Store publication is distinct from serviceability, catalog/offer eligibility and current operational orderability;
+- customer-visible Store publication requires applicable Store publication, active Service City assignment and catalog publication gates; current orderability is evaluated separately;
 - a published Store may remain customer-discoverable as closed/paused when current Product/experience policy allows, but checkout may not treat publication as proof that the Store can accept orders now;
 - trusted case/business scope is derived server-side, never granted by request input;
 - mutations are concurrency-safe, idempotent and attributable.
@@ -38,18 +47,20 @@ DSH owns joining-case, Field standing admission/eligibility, assignment, Partner
 
 ```text
 FIELD CANDIDATE
-→ DSH Field eligibility
-→ Identity field role admission
-→ FIELD joining work
+→ DSH Field admission / eligibility
+→ authorized Identity request
+→ Identity field role admission + canonical actor binding
+→ authorized FIELD joining work
 → OPERATOR review
 
 PROSPECTIVE PARTNER
-→ JoiningCase with first-Store facts
-→ DSH Partner eligibility
-→ Identity partner role admission
-→ canonical actor binding
-→ submission / review / correction
-→ Store creation + Store ownership binding
+→ JoiningCase with first-Store Service City + Commerce Vertical + Store Type + fulfillment-mode policy
+→ DSH Partner admission / eligibility
+→ authorized Identity request
+→ Identity partner role admission + canonical actor binding
+→ submission / owner review
+→ bound Partner correction/resubmission when required
+→ Store creation + Store ownership binding + canonical first-Store facts
 → catalog/readiness gates
 → Store publication
 ```
@@ -58,7 +69,7 @@ Documents, evidence and visit checks exist only when current onboarding policy r
 
 ## Failure and recovery
 
-Duplicate logical case, duplicate-actor risk, missing required Service City/vertical/type, stale version, unauthorized cross-case access, incomplete prerequisites, correction loop and retry conflict recover through canonical DSH/Identity readback. A suspended Field cannot originate joining work. Recovery never guesses a Store classification or rebinds a case to a different actor.
+Duplicate logical case, duplicate-actor risk, missing required Service City/vertical/type, incompatible Store Type/Vertical, stale version, unauthorized cross-case access, incomplete prerequisites, correction loop and retry conflict recover through canonical DSH/Identity readback. A suspended or stale Field admission cannot originate joining work; restoring DSH standing and the applicable Identity role is an explicit authorized recovery. Recovery never guesses a Store classification or rebinds a case/Field admission to a different actor.
 
 ## Material participants
 
