@@ -14,3 +14,6 @@ IMPLEMENTATION_STATE_AUTHORITY: NONE
 - Synthetic/non-production proof data is disposable environment state. It never becomes migration/bootstrap Product data, and test convenience alone never justifies durable test-only schema or parallel fact ownership. Prefer environment isolation to polluting domain models with test flags.
 - Personal data is minimized, purpose-limited and exposed only to materially authorized consumers.
 - Retention/deletion/anonymization obligations stay with the fact owner; no global shortcut destroys another owner's required retained truth.
+- Material media state uses one canonical write or upload path, one storage owner and one durable reference model when BThwani owns that media lifecycle.
+- Replacing or removing media preserves referential integrity and cleans superseded or orphaned media when no retention obligation requires preservation.
+- Data policy owns media reference and storage lifecycle only. Provenance, licensing and visual use remain with the applicable Design or domain owner; domain-specific media requirements remain with the owning capability.
