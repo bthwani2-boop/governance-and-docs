@@ -129,7 +129,7 @@ As applicable, prove:
 - claim-fit static/unit/contract/database/integration/browser/device/runtime evidence;
 - Governance/Docs convergence and absence of obsolete/shadow/losing paths after cutover.
 
-A single tool may cover multiple dimensions. Tool count is not assurance strength.
+A single tool may cover multiple dimensions. Tool count is not assurance strength. Duplicate proof that exercises materially the same oracle and failure surface adds no assurance by repetition; retain duplicate proof only when it has distinct material falsification value.
 
 ## Real-device and rendered proof
 
