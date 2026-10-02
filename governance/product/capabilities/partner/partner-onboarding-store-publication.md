@@ -25,8 +25,9 @@ DSH owns joining-case, Field standing admission/eligibility, assignment, Partner
 - each Store has its own commercial Store Type; one Partner may own multiple Stores with different types and corresponding financial terms;
 - first-Store Service City, Commerce Vertical, commercial Store Type and fulfillment-mode policy are preserved through review, correction and resubmission and become canonical Store facts atomically at Store creation;
 - first-Store Store Type may be corrected before Store creation only through the governed case-correction path;
-- after Store creation, only the currently authorized owner path may change Store fulfillment-mode policy; the surface hosting that work is not a second writer;
-- fulfillment-mode policy mutation remains DSH-owned, versioned, attributable and auditable;
+- after Store creation, only an active authorized Operator path may change the Store's durable enabled fulfillment-mode policy; Partner surfaces cannot mutate that durable policy;
+- Partner may change only the temporary operational availability allowed by `STORE_OPERATIONAL_AVAILABILITY`; pausing a mode never enables/disables the durable admitted mode policy;
+- fulfillment-mode policy mutation remains DSH-owned, versioned, attributable and auditable; the Operator surface is an authorized host, not a second writer;
 - Partner is not city-scoped; a Partner may own multiple Stores in the same or different Service Cities;
 - a new Store cannot be created without an active canonical Service City;
 - DSH joining eligibility may request Identity `partner` role admission; generic account input cannot create that role;
