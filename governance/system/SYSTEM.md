@@ -18,15 +18,18 @@ Identity
 DSH
 → delivery-commerce operational truth
 → Partner / Store / joining
+→ Store ownership and Store-scoped delegated authority
+→ Store publication and Store operational availability/orderability
 → catalog / assortment / serviceability
 → cart / checkout / Store Order
+→ Order recipient delivery-contact snapshot
+→ legal Order adjustments / cancellation / operational exception
 → fulfillment mode
 → Store-Captain membership
-→ Store-scoped access grants / bounded delegated permissions
 → dispatch / custody / delivery / customer pickup
 → order-scoped conversation / feedback
 → promotion eligibility and discovery-content publication
-→ operational tracking / exception state
+→ operational tracking / delivery/pickup evidence relationship / exception state
 
 WLT
 → all internal financial truth
@@ -35,7 +38,7 @@ WLT
 → COD exposure / risk holds
 → cash receivable / remittance
 → fees / commissions / earnings
-→ refunds
+→ refunds / Order-adjustment financial deltas
 → payout / settlement / reconciliation
 ```
 
@@ -53,6 +56,8 @@ External financial providers are rails around WLT-owned financial truth and neve
 
 Actor-facing Client, Partner, Captain, Field and Operator surfaces are presentation/composition hosts. A host never becomes canonical owner because it renders or invokes a fact. Exact deployable host names and repository paths remain implementation truth.
 
+A Partner session proves the admitted high-level role only. DSH independently authorizes Store ownership or explicit Store-scoped grant for every Store-scoped mutation. A Captain session similarly does not imply Store-Captain membership or platform-dispatch eligibility.
+
 ## Canonical writer/readback law
 
 ```text
@@ -63,6 +68,10 @@ ONE MUTABLE FACT
 ```
 
 Caches, search, analytics, local state, generated clients and projections are derived.
+
+Published Store, current Store orderability, Offer availability, geographic serviceability and selected fulfillment-mode availability remain distinct DSH facts/evaluations. No surface may collapse them into one editable `available` flag.
+
+A confirmed Store Order preserves its original transaction snapshot. A legal post-confirmation change is an attributable DSH Order-adjustment fact with applicable WLT financial delta; it is never an in-place rewrite that erases the original confirmation.
 
 ## Canonical identity evolution law
 
@@ -108,6 +117,8 @@ TypeScript types, generated clients, DTO typing, UI validation and transport sch
 ## Data ownership
 
 Each bounded owner owns its durable persistence and migration history. Another service may store a bounded reference/projection but cannot write the owner fact as parallel truth.
+
+A different delivery recipient is stored only as the bounded DSH Order delivery-contact snapshot needed for execution. It does not create a second Client identity or authorization principal, and unnecessary recipient contact data is not propagated beyond the operational need.
 
 ## Runtime/configuration
 
