@@ -12,15 +12,14 @@ One Human Actor resolves to one permanent `actor_id`; verification, role admissi
 
 ## Ownership
 
-Identity owns `actor_id`, verified identifiers, credentials, high-level role admission, first-Operator bootstrap state, authentication proofs and role-scoped sessions. For a domain-managed role, the owning domain first establishes admission/eligibility and then sends an authorized role-admission request to Identity; Identity alone resolves or creates the `actor_id` and persists the role admission. DSH may request governed `partner`, `captain` and `field` role admission only from DSH-owned eligibility/onboarding truth. For `field`, that truth is the distinct DSH standing Field admission, not a joining-case field, phone number, or surface assertion. Surfaces never grant roles themselves.
+Identity owns `actor_id`, verified identifiers, credentials, high-level role admission, first-Operator bootstrap state, authentication proofs and role-scoped sessions. For a domain-managed role, the owning domain first establishes admission/eligibility and then sends an authorized role-admission request to Identity; Identity alone resolves or creates the `actor_id` and persists the role admission. DSH may request governed `partner`, `captain` and `field` role admission only from DSH-owned eligibility truth. For `partner`, DSH eligibility may arise from canonical Partner onboarding/Store ownership or from an accepted Store-scoped access invitation that explicitly requires Partner-workspace access; the role admits the workspace and never substitutes for DSH Store ownership/grant authorization. For `field`, eligibility is the distinct DSH standing Field admission, not a joining-case field, phone number, or surface assertion. Surfaces never grant roles themselves.
 
 ## Role-specific lifecycle
 
 The canonical current role set is owned by `governance/platform/PLATFORM.md`. Identity applies the following lifecycle distinctions to that set; this section does not independently admit roles.
 
-
 - Client uses governed self-registration/login/recovery.
-- Partner/Captain/Field require domain admission/eligibility, governed Identity role admission, then one-time activation/enrollment and normal role-scoped session behavior. A current dispatch assignment is not a prerequisite for standing Captain admission.
+- Partner/Captain/Field require domain admission/eligibility, governed Identity role admission, then one-time activation/enrollment and normal role-scoped session behavior. A current dispatch assignment is not a prerequisite for standing Captain admission. A Partner session authenticates the Partner workspace only; DSH separately authorizes every Store resource from Store ownership or an active Store-scoped grant.
 - Operator is the only Operator-workspace human role. First bootstrap is one-time. Normal Operator login requires user-verified WebAuthn/Passkey; Operator password login and SMS-as-normal-login-MFA are not admitted.
 
 ## Invariants
@@ -29,6 +28,8 @@ The canonical current role set is owned by `governance/platform/PLATFORM.md`. Id
 - one human resolution must not create duplicate actors;
 - domain admission/eligibility, Identity role admission, activation/enrollment, authentication/session and resource authorization are distinct ordered facts;
 - a domain-managed role admission request is authorized by the owning domain's admission/eligibility truth, never by a phone number, surface input or current task assignment;
+- `partner` role means admitted Partner-workspace authentication, not ownership of every Store or membership in a generic organization;
+- DSH is responsible for determining whether a Partner actor still has standing Partner-workspace eligibility from at least one admitted ownership/grant relationship before requesting role disable; Identity does not infer that standing from UI state;
 - one role's credential/session cannot authenticate another role;
 - role disable revokes only that role's sessions unless Identity-wide security disable applies;
 - refresh rotates atomically and known replay compromises the session family;
@@ -42,7 +43,7 @@ Bootstrap creates the first `operator` exactly once. Subsequent Operator admissi
 
 ## Failure and recovery
 
-Reject duplicate identity, self-granted managed role, repeated activation-as-login, cross-role credential use, challenge/session replay, invalid Passkey ceremony, unauthorized re-enrollment and caller-authored authority. Recovery preserves one canonical actor and role isolation.
+Reject duplicate identity, self-granted managed role, repeated activation-as-login, cross-role credential use, challenge/session replay, invalid Passkey ceremony, unauthorized re-enrollment and caller-authored authority. Store grant acceptance/revocation never silently rebinds actor identity. Recovery preserves one canonical actor and role isolation.
 
 ## Material participants
 
@@ -54,10 +55,10 @@ Identity issues one bounded `finance` permission to an Operator identity. It con
 
 ## Operator Platform Policies permission
 
-Identity issues one bounded `platform_policies` permission to an Operator identity. It controls write access to the Control Panel Platform Policies workspace and its owner-authorized policy mutations; it does not create a new high-level role or a generic permissions engine. The one-time bootstrapped first Operator receives this permission. Later Operators receive no Platform Policies permission by default. Only the one-time bootstrapped first Operator may grant or revoke it, and only for another enabled Operator. Grants and revocations are reasoned, versioned and audited, and invalidate the affected Operator's sessions. Each canonical mutation owner independently verifies the active Operator and this permission before accepting a protected write; inability to verify authorization fails closed. Reads may remain available according to the owning workspace's access rules.
+Identity issues one bounded `platform_policies` permission to an Operator identity. It controls write access to the Operator Platform Policies workspace and its owner-authorized policy mutations; it does not create a new high-level role or a generic permissions engine. The one-time bootstrapped first Operator receives this permission. Later Operators receive no Platform Policies permission by default. Only the one-time bootstrapped first Operator may grant or revoke it, and only for another enabled Operator. Grants and revocations are reasoned, versioned and audited, and invalidate the affected Operator's sessions. Each canonical mutation owner independently verifies the active Operator and this permission before accepting a protected write; inability to verify authorization fails closed. Reads may remain available according to the owning workspace's access rules.
 
 ## Operator workspace permission boundaries
 
-Operator workspace permissions are a finite, Identity-owned set for Operator identities only. The current set is `operations`, `partners`, `catalog`, `marketing`, `finance` and `platform_policies`. These bounded scopes do not create new high-level roles or a generic permissions engine. The initial bootstrapped Operator receives each registered scope; subsequent Operators receive none by default. Only the initial bootstrapped Operator can grant or revoke a registered scope for another enabled Operator. Every grant or revocation requires a reason and expected version, is audited, and invalidates the target Operator's sessions. Control Panel handlers and canonical mutation owners enforce the relevant scope at their respective boundaries and fail closed when the permission cannot be verified.
+Operator workspace permissions are a finite, Identity-owned set for Operator identities only. The current set is `operations`, `partners`, `catalog`, `marketing`, `finance` and `platform_policies`. These bounded scopes do not create new high-level roles or a generic permissions engine. The initial bootstrapped Operator receives each registered scope; subsequent Operators receive none by default. Only the initial bootstrapped Operator can grant or revoke a registered scope for another enabled Operator. Every grant or revocation requires a reason and expected version, is audited, and invalidates the target Operator's sessions. Operator handlers and canonical mutation owners enforce the relevant scope at their respective boundaries and fail closed when the permission cannot be verified.
 
 `operations` covers operational order handling and Captain administration. `partners` covers Partner and Field admission, status and directory administration. `catalog` covers central products, shared category taxonomy and attribute policy, proposals and imports. `marketing` covers promotion and discovery-content administration. `finance` remains the financial workspace scope, and `platform_policies` remains the shared platform-rule workspace scope. Leadership is a read-oriented center without an independent write permission; sensitive data retains its owning domain's access rules. Access and Permissions administration is not delegated by these scopes and remains limited to the initial bootstrapped Operator. Partner, Captain and Field role admission and entitlements remain distinct from Operator workspace permissions.
