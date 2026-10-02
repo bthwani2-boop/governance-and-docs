@@ -8,53 +8,58 @@ CAPABILITY_ID: PARTNER_ONBOARDING_STORE_PUBLICATION
 
 ## Outcome
 
-A prospective Partner progresses through one DSH-owned joining lifecycle to one canonically bound Partner actor and one governed Store-publication result, including the required primary Commerce Vertical, commercial Store Type and initial fulfillment-mode availability for the first Store.
+A prospective Partner progresses through one DSH-owned joining lifecycle to one canonically bound Partner actor and one governed Store-publication result, including the required primary Commerce Vertical, commercial Store Type and initially admitted fulfillment modes for the first Store.
 
 ## Ownership
 
-DSH owns joining-case, Field standing admission/eligibility, assignment, Partner/Store readiness, review/correction, canonical Service City, primary Commerce Vertical, commercial Store Type and initial Store fulfillment-mode assignment, operator-authorized post-creation fulfillment-mode changes, and Store-publication truth. Identity alone creates or resolves `actor_id` and admits roles `partner` and `field` after an authorized DSH request. Catalog publication remains with `CENTRAL_CATALOG`.
+DSH owns joining-case, Field standing admission/eligibility, assignment, Partner/Store readiness, review/correction, canonical Service City, primary Commerce Vertical, commercial Store Type, initial Store fulfillment-mode assignment, operator-authorized post-creation fulfillment-mode policy changes, Store ownership binding and Store-publication truth. Identity alone creates/resolves `actor_id` and admits `partner`/`field` roles after an authorized DSH request. Catalog publication remains with `CENTRAL_CATALOG`; current Store opening/orderability after publication belongs to `STORE_OPERATIONAL_AVAILABILITY`.
 
 ## Invariants
 
 - a joining case may exist before `partner` role admission and is never a second Partner identity;
-- canonical Service City is required first-Store data on the joining case;
-- primary Commerce Vertical is required first-Store data on the joining case and is transferred to the Store atomically;
-- commercial Store Type is required first-Store data, belongs to exactly one compatible primary Commerce Vertical, and is transferred from the joining case to the Store atomically;
-- DSH owns the active commercial Store Type registry and validates the selected type against its parent Commerce Vertical; type identity is a stable canonical code, not an Arabic label;
-- commercial Store Type describes the Store's business model and is independent of catalog product categories; it is never inferred from the Store's products or category assignments;
-- each Store has its own commercial Store Type; a Partner with multiple Stores may have different types and corresponding financial terms;
-- the first-Store commercial Store Type is preserved through review, correction and resubmission; it may be corrected before Store creation through the existing governed case correction path;
-- JoiningCase first-Store Service City is preserved through review, correction, and resubmission, and becomes canonical `Store.service_city_id` atomically upon Store creation;
-- JoiningCase first-Store Commerce Vertical is preserved through review, correction, and resubmission, and becomes canonical `Store.primary_vertical_id` atomically upon Store creation;
-- first-Store fulfillment-mode availability is selected once in the initial JoiningCase, preserved through review, correction, and resubmission, and transferred to the canonical Store atomically upon Store creation;
-- after Store creation, only an active Operator may change the Store's available fulfillment modes through the Control Panel; Partner surfaces cannot mutate that policy;
-- mode changes remain DSH-owned, versioned, attributable and auditable; the Control Panel is an authorized surface, not a second Store-mode writer;
-- Partner itself is not city-scoped; a Partner may own multiple Stores in the same or different Service Cities;
-- a new Store cannot be created without its required canonical active Service City;
-- the initial operator admission/submit transition is the DSH-owned eligibility point that may request Identity `partner` role admission; a generic accounts action cannot create that role;
+- canonical Service City, primary Commerce Vertical and compatible commercial Store Type are required first-Store data and transfer atomically to the Store;
+- first-Store fulfillment-mode policy is preserved through review/correction/resubmission and transferred with Store creation;
+- after Store creation, only the currently authorized owner path may change Store fulfillment-mode policy; the surface hosting that work is not a second writer;
+- Partner is not city-scoped and may own multiple Stores;
+- a new Store cannot be created without an active canonical Service City;
+- DSH joining eligibility may request Identity `partner` role admission; generic account input cannot create that role;
+- `partner` role authenticates the Partner workspace, while Store ownership remains a separate DSH relationship;
 - once bound to canonical `actor_id`, retries cannot silently rebind the case;
 - `field` is Partner Acquisition and Onboarding Representative only;
-- Field standing admission is a distinct DSH-owned fact: an Operator creates a candidate and may suspend or restore it; DSH may request Identity `field` role admission only for an eligible, unbound candidate, and the candidate binds to one canonical Field `actor_id`;
-- Field may originate/progress authorized joining work but cannot create Identity actors/roles, approve its own submission or publish a Store;
-- Store is not a tenant or actor; publication is its own lifecycle distinct from serviceability;
-- owner review is distinct from Field submission;
-- only a bound Partner may correct and resubmit a `needs_correction` case, as one atomic business transition; an Operator may not resubmit it;
-- customer-visible Store requires applicable Store publication, active Service City assignment, and catalog publication gates;
+- Field standing admission is a distinct DSH-owned fact and may request Identity `field` role admission only for an eligible candidate;
+- Field may originate/progress authorized joining work but cannot create roles, approve its own submission or publish a Store;
+- only a bound Partner may correct and resubmit its `needs_correction` case through the governed transition;
+- Store publication is distinct from serviceability, catalog/offer eligibility and current operational orderability;
+- a published Store may remain customer-discoverable as closed/paused when current Product/experience policy allows, but checkout may not treat publication as proof that the Store can accept orders now;
 - trusted case/business scope is derived server-side, never granted by request input;
 - mutations are concurrency-safe, idempotent and attributable.
 
 ## Minimal lifecycle
 
-FIELD CANDIDATE → DSH FIELD ADMISSION/ELIGIBILITY → authorized Identity request → Identity resolution + field ROLE ADMISSION → CANONICAL Field actor_id BINDING → authorized Field-originated joining work → owner review.
+```text
+FIELD CANDIDATE
+→ DSH Field eligibility
+→ Identity field role admission
+→ FIELD joining work
+→ OPERATOR review
 
-PROSPECTIVE PARTNER → JOINING CASE (WITH FIRST-STORE SERVICE CITY + PRIMARY COMMERCE VERTICAL + COMMERCIAL STORE TYPE) → REQUIRED BUSINESS / FIRST-STORE DATA → DSH ADMISSION/ELIGIBILITY → authorized Identity request → Identity resolution + partner ROLE ADMISSION → CANONICAL actor_id BINDING → SUBMISSION → OWNER REVIEW → bound Partner atomic CORRECT-AND-RESUBMIT (PRESERVING/UPDATING SERVICE CITY + VERTICAL + STORE TYPE) when required → STORE READINESS WITH CANONICAL SERVICE CITY + VERTICAL + STORE TYPE → STORE PUBLICATION.
+PROSPECTIVE PARTNER
+→ JoiningCase with first-Store facts
+→ DSH Partner eligibility
+→ Identity partner role admission
+→ canonical actor binding
+→ submission / review / correction
+→ Store creation + Store ownership binding
+→ catalog/readiness gates
+→ Store publication
+```
 
 Documents, evidence and visit checks exist only when current onboarding policy requires them; they are not separate capabilities.
 
 ## Failure and recovery
 
-Duplicate logical case, duplicate-actor risk, missing required Service City, stale version, unauthorized cross-case access, incomplete prerequisites, correction loop and retry conflict recover through canonical DSH/Identity readback. A suspended or stale Field admission cannot originate joining work; restoring the DSH admission and its Identity role is an explicit Operator-owned recovery, and no retry may rebind a Field admission to a different actor.
+Duplicate logical case, duplicate-actor risk, missing required Service City/vertical/type, stale version, unauthorized cross-case access, incomplete prerequisites, correction loop and retry conflict recover through canonical DSH/Identity readback. A suspended Field cannot originate joining work. Recovery never guesses a Store classification or rebinds a case to a different actor.
 
 ## Material participants
 
-Field acquisition/onboarding work, Operator review/admission work, Partner post-admission work, Client publication consequences and the DSH/Identity owner runtimes/persistence are material consumers of this capability. Deployable host names and repository paths remain implementation truth.
+Field acquisition/onboarding work, Operator review/admission work, Partner post-admission work, Client publication consequences and DSH/Identity owner runtimes are material consumers. Store orderability is separately read from `STORE_OPERATIONAL_AVAILABILITY`.
