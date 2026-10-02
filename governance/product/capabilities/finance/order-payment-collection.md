@@ -17,15 +17,15 @@ WLT owns payment intent, customer payment allocation, collection state, Order-ad
 ## Invariants
 
 - payment method/source is independent from fulfillment mode;
-- customer funding allocation currently composes admitted WLT internal balance and/or cash semantics; external provider balance is never directly authoritative at checkout;
+- customer funding allocation currently composes admitted WLT internal balance and/or cash semantics; external provider account balance is never directly authoritative at checkout;
 - original financial confirmation remains attributable to the original Order snapshot; an approved DSH OrderAdjustment causes a new WLT delta/reversal/additional-treatment fact rather than rewriting prior ledger movement;
 - duplicate/retried OrderAdjustment identity cannot create a duplicate financial effect;
 - where a substitute/actual measure would require more value than the already authorized amount, WLT determines the legal additional financial treatment; DSH/Partner cannot assume extra collection authority;
-- for `CUSTOMER_PICKUP` paid with cash at the Store, the Store receives/retains sale proceeds; WLT records collection and versioned Partner commission receivable;
-- Partner commission policy is scoped to canonical commercial Store Type and fulfillment mode, uses the governed basis, and is snapshotted with effective policy version on each Order;
+- for `CUSTOMER_PICKUP` paid with cash at the Store, the Store receives and retains the customer's sale proceeds; WLT records the Order-bound collection and the versioned commission receivable owed by the responsible Partner;
+- Partner commission policy is scoped to canonical commercial Store Type and fulfillment mode, uses product value as its commission basis, and is snapshotted with the effective policy version on each Order; Stores of the same Store Type and fulfillment mode use the same active terms, and only authorized Finance policy mutation may change those terms prospectively through a new version;
 - for the initial `PARTNER_CAPTAIN` release, no customer delivery fee is charged; Store-Captain remuneration remains an off-WLT Store responsibility;
-- when a Store Captain collects cash for a `PARTNER_CAPTAIN` Order, sale proceeds belong to Store/Partner and the Captain hands them to the Store; DSH records collection/handoff/acknowledgment outside WLT, and WLT creates no BThwani-Captain COD receivable/earning/wallet movement for those proceeds;
-- Store-collected pickup cash never creates BThwani Captain custody/exposure/remittance;
+- when a Store Captain collects cash for a `PARTNER_CAPTAIN` Order, sale proceeds belong to Store/Partner and the Captain hands them to the Store; DSH records collection/handoff/Store acknowledgment outside WLT, and WLT creates no BThwani-Captain COD receivable, Captain earning or wallet movement for those proceeds;
+- Store-collected pickup cash never creates BThwani Captain cash custody, COD exposure, Captain COD remittance or a duplicate Partner wallet credit for sale proceeds already retained by the Store;
 - customer payment allocation does not include merchant/platform settlement funding;
 - external provider funding first becomes WLT internal balance through `CUSTOMER_BALANCE_FUNDING`;
 - COD risk hold is not ordinary payment consumption;
@@ -37,4 +37,4 @@ WLT owns payment intent, customer payment allocation, collection state, Order-ad
 
 ## Failure and recovery
 
-Insufficient balance/exposure, adjustment delta refusal, unknown provider outcome, duplicate collection/delta/remittance, wrong amount, cancellation race, unresolved Partner commission receivable, remittance uncertainty and refund exception fail closed or remain reconciliation-required from canonical WLT state.
+Insufficient balance/exposure, adjustment delta refusal, unknown provider outcome, duplicate collection/delta/remittance, wrong collected amount, cancellation race, unresolved Partner commission receivable, remittance uncertainty and refund exception fail closed or remain reconciliation-required from canonical WLT state.
