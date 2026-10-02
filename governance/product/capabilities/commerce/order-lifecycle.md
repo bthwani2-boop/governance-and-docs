@@ -21,6 +21,7 @@ DSH owns operational Order truth, original confirmation snapshot, OrderAdjustmen
 - a parent Multi-Store checkout never collapses multiple Stores into one Store Order;
 - the durable Order model distinguishes `BTHWANI_CAPTAIN`, `PARTNER_CAPTAIN` and `CUSTOMER_PICKUP`; fulfillment mode is distinct from payment method;
 - the Client selects one fulfillment mode from current canonical eligible modes; checkout rejects disabled/unavailable mode and snapshots the selection without fallback;
+- an implementation slice that currently executes only one mode may migrate/backfill existing Orders to that explicit mode, but another mode must never be introduced by silently reinterpreting historical Order meaning;
 - required StoreOffer/ProductVariant/display-name/variant/modifier/requested-quantity/pricing/amount/serviceability and other purchase evidence remains the original confirmation snapshot;
 - a legal post-confirmation change never mutates that original snapshot in place; it creates an attributable OrderAdjustment and contributes to a separate final fulfilled snapshot;
 - an OrderAdjustment may cover bounded item removal, eligible substitution or actual fulfilled quantity/measure where current catalog quantity semantics permit it;
