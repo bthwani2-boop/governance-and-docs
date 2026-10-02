@@ -151,7 +151,24 @@ FUTURE POSSIBILITY ALONE → NOT A JUSTIFICATION
 
 Do not create a master handbook, shadow standards registry, policy engine or second verifier merely to restate existing owners.
 
-## 12. Cross-repository consumption
+## 12. Agent-constitution semantic conservation
+
+Simplification or refoundation of a repository agent constitution must reduce machinery without silently deleting still-required execution or safety meaning.
+
+For each materially removed rule, establish exactly one disposition:
+
+```text
+RETAINED_IN_COMPACT_FORM
+MOVED_TO_CANONICAL_OWNER
+PROVEN_DUPLICATE
+PROVEN_OBSOLETE
+```
+
+`UNKNOWN` or silently dropped material execution/safety meaning is nonconformant. Simplification closes only when no unique current execution or safety responsibility was lost, while Product/System/Policy meaning remains with its existing canonical Governance owner rather than being copied into the agent constitution.
+
+Do not add a rule registry, prose checksum, shadow verifier or second agent-law authority merely to enforce this conservation rule. Use Git history plus claim-specific review/evidence unless a deterministically detectable defect class independently justifies a guard.
+
+## 13. Cross-repository consumption
 
 Where durable governance is consumed across repositories, bind the consumer to an exact immutable governance state.
 
@@ -159,7 +176,7 @@ A moving governance branch must not silently change an already-bound implementat
 
 A binding manifest is provenance, not a second knowledge registry.
 
-## 13. Current-material closure
+## 14. Current-material closure
 
 “100% current material closure” means complete treatment of the exact authorized material cone with zero known material defect. It is not a claim of permanent infallibility or permanent finality.
 
