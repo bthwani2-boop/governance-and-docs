@@ -7,7 +7,7 @@ IMPLEMENTATION_STATE_AUTHORITY: NONE
 
 ## Journey law
 
-A top-level Journey is one end-to-end user/business outcome that crosses at least two material actor-facing surfaces, crosses every canonical owner/handoff needed by that outcome, and ends with canonical readback usable by every authorized participant.
+A top-level Journey is one end-to-end user/business outcome that crosses at least two material actor-facing surfaces, crosses every canonical business owner/handoff needed by that outcome, and ends with canonical readback usable by every authorized participant.
 
 ```text
 JOURNEY
@@ -21,7 +21,7 @@ JOURNEY
 
 The actor-facing surfaces are exactly `CLIENT`, `PARTNER`, `CAPTAIN`, `FIELD` and `OPERATOR`. Identity, DSH, WLT, adapters and external providers are owners/systems/rails, never actor-facing surfaces.
 
-Every top-level Journey declares one outcome, material surfaces, canonical owners, entry/exit/readback, legal branches, handoffs and applicable failure/recovery. A single-surface or owner-internal flow remains a supporting subflow, control lane, projection, policy flow or explicit non-goal.
+Authentication/session is a prerequisite lane except where role admission is itself the Journey outcome. A surface is listed in `SURFACES` only when it materially participates in the Journey outcome; a merely possible exception or contextual target does not count. Single-surface or owner-internal work remains a supporting subflow, policy/control lane, projection or explicit non-goal.
 
 ## MANAGED_PARTICIPANT_ADMISSION — admitted managed actor becomes usable
 
@@ -31,21 +31,21 @@ SURFACES: OPERATOR, PARTNER, CAPTAIN, FIELD
 OWNERS: IDENTITY, DSH
 CAPABILITIES: IDENTITY_ACTIVATION_SESSIONS
 ENTRY: Authorized DSH domain admission or eligibility exists for Partner, Captain or Field.
-EXIT: Target managed role is admitted and the target surface can authenticate and read its owner-backed standing state.
-READBACK: Identity role/session readback plus DSH domain standing readback.
+EXIT: The target role is admitted and its target surface can authenticate and read owner-backed standing state.
+READBACK: Identity role/session readback plus DSH domain-standing readback.
 
 ### Frontstage and handoffs
 
 ```text
 OPERATOR
-→ DSH domain candidate / eligibility
+→ DSH candidate / eligibility
 → authorized Identity role-admission request
 → Identity actor resolution + role admission
 → target PARTNER / CAPTAIN / FIELD activation and authentication
 → DSH standing readback
 ```
 
-Partner, Captain and Field each use their own role-scoped session. Eligibility, role admission, activation, authentication and resource authorization remain distinct. Client self-registration and Operator bootstrap/recovery are access subflows, not top-level Journeys.
+Partner, Captain and Field each use their own role-scoped session. Eligibility, role admission, activation, authentication and resource authorization remain distinct. Client self-registration and Operator bootstrap/recovery remain access subflows.
 
 ### Failure / recovery
 
@@ -58,31 +58,33 @@ No surface grants its own role. Current task assignment never substitutes for st
 ## PARTNER_TO_VISIBLE_STORE — acquisition to customer-visible Store
 
 JOURNEY_ID: PARTNER_TO_VISIBLE_STORE
-OUTCOME: A legitimate prospect progresses through Field/Operator/Partner work to one published Store that can be discovered by a Client when the separate catalog/serviceability gates are satisfied.
+OUTCOME: A legitimate prospect progresses through Field, Operator and Partner work to one published Store that can be discovered by a Client when the separate visibility gates are satisfied.
 SURFACES: FIELD, OPERATOR, PARTNER, CLIENT
 OWNERS: IDENTITY, DSH
 CAPABILITIES: PARTNER_ONBOARDING_STORE_PUBLICATION, IDENTITY_ACTIVATION_SESSIONS, CENTRAL_CATALOG
 ENTRY: Eligible Field standing or authorized Operator-originated joining work starts a prospective Partner case.
 EXIT: Store publication is committed and customer-safe publication readback is available.
-READBACK: Joining/Store publication readback to Field, Operator and Partner; Client receives the resulting published Store projection when other visibility gates allow it.
+READBACK: Field, Operator and Partner read joining/publication state; Client receives the resulting Store projection when catalog/serviceability visibility gates allow it.
 
 ### Frontstage and handoffs
 
 ```text
-OPERATOR → Field eligibility → Identity field role
-FIELD → JoiningCase
+OPERATOR → Field candidate/standing
+DSH → Identity field-role request
+FIELD → JoiningCase work
 OPERATOR → review / correction / rejection / admission
-DSH → Partner eligibility → Identity partner role
+DSH → Identity partner-role request
 PARTNER → required Store correction/readiness
-DSH → Store creation + canonical business classification + publication
+DSH → Store ownership + Service City + Commerce Vertical + Store Type + durable fulfillment-mode policy
+DSH → publication
 CLIENT → customer-safe Store projection
 ```
 
-Store publication is not current orderability. A published Store may later be closed by schedule or paused without becoming unpublished.
+Store publication is not current orderability. Durable enabled fulfillment modes are not temporary mode availability.
 
 ### Failure / recovery
 
-Missing required data, correction loops, duplicate logical case, stale version, suspended Field, duplicate actor risk and interrupted Identity handoff recover through canonical readback without rebinding the case to a different actor.
+Missing/incompatible first-Store facts, correction loops, duplicate logical case, stale version, suspended Field, duplicate-actor risk and interrupted Identity handoff recover through canonical readback without rebinding the case or actor.
 
 ### Negative space
 
@@ -91,19 +93,19 @@ Field does not approve its own case. Operator does not become Partner/Store owne
 ## STORE_ORDERABILITY — published Store to current ability to accept orders
 
 JOURNEY_ID: STORE_ORDERABILITY
-OUTCOME: Partner-maintained operating state is evaluated by DSH and exposed consistently so a Client can know whether the Store and selected fulfillment mode can accept a new order now, with bounded Operator intervention when authorized.
+OUTCOME: Partner-maintained operating state is evaluated by DSH and exposed consistently so a Client can know whether the Store and a durably enabled fulfillment mode can accept a new order now, with bounded Operator intervention when authorized.
 SURFACES: PARTNER, CLIENT, OPERATOR
 OWNERS: DSH
 CAPABILITIES: STORE_OPERATIONAL_AVAILABILITY
-ENTRY: A published Store has an admitted operating schedule or bounded operating-state mutation.
+ENTRY: A published Store has an admitted schedule or bounded operating-state mutation.
 EXIT: DSH exposes one current Store/mode orderability result.
-READBACK: Partner and Operator receive mutation readback; Client receives the customer-safe current orderability projection.
+READBACK: Partner and Operator receive mutation readback; Client receives customer-safe current orderability.
 
 ### Frontstage and handoffs
 
 ```text
-PARTNER → weekly schedule / pause / resume
-OPERATOR → bounded authorized intervention when required
+PARTNER → weekly schedule / temporary pause / resume / allowed temporary mode availability
+OPERATOR → bounded authorized operational intervention when required
 DSH → validate + version + derive Store/mode orderability
 CLIENT → open / closed / paused / unavailable readback
 CHECKOUT → revalidate the same DSH result before Order creation
@@ -111,11 +113,11 @@ CHECKOUT → revalidate the same DSH result before Order creation
 
 ### Failure / recovery
 
-Stale schedule, conflicting pause/resume, invalid interval, offline mutation and ambiguous commit reread the canonical DSH state. No failed orderability mutation changes publication, catalog or serviceability truth.
+Stale schedule, conflicting pause/resume, invalid interval, unauthorized Store scope, offline mutation and ambiguous commit reread canonical DSH state. Failed orderability mutation never changes publication, catalog or serviceability truth.
 
 ### Negative space
 
-No numeric capacity engine, mandatory daily check-in, queue forecaster or AI preparation predictor is admitted here.
+No numeric capacity engine, mandatory daily check-in, queue forecaster or AI preparation predictor is admitted. Temporary availability does not mutate durable enabled-mode policy.
 
 ## CATALOG_TO_CUSTOMER_OFFER — canonical catalog to customer-safe assortment
 
@@ -124,85 +126,87 @@ OUTCOME: Operator/Partner catalog work produces one DSH-governed customer-safe S
 SURFACES: OPERATOR, PARTNER, CLIENT
 OWNERS: DSH
 CAPABILITIES: CENTRAL_CATALOG
-ENTRY: An authorized catalog mutation/proposal/import/Store assortment action begins.
-EXIT: Eligible Product/Variant/StoreOffer content is published or intentionally not eligible.
-READBACK: Operator/Partner mutation readback and Client customer-safe storefront readback come from DSH.
+ENTRY: An authorized catalog mutation, proposal, import or Store-assortment action begins.
+EXIT: Eligible Product/Variant/StoreOffer content is published or intentionally remains ineligible.
+READBACK: Operator/Partner mutation readback and Client storefront readback come from DSH.
 
 ### Frontstage and handoffs
 
 ```text
 OPERATOR → vertical / taxonomy / shared Product / Variant / proposal review / import
-PARTNER → shared assortment or Store-local item / offer / modifier / section
+PARTNER → shared assortment or Store-local item / offer / price / availability / section / modifier
 DSH → canonical validation + CUSTOMER_VISIBLE_OFFER evaluation
 CLIENT → coherent storefront assortment
 ```
 
-`VARIABLE_MEASURE` preserves requested quantity/range and can later receive an actual fulfilled amount through the Order-adjustment boundary. Current inventory remains availability-only unless finite inventory is separately admitted.
+Shared Product, Variant, identifiers, taxonomy, typed attributes, Store-local Product, StoreOffer, StorefrontSection, modifiers, proposals, import preview/commit and media relationships remain distinct bounded meanings. `VARIABLE_MEASURE` preserves requested quantity/range and can receive actual fulfilled quantity through the Order-adjustment boundary. Current inventory remains availability-only unless finite reservation is separately admitted.
 
 ### Failure / recovery
 
-Invalid taxonomy, identifier conflict, stale price/offer, invalid modifier, duplicate import, unavailable offer and direct-ID bypass fail closed and converge on DSH readback.
+Invalid taxonomy, identifier conflict, stale price/offer, invalid modifier/quantity, duplicate import, unavailable offer and direct-ID bypass fail closed and converge on DSH readback.
 
 ### Negative space
 
-Catalog visibility does not prove Store operational availability, serviceability or checkout eligibility. Catalog is not PIM/ERP/POS authority.
+Catalog visibility does not prove Store orderability, serviceability or checkout eligibility. Catalog is not PIM/ERP/POS authority.
 
 ## DISCOVERY_TO_COMMERCE_ENTRY — governed discovery and promotion to valid target
 
 JOURNEY_ID: DISCOVERY_TO_COMMERCE_ENTRY
-OUTCOME: Authorized discovery content or commercial promotion reaches a Client only through an eligible canonical target and, when financially funded, preserves the WLT funding boundary.
-SURFACES: OPERATOR, CLIENT, PARTNER
+OUTCOME: Authorized discovery content or commercial promotion reaches a Client through an eligible canonical target while any funded promotion preserves the WLT funding boundary.
+SURFACES: OPERATOR, CLIENT
 OWNERS: DSH, WLT
-CAPABILITIES: DISCOVERY_CONTENT, COMMERCE_PROMOTIONS, CENTRAL_CATALOG, ORDER_PAYMENT_COLLECTION
-ENTRY: Authorized Operator/Partner-context content or promotion enters its governed review/eligibility lifecycle.
-EXIT: Client reaches a valid Store/Product/Category/commerce target or the content/promotion is ineligible/expired.
-READBACK: Publication/eligibility is DSH-backed; funded financial effect is WLT-backed.
+CAPABILITIES: DISCOVERY_CONTENT, COMMERCE_PROMOTIONS, CENTRAL_CATALOG
+ENTRY: Authorized content or promotion enters its governed review/eligibility lifecycle.
+EXIT: Client reaches a valid Store/Product/Category/commerce target or the content/promotion is ineligible, exhausted or expired.
+READBACK: Publication/eligibility is DSH-backed and funded promotion effect is WLT-backed through the promotion capability.
 
 ### Parallel lanes
 
 ```text
-EDITORIAL: Operator → Discovery Content → DSH publication → Client target
-COMMERCIAL: Operator → Promotion → DSH eligibility → WLT funding effect when applicable → Client application
+EDITORIAL: OPERATOR → Discovery Content → DSH publication → CLIENT target
+COMMERCIAL: OPERATOR → Promotion → DSH eligibility → WLT funding/subsidy effect when applicable → CLIENT application
 ```
+
+Partner-owned commerce objects may be targets/context without making Partner a material actor in this Journey unless Partner-authored discovery work is separately admitted.
 
 ### Failure / recovery
 
-Expired target, invalid scope, stale publication, funding refusal and retry conflict fail closed. A banner never becomes discount authority.
+Expired target, invalid scope, stale publication, concurrent redemption, funding refusal and retry conflict fail closed. A banner never becomes discount authority.
 
 ### Negative space
 
-No loyalty, paid membership or social content network is implied.
+No loyalty, paid membership, social-content network or app-local publication authority is implied.
 
 ## SINGLE_STORE_ORDER_CREATION — Client intent to canonical Store Order
 
 JOURNEY_ID: SINGLE_STORE_ORDER_CREATION
-OUTCOME: A Client confirms one Store-scoped commerce intent and the Partner receives at most one canonical Store Order created from current catalog, serviceability, Store-orderability and financial evidence.
+OUTCOME: A Client confirms one Store-scoped commerce intent and the Partner receives at most one canonical Store Order from current catalog, serviceability, Store orderability and financial evidence.
 SURFACES: CLIENT, PARTNER
-OWNERS: IDENTITY, DSH, WLT
+OWNERS: DSH, WLT
 CAPABILITIES: SERVICEABILITY_ADDRESSES, CART_CHECKOUT, ORDER_LIFECYCLE, ORDER_PAYMENT_COLLECTION, CUSTOMER_BALANCE_FUNDING, STORE_OPERATIONAL_AVAILABILITY, CENTRAL_CATALOG
 ENTRY: Client has an eligible Store/Offer/cart and chooses an admitted fulfillment intent.
-EXIT: One Store Order and its payment/collection intent exist or the confirmation fails without duplicate effect.
+EXIT: One Store Order and its payment/collection intent exist or confirmation fails without duplicate effect.
 READBACK: Client and Partner read the canonical Store Order; Client sees WLT-backed payment state where applicable.
 
 ### Frontstage and handoffs
 
 ```text
-CLIENT → address / storefront / Offer / quantity / modifiers / fulfillment intent / payment intent
+CLIENT → address / Store / Offer / Variant / quantity / modifiers / fulfillment intent / payment intent
 DSH → revalidate serviceability + offer + Store/mode orderability + cart evidence
-WLT → establish customer payment/collection intent
+WLT → establish payment/collection intent
 DSH → create at most one canonical Store Order
 PARTNER → new Order readback
 ```
 
-An optional delivery recipient may differ from the purchasing Client. The recipient is an Order delivery-contact snapshot, not a Human Actor and never receives Order/payment authority.
+A delivery recipient may be `SELF` or `OTHER`. An `OTHER` recipient is bounded delivery-contact data, not a Human Actor or Order/payment principal.
 
 ### Supporting financial subflow
 
-`CUSTOMER_BALANCE_FUNDING` may fund WLT internal balance before checkout. The external provider is a rail, not checkout or ledger authority.
+`CUSTOMER_BALANCE_FUNDING` may fund WLT internal balance before checkout. The external provider remains a rail, not checkout or ledger authority.
 
 ### Failure / recovery
 
-Stale cart, closed/paused Store, unavailable selected mode, unavailable Offer, unserviceable address, financial refusal, duplicate confirmation, conflict and unknown cross-owner outcome recover through owner readback/reconciliation without silently creating another Order.
+Stale cart, closed/paused Store, unavailable selected mode, unavailable Offer, unserviceable address, invalid recipient data, financial refusal, duplicate confirmation, conflict and unknown cross-owner outcome recover through owner readback/reconciliation without silently creating another Order or changing modes.
 
 ### Negative space
 
@@ -212,8 +216,8 @@ No scheduled customer-order lifecycle or generic point-to-point courier request 
 
 JOURNEY_ID: BTHWANI_CAPTAIN_DELIVERY
 OUTCOME: A Partner-ready BThwani-Captain Order is accepted by an eligible Captain, transferred into canonical custody and completed to the Client with explicit tracking/proof and financial effects.
-SURFACES: PARTNER, CAPTAIN, CLIENT, OPERATOR
-OWNERS: IDENTITY, DSH, WLT
+SURFACES: PARTNER, CAPTAIN, CLIENT
+OWNERS: DSH, WLT
 CAPABILITIES: ORDER_LIFECYCLE, CAPTAIN_DISPATCH, STORE_CAPTAIN_HANDOFF, FINAL_MILE_DELIVERY, ORDER_PAYMENT_COLLECTION, CAPTAIN_BALANCE_FUNDING, PARTNER_CAPTAIN_FIELD_EARNINGS_SETTLEMENT
 ENTRY: Partner has accepted/prepared an Order with fulfillment mode `BTHWANI_CAPTAIN` and marks it ready for dispatch.
 EXIT: Delivery reaches a legal terminal result and applicable WLT effects are committed or explicitly reconciling.
@@ -223,33 +227,33 @@ READBACK: Partner, Captain and Client read one DSH delivery result; WLT financia
 
 ```text
 PARTNER → accept / prepare / ready
-DSH + WLT → dispatch eligibility + COD exposure if applicable
+DSH + WLT → Captain dispatch eligibility + COD exposure if applicable
 CAPTAIN → offer accept
 DSH → assignment
 PARTNER ↔ CAPTAIN → two-sided handoff
 DSH → custody
 CAPTAIN → final mile + bounded delivery proof
 DSH → terminal delivery result
-CLIENT / PARTNER / CAPTAIN → completion/tracking readback
+CLIENT / PARTNER / CAPTAIN → tracking/completion readback
 WLT → collection / receivable / earning effects
 ```
 
-Tracking is a DSH projection. Proof is bounded evidence used by DSH; photo/upload alone is never delivery truth. `CAPTAIN_BALANCE_FUNDING` remains a supporting balance/collateral subflow and is not earnings or COD remittance.
+Tracking is a DSH projection. Proof is bounded evidence validated by DSH; upload/UI success alone is never delivery truth. `CAPTAIN_BALANCE_FUNDING` remains a supporting balance/collateral subflow, not earnings or COD remittance.
 
 ### Failure / recovery
 
-Offer race, assignment conflict, handoff disagreement, connectivity loss, failed delivery, customer unavailable, payment uncertainty and duplicate proof preserve one assignment/custody/delivery truth and explicit recovery.
+Offer race, assignment conflict, handoff disagreement, connectivity loss, invalid proof, failed delivery, recipient/customer unavailable, payment uncertainty and duplicate terminal action preserve one assignment/custody/delivery truth. Operational exceptions requiring Operator action transfer to `ORDER_ADJUSTMENT_EXCEPTION_REFUND` rather than making Operator part of the normal fulfillment Journey.
 
 ### Negative space
 
-Not Partner-Captain delivery, not Customer Pickup, not advanced route optimization, not Captain-authored earnings.
+Not Partner-Captain delivery, not Customer Pickup, not advanced route optimization and not Captain-authored earnings.
 
 ## PARTNER_CAPTAIN_DELIVERY — Store-affiliated Captain fulfillment
 
 JOURNEY_ID: PARTNER_CAPTAIN_DELIVERY
-OUTCOME: A Store-affiliated canonical Captain accepts an authorized Store relationship and completes an eligible Partner-Captain Order to the Client without reusing BThwani-Captain financial semantics.
-SURFACES: PARTNER, CAPTAIN, CLIENT, OPERATOR
-OWNERS: IDENTITY, DSH, WLT
+OUTCOME: A Store-affiliated canonical Captain uses an accepted Store relationship to complete an eligible Partner-Captain Order to the Client without reusing BThwani-Captain financial semantics.
+SURFACES: PARTNER, CAPTAIN, CLIENT
+OWNERS: DSH, WLT
 CAPABILITIES: STORE_CAPTAIN_MEMBERSHIP, STORE_CAPTAIN_HANDOFF, FINAL_MILE_DELIVERY, ORDER_LIFECYCLE, ORDER_PAYMENT_COLLECTION
 ENTRY: Order mode is `PARTNER_CAPTAIN` and an active accepted Store-Captain membership exists.
 EXIT: Delivery reaches a legal terminal DSH result with Store-owned internal Captain remuneration remaining outside WLT.
@@ -262,16 +266,16 @@ PARTNER → invite canonical eligible Captain
 CAPTAIN → accept / decline
 DSH → ACTIVE membership only after acceptance
 PARTNER → suspend/remove when authorized
-CAPTAIN → leave when policy permits
+CAPTAIN → leave when current policy permits
 ```
 
 ### Failure / recovery
 
-Unaccepted membership, stale membership, wrong Store, handoff disagreement and delivery failure fail closed. Membership history is not rewritten by later suspension/removal.
+Unaccepted/expired membership, stale membership, wrong Store, handoff disagreement and delivery failure fail closed. Membership history is not rewritten by later suspension/removal. Operator-required exceptions transfer to the exception Journey.
 
 ### Negative space
 
-Partner Captain is not a sixth role. Store-Captain remuneration does not create BThwani-Captain wallet/earning/COD-receivable semantics.
+Partner Captain is not a sixth role. Store-Captain remuneration does not create BThwani-Captain wallet, earning or COD-receivable semantics.
 
 ## CUSTOMER_PICKUP — Partner readiness to customer pickup
 
@@ -281,17 +285,17 @@ SURFACES: CLIENT, PARTNER
 OWNERS: DSH, WLT
 CAPABILITIES: CUSTOMER_PICKUP, ORDER_LIFECYCLE, ORDER_PAYMENT_COLLECTION
 ENTRY: Store Order fulfillment mode is `CUSTOMER_PICKUP`.
-EXIT: DSH records canonical pickup completion and WLT applies the relevant collection/commission effects.
+EXIT: DSH records canonical pickup completion and WLT applies relevant collection/commission effects.
 READBACK: Client and Partner receive one canonical pickup result.
 
-### Frontstage
+### Frontstage and handoffs
 
 ```text
 PARTNER → accept / prepare / ready for pickup
 CLIENT → arrives
 CLIENT ↔ PARTNER → bounded pickup proof
 DSH → CUSTOMER_PICKED_UP
-WLT → applicable collection / commission effect
+WLT → applicable collection / Partner commission effect
 ```
 
 ### Failure / recovery
@@ -320,7 +324,7 @@ PARENT INTENT
 → child Store Order A
 → child Store Order B
 → ...
-→ per-child payment + fulfillment + cancellation/refund/exception
+→ per-child payment + fulfillment + adjustment/exception/cancellation/refund
 → optional bounded grouped execution plan
 → parent reconciliation/readback
 ```
@@ -340,13 +344,13 @@ OUTCOME: Authorized participants of one Store Order communicate during the legal
 SURFACES: CLIENT, PARTNER, CAPTAIN, OPERATOR
 OWNERS: DSH
 CAPABILITIES: ORDER_CONVERSATION
-ENTRY: A canonical Store Order exists and the actor is a current authorized participant or authorized escalation participant.
+ENTRY: A canonical Store Order exists and the actor is a current authorized participant or an authorized escalation participant.
 EXIT: Conversation enters governed read-only closure after operational completion and grace policy.
 READBACK: Messages, membership, unread/read and closure state are canonical DSH conversation readback.
 
 ### Parallel lane
 
-Conversation runs beside normal fulfillment. Notifications are derived from owner events and may deep-link to the conversation; provider delivery failure does not change message or Order truth.
+Conversation runs beside normal fulfillment. Captain participates only while assignment/member rules authorize it; Operator participates only through authorized escalation. Notifications are derived from owner events and may deep-link to the conversation; provider delivery failure does not change message or Order truth.
 
 ### Failure / recovery
 
@@ -359,35 +363,31 @@ No generic customer-support ticket platform. Messages do not prove delivery, pay
 ## ORDER_ADJUSTMENT_EXCEPTION_REFUND — legal order change or exception to reconciled result
 
 JOURNEY_ID: ORDER_ADJUSTMENT_EXCEPTION_REFUND
-OUTCOME: A material Order problem or legal post-confirmation change is resolved across affected participants without rewriting the original Order snapshot or hiding financial consequences.
+OUTCOME: A material Order problem or legal post-confirmation change is resolved across affected participants without rewriting the original Order snapshot or hiding operational/financial consequences.
 SURFACES: CLIENT, PARTNER, CAPTAIN, OPERATOR
 OWNERS: DSH, WLT
-CAPABILITIES: ORDER_LIFECYCLE, ORDER_PAYMENT_COLLECTION, PARTNER_CAPTAIN_FIELD_EARNINGS_SETTLEMENT, CUSTOMER_BALANCE_MANUAL_WITHDRAWAL
-ENTRY: A canonical Order encounters an allowed adjustment, cancellation, failure, dispute or financial exception; the rare customer-balance withdrawal path enters as a separate Finance/Operations subflow, not as Order mutation.
-EXIT: Operational and financial outcomes are committed or explicitly remain in reconciliation-required state.
+CAPABILITIES: ORDER_LIFECYCLE, ORDER_PAYMENT_COLLECTION, PARTNER_CAPTAIN_FIELD_EARNINGS_SETTLEMENT
+ENTRY: A canonical Order encounters an allowed adjustment, cancellation, fulfillment failure, dispute or Order-bound financial exception.
+EXIT: Operational and financial outcomes are committed or explicitly remain reconciliation-required.
 READBACK: Affected surfaces read canonical DSH operational result and WLT financial result.
 
 ### Order adjustment branch
 
 ```text
 PARTNER → item unavailable / actual quantity differs
-DSH → validate canonical OrderLine
-→ remove item OR propose substitute OR record actual measured quantity
+DSH → validate canonical OrderLine + allowed action
+→ remove item OR propose eligible substitute OR record actual measured quantity
 CLIENT → approve / reject / alternate when required
-DSH → attributable adjustment history + final fulfilled snapshot
-WLT → financial delta / refund / required additional financial treatment
-PARTNER → continue only when required adjustment is resolved
+DSH → append attributable adjustment + final fulfilled snapshot
+WLT → delta / refund / additional legal financial treatment
+PARTNER → continue only when mandatory adjustment is resolved
 ```
 
-Original confirmation snapshot remains immutable; adjustments are attributable facts.
+Original confirmation snapshot remains immutable; adjustments are attributable facts with stable retry identity.
 
 ### Exception branches
 
-Pre-accept cancellation, post-accept cancellation, preparation failure, customer rejection of adjustment, custody mismatch, delivery failure, customer unavailable, governed return-to-Store when required, payment uncertainty, refund, external RefundCase and post-completion dispute remain explicit branches. Post-completion dispute does not silently reopen the completed Order.
-
-### Customer withdrawal supporting subflow
-
-`CUSTOMER_BALANCE_MANUAL_WITHDRAWAL` remains rare and non-self-service: Operations intake/evidence → WLT eligibility/hold → authorized Finance approval/execution → independent reconciliation → WLT liability finalization → Client balance readback.
+Pre-accept cancellation, post-accept cancellation, preparation failure, customer rejection of adjustment, custody mismatch, delivery failure, unavailable customer/recipient, governed return-to-Store when required, payment uncertainty, refund, external RefundCase and post-completion wrong/damaged/missing dispute remain explicit branches. Post-completion dispute does not silently reopen the completed Order. Operator/Finance participation occurs only where the exception requires authorized intervention.
 
 ### Failure / recovery
 
@@ -395,7 +395,7 @@ Concurrent cancellation/fulfillment, stale adjustment, duplicate refund, unknown
 
 ### Negative space
 
-No generic returns/exchange/warranty platform is admitted. Wrong/damaged/missing delivery may use bounded incident/refund handling only.
+Customer balance withdrawal is not an Order exception and remains a separate supporting financial subflow. No generic returns/exchange/warranty platform is admitted.
 
 ## CAPTAIN_COD_REMITTANCE — Captain cash receivable to reconciled closure
 
@@ -440,7 +440,7 @@ Store-retained sale proceeds are not re-credited as a duplicate Partner wallet e
 JOURNEY_ID: BENEFICIARY_SETTLEMENT
 OUTCOME: Eligible Partner, BThwani Captain or Field entitlement reaches an authorized reconciled payout/settlement result without surfaces becoming ledger writers.
 SURFACES: PARTNER, CAPTAIN, FIELD, OPERATOR
-OWNERS: IDENTITY, DSH, WLT
+OWNERS: DSH, WLT
 CAPABILITIES: PARTNER_CAPTAIN_FIELD_EARNINGS_SETTLEMENT
 ENTRY: DSH qualifying evidence has produced a WLT entitlement eligible for settlement.
 EXIT: Payout is executed with immutable approved destination evidence and independently reconciled, or remains explicitly held/reconciling.
@@ -474,17 +474,18 @@ These are materially governed but are not promoted to top-level Journeys merely 
 | CLIENT_REGISTRATION_SESSION | SUPPORTING_SUBFLOW | `IDENTITY_ACTIVATION_SESSIONS` / Identity | Client access prerequisite |
 | OPERATOR_BOOTSTRAP_SESSION | SUPPORTING_SUBFLOW | `IDENTITY_ACTIVATION_SESSIONS` / Identity | Operator access prerequisite |
 | ROLE_SESSION_RECOVERY | SUPPORTING_SUBFLOW | `IDENTITY_ACTIVATION_SESSIONS` / Identity | managed-role recovery |
-| OPERATOR_PERMISSION_ADMINISTRATION | POLICY_FLOW | `IDENTITY_ACTIVATION_SESSIONS` / Identity | finite Operator scopes |
-| STORE_SCOPED_DELEGATION | SUPPORTING_SUBFLOW | `STORE_SCOPED_ACCESS_DELEGATION` / DSH + Identity admission | Partner workspace Store authority |
-| STORE_CAPTAIN_MEMBERSHIP | SUPPORTING_SUBFLOW | `STORE_CAPTAIN_MEMBERSHIP` / DSH | Partner-Captain eligibility |
+| OPERATOR_PERMISSION_ADMINISTRATION | POLICY_FLOW | `IDENTITY_ACTIVATION_SESSIONS` / Identity | finite Operator scopes + session invalidation |
+| PLATFORM_POLICY_ADMINISTRATION | POLICY_FLOW | Identity / DSH / WLT by typed policy owner | Operator mutation + prospective affected-surface readback |
+| STORE_SCOPED_DELEGATION | SUPPORTING_SUBFLOW | `STORE_SCOPED_ACCESS_DELEGATION` / DSH + Identity admission | Partner-workspace Store authority |
+| STORE_CAPTAIN_MEMBERSHIP | SUPPORTING_SUBFLOW | `STORE_CAPTAIN_MEMBERSHIP` / DSH | accepted Partner-Captain relationship |
 | ADDRESS_MANAGEMENT | SUPPORTING_SUBFLOW | `SERVICEABILITY_ADDRESSES` / DSH | ordering prerequisite |
 | CART_MANAGEMENT | SUPPORTING_SUBFLOW | `CART_CHECKOUT` / DSH | ordering prerequisite |
-| CUSTOMER_BALANCE_FUNDING | SUPPORTING_SUBFLOW | `CUSTOMER_BALANCE_FUNDING` / WLT | internal balance funding |
-| CAPTAIN_BALANCE_FUNDING | SUPPORTING_SUBFLOW | `CAPTAIN_BALANCE_FUNDING` / WLT | BThwani Captain balance funding |
+| CUSTOMER_BALANCE_FUNDING | SUPPORTING_SUBFLOW | `CUSTOMER_BALANCE_FUNDING` / WLT | internal-balance funding |
+| CAPTAIN_BALANCE_FUNDING | SUPPORTING_SUBFLOW | `CAPTAIN_BALANCE_FUNDING` / WLT | BThwani-Captain balance funding |
 | PAYMENT_ALLOCATION | SUPPORTING_SUBFLOW | `ORDER_PAYMENT_COLLECTION` / WLT | checkout/payment boundary |
-| COD_EXPOSURE_HOLD | SUPPORTING_SUBFLOW | `ORDER_PAYMENT_COLLECTION` / WLT | BThwani Captain dispatch boundary |
-| CUSTOMER_MANUAL_WITHDRAWAL | SUPPORTING_SUBFLOW | `CUSTOMER_BALANCE_MANUAL_WITHDRAWAL` / WLT | Operations/Finance exception |
-| ORDER_FEEDBACK | SUPPORTING_SUBFLOW | `ORDER_LIFECYCLE` / DSH | bounded completed-order feedback |
+| COD_EXPOSURE_HOLD | SUPPORTING_SUBFLOW | `ORDER_PAYMENT_COLLECTION` / WLT | BThwani-Captain dispatch boundary |
+| CUSTOMER_MANUAL_WITHDRAWAL | SUPPORTING_SUBFLOW | `CUSTOMER_BALANCE_MANUAL_WITHDRAWAL` / WLT | Client request → Operations/Finance → independent reconciliation |
+| ORDER_FEEDBACK | SUPPORTING_SUBFLOW | `ORDER_LIFECYCLE` / DSH | bounded completed-Order feedback |
 | NOTIFICATIONS | PROJECTION | DSH owner events + delivery adapter | many Journeys |
 | TRACKING | PROJECTION | DSH | Captain fulfillment Journeys |
 | MEDIA | CROSS_CUTTING_LANE | DSH relationship + media adapter | catalog/conversation/content |
@@ -496,6 +497,7 @@ These are materially governed but are not promoted to top-level Journeys merely 
 | OFFLINE_RECOVERY | CROSS_CUTTING_LANE | surface + canonical owner readback | applicable Journeys |
 | UNKNOWN_OUTCOME | CROSS_CUTTING_LANE | receiving owner + reconciliation | cross-owner/provider effects |
 | RESTART_RESUME | CROSS_CUTTING_LANE | canonical owner readback | applicable Journeys |
+| PRIVACY_SECURITY_RETENTION | POLICY_FLOW | DATA/SECURITY policy + canonical owner | minimization, access, retention, evidence |
 | ANALYTICS_SEARCH_CACHE | PROJECTION | derived | no mutation authority |
 | OBSERVABILITY | CROSS_CUTTING_LANE | runtime operations | evidence, not business authority |
 
@@ -507,10 +509,10 @@ These are materially governed but are not promoted to top-level Journeys merely 
 | PARTNER_TO_VISIBLE_STORE | READBACK | DIRECT | — | DIRECT | DIRECT |
 | STORE_ORDERABILITY | DIRECT | DIRECT | — | — | CONDITIONAL |
 | CATALOG_TO_CUSTOMER_OFFER | DIRECT | DIRECT | — | — | DIRECT |
-| DISCOVERY_TO_COMMERCE_ENTRY | DIRECT | CONTEXT | — | — | DIRECT |
+| DISCOVERY_TO_COMMERCE_ENTRY | DIRECT | — | — | — | DIRECT |
 | SINGLE_STORE_ORDER_CREATION | DIRECT | READBACK | — | — | — |
-| BTHWANI_CAPTAIN_DELIVERY | DIRECT | DIRECT | DIRECT | — | CONDITIONAL |
-| PARTNER_CAPTAIN_DELIVERY | DIRECT | DIRECT | DIRECT | — | CONDITIONAL |
+| BTHWANI_CAPTAIN_DELIVERY | DIRECT | DIRECT | DIRECT | — | — |
+| PARTNER_CAPTAIN_DELIVERY | DIRECT | DIRECT | DIRECT | — | — |
 | CUSTOMER_PICKUP | DIRECT | DIRECT | — | — | — |
 | MULTI_STORE_ORCHESTRATION | DIRECT | DIRECT | CONDITIONAL | — | — |
 | ORDER_COMMUNICATION | DIRECT | DIRECT | CONDITIONAL | — | CONDITIONAL |
@@ -551,20 +553,20 @@ These are materially governed but are not promoted to top-level Journeys merely 
 | Journey | IDENTITY | DSH | WLT |
 |---|---|---|---|
 | MANAGED_PARTICIPANT_ADMISSION | PRIMARY | ELIGIBILITY | — |
-| PARTNER_TO_VISIBLE_STORE | ROLE ADMISSION | PRIMARY | CONDITIONAL FIELD EFFECT LATER |
+| PARTNER_TO_VISIBLE_STORE | ROLE ADMISSION | PRIMARY | — |
 | STORE_ORDERABILITY | — | PRIMARY | — |
 | CATALOG_TO_CUSTOMER_OFFER | — | PRIMARY | — |
-| DISCOVERY_TO_COMMERCE_ENTRY | SESSION | PRIMARY | FUNDED INCENTIVE EFFECT |
-| SINGLE_STORE_ORDER_CREATION | SESSION | PRIMARY | PAYMENT/COLLECTION |
-| BTHWANI_CAPTAIN_DELIVERY | SESSION | FULFILLMENT | COD/COLLECTION/EARNING |
-| PARTNER_CAPTAIN_DELIVERY | SESSION | FULFILLMENT | ORDER COLLECTION ONLY WHERE APPLICABLE |
-| CUSTOMER_PICKUP | SESSION | PICKUP | COLLECTION/COMMISSION |
-| MULTI_STORE_ORCHESTRATION | SESSION | PRIMARY | PER-CHILD FINANCE |
-| ORDER_COMMUNICATION | SESSION | PRIMARY | — |
-| ORDER_ADJUSTMENT_EXCEPTION_REFUND | SESSION | OPERATIONAL EXCEPTION | REFUND/RECONCILIATION |
-| CAPTAIN_COD_REMITTANCE | SESSION | QUALIFYING EVIDENCE | PRIMARY |
-| PARTNER_COMMISSION_REMITTANCE | SESSION | QUALIFYING EVIDENCE | PRIMARY |
-| BENEFICIARY_SETTLEMENT | SESSION | QUALIFYING EVIDENCE | PRIMARY |
+| DISCOVERY_TO_COMMERCE_ENTRY | — | PRIMARY | FUNDED PROMOTION EFFECT |
+| SINGLE_STORE_ORDER_CREATION | — | PRIMARY | PAYMENT/COLLECTION |
+| BTHWANI_CAPTAIN_DELIVERY | — | FULFILLMENT | COD/COLLECTION/EARNING |
+| PARTNER_CAPTAIN_DELIVERY | — | FULFILLMENT | ORDER COLLECTION WHERE APPLICABLE |
+| CUSTOMER_PICKUP | — | PICKUP | COLLECTION/COMMISSION |
+| MULTI_STORE_ORCHESTRATION | — | PRIMARY | PER-CHILD FINANCE |
+| ORDER_COMMUNICATION | — | PRIMARY | — |
+| ORDER_ADJUSTMENT_EXCEPTION_REFUND | — | OPERATIONAL EXCEPTION | DELTA/REFUND/RECONCILIATION |
+| CAPTAIN_COD_REMITTANCE | — | QUALIFYING EVIDENCE | PRIMARY |
+| PARTNER_COMMISSION_REMITTANCE | — | QUALIFYING EVIDENCE | PRIMARY |
+| BENEFICIARY_SETTLEMENT | — | QUALIFYING EVIDENCE | PRIMARY |
 
 ## Matrix — Journey × Correctness dimension
 
@@ -590,54 +592,79 @@ Legend: `A` applicable, `C` conditional, `N` not applicable for the Journey outc
 
 ## Platform material census
 
-Every currently material concept must have one explicit disposition. Absence from a top-level Journey is not omission when the concept is deliberately classified here or in the supporting-lanes table.
+Every currently material concept must have one explicit disposition. Absence from a top-level Journey is not omission when deliberately classified here or in the supporting-lanes table.
 
 | Material concept | Canonical owner | Disposition | Placement | Status |
 |---|---|---|---|---|
 | Human Actor / managed role admission | Identity + domain eligibility | TOP_LEVEL_MULTI_SURFACE_JOURNEY | MANAGED_PARTICIPANT_ADMISSION | MAPPED |
-| Partner joining / Store publication | DSH + Identity role handoff | TOP_LEVEL_MULTI_SURFACE_JOURNEY | PARTNER_TO_VISIBLE_STORE | MAPPED |
-| Store schedule / pause / mode orderability | DSH | TOP_LEVEL_MULTI_SURFACE_JOURNEY | STORE_ORDERABILITY | MAPPED |
-| Catalog / variants / taxonomy / offers / modifiers | DSH | TOP_LEVEL_MULTI_SURFACE_JOURNEY | CATALOG_TO_CUSTOMER_OFFER | MAPPED |
+| Client registration/session/recovery | Identity | SUPPORTING_SUBFLOW | CLIENT_REGISTRATION_SESSION | MAPPED |
+| Operator bootstrap/session/recovery | Identity | SUPPORTING_SUBFLOW | OPERATOR_BOOTSTRAP_SESSION | MAPPED |
+| Operator finite permissions | Identity | POLICY_FLOW | OPERATOR_PERMISSION_ADMINISTRATION | MAPPED |
+| Typed/versioned platform policies | policy-specific Identity/DSH/WLT owner | POLICY_FLOW | PLATFORM_POLICY_ADMINISTRATION | MAPPED |
+| Partner joining / Store ownership / publication | DSH + Identity role handoff | TOP_LEVEL_MULTI_SURFACE_JOURNEY | PARTNER_TO_VISIBLE_STORE | MAPPED |
+| Store schedule / pause / temporary mode orderability | DSH | TOP_LEVEL_MULTI_SURFACE_JOURNEY | STORE_ORDERABILITY | MAPPED |
+| Durable Store fulfillment-mode policy | DSH | POLICY_FLOW | PARTNER_TO_VISIBLE_STORE + platform policy administration | MAPPED |
+| Catalog / variants / identifiers / taxonomy / typed attributes / offers / sections / modifiers | DSH | TOP_LEVEL_MULTI_SURFACE_JOURNEY | CATALOG_TO_CUSTOMER_OFFER | MAPPED |
+| Product proposals / import preview / import commit / catalog media relation | DSH | SUPPORTING_SUBFLOW | CATALOG_TO_CUSTOMER_OFFER | MAPPED |
+| Current availability-only inventory semantics | DSH | SUPPORTING_SUBFLOW | CATALOG_TO_CUSTOMER_OFFER + checkout | MAPPED |
 | Serviceability / address | DSH | SUPPORTING_SUBFLOW | SINGLE_STORE_ORDER_CREATION | MAPPED |
 | Single-Store cart / checkout / Store Order | DSH + WLT effect | TOP_LEVEL_MULTI_SURFACE_JOURNEY | SINGLE_STORE_ORDER_CREATION | MAPPED |
-| Optional different delivery recipient | DSH Order snapshot | SUPPORTING_SUBFLOW | SINGLE_STORE_ORDER_CREATION / delivery | MAPPED |
+| Different delivery recipient for gifts/family delivery | DSH Order snapshot | SUPPORTING_SUBFLOW | SINGLE_STORE_ORDER_CREATION + final mile | MAPPED |
+| Restaurants/menu modifiers/sections | DSH Catalog | SUPPORTING_SUBFLOW | CATALOG_TO_CUSTOMER_OFFER | MAPPED |
+| Grocery/fresh variable measure and actual fulfilled quantity | DSH + WLT delta | SUPPORTING_SUBFLOW | catalog + ORDER_ADJUSTMENT_EXCEPTION_REFUND | MAPPED |
+| Standard non-regulated pharmacy commerce | DSH/WLT standard commerce | SUPPORTING_SUBFLOW | catalog/order/fulfillment Journeys | MAPPED |
+| Electronics wrong/damaged/missing delivered item | DSH + WLT | SUPPORTING_SUBFLOW | ORDER_ADJUSTMENT_EXCEPTION_REFUND | MAPPED |
 | BThwani Captain dispatch / handoff / custody / delivery | DSH + WLT effects | TOP_LEVEL_MULTI_SURFACE_JOURNEY | BTHWANI_CAPTAIN_DELIVERY | MAPPED |
-| Partner Captain membership / delivery | DSH | TOP_LEVEL_MULTI_SURFACE_JOURNEY | PARTNER_CAPTAIN_DELIVERY | MAPPED |
+| Partner Captain invitation/membership/delivery | DSH | TOP_LEVEL_MULTI_SURFACE_JOURNEY | PARTNER_CAPTAIN_DELIVERY | MAPPED |
 | Customer Pickup | DSH + WLT effects | TOP_LEVEL_MULTI_SURFACE_JOURNEY | CUSTOMER_PICKUP | MAPPED |
-| Multi-Store parent / independent children | DSH + WLT per child | TOP_LEVEL_MULTI_SURFACE_JOURNEY | MULTI_STORE_ORCHESTRATION | MAPPED |
-| Order communication | DSH | TOP_LEVEL_MULTI_SURFACE_JOURNEY | ORDER_COMMUNICATION | MAPPED |
+| Multi-Store parent / independent Store Orders | DSH + WLT per child | TOP_LEVEL_MULTI_SURFACE_JOURNEY | MULTI_STORE_ORCHESTRATION | MAPPED |
+| Order communication / read state / grace closure | DSH | TOP_LEVEL_MULTI_SURFACE_JOURNEY | ORDER_COMMUNICATION | MAPPED |
 | Out-of-stock / substitute / actual variable measure | DSH + WLT delta | TOP_LEVEL_MULTI_SURFACE_JOURNEY | ORDER_ADJUSTMENT_EXCEPTION_REFUND | MAPPED |
-| Cancellation / failure / custody mismatch / refund | DSH + WLT | TOP_LEVEL_MULTI_SURFACE_JOURNEY | ORDER_ADJUSTMENT_EXCEPTION_REFUND | MAPPED |
+| Cancellation / rejection / preparation failure / custody mismatch / delivery failure | DSH + WLT | TOP_LEVEL_MULTI_SURFACE_JOURNEY | ORDER_ADJUSTMENT_EXCEPTION_REFUND | MAPPED |
+| Refund / reversal / external RefundCase / payment uncertainty | WLT + DSH evidence | TOP_LEVEL_MULTI_SURFACE_JOURNEY | ORDER_ADJUSTMENT_EXCEPTION_REFUND | MAPPED |
 | Post-completion wrong/damaged/missing dispute | DSH + WLT | TOP_LEVEL_MULTI_SURFACE_JOURNEY | ORDER_ADJUSTMENT_EXCEPTION_REFUND | MAPPED |
 | Customer balance funding | WLT | SUPPORTING_SUBFLOW | CUSTOMER_BALANCE_FUNDING | MAPPED |
 | Captain balance funding | WLT | SUPPORTING_SUBFLOW | CAPTAIN_BALANCE_FUNDING | MAPPED |
+| Payment allocation | WLT | SUPPORTING_SUBFLOW | PAYMENT_ALLOCATION | MAPPED |
+| Captain COD exposure/hold | WLT | SUPPORTING_SUBFLOW | COD_EXPOSURE_HOLD | MAPPED |
 | Captain COD receivable/remittance | WLT | TOP_LEVEL_MULTI_SURFACE_JOURNEY | CAPTAIN_COD_REMITTANCE | MAPPED |
 | Partner commission receivable/remittance | WLT | TOP_LEVEL_MULTI_SURFACE_JOURNEY | PARTNER_COMMISSION_REMITTANCE | MAPPED |
 | Partner/Captain/Field earning settlement | WLT | TOP_LEVEL_MULTI_SURFACE_JOURNEY | BENEFICIARY_SETTLEMENT | MAPPED |
 | Customer manual withdrawal | WLT | SUPPORTING_SUBFLOW | CUSTOMER_MANUAL_WITHDRAWAL | MAPPED |
-| Store delegated access | DSH + Identity admission | SUPPORTING_SUBFLOW | STORE_SCOPED_DELEGATION | MAPPED |
+| Official-wallet payout destination administration | WLT/Finance | POLICY_FLOW | BENEFICIARY_SETTLEMENT support | MAPPED |
+| Store delegated access invitation/grant/revocation | DSH + Identity admission | SUPPORTING_SUBFLOW | STORE_SCOPED_DELEGATION | MAPPED |
 | Notifications / deep links / unread | DSH intent/read state + adapter delivery | PROJECTION | many Journeys | MAPPED |
-| Tracking | DSH | PROJECTION | Captain fulfillment | MAPPED |
+| Tracking / Captain telemetry | DSH | PROJECTION | Captain fulfillment | MAPPED |
 | Delivery/pickup proof | DSH | CROSS_CUTTING_LANE | fulfillment | MAPPED |
-| Media | DSH relationship + adapter transport | CROSS_CUTTING_LANE | catalog/conversation/content | MAPPED |
-| Authorization / audit / idempotency / concurrency | each canonical owner | CROSS_CUTTING_LANE | all applicable Journeys | MAPPED |
-| Offline / retry / unknown outcome / restart | each owner + surface recovery | CROSS_CUTTING_LANE | all applicable Journeys | MAPPED |
-| RTL / accessibility / complete user-visible states | Experience policy | POLICY_FLOW | every participating surface | MAPPED |
+| Media / attachment lifecycle | DSH relationship + media adapter | CROSS_CUTTING_LANE | catalog/conversation/content | MAPPED |
+| Authorization / audit / correlation / idempotency / concurrency | each canonical owner | CROSS_CUTTING_LANE | all applicable Journeys | MAPPED |
+| Offline / degraded / retry / unknown outcome / restart/resume | each owner + surface recovery | CROSS_CUTTING_LANE | all applicable Journeys | MAPPED |
+| Privacy / security / minimization / retention | DATA/SECURITY policy + owner | POLICY_FLOW | PRIVACY_SECURITY_RETENTION | MAPPED |
+| RTL / accessibility / loading-empty-ready-pending-success-forbidden-offline-conflict-reconciliation-error states | Experience policy | POLICY_FLOW | every participating surface | MAPPED |
 | Search / cache / analytics | derived | PROJECTION | read models | MAPPED |
-| Prescription-required regulated pharmacy fulfillment | none admitted | EXPLICIT_NON_GOAL | current Product target | MAPPED |
-| Generic returns/exchanges/warranty | none admitted | EXPLICIT_NON_GOAL | current Product target | MAPPED |
+| Runtime logging/observability | runtime operations | CROSS_CUTTING_LANE | operational evidence | MAPPED |
+| Prescription-required or specially regulated pharmacy fulfillment | none admitted | EXPLICIT_NON_GOAL | current Product target | MAPPED |
+| Generic returns/exchanges | none admitted | EXPLICIT_NON_GOAL | current Product target | MAPPED |
+| Electronics warranty-claim management | none admitted | EXPLICIT_NON_GOAL | current Product target | MAPPED |
 | Scheduled customer orders | none admitted | EXPLICIT_NON_GOAL | current Product target | MAPPED |
 | Generic point-to-point courier requests | none admitted | EXPLICIT_NON_GOAL | current Product target | MAPPED |
-| Advanced route optimization | future bounded adapter only if admitted | EXPLICIT_NON_GOAL | current Product target | MAPPED |
-| Numeric/predictive Store capacity engine | none admitted | EXPLICIT_NON_GOAL | current Product target | MAPPED |
-| Loyalty / paid membership / generic support ticketing / social review | none admitted | EXPLICIT_NON_GOAL | current Product target | MAPPED |
-| ERP/POS / generic Partner team/tenant system | none admitted | EXPLICIT_NON_GOAL | current Product target | MAPPED |
+| Advanced route optimization | future bounded adapter only if separately admitted | EXPLICIT_NON_GOAL | current Product target | MAPPED |
+| Numeric/predictive Store capacity / mandatory daily check-in | none admitted | EXPLICIT_NON_GOAL | current Product target | MAPPED |
+| Loyalty / rewards standalone Product | none admitted | EXPLICIT_NON_GOAL | current Product target | MAPPED |
+| Paid membership / subscription Product | none admitted | EXPLICIT_NON_GOAL | current Product target | MAPPED |
+| Generic support/ticketing platform | none admitted | EXPLICIT_NON_GOAL | current Product target | MAPPED |
+| Social review/community network | none admitted | EXPLICIT_NON_GOAL | current Product target | MAPPED |
+| Generic analytics Product / standalone notification Product | none admitted | EXPLICIT_NON_GOAL | current Product target | MAPPED |
+| Broad customer-profile/privacy orchestration Product | none admitted | EXPLICIT_NON_GOAL | current Product target | MAPPED |
+| Generic Partner organization/team/tenant system | none admitted | EXPLICIT_NON_GOAL | current Product target | MAPPED |
+| ERP/POS replacement | none admitted | EXPLICIT_NON_GOAL | current Product target | MAPPED |
+| Speculative multi-currency breadth | none admitted | EXPLICIT_NON_GOAL | current Product target | MAPPED |
 
 ## Journey acceptance law
 
-For every participating surface, the applicable user-visible states are not polish: `loading`, `empty`, `ready`, `pending`, `success`, `forbidden`, `offline`, `conflict`, `reconciliation_required` and `error` must be deliberately handled or marked not applicable with reason by the implementation proof.
+For every participating surface, applicable user-visible states are not polish: `loading`, `empty`, `ready`, `pending`, `success`, `forbidden`, `offline`, `conflict`, `reconciliation_required` and `error` must be deliberately handled or marked not applicable with reason by implementation proof.
 
-A Journey is not complete because endpoints exist. Current-material proof follows:
+A Journey is not complete merely because endpoints exist. Current-material proof follows:
 
 ```text
 INTENT
