@@ -12,7 +12,7 @@ A Store may establish an accepted Store-scoped affiliation with a canonical Capt
 
 ## Ownership
 
-DSH owns invitation/membership/affiliation, Store scope, acceptance, eligibility, suspension/removal and operational readback. Identity owns the canonical Human Actor and standing `captain` role.
+DSH owns invitation/membership/affiliation, Store scope, acceptance, eligibility, suspension/removal and operational readback. Identity owns the canonical Human Actor and standing `captain` role. WLT retains only the Order payment/Partner commission financial authority that applies to `PARTNER_CAPTAIN`; Store-Captain internal remuneration is a Store responsibility outside WLT.
 
 ## Minimal lifecycle
 
@@ -36,7 +36,8 @@ PARTNER STORE OWNER
 - Store owner authorization cannot grant or mutate Identity role by request input;
 - membership eligibility is distinct from platform Captain availability/pool state;
 - suspension/removal/leave stops future eligibility without rewriting historical fulfillment records;
-- Partner-Captain cash/earnings rules are explicit and do not reuse BThwani Captain custody/remuneration semantics by accident.
+- `ORDER_PAYMENT_COLLECTION`/WLT continues to govern applicable customer collection and Partner commission consequences of Partner-Captain Orders;
+- Store-Captain remuneration and Store-side cash handoff do not reuse BThwani-Captain earning, wallet, COD exposure or remittance semantics.
 
 ## Failure and recovery
 
