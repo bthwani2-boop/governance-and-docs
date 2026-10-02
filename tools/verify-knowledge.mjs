@@ -171,10 +171,79 @@ for (const [id, p] of capabilityIds) {
 const routedIds = new Set([...router.matchAll(/`([A-Z][A-Z0-9_]+)`\s*→/g)].map((m) => m[1]));
 for (const id of routedIds) if (!capabilityIds.has(id)) fail(`capability router contains non-owner ID: ${id}`);
 
+// JOURNEYS.md structural evidence only. Semantic correctness remains human/governance evidence.
 const journeys = read("governance/product/JOURNEYS.md");
-const journeyNumbers = [...journeys.matchAll(/^##\s+J(\d+)\s+—.*$/gm)].map((m) => Number(m[1]));
-for (let i = 0; i < journeyNumbers.length; i += 1) if (journeyNumbers[i] !== i) fail(`journeys must be sequential J0..Jn; found ${journeyNumbers.join(",")}`);
-for (const id of admittedIds) if (!journeys.includes(`\`${id}\``)) fail(`admitted capability has no current journey coverage: ${id}`);
+if (/^##\s+J\d+\s+—/m.test(journeys)) fail("retired sequential J0..Jn journey taxonomy survives");
+
+const allowedSurfaces = new Set(["CLIENT", "PARTNER", "CAPTAIN", "FIELD", "OPERATOR"]);
+const allowedOwners = new Set(["IDENTITY", "DSH", "WLT"]);
+const seenJourneyIds = new Set();
+const coveredSurfaces = new Set();
+const journeySections = [...journeys.matchAll(/^##\s+([A-Z][A-Z0-9_]+)\s+—[^\n]*\n([\s\S]*?)(?=^##\s+|\Z)/gm)];
+if (journeySections.length < 10) fail(`JOURNEYS.md exposes too few top-level multi-surface journeys: ${journeySections.length}`);
+
+const requiredJourneyFields = ["JOURNEY_ID", "OUTCOME", "SURFACES", "OWNERS", "CAPABILITIES", "ENTRY", "EXIT", "READBACK"];
+for (const section of journeySections) {
+  const headingId = section[1];
+  const body = section[2];
+  const fields = new Map();
+  for (const field of requiredJourneyFields) {
+    const matches = [...body.matchAll(new RegExp(`^${field}:\\s*(.+)$`, "gm"))];
+    if (matches.length !== 1) fail(`${headingId} must declare exactly one ${field}`);
+    else fields.set(field, matches[0][1].trim());
+  }
+  const declaredId = fields.get("JOURNEY_ID");
+  if (declaredId && declaredId !== headingId) fail(`${headingId} JOURNEY_ID mismatch: ${declaredId}`);
+  if (seenJourneyIds.has(headingId)) fail(`duplicate JOURNEY_ID: ${headingId}`);
+  seenJourneyIds.add(headingId);
+
+  const surfaces = (fields.get("SURFACES") ?? "").split(",").map((v) => v.trim()).filter(Boolean);
+  const uniqueSurfaces = new Set(surfaces);
+  if (uniqueSurfaces.size < 2) fail(`${headingId} must declare at least two distinct actor-facing surfaces`);
+  for (const surface of uniqueSurfaces) {
+    if (!allowedSurfaces.has(surface)) fail(`${headingId} contains invalid actor-facing surface: ${surface}`);
+    else coveredSurfaces.add(surface);
+  }
+
+  const ownerTokens = (fields.get("OWNERS") ?? "").split(",").map((v) => v.trim()).filter(Boolean);
+  if (!ownerTokens.length) fail(`${headingId} declares no canonical owner`);
+  for (const owner of ownerTokens) if (!allowedOwners.has(owner)) fail(`${headingId} contains invalid canonical owner: ${owner}`);
+
+  const capabilityTokens = (fields.get("CAPABILITIES") ?? "").split(",").map((v) => v.trim()).filter(Boolean);
+  if (!capabilityTokens.length) fail(`${headingId} declares no capability participation`);
+  for (const id of capabilityTokens) if (!admittedIds.has(id)) fail(`${headingId} references non-admitted capability: ${id}`);
+}
+for (const surface of allowedSurfaces) if (!coveredSurfaces.has(surface)) fail(`actor-facing surface has no top-level journey coverage: ${surface}`);
+
+const capabilityMatrix = journeys.match(/## Matrix — Capability participation([\s\S]*?)(?=\n## |$)/)?.[1] ?? "";
+if (!capabilityMatrix) fail("JOURNEYS.md missing capability participation matrix");
+const mappedCapabilityIds = [...capabilityMatrix.matchAll(/^\|\s*`([A-Z][A-Z0-9_]+)`\s*\|/gm)].map((m) => m[1]);
+const mappedCounts = new Map();
+for (const id of mappedCapabilityIds) mappedCounts.set(id, (mappedCounts.get(id) ?? 0) + 1);
+for (const id of admittedIds) {
+  const count = mappedCounts.get(id) ?? 0;
+  if (count !== 1) fail(`admitted capability must have exactly one capability-matrix row: ${id} count=${count}`);
+}
+for (const id of mappedCounts.keys()) if (!admittedIds.has(id)) fail(`capability participation matrix contains non-admitted ID: ${id}`);
+
+const materialCensus = journeys.match(/## Platform material census([\s\S]*?)(?=\n## |$)/)?.[1] ?? "";
+if (!materialCensus) fail("JOURNEYS.md missing Platform material census");
+const censusRows = materialCensus.split("\n").filter((line) => /^\|[^-].*\|$/.test(line.trim()) && !/^\|\s*Material concept\s*\|/.test(line.trim()));
+if (censusRows.length < 20) fail(`Platform material census is unexpectedly small: ${censusRows.length}`);
+for (const row of censusRows) if (!/\|\s*MAPPED\s*\|\s*$/.test(row)) fail(`Platform material census row is not closed as MAPPED: ${row.trim()}`);
+for (const forbidden of ["UNMAPPED", "TBD_WITHOUT_OWNER", "UNKNOWN_WITHOUT_DECISION"]) {
+  if (materialCensus.includes(forbidden)) fail(`Platform material census contains unresolved status token: ${forbidden}`);
+}
+
+for (const heading of [
+  "## Matrix — Journey × Surface",
+  "## Matrix — Capability participation",
+  "## Matrix — Journey × Canonical Owner",
+  "## Matrix — Journey × Correctness dimension",
+  "## Platform material census",
+  "## Supporting subflows and cross-cutting lanes",
+  "## Journey acceptance law",
+]) if (!journeys.includes(heading)) fail(`JOURNEYS.md missing structural section: ${heading}`);
 
 const referenceFiles = docsFiles.filter((p) => rel(p).startsWith("docs/reference/"));
 if (!referenceFiles.length) fail("no external reference routing exists");
@@ -233,6 +302,9 @@ if (failures.length) {
 console.log("KNOWLEDGE_STRUCTURE_INTEGRITY=PASS");
 console.log(`SEMANTIC_OWNERS=${owners.size}`);
 console.log(`ADMITTED_CAPABILITIES=${capabilityIds.size}`);
+console.log(`TOP_LEVEL_JOURNEYS=${seenJourneyIds.size}`);
+console.log(`COVERED_ACTOR_SURFACES=${coveredSurfaces.size}`);
+console.log(`MATERIAL_CENSUS_ROWS=${censusRows.length}`);
 console.log(`QUALITY_DIMENSIONS=${qualityDimensions.length}`);
 console.log(`REFERENCE_FILES=${referenceFiles.length}`);
 console.log(`REFERENCE_CLASSES=${referenceClasses.size}`);
