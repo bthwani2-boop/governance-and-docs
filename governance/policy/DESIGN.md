@@ -59,13 +59,19 @@ Exact font sizes, line heights, weights and platform mappings are executable Des
 
 Spacing establishes information groups and action priority rather than filling empty space mechanically. Density may differ by surface and input model while preserving the same hierarchy and state meaning.
 
+Operational density means information efficiency, not visual crowding. Repeated comparison and high-volume work should expose enough identity, state and decisive comparable information to scan and act without unnecessary route changes or oversized containers. Secondary metadata and secondary actions remain visually quieter than the primary job.
+
+Narrative, form and focused-detail content may use constrained readable widths. Operational registries, comparison surfaces and other wide data workspaces may consume materially more of the available viewport when an arbitrary global maximum width would reduce scanning, comparison or action efficiency. Exact breakpoints, dimensions and layout values remain executable Design System or app concerns rather than durable constants here.
+
+Where multiple density modes materially improve sustained operator work, compact and comfortable treatments preserve the same semantics, reachability and accessibility rather than becoming different products. Density choice is not introduced without a real user or workflow need, and exact density tokens remain executable Design System concerns.
+
 Important values, actions and statuses must remain readable under realistic Arabic copy, large text and constrained widths. Truncation must not hide materially required meaning.
 
 ## Shape, surfaces, elevation and depth
 
 Shape language is cohesive and restrained. Controls, fields, cards, sheets and other surfaces use a consistent radius family through semantic Design System roles rather than local per-screen invention.
 
-Cards contain one coherent responsibility; they are not giant click targets containing unrelated actions. Borders and restrained elevation may separate work areas, but shadows do not substitute for hierarchy. Decorative gradients, excessive layering or visual effects that obscure state or delay an operational action are noncanonical.
+Cards contain one coherent responsibility; they are not giant click targets containing unrelated actions and are not the default layout primitive for large comparable record collections. Data-dense workspaces prefer clear alignment, spacing, borders or restrained tonal separation before decorative elevation. Borders and restrained elevation may separate work areas, but shadows do not substitute for hierarchy. Decorative gradients, excessive layering or visual effects that obscure state or delay an operational action are noncanonical.
 
 Focus, busy, disabled, selected and error treatments should preserve understandable geometry while changing semantic treatment as appropriate.
 

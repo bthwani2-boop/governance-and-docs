@@ -18,8 +18,10 @@ Use these sources to challenge interaction quality, accessibility, platform fit,
 ## Accessible interaction patterns
 
 - WAI-ARIA Authoring Practices Guide — https://www.w3.org/WAI/ARIA/apg/
+- APG table pattern — https://www.w3.org/WAI/ARIA/apg/patterns/table/
+- APG grid pattern — https://www.w3.org/WAI/ARIA/apg/patterns/grid/
 
-APG is guidance/pattern evidence, not a normative standard and not a complete UI Design System.
+APG is guidance/pattern evidence, not a normative standard and not a complete UI Design System. Prefer native semantic HTML where it fits; adopting a composite grid requires the corresponding focus and keyboard behavior rather than only visual grid styling.
 
 ## Apple platform experience
 
@@ -38,6 +40,20 @@ Use for native platform familiarity, adaptive layout, accessibility and brand/pl
 - Material Design 3 — https://m3.material.io/
 
 Use for Android-native interaction, adaptive behavior, accessibility and Material component semantics. Material is an implementation/design reference, not BThwani visual authority.
+
+## Operator collection and high-density workspace evidence
+
+- Cloudscape view resources — https://cloudscape.design/patterns/resource-management/view/
+- Cloudscape table view — https://cloudscape.design/patterns/resource-management/view/table-view/
+- Cloudscape split view — https://cloudscape.design/patterns/resource-management/view/split-view/
+- Cloudscape filtering patterns — https://cloudscape.design/patterns/general/filter-patterns/
+- Cloudscape filter persistence in collection views — https://cloudscape.design/patterns/general/filter-patterns/filter-persistence-in-collection-views/
+- Cloudscape saved filter sets — https://cloudscape.design/patterns/general/filter-patterns/saved-filter-sets/
+- Cloudscape density settings — https://cloudscape.design/patterns/general/density-settings/
+- TanStack Table client-side vs server-side guide — https://tanstack.com/table/latest/docs/guide/client-side-vs-server-side
+- TanStack Table virtualization guide — https://tanstack.com/table/latest/docs/framework/react/guide/virtualization
+
+Use these as experience and implementation exemplars for choosing collection presentation, preserving query/view context, separating data processing from rendering and testing realistic scale. Their component APIs, thresholds and architecture are not BThwani authority and must not be copied as universal rules.
 
 ## Design-token interoperability
 
