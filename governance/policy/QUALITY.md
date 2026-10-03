@@ -131,6 +131,16 @@ As applicable, prove:
 
 A single tool may cover multiple dimensions. Tool count is not assurance strength. Duplicate proof that exercises materially the same oracle and failure surface adds no assurance by repetition; retain duplicate proof only when it has distinct material falsification value.
 
+## Operational collection and scale proof
+
+A claim that an operational collection or workflow is fit for sustained scale is proven at the materially expected operating envelope, not from a toy row count or an isolated component benchmark. Representative proof uses realistic record shape, column density, Arabic/Latin/numeric content, target-class hardware and network conditions when those factors can materially change the result.
+
+As applicable, challenge the complete pipeline rather than only rendering: canonical query cost and correctness; transferred payload; browser memory and client processing; DOM/rendering cost; server-owned filtering/sorting/counting across the full represented result set; bounded paging or incremental retrieval; stable record identity; selection scope; detail-and-return context preservation; long-running or bulk action behavior; conflict/partial-failure/recovery; responsive widths; RTL; keyboard and accessibility.
+
+Virtualization can prove/render a smaller DOM, but it does not by itself prove that an oversized dataset is safe to fetch, process or authorize on the client. Conversely, a server-driven collection does not prove acceptable UX merely because the database query is bounded. Evidence follows the actual bottlenecks and the scale claim being made.
+
+Do not impose one arbitrary maximum row count, one pagination mechanism or one benchmark threshold on unrelated resources. The expected operational envelope is derived from the material Product/workload claim and must include enough headroom to falsify the design where capacity is part of the claim.
+
 ## Real-device and rendered proof
 
 When correctness depends on OS/device behavior, use representative real-device evidence for the material claim, including restart/resume, foreground/background behavior, weak/offline reconnect, permissions, location/background restrictions, deep-link/notification handoff, text scaling/accessibility and canonical readback as applicable.
