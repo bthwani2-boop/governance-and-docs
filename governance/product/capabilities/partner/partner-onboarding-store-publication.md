@@ -8,11 +8,11 @@ CAPABILITY_ID: PARTNER_ONBOARDING_STORE_PUBLICATION
 
 ## Outcome
 
-A prospective Partner progresses through one DSH-owned joining lifecycle to one canonically bound Partner actor and one governed Store-publication result, including the required primary Commerce Vertical, commercial Store Type and initially admitted fulfillment modes for the first Store.
+A prospective Partner progresses through one DSH-owned joining lifecycle to one canonically bound Partner actor and one governed Store-publication result. The first-Store intake captures the owner name and contact phone; Store name; Service City; primary Commerce Vertical and commercial Store Type; written address and fixed map location; weekly working hours; one or more initially admitted fulfillment modes; and the required onboarding evidence type, number and private image. The public Storefront profile image is a separate asset. Operator-facing notes are optional.
 
 ## Ownership
 
-DSH owns joining-case, Field standing admission/eligibility, assignment, Partner/Store readiness, review/correction, canonical Service City, primary Commerce Vertical, commercial Store Type, initial Store fulfillment-mode assignment, operator-authorized post-creation fulfillment-mode policy changes, Store ownership binding and Store-publication truth. Identity alone creates/resolves `actor_id` and admits `partner`/`field` roles after an authorized DSH request. Catalog publication remains with `CENTRAL_CATALOG`; current Store opening/orderability after publication belongs to `STORE_OPERATIONAL_AVAILABILITY`.
+DSH owns joining-case, Field standing admission/eligibility, assignment, Partner/Store readiness, review/correction, submitted owner contact and first-Store intake facts, canonical Service City, primary Commerce Vertical, commercial Store Type, initial Store fulfillment-mode assignment, operator-authorized post-creation fulfillment-mode policy changes, Store ownership binding and Store-publication truth. Identity alone creates/resolves `actor_id` and admits `partner`/`field` roles after an authorized DSH request. Catalog publication remains with `CENTRAL_CATALOG`; current Store opening/orderability after publication belongs to `STORE_OPERATIONAL_AVAILABILITY`.
 
 ## Invariants
 
@@ -24,6 +24,12 @@ DSH owns joining-case, Field standing admission/eligibility, assignment, Partner
 - commercial Store Type describes the Store business model and is independent of catalog product categories; it is never inferred from products or category assignments;
 - each Store has its own commercial Store Type; one Partner may own multiple Stores with different types and corresponding financial terms;
 - first-Store Service City, Commerce Vertical, commercial Store Type and fulfillment-mode policy are preserved through review, correction and resubmission and become canonical Store facts atomically at Store creation;
+- the required first-Store intake includes a submitted owner name and contact phone, Store name, active Service City, primary Commerce Vertical, compatible commercial Store Type, written Store address, fixed map coordinates, weekly working hours and one or more fulfillment modes; the owner name is an onboarding fact and does not silently replace the Identity account profile;
+- onboarding proof is required and consists of exactly one supported proof type (commercial registration, identity document or freelance-work document), its number and a private image of that evidence; the evidence image and its number are case-scoped personal/business data, never public Store or Catalog media, and never appear in public discovery or ordinary Store summaries;
+- only the bound Partner for that case and an authorized DSH Operator reviewer may read the private evidence image or unmasked number; Field may collect and submit it only for an authorized case and has no general evidence-download capability; evidence reads are attributable and sensitive values are redacted from logs;
+- the public Storefront profile image is a separate required visual asset and cannot serve as legal evidence; it follows Store-profile media provenance and publication rules;
+- weekly working hours are expressed in the selected Service City's local time and support closed days and multiple opening intervals in a day; optional onboarding notes are available to the Operator reviewer and do not replace structured intake facts;
+- owner contact, address, map location, working hours, fulfillment modes and other submitted first-Store facts are preserved through review/correction and copied into their canonical Store owner at creation; the case remains the auditable intake snapshot;
 - first-Store Store Type may be corrected before Store creation only through the governed case-correction path;
 - after Store creation, only an active authorized Operator path may change the Store's durable enabled fulfillment-mode policy; Partner surfaces cannot mutate that durable policy;
 - Partner may change only the temporary operational availability allowed by `STORE_OPERATIONAL_AVAILABILITY`; pausing a mode never enables/disables the durable admitted mode policy;
@@ -66,7 +72,7 @@ PROSPECTIVE PARTNER
 → Store publication
 ```
 
-Documents, evidence and visit checks exist only when current onboarding policy requires them; they are not separate capabilities.
+Documents and evidence belong to the joining lifecycle when this capability's intake requires them; they are not separate capabilities. Onboarding evidence remains private and purpose-limited under DSH ownership. Storefront profile imagery remains a separately governed public-facing media asset.
 
 ## Failure and recovery
 
