@@ -13,7 +13,7 @@ IMPLEMENTATION_STATE_AUTHORITY: NONE
 - Generated/derived/read-model state is rebuildable and never mutation authority.
 - Collection reads that can materially grow are bounded by default rather than requiring clients to load an unbounded result merely to search, filter, sort, compare or act on it.
 - Paged or incremental reads whose correctness depends on sequence use deterministic ordering, including a stable tie-breaker when needed so adjacent requests do not rely on an ambiguous order.
-- Choose the simplest paging or incremental-read strategy whose correctness and cost remain fit for the expected volume, change rate and access pattern. Offset paging is not forbidden, but a materially inefficient deep offset or another approach that degrades beyond the expected operating envelope must be replaced by a bounded strategy that preserves canonical result semantics.
+- Choose the simplest paging or incremental-read strategy whose correctness and cost remain fit for the expected volume, change rate and access pattern. No single paging mechanism is globally mandatory; a strategy that degrades materially beyond the expected operating envelope must be replaced by a bounded alternative that preserves canonical result semantics.
 - Synthetic/non-production proof data is disposable environment state. It never becomes migration/bootstrap Product data, and test convenience alone never justifies durable test-only schema or parallel fact ownership. Prefer environment isolation to polluting domain models with test flags.
 - Personal data is minimized, purpose-limited and exposed only to materially authorized consumers.
 - Retention/deletion/anonymization obligations stay with the fact owner; no global shortcut destroys another owner's required retained truth.
