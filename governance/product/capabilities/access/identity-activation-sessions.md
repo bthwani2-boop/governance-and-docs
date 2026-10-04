@@ -12,7 +12,7 @@ One Human Actor resolves to one permanent `actor_id`; verification, role admissi
 
 ## Ownership
 
-Identity owns `actor_id`, verified identifiers, credentials, high-level role admission, first-Operator bootstrap state, authentication proofs and role-scoped sessions. For a domain-managed role, the owning domain first establishes admission/eligibility and then sends an authorized role-admission request to Identity; Identity alone resolves or creates the `actor_id` and persists the role admission. DSH may request governed `partner`, `captain` and `field` role admission only from DSH-owned eligibility truth. For `partner`, DSH eligibility may arise from canonical Partner onboarding/Store ownership or from an accepted Store-scoped access invitation that explicitly requires Partner-workspace access; the role admits the workspace and never substitutes for DSH Store ownership/grant authorization. For `field`, eligibility is the distinct DSH standing Field admission, not a joining-case field, phone number, or surface assertion. Surfaces never grant roles themselves.
+Identity owns `actor_id`, the current canonical official identity name, verified identifiers, credentials, high-level role admission, first-Operator bootstrap state, authentication proofs and role-scoped sessions. For a domain-managed role, the owning domain first establishes admission/eligibility and then sends an authorized role-admission request to Identity; Identity alone resolves or creates the `actor_id`, accepts any initial name through its identity path, and persists the role admission. DSH may request governed `partner`, `captain` and `field` role admission only from DSH-owned eligibility truth. For `partner`, DSH eligibility may arise from canonical Partner onboarding/Store ownership or from an accepted Store-scoped access invitation that explicitly requires Partner-workspace access; the role admits the workspace and never substitutes for DSH Store ownership/grant authorization. For `field`, eligibility is the distinct DSH standing Field admission, not a joining-case field, phone number, or surface assertion. Surfaces never grant roles themselves.
 
 ## Role-specific lifecycle
 
@@ -25,6 +25,7 @@ The canonical current role set is owned by `governance/platform/PLATFORM.md`. Id
 ## Invariants
 
 - phone is a mutable verified identifier, never the cross-boundary primary key;
+- the current official identity name is an Identity-owned actor fact; a domain-submitted admission name is only initial input until Identity accepts it, and onboarding or financial destination input never creates a second name authority;
 - one human resolution must not create duplicate actors;
 - domain admission/eligibility, Identity role admission, activation/enrollment, authentication/session and resource authorization are distinct ordered facts;
 - a domain-managed role admission request is authorized by the owning domain's admission/eligibility truth, never by a phone number, surface input or current task assignment;
