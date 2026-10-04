@@ -12,7 +12,7 @@ A prospective Partner progresses through one DSH-owned joining lifecycle to one 
 
 ## Ownership
 
-DSH owns joining-case, Field standing admission/eligibility, assignment, Partner/Store readiness, review/correction, submitted owner contact and first-Store intake facts, canonical Service City, primary Commerce Vertical, commercial Store Type, initial Store fulfillment-mode assignment, operator-authorized post-creation fulfillment-mode policy changes, Store ownership binding and Store-publication truth. Identity alone creates/resolves `actor_id` and admits `partner`/`field` roles after an authorized DSH request. Catalog publication remains with `CENTRAL_CATALOG`; current Store opening/orderability after publication belongs to `STORE_OPERATIONAL_AVAILABILITY`.
+DSH owns joining-case, Field standing admission/eligibility, assignment, Partner/Store readiness, review/correction, submitted owner contact and first-Store intake facts, canonical Service City, primary Commerce Vertical, commercial Store Type, initial Store fulfillment-mode assignment, operator-authorized post-creation fulfillment-mode policy changes, Store ownership binding and Store-publication truth. DSH supplies canonical Store context, joining attribution and enabled fulfillment modes to WLT for the Store Commercial Agreement; WLT owns proposal, acceptance, approval and activation of financial terms. Identity alone creates/resolves `actor_id` and admits `partner`/`field` roles after an authorized DSH request. Catalog publication remains with `CENTRAL_CATALOG`; current Store opening/orderability after publication belongs to `STORE_OPERATIONAL_AVAILABILITY`.
 
 ## Invariants
 
@@ -22,9 +22,10 @@ DSH owns joining-case, Field standing admission/eligibility, assignment, Partner
 - commercial Store Type is required first-Store data, belongs to exactly one compatible primary Commerce Vertical, and transfers from the joining case to the Store atomically;
 - DSH owns the active commercial Store Type registry and validates the selected type against its parent Commerce Vertical; type identity is a stable canonical code, not a localized label;
 - commercial Store Type describes the Store business model and is independent of catalog product categories; it is never inferred from products or category assignments;
-- each Store has its own commercial Store Type; one Partner may own multiple Stores with different types and corresponding financial terms;
+- each Store has its own commercial Store Type, while its financial terms belong to its Store-specific STORE_COMMERCIAL_AGREEMENT; Stores with the same Store Type may have different active terms;
 - first-Store Service City, Commerce Vertical, commercial Store Type and fulfillment-mode policy are preserved through review, correction and resubmission and become canonical Store facts atomically at Store creation;
 - the required first-Store intake includes a submitted owner name and contact phone, Store name, active Service City, primary Commerce Vertical, compatible commercial Store Type, written Store address, fixed map coordinates, weekly working hours and one or more fulfillment modes; the owner name is an onboarding fact and does not silently replace the Identity account profile;
+- first-Store intake may capture the bound Partner owner's official-wallet provider preference; WLT resolves the destination only after Identity binding and never takes a separate wallet number or beneficiary name;
 - onboarding proof is required and consists of exactly one supported proof type (commercial registration, identity document or freelance-work document), its number and a private image of that evidence; the evidence image and its number are case-scoped personal/business data, never public Store or Catalog media, and never appear in public discovery or ordinary Store summaries;
 - only the bound Partner for that case and an authorized DSH Operator reviewer may read the private evidence image or unmasked number; Field may collect and submit it only for an authorized case and has no general evidence-download capability; evidence reads are attributable and sensitive values are redacted from logs;
 - the public Storefront profile image is a separate required visual asset and cannot serve as legal evidence; it follows Store-profile media provenance and publication rules;
@@ -41,11 +42,14 @@ DSH owns joining-case, Field standing admission/eligibility, assignment, Partner
 - once bound to canonical `actor_id`, retries cannot silently rebind the case;
 - `field` is Partner Acquisition and Onboarding Representative only;
 - Field standing admission is a distinct DSH-owned fact: an authorized Operator creates the candidate and may suspend/restore it; DSH may request Identity `field` role admission only for an eligible, unbound candidate, which binds to one canonical Field `actor_id`;
+- a Field admission candidate captures the person's submitted name and contact phone, Service City and official-wallet provider preference; Identity alone accepts the canonical identity name and verified phone, and the provider preference does not create a payout destination;
 - Field may originate/progress authorized joining work but cannot create Identity actors/roles, approve its own submission or publish a Store;
 - owner review is distinct from Field submission;
 - only a bound Partner may correct and resubmit its `needs_correction` case as one governed atomic business transition; Operator does not impersonate that resubmission;
 - Store publication is distinct from serviceability, catalog/offer eligibility and current operational orderability;
 - customer-visible Store publication requires applicable Store publication, active Service City assignment and catalog publication gates; current orderability is evaluated separately;
+- Store publication requires an active Store-specific `STORE_COMMERCIAL_AGREEMENT` for its enabled fulfillment modes, explicit acceptance by the bound Partner owner of the exact agreement version, and Finance approval; Store Type suggestions, Store creation and catalog readiness cannot substitute for these gates;
+- Field may perform authorized initial catalog work only for its assigned, bound joining Store before Go-Live; after successful publication that write authority ends and the Partner becomes the ongoing Store catalog operator;
 - a published Store may remain customer-discoverable as closed/paused when current Product/experience policy allows, but checkout may not treat publication as proof that the Store can accept orders now;
 - trusted case/business scope is derived server-side, never granted by request input;
 - mutations are concurrency-safe, idempotent and attributable.
@@ -53,22 +57,23 @@ DSH owns joining-case, Field standing admission/eligibility, assignment, Partner
 ## Minimal lifecycle
 
 ```text
-FIELD CANDIDATE
-→ DSH Field admission / eligibility
-→ authorized Identity request
-→ Identity field role admission + canonical actor binding
-→ authorized FIELD joining work
-→ OPERATOR review
+FIELD
+→ Operator candidate admission
+→ DSH Field standing admission / eligibility
+→ authorized Identity Field role admission, activation and access
+→ assigned JoiningCase, Field intake and submission
 
-PROSPECTIVE PARTNER
-→ JoiningCase with first-Store Service City + Commerce Vertical + Store Type + fulfillment-mode policy
-→ DSH Partner admission / eligibility
-→ authorized Identity request
-→ Identity partner role admission + canonical actor binding
-→ submission / owner review
-→ bound Partner correction/resubmission when required
-→ Store creation + Store ownership binding + canonical first-Store facts
-→ catalog/readiness gates
+PARTNER
+→ Operator initial admission of the submitted case
+→ DSH Partner eligibility
+→ authorized Identity Partner role admission and access
+→ canonical draft Store + owner binding
+→ bound Partner confirmation/correction of onboarding data
+→ WLT Store-specific agreement proposal
+→ bound Partner acceptance of the exact agreement terms
+→ Finance approval and WLT activation
+→ authorized initial catalog readiness
+→ final Operator readiness
 → Store publication
 ```
 

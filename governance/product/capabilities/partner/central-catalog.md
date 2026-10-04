@@ -33,7 +33,7 @@ is retained for history but is not vertical-discoverable or customer-visible
 until an authorized Operator assigns one through the DSH owner path. No legacy
 Store receives a guessed vertical.
 
-The Commerce Vertical registry is canonical DSH data, not a hard-coded Governance inventory. Registry members change only through authorized DSH mutation and canonical readback; this capability owns the classification semantics, not the current registry contents. Each vertical has one explicit internal catalog model, `SHARED_CATALOG` or `STORE_LOCAL_CATALOG`, maintained with that vertical in the Operator Catalog center. It routes Partner product entry to the right workflow: groceries use shared identities; restaurant menus use Store-local items and groupings. An unset model blocks catalog entry/publication until an Operator assigns it. The model is an internal workflow fact and is not shown as a central/local choice to Partners or as a distinction to Clients. This vertical-level choice is sufficient for the currently admitted workflows; finer-grained mixing is not introduced without a demonstrated current need.
+The Commerce Vertical registry is canonical DSH data, not a hard-coded Governance inventory. Registry members change only through authorized DSH mutation and canonical readback; this capability owns the classification semantics, not the current registry contents. A vertical may carry a non-authoritative workflow preference that helps route initial product entry. That preference cannot require a Store or vertical to use only shared or only Store-scoped identities and cannot block a mixed assortment.
 
 ## Shared catalog taxonomy and data definitions
 
@@ -74,19 +74,21 @@ Product ownership is explicit:
 - `STORE_SCOPED`: identity and content belonging to exactly one Store, managed
   by its Partner through DSH, and never silently made shared.
 
+A Store may hold `StoreOffer`s for both `SHARED` and `STORE_SCOPED` Products at the same time. `SHARED` does not require a barcode or any other identifier. Identifiers remain Variant-level: `GTIN`, `EAN` and `UPC` are global sellable identifiers; `SKU` is scoped to its Store.
+
 Partners cannot create or mutate a Shared Product directly. If a required
 Shared Product is missing, the Partner submits a `ProductProposal`. A proposal
 is attributable, reviewable and never sellable; only the authorized DSH
 acceptance transition may create the Shared identity. `STORE_SCOPED` items do
 not require a proposal and their name, description, media and menu grouping
-remain owned by that Store. The operational workflow follows the Store's admitted
-catalog model; Partner entry does not expose an internal shared-versus-local
-classification choice on every item, and the Client does not present this
-ownership distinction as a second set of customer categories.
+remain owned by that Store. Partner workflows may route users toward common
+actions, but vertical preferences cannot restrict Store assortment ownership.
+The Client does not present shared/local ownership as separate customer
+categories.
 
 ## Identifiers and media
 
-Identifiers belong to Variants, not Products. DSH supports a bounded typed identifier relation for `GTIN`, `EAN`, `UPC` and `SKU`, with exact uniqueness rules. An identifier whose external type is not verified must remain explicitly represented without inventing a more specific external type; no barcode or provider identifier becomes the sole Product identity.
+Identifiers belong to Variants, not Products. DSH supports global `GTIN`, `EAN` and `UPC` sellable identifiers and Store-scoped `SKU`, with exact uniqueness rules. An identifier whose external type is not verified must remain explicitly represented without inventing a more specific external type; no barcode or provider identifier becomes the sole Product identity.
 
 Media is a bounded catalog-owned relation. Product media identity, role, ordering and authorization remain DSH catalog truth. Storage/provider/transport choice is an integration concern and does not become Product authority. External media references are validated, contain no credentials and are replaceable without redefining catalog identity.
 
@@ -174,13 +176,26 @@ canonical readback; the Control Panel is not a business owner.
 
 Catalog bulk/import mutation has one canonical DSH writer path. Any admitted import mechanism must validate before mutation, distinguish duplicate/conflict from new identity, require an explicit commit boundary, preserve attributable audit and finish with canonical readback. Missing input never implies deletion, blind upsert is forbidden, and retry/resume cannot silently create a different identity.
 
-Partners can browse/search Shared Products where the Store's catalog model uses
-them, inspect Variants and identifiers, select Variants, create StoreOffers,
-manage price/quantity/availability/publication and manage their Store-local
-items, menu groupings and modifiers where applicable. The admitted vertical's
-catalog model determines the relevant workflow; the Partner does not choose
-the ownership model for each item. Cross-Store access, Shared Product mutation
-and direct Shared Product creation are denied.
+Field, Partner and authorized Operator catalog work use one Store Catalog import flow with surface-specific authorization. It accepts XLSX and CSV rows with a barcode and price when the identifier is known; the user does not need internal IDs or enums. One run parses, normalizes and resolves rows, previews results, commits valid rows and leaves unresolved rows for review. An invalid or conflicting minority does not discard valid rows. A run is replay-safe and auditable, and the current Product target supports 5,000 rows in one run; internal chunking does not create multiple user-visible imports or a hard 1,000-row cap.
+
+Quick Prices edits use the canonical `StoreOffer` mutation. Search and category/brand/package filters help find products, including without-price, already-offered, not-offered and hidden items. Bulk changes show a summary and require an explicit commit. Listing a Shared Product never adds an offer. Only changed rows mutate, and the canonical audit preserves old/new price, actor, time and provenance. Field, Partner and Control Panel barcode scans use one DSH resolver with Store context and the scanned identifier; it distinguishes an existing Store offer, Shared match, Store-local match, unknown identifier and variable-measure identifier. Store SKU is not a global barcode, and variable-measure codes are not silently treated as GTINs.
+
+Partners can browse/search Shared Products, inspect Variants and identifiers,
+select Variants and create StoreOffers alongside their Store-scoped items.
+They manage price/quantity/availability/publication and their Store-local
+items, menu groupings and modifiers where applicable. A vertical workflow
+preference may help route entry but cannot restrict a Store to one ownership
+scope. Cross-Store access, Shared Product mutation and direct Shared Product
+creation are denied.
+
+Before Go-Live, Field may search the Shared Catalog, scan identifiers, create
+StoreOffers and set initial price/availability, create Store-scoped Products,
+import the initial Store assortment, and submit Shared Product proposals or
+corrections for its authorized joining Store. DSH enforces that joining-case,
+Store and pre-publication scope server-side. Field cannot approve or merge
+Shared identities or directly change Shared media. Its initial catalog write
+authority ends at successful Go-Live; the Partner then owns ongoing Store
+catalog operations.
 
 ## Evolution and migration invariants
 
@@ -188,6 +203,7 @@ Catalog representation may evolve only through the DSH-owned migration history u
 
 - already-applied migrations remain immutable without copying their current ordinal/range into Governance;
 - representation changes preserve current canonical Product, Variant, StoreOffer, identifier, media, category and audit meaning unless an explicitly authorized Product decision changes that meaning;
+- local-to-Shared promotion selects or creates an approved Shared identity, repoints the Store's offers while preserving price, availability and history, then removes the losing local identity responsibility;
 - legacy/historical records are never guessed into a current classification merely to satisfy a newer model;
 - a migration/cutover has one winning current writer/readback path; losing writers and compatibility residue are removed when their bounded coexistence need ends;
 - historical cutover details belong to Git and executable migrations, not live capability truth.

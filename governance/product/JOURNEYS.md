@@ -58,13 +58,13 @@ No surface grants its own role. Current task assignment never substitutes for st
 ## PARTNER_TO_VISIBLE_STORE — acquisition to customer-visible Store
 
 JOURNEY_ID: PARTNER_TO_VISIBLE_STORE
-OUTCOME: A legitimate prospect progresses through Field, Operator and Partner work to one published Store that can be discovered by a Client when the separate visibility gates are satisfied.
+OUTCOME: A legitimate prospect progresses through Field, Operator and Partner work to one published Store only after its bound Partner owner accepts the exact Store Commercial Agreement and Finance approves it; the Client then receives the separate customer-safe visibility readback.
 SURFACES: FIELD, OPERATOR, PARTNER, CLIENT
-OWNERS: IDENTITY, DSH
-CAPABILITIES: PARTNER_ONBOARDING_STORE_PUBLICATION, IDENTITY_ACTIVATION_SESSIONS, CENTRAL_CATALOG
+OWNERS: IDENTITY, DSH, WLT
+CAPABILITIES: PARTNER_ONBOARDING_STORE_PUBLICATION, IDENTITY_ACTIVATION_SESSIONS, CENTRAL_CATALOG, STORE_COMMERCIAL_AGREEMENT
 ENTRY: Eligible Field standing or authorized Operator-originated joining work starts a prospective Partner case.
-EXIT: Store publication is committed and customer-safe publication readback is available.
-READBACK: Field, Operator and Partner read joining/publication state; Client receives the resulting Store projection when catalog/serviceability visibility gates allow it.
+EXIT: The exact Store agreement is Partner-accepted and Finance-approved, initial catalog and final Operator readiness pass, and Store publication plus customer-safe readback are available.
+READBACK: Field, Operator and Partner read joining/publication state; Partner and Finance read the canonical agreement state; Client receives the resulting Store projection when catalog/serviceability visibility gates allow it.
 
 ### Frontstage and handoffs
 
@@ -74,9 +74,15 @@ DSH → Identity field-role request
 FIELD → JoiningCase work
 OPERATOR → review / correction / rejection / admission
 DSH → Identity partner-role request
-PARTNER → required Store correction/readiness
+PARTNER → confirm/correct canonical onboarding data
 DSH → Store ownership + Service City + Commerce Vertical + Store Type + durable fulfillment-mode policy
-DSH → publication
+WLT → Store-specific agreement proposal
+PARTNER → accept exact agreement version and rates
+FINANCE → approve; WLT activates only after both gates
+FIELD → authorized initial catalog work for the bound joining Store
+OPERATOR → final readiness and publication approval
+DSH → Store publication
+DSH → idempotent Partner Go-Live/catalog handoff and Field mission-complete notification from publication readback
 CLIENT → customer-safe Store projection
 ```
 
@@ -84,11 +90,11 @@ Store publication is not current orderability. Durable enabled fulfillment modes
 
 ### Failure / recovery
 
-Missing/incompatible first-Store facts, correction loops, duplicate logical case, stale version, suspended Field, duplicate-actor risk and interrupted Identity handoff recover through canonical readback without rebinding the case or actor.
+Missing/incompatible first-Store facts, correction loops, duplicate logical case, stale version, suspended Field, duplicate-actor risk, missing Partner acceptance, missing Finance approval and interrupted Identity/WLT handoff recover through canonical readback without rebinding the case, actor or agreement version. Missing or inactive agreement blocks publication.
 
 ### Negative space
 
-Field does not approve its own case. Operator does not become Partner/Store owner. Store is not a tenant.
+Field does not approve its own case, accept for the Partner or approve financial terms. Operator does not become Partner/Store owner. Store is not a tenant.
 
 ## STORE_ORDERABILITY — published Store to current ability to accept orders
 
@@ -122,19 +128,20 @@ No numeric capacity engine, mandatory daily check-in, queue forecaster or AI pre
 ## CATALOG_TO_CUSTOMER_OFFER — canonical catalog to customer-safe assortment
 
 JOURNEY_ID: CATALOG_TO_CUSTOMER_OFFER
-OUTCOME: Operator/Partner catalog work produces one DSH-governed customer-safe Store assortment without exposing internal ownership topology to the Client.
-SURFACES: OPERATOR, PARTNER, CLIENT
+OUTCOME: Field's authorized initial onboarding and later Operator/Partner catalog work produce one DSH-governed customer-safe Store assortment without exposing internal ownership topology to the Client.
+SURFACES: FIELD, OPERATOR, PARTNER, CLIENT
 OWNERS: DSH
 CAPABILITIES: CENTRAL_CATALOG
-ENTRY: An authorized catalog mutation, proposal, import or Store-assortment action begins.
+ENTRY: An authorized Field initial-catalog, Operator shared-catalog or Partner Store-assortment action begins.
 EXIT: Eligible Product/Variant/StoreOffer content is published or intentionally remains ineligible.
-READBACK: Operator/Partner mutation readback and Client storefront readback come from DSH.
+READBACK: Field receives authorized pre-Go-Live mutation readback, Operator/Partner receive their authorized mutation readback, and the Client storefront readback comes from DSH.
 
 ### Frontstage and handoffs
 
 ```text
 OPERATOR → vertical / taxonomy / shared Product / Variant / proposal review / import
-PARTNER → shared assortment or Store-local item / offer / price / availability / section / modifier
+FIELD (before Go-Live, assigned Store only) → shared search/scan, initial StoreOffers, Store-local items, import and Shared proposals/corrections
+PARTNER (after Go-Live) → ongoing Store offers / local items / price / availability / section / modifier
 DSH → canonical validation + CUSTOMER_VISIBLE_OFFER evaluation
 CLIENT → coherent storefront assortment
 ```
@@ -148,6 +155,7 @@ Invalid taxonomy, identifier conflict, stale price/offer, invalid modifier/quant
 ### Negative space
 
 Catalog visibility does not prove Store orderability, serviceability or checkout eligibility. Catalog is not PIM/ERP/POS authority.
+Field initial write authority ends at Go-Live and is enforced by DSH; Field cannot approve or merge a Shared identity. A Store's customer-facing assortment may combine Shared and Store-scoped Products without exposing that ownership split.
 
 ## DISCOVERY_TO_COMMERCE_ENTRY — governed discovery and promotion to valid target
 
@@ -438,7 +446,7 @@ Store-retained sale proceeds are not re-credited as a duplicate Partner wallet e
 ## BENEFICIARY_SETTLEMENT — earned entitlement to reconciled payout
 
 JOURNEY_ID: BENEFICIARY_SETTLEMENT
-OUTCOME: Eligible Partner, BThwani Captain or Field entitlement reaches an authorized reconciled payout/settlement result without surfaces becoming ledger writers.
+OUTCOME: Eligible Partner, BThwani Captain or Field entitlement reaches an authorized reconciled payout/settlement result without surfaces becoming ledger writers; the first qualifying Field-attributed Store that becomes `STORE_CLIENT_VISIBLE` produces one acquisition earning per joining case.
 SURFACES: PARTNER, CAPTAIN, FIELD, OPERATOR
 OWNERS: DSH, WLT
 CAPABILITIES: PARTNER_CAPTAIN_FIELD_EARNINGS_SETTLEMENT
@@ -451,10 +459,12 @@ READBACK: Beneficiary surface and Finance read canonical WLT settlement state.
 ```text
 DSH qualifying event
 → WLT entitlement / eligibility / hold
+→ for the first qualifying `STORE_CLIENT_VISIBLE` Store only, WLT records exactly one Field acquisition earning per joining case
 → OPERATOR Finance preparation + approval + execution evidence
 → independent reconciliation
 → WLT completion
 → PARTNER / CAPTAIN / FIELD readback
+→ Field reward notification only after WLT entitlement readback
 ```
 
 ### Failure / recovery
@@ -463,7 +473,7 @@ Destination change, stale approval, duplicate execution, provider uncertainty an
 
 ### Negative space
 
-Store-affiliated Captain remuneration remains outside BThwani WLT earnings semantics.
+Store-affiliated Captain remuneration remains outside BThwani WLT earnings semantics. Field acquisition entitlement and payout are downstream of Store publication and never gate publication; repeated visibility or publication does not create another entitlement.
 
 ## Supporting subflows and cross-cutting lanes
 
@@ -508,7 +518,7 @@ These are materially governed but are not promoted to top-level Journeys merely 
 | MANAGED_PARTICIPANT_ADMISSION | — | DIRECT | DIRECT | DIRECT | DIRECT |
 | PARTNER_TO_VISIBLE_STORE | READBACK | DIRECT | — | DIRECT | DIRECT |
 | STORE_ORDERABILITY | DIRECT | DIRECT | — | — | CONDITIONAL |
-| CATALOG_TO_CUSTOMER_OFFER | DIRECT | DIRECT | — | — | DIRECT |
+| CATALOG_TO_CUSTOMER_OFFER | DIRECT | DIRECT | — | DIRECT | DIRECT |
 | DISCOVERY_TO_COMMERCE_ENTRY | DIRECT | — | — | — | DIRECT |
 | SINGLE_STORE_ORDER_CREATION | DIRECT | READBACK | — | — | — |
 | BTHWANI_CAPTAIN_DELIVERY | DIRECT | DIRECT | DIRECT | — | — |
@@ -536,6 +546,7 @@ These are materially governed but are not promoted to top-level Journeys merely 
 | `STORE_CAPTAIN_HANDOFF` | BTHWANI_CAPTAIN_DELIVERY / PARTNER_CAPTAIN_DELIVERY | PRIMARY |
 | `FINAL_MILE_DELIVERY` | BTHWANI_CAPTAIN_DELIVERY / PARTNER_CAPTAIN_DELIVERY | PRIMARY |
 | `ORDER_PAYMENT_COLLECTION` | order / fulfillment / remittance / exception | SUPPORTING FINANCIAL OWNER |
+| `STORE_COMMERCIAL_AGREEMENT` | PARTNER_TO_VISIBLE_STORE | PRIMARY FINANCIAL PREREQUISITE |
 | `CUSTOMER_BALANCE_FUNDING` | CUSTOMER_BALANCE_FUNDING subflow | SUPPORTING_SUBFLOW |
 | `CAPTAIN_BALANCE_FUNDING` | CAPTAIN_BALANCE_FUNDING subflow | SUPPORTING_SUBFLOW |
 | `PARTNER_CAPTAIN_FIELD_EARNINGS_SETTLEMENT` | BENEFICIARY_SETTLEMENT + remittance Journeys | PRIMARY |
@@ -553,7 +564,7 @@ These are materially governed but are not promoted to top-level Journeys merely 
 | Journey | IDENTITY | DSH | WLT |
 |---|---|---|---|
 | MANAGED_PARTICIPANT_ADMISSION | PRIMARY | ELIGIBILITY | — |
-| PARTNER_TO_VISIBLE_STORE | ROLE ADMISSION | PRIMARY | — |
+| PARTNER_TO_VISIBLE_STORE | ROLE ADMISSION | PRIMARY | AGREEMENT ACCEPTANCE / FINANCE APPROVAL |
 | STORE_ORDERABILITY | — | PRIMARY | — |
 | CATALOG_TO_CUSTOMER_OFFER | — | PRIMARY | — |
 | DISCOVERY_TO_COMMERCE_ENTRY | — | PRIMARY | FUNDED PROMOTION EFFECT |
@@ -575,7 +586,7 @@ Legend: `A` applicable, `C` conditional, `N` not applicable for the Journey outc
 | Journey | Authz | Idempotency | Concurrency | Offline | Retry | Unknown outcome | Restart | Audit | Notification | Media | Tracking | Financial | Exception | Readback |
 |---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
 | MANAGED_PARTICIPANT_ADMISSION | A | A | A | C | A | C | A | A | C | N | N | N | A | A |
-| PARTNER_TO_VISIBLE_STORE | A | A | A | C | A | C | A | A | C | C | N | C | A | A |
+| PARTNER_TO_VISIBLE_STORE | A | A | A | C | A | C | A | A | C | C | N | A | A | A |
 | STORE_ORDERABILITY | A | A | A | C | A | C | A | A | C | N | N | N | A | A |
 | CATALOG_TO_CUSTOMER_OFFER | A | A | A | C | A | C | A | A | C | A | N | N | A | A |
 | DISCOVERY_TO_COMMERCE_ENTRY | A | A | A | C | A | C | A | A | C | A | N | C | A | A |
@@ -597,14 +608,17 @@ Every currently material concept must have one explicit disposition. Absence fro
 | Material concept | Canonical owner | Disposition | Placement | Status |
 |---|---|---|---|---|
 | Human Actor / managed role admission | Identity + domain eligibility | TOP_LEVEL_MULTI_SURFACE_JOURNEY | MANAGED_PARTICIPANT_ADMISSION | MAPPED |
+| Canonical official identity name | Identity | CROSS_CUTTING_LANE | MANAGED_PARTICIPANT_ADMISSION + BENEFICIARY_SETTLEMENT | MAPPED |
 | Client registration/session/recovery | Identity | SUPPORTING_SUBFLOW | CLIENT_REGISTRATION_SESSION | MAPPED |
 | Operator bootstrap/session/recovery | Identity | SUPPORTING_SUBFLOW | OPERATOR_BOOTSTRAP_SESSION | MAPPED |
 | Operator finite permissions | Identity | POLICY_FLOW | OPERATOR_PERMISSION_ADMINISTRATION | MAPPED |
 | Typed/versioned platform policies | policy-specific Identity/DSH/WLT owner | POLICY_FLOW | PLATFORM_POLICY_ADMINISTRATION | MAPPED |
-| Partner joining / Store ownership / publication | DSH + Identity role handoff | TOP_LEVEL_MULTI_SURFACE_JOURNEY | PARTNER_TO_VISIBLE_STORE | MAPPED |
+| Partner joining / Store ownership / publication | DSH + Identity role handoff + WLT agreement | TOP_LEVEL_MULTI_SURFACE_JOURNEY | PARTNER_TO_VISIBLE_STORE | MAPPED |
+| Store-specific Partner commercial terms | WLT; DSH Store context; bound Partner acceptance; Finance approval | FINANCIAL_PUBLICATION_PREREQUISITE | PARTNER_TO_VISIBLE_STORE | MAPPED |
 | Store schedule / pause / temporary mode orderability | DSH | TOP_LEVEL_MULTI_SURFACE_JOURNEY | STORE_ORDERABILITY | MAPPED |
 | Durable Store fulfillment-mode policy | DSH | POLICY_FLOW | PARTNER_TO_VISIBLE_STORE + platform policy administration | MAPPED |
 | Catalog / variants / identifiers / taxonomy / typed attributes / offers / sections / modifiers | DSH | TOP_LEVEL_MULTI_SURFACE_JOURNEY | CATALOG_TO_CUSTOMER_OFFER | MAPPED |
+| Field initial catalog authority | DSH server-side joining-Store scope until Go-Live | SUPPORTING_SUBFLOW | CATALOG_TO_CUSTOMER_OFFER | MAPPED |
 | Product proposals / import preview / import commit / catalog media relation | DSH | SUPPORTING_SUBFLOW | CATALOG_TO_CUSTOMER_OFFER | MAPPED |
 | Current availability-only inventory semantics | DSH | SUPPORTING_SUBFLOW | CATALOG_TO_CUSTOMER_OFFER + checkout | MAPPED |
 | Serviceability / address | DSH | SUPPORTING_SUBFLOW | SINGLE_STORE_ORDER_CREATION | MAPPED |
@@ -630,8 +644,9 @@ Every currently material concept must have one explicit disposition. Absence fro
 | Captain COD receivable/remittance | WLT | TOP_LEVEL_MULTI_SURFACE_JOURNEY | CAPTAIN_COD_REMITTANCE | MAPPED |
 | Partner commission receivable/remittance | WLT | TOP_LEVEL_MULTI_SURFACE_JOURNEY | PARTNER_COMMISSION_REMITTANCE | MAPPED |
 | Partner/Captain/Field earning settlement | WLT | TOP_LEVEL_MULTI_SURFACE_JOURNEY | BENEFICIARY_SETTLEMENT | MAPPED |
+| Field acquisition entitlement | DSH qualifying visibility event + WLT exactly-once earning | SUPPORTING_SUBFLOW | PARTNER_TO_VISIBLE_STORE → BENEFICIARY_SETTLEMENT | MAPPED |
 | Customer manual withdrawal | WLT | SUPPORTING_SUBFLOW | CUSTOMER_MANUAL_WITHDRAWAL | MAPPED |
-| Official-wallet payout destination administration | WLT/Finance | POLICY_FLOW | BENEFICIARY_SETTLEMENT support | MAPPED |
+| Official-wallet payout destination administration | WLT/Finance using Identity phone/name | POLICY_FLOW | BENEFICIARY_SETTLEMENT support | MAPPED |
 | Store delegated access invitation/grant/revocation | DSH + Identity admission | SUPPORTING_SUBFLOW | STORE_SCOPED_DELEGATION | MAPPED |
 | Notifications / deep links / unread | DSH intent/read state + adapter delivery | PROJECTION | many Journeys | MAPPED |
 | Tracking / Captain telemetry | DSH | PROJECTION | Captain fulfillment | MAPPED |

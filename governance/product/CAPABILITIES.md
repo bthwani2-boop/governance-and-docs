@@ -25,6 +25,7 @@ Routing only; behavior remains in each capability owner. Journey participation i
 `FINAL_MILE_DELIVERY` → `capabilities/fulfillment/final-mile-delivery.md`
 `CUSTOMER_PICKUP` → `capabilities/fulfillment/customer-pickup.md`
 `ORDER_PAYMENT_COLLECTION` → `capabilities/finance/order-payment-collection.md`
+`STORE_COMMERCIAL_AGREEMENT` → `capabilities/finance/store-commercial-agreement.md`
 `CUSTOMER_BALANCE_FUNDING` → `capabilities/finance/customer-balance-funding.md`
 `CAPTAIN_BALANCE_FUNDING` → `capabilities/finance/captain-balance-funding.md`
 `PARTNER_CAPTAIN_FIELD_EARNINGS_SETTLEMENT` → `capabilities/finance/partner-captain-field-earnings-settlement.md`
