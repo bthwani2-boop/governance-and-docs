@@ -26,10 +26,11 @@ Use these products only when current Yemen-market evidence can materially change
 
 At use, revalidate current product status, public surfaces/package identity, city coverage, capabilities, pricing, payment methods, policies, reviews and release behavior. Popularity, repetition across competitors or presence in a competitor does not establish a BThwani requirement. Extract only decision-relevant edge cases, state machines, failure/recovery behavior, experience evidence and test-oracle value; map proven value to the current BThwani owner. Do not preserve research transcripts, APK/decompiled output, screenshots or mutable competitor inventories as live durable knowledge.
 
-- Tawseel One — Android customer surface `com.smartapps.tawseel` — https://play.google.com/store/apps/details?id=com.smartapps.tawseel — broad Yemen delivery-commerce, customer ordering/tracking and cross-surface delivery behavior; discover other current public Tawseel surfaces when the material question requires them.
-- Etlobni — Android customer surface `com.etlobni` — https://play.google.com/store/apps/details?id=com.etlobni — Sana'a delivery-commerce, ordering, payment and customer-experience evidence.
+- Tawseel One — captured observations: `docs/reference/competitors/tawseel-one.md` — current public customer surface: https://play.google.com/store/apps/details?id=com.smartapps.tawseel — discover other current public Tawseel surfaces when the material question requires them.
+- Etlobni — captured observations: `docs/reference/competitors/etlobni.md` — current public customer surface: https://play.google.com/store/apps/details?id=com.etlobni.
 - Talqh — Android customer surface `com.talka.express.customer` — https://play.google.com/store/apps/details?id=com.talka.express.customer — multi-vertical delivery, parcel/task patterns and delivery-commerce experience evidence.
-- Nass — Android customer surface `com.teknokeys.nass` — https://play.google.com/store/apps/details?id=com.teknokeys.nass — Sana'a ordering, delivery execution and customer-experience evidence.
+- Nass — captured observations: `docs/reference/competitors/nass.md` — current public customer surface: https://play.google.com/store/apps/details?id=com.teknokeys.nass.
+- Tasaheel — captured observations: `docs/reference/competitors/tasaheel.md`.
 - On Time — Android customer surface `com.ontime.application` — https://play.google.com/store/apps/details?id=com.ontime.application — Sana'a multi-vertical delivery, location/tracking, payment and failure/recovery evidence.
 - Safir — Android customer surface `com.safir.safirappye` — https://play.google.com/store/apps/details?id=com.safir.safirappye — Aden commerce/delivery, payment and support-experience evidence.
 - Wssy — Android customer surface `com.wssy.wssy_app` — https://play.google.com/store/apps/details?id=com.wssy.wssy_app — Aden restaurant/customer ordering and delivery-experience evidence.

@@ -11,7 +11,7 @@ This policy owns durable information-architecture, navigation, interaction, RTL/
 
 ## BThwani experience contract
 
-BThwani maintains one recognizable cross-surface experience system with platform-native behavior. Unified identity does not mean identical information architecture, identical shells or pixel-identical UI across Client, Partner, Captain, Field and Control Panel.
+BThwani maintains one recognizable cross-surface experience system with platform-native behavior. Unified identity does not mean identical information architecture, identical shells or pixel-identical UI across Client, Partner, Captain, Field and Operator.
 
 The durable BThwani experience must remain:
 
@@ -45,11 +45,11 @@ ACTOR / USER OUTCOME
 - A route or screen is composition, not durable Product truth. Presentation follows the capability and service owners rather than becoming a competing business model.
 - A missing or materially wrong shell, navigation hierarchy or screen relationship is incomplete implementation even when each isolated screen renders and its API calls work.
 
-For the Operator workspace, the durable top-level information architecture is organized around eight centers: Leadership; Operations; Partners; Catalog; Marketing and Content; Finance; Policies; Access and Permissions. Partners and Catalog are separate centers because partner lifecycle, field acquisition, serviceability and store readiness are distinct from central product identities, their categories, proposals and imports. The Catalog center owns operator-facing management of the shared catalog, including its categories, structured data definitions and import/review workflows. Quick Prices uses a fast operational grid on desktop and compact sequential price entry on mobile. In Arabic operator-facing central catalog experiences, use the term “الفئات” for this taxonomy, including its top-level and nested levels. Policies is the operator-facing home for cross-capability shared platform rules, including service geography and field rewards; it does not own catalog taxonomy or product data definitions. After Go-Live, ongoing Store-local catalog content and menu organization remain in the Partner workspace with the Store owner. Before Go-Live, the assigned Field gets only authorized initial catalog entry for that joining Store through DSH. Finance provides one operational workspace for “مستحقات وتسويات الشركاء والكباتن والميدان” with distinct Partner, BThwani Captain and Field sections and a shared execution/reconciliation workbench. For each Store, Finance sees the proposed agreement, Partner acceptance, Finance approval and active version as explicit states; if a Store Type rate is shown, it is visibly a suggestion and cannot appear as active terms. Partner, Captain and Field official-wallet intake may select a provider preference only; where available, the Identity-derived phone and official name are read-only, and stale Identity facts require reverification. Its growing payout and evidence resources use server-driven registries with server-owned search, filters, sorting, bounded paging, selection/actions where justified, and on-demand relationship details. Customer balance withdrawals remain a separately authorized exception queue: Operations records the request, Finance approves and executes it, and an independent operator reconciles it. Funding, COD remittance, beneficiary payouts and customer withdrawal exceptions remain distinct work queues because they have different sources, authority and state transitions. These centers organize administration and do not reassign canonical capability meaning, data or write ownership. Personal profile, appearance, own-session and security utilities remain shell/account utilities rather than a ninth business center. A center is an information-architecture responsibility, not a new service or semantic owner.
+For the Operator workspace, the durable top-level information architecture is organized around eight centers: Leadership; Operations; Partners; Catalog; Marketing and Content; Finance; Policies; Access and Permissions. Partners and Catalog are separate centers because partner lifecycle, field acquisition, serviceability and store readiness are distinct from central product identities, their categories, proposals and imports. The Catalog center owns operator-facing management of the shared catalog, including its categories, structured data definitions and import/review workflows. Quick Prices uses a fast operational grid on desktop and compact sequential price entry on mobile. In Arabic operator-facing central catalog experiences, use the term “الفئات” for this taxonomy, including its top-level and nested levels. Policies is the operator-facing home for cross-capability shared platform rules, including service geography and field rewards; it does not own catalog taxonomy or product data definitions. After Go-Live, ongoing Store-local catalog content and menu organization remain in the Partner workspace with the Store owner. Before Go-Live, authorized initial catalog entry for that joining Store is reached through the DSH-owned onboarding path (`PARTNER_ONBOARDING_STORE_PUBLICATION`). Finance provides one operational workspace for “مستحقات وتسويات الشركاء والكباتن والميدان” with distinct Partner, BThwani Captain and Field sections and a shared execution/reconciliation workbench. Finance surfaces the agreement states owned by `STORE_COMMERCIAL_AGREEMENT` as explicit workspace states; if a Store Type rate is shown, it is visibly a suggestion and cannot appear as active terms. Partner, Captain and Field official-wallet intake is presented as a distinct destination surface under the destination governance owned by `PARTNER_CAPTAIN_FIELD_EARNINGS_SETTLEMENT`. Its growing payout and evidence resources use the server-driven registry presentation default, with search, filters, sorting, paging, selection/actions where justified and on-demand relationship details as presented collection semantics. Customer balance withdrawals remain a separately authorized exception queue, surfaced as the exception workflow owned by `CUSTOMER_BALANCE_MANUAL_WITHDRAWAL`. Funding, COD remittance, beneficiary payouts and customer withdrawal exceptions remain distinct work queues because they have different sources, authority and state transitions. These centers organize administration and do not reassign canonical capability meaning, data or write ownership. Personal profile, appearance, own-session and security utilities remain shell/account utilities rather than a ninth business center. A center is an information-architecture responsibility, not a new service or semantic owner.
 
 ### Operator operations-at-scale contract
 
-The Control Panel is an operations console for sustained work at scale, not a decorative dashboard. Operator presentation starts from the job, resource semantics and expected scale rather than a preferred component.
+The Operator workspace is an operations console for sustained work at scale, not a decorative dashboard. Operator presentation starts from the job, resource semantics and expected scale rather than a preferred component.
 
 ```text
 OPERATOR JOB
@@ -62,7 +62,7 @@ OPERATOR JOB
 → CANONICAL READBACK
 ```
 
-An Operator resource that can materially grow and whose primary job is to find, filter, sort, compare, select or act on records uses a server-driven operational registry by default. Server-owned search, filtering, sorting, aggregation/counting and bounded paging or incremental retrieval operate over the canonical result set represented by the query; the UI must not present filtering or sorting over only a loaded page/subset as if it were full-collection truth. Small, bounded collections whose complete authoritative result can be safely and efficiently loaded may use simpler client-side collection processing when doing so does not weaken correctness, permissions, freshness or expected scale.
+An Operator resource that can materially grow and whose primary job is to find, filter, sort, compare, select or act on records is presented as a server-driven operational registry by default. Search, filters, sorting, counting, paging, selection and actions are presented collection semantics of the registry rather than client-side re-derivations over a locally loaded subset, and the UI must not present filtering or sorting over only a loaded page/subset as if it were full-collection truth. Default bounding of materially growing reads follows `governance/policy/DATA.md`. Small, bounded collections whose complete authoritative result can be safely and efficiently loaded may use simpler client-side collection processing when doing so does not weaken correctness, permissions, freshness or expected scale.
 
 The registry default is not universal. Use a queue for work ordered by operational attention, SLA, priority or state; a tree or nested-resource presentation for genuine hierarchy; a feed for chronological/event consumption; and a focused object/detail workspace when one entity and its relationships are the primary task. Cards are appropriate when the collection is small or materially visual/non-columnar; they are not the default replacement for a comparable growing operational collection. A dashboard summarizes high-signal status, anomalies, trends or work requiring attention and links into the owning operational workspace; it must not become a card-based substitute for managing a large collection.
 
@@ -94,7 +94,7 @@ Touch targets, focus order, keyboard reachability, gesture behavior and safe-are
 
 ## State, feedback, recovery and truth
 
-Loading, empty, no-results, forbidden, conflict, offline, error, unknown, busy, disabled, selected, validation and recovery states are materially distinct when the capability exposes them.
+The canonical user-visible state vocabulary is owned by this policy: loading, empty, no-results, forbidden, conflict, offline, error, unknown, busy, disabled, selected, validation and recovery states are materially distinct when the capability exposes them.
 
 A surface accounts for every applicable user-visible state and transition rather than implementing only the happy path. Missing applicable states are incomplete implementation, not future polish.
 
@@ -117,7 +117,7 @@ As applicable, prove:
 - headers, tabs, lists, sheets and dialogs;
 - gesture/animation direction when it communicates navigation or hierarchy.
 
-Partner, Captain and Field mobile surfaces use the current Arabic-only RTL baseline unless a later explicit Product decision changes it. Control Panel is Arabic/RTL-first. Do not infer or prebuild runtime language switching without current Product need.
+Partner, Captain and Field mobile surfaces use the current Arabic-only RTL baseline unless a later explicit Product decision changes it. The Operator workspace is Arabic/RTL-first. Do not infer or prebuild runtime language switching without current Product need.
 
 Directionality is a shared semantic foundation; apps do not invent competing RTL/LTR systems.
 
@@ -150,7 +150,7 @@ PRODUCT SEMANTICS
 → CANONICAL OUTCOME READBACK
 ```
 
-Rendered claims require interaction/accessibility/device/runtime evidence appropriate to the affected surface. A screenshot alone is not journey proof. Static type/source checks do not override a visibly, structurally or interactively defective surface.
+Rendered claims require interaction/accessibility/device/runtime evidence appropriate to the affected surface. Rendered/behavior proof obligations are owned by `governance/policy/QUALITY.md`.
 
 Visual regression can prove stability of a rendered contract when that contract is mature and materially valuable, but it does not replace behavioral, accessibility, RTL or canonical-readback proof.
 

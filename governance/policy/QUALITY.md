@@ -125,7 +125,7 @@ As applicable, prove:
 - native platform/device and responsive/adaptive behavior where claimed;
 - runtime/config/infrastructure ownership and parity for the authorized environment;
 - dependency maturity/license/security/provenance/maintenance when dependencies change;
-- deployable identity when package/bundle/EAS/signing/deep-link/provider/store identity is affected;
+- deployable identity when mobile build/distribution project identity (package/bundle IDs, signing identities), deep-link or provider/store identity is affected;
 - claim-fit static/unit/contract/database/integration/browser/device/runtime evidence;
 - Governance/Docs convergence and absence of obsolete/shadow/losing paths after cutover.
 

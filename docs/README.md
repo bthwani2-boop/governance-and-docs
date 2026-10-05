@@ -16,7 +16,7 @@ Use:
 - `reference/experience.md` for accessibility, interaction, platform-experience and Design System evidence.
 - `reference/discovery.md` for capability/API discovery catalogs.
 - `reference/exemplars.md` for mature Product/OSS exemplars.
-- `reference/competitors/README.md` for the evidence-cache boundary and use rules.
+- `reference/competitors/README.md` for the evidence-cache boundary, cache protocol contract and use rules.
 - `reference/competitors/tawseel-one.md` for captured Tawseel One app observations.
 - `reference/competitors/tasaheel.md` for captured Tasaheel app observations.
 - `reference/competitors/etlobni.md` for captured Etlobni app observations.

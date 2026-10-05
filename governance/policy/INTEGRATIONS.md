@@ -13,7 +13,7 @@ IMPLEMENTATION_STATE_AUTHORITY: NONE
 - Refund, payout, reversal or query capability is never inferred from provider or product name; each capability is proven from the current provider contract at actual use.
 - Provider identifiers are references, not replacements for BThwani canonical identity.
 - Media and notification adapters own provider/storage/delivery mechanics only; the applicable DSH capability owns message/content/media relationship, publication/intent/read-state meaning.
-- Adoption requires current need, fit, maturity/stability, compatibility, license/provenance, security/supply-chain, operational/recovery, migration/rollback and replaceability evidence as applicable.
+- Adoption follows the candidate-evaluation law owned by `governance/policy/KNOWLEDGE.md`.
 - Newer or more popular is never adoption authority.
 - Mutable provider/API/platform facts are revalidated at use from current primary sources.
 - Discovery catalogs and OSS exemplars surface candidates; neither grants adoption authority.

@@ -16,6 +16,8 @@ PARALLEL_REPORTS_ALLOWED: NO
 - Package: `com.smartapps.tawseel`
 - Launch activity: `com.smartapps.tawseel/.MainActivity`
 - Device used: Samsung `SM-S9280`
+- Priority: `HIGH_YEMEN_FIT`
+- Role: High-priority Yemen-market reference.
 - Installed version readback: `2.0.63` (versionCode `263`)
 - Review confidence: `PARTIAL_INTERACTIVE_BLACK_BOX_REVIEW`
 - Freshness: `REVALIDATE_AT_USE`
@@ -28,27 +30,59 @@ Read this file before live inspection. Reuse still-current evidence; inspect onl
 
 Every material control below is either described as exercised or recorded as `NOT_TESTED_WITH_REASON`. Paid, destructive, personal-data-changing and externally consequential paths were not crossed.
 
+## Mandatory black-box review method
+A review is not complete from screenshots or visual browsing alone. For each material journey/screen/workspace, use normal authorized interaction on the real app/device and cover the applicable dimensions:
+
+```text
+PRODUCT / UX
+BEHAVIORAL REVERSE ANALYSIS
+LOGIC / VISIBLE RULES
+INTERACTION / CONTROL COVERAGE
+EXPERIMENTAL PATH COVERAGE
+VISUAL
+TECHNICAL / PLATFORM OBSERVATION
+PERFORMANCE / RESPONSIVENESS
+FAILURE / RECOVERY
+OPERATIONAL FLOW
+```
+
+For every relevant route/screen:
+
+```text
+ENTER RELEVANT TAB / ROUTE
+→ TAP RELEVANT BUTTONS / CTAs / ICONS / ROWS / CARDS
+→ EXERCISE MENUS / SHEETS / DIALOGS / FILTERS / SORT / SEARCH / SELECTORS / TOGGLES
+→ TEST BACK / CLOSE / CANCEL / CONFIRM / RETRY / REFRESH / SCROLL / PAGINATION / CAROUSEL WHEN PRESENT
+→ TRY SAFE ALTERNATIVE INPUTS / PATHS
+→ OBSERVE STATE BEFORE / AFTER
+→ RECORD RESULT / FAILURE / RECOVERY / PERFORMANCE
+```
+
+Every relevant control is either exercised or recorded as `NOT_TESTED_WITH_REASON`. Do not cross an irreversible, paid, destructive or externally consequential boundary without explicit authority.
+
+Do not decompile binaries, bypass protections, intercept secrets, or present hidden implementation as fact. Classify conclusions as `OBSERVED`, `STRONGLY_INFERRED`, `HYPOTHESIS`, or `NOT_TESTED`.
+
 ## Coverage matrix
-| Dimension | Status | Evidence boundary |
-|---|---|---|
-| Shell / IA / Navigation / Home / Discovery | PARTIAL | Main tabs, home, category grid and selected routes sampled |
-| Stores / Categories / Products / Media | PARTIAL | Several categories and store/menu states; not every vertical or merchant |
-| Search / Filters / Sort | PARTIAL | Store/product mode, selected queries, filters and no-result state |
-| Cart / Checkout | PARTIAL | Temporary cart item added then removed; checkout controls inspected without order submission |
-| Orders / Tracking | PARTIAL | Orders and cart tabs/status filters viewed; no transaction detail or repeat action |
-| Account | PARTIAL | Profile, addresses, city picker, balance, help, contact and privacy routes sampled |
-| Promotions / Banners | PARTIAL | Offers list, a promotion's branch choices and a branch menu sampled |
-| Product / UX | PARTIAL | Visible hierarchy and several core interactions sampled |
-| Behavior / Logic / Visible State Machine | PARTIAL | Selected before/after states observed; no backend semantics inferred |
-| Interaction / Buttons / Tabs / Controls | PARTIAL | Controls listed in interaction evidence; many lower-priority categories and external actions remain untested |
-| Experimental Paths / Input Variations | PARTIAL | No-result/product search, empty coupon validation and delivery/pickup toggle sampled |
-| Loading / Empty / No Results / Error / Retry | PARTIAL | Empty cart, search, custom-order validation and loading message observed; error/retry coverage incomplete |
-| Offline / Conflict / Recovery | NOT_REVIEWED | No network interruption or concurrent conflict induced |
-| RTL / Arabic / Accessibility | PARTIAL | Arabic RTL rendered states observed; screen-reader and systematic accessibility checks not performed |
-| Visual Hierarchy / Density / Media | PARTIAL | Screenshots capture representative home, search, menu, account and subscription screens |
-| Technical / Platform Behavior | PARTIAL | Package/version/activity read from device; no internal implementation inspected |
-| Performance / Responsiveness / Jank / Latency | NOT_REVIEWED | No controlled measurement performed |
-| State Persistence / Refresh / Relaunch | PARTIAL | A data-refresh action completed; notification badge change was observed but causality and content freshness were not established; no relaunch/persistence test |
+| Dimension | Status |
+|---|---|
+| Shell / IA / Navigation / Home / Discovery | PARTIAL |
+| Stores / Categories / Products / Media | PARTIAL |
+| Search / Filters / Sort | PARTIAL |
+| Cart / Checkout | PARTIAL |
+| Orders / Tracking | PARTIAL |
+| Account | PARTIAL |
+| Promotions / Banners | PARTIAL |
+| Product / UX | PARTIAL |
+| Behavior / Logic / Visible State Machine | PARTIAL |
+| Interaction / Buttons / Tabs / Controls | PARTIAL |
+| Experimental Paths / Input Variations | PARTIAL |
+| Loading / Empty / No Results / Error / Retry | PARTIAL |
+| Offline / Conflict / Recovery | NOT_REVIEWED |
+| RTL / Arabic / Accessibility | PARTIAL |
+| Visual Hierarchy / Density / Media | PARTIAL |
+| Technical / Platform Behavior | PARTIAL |
+| Performance / Responsiveness / Jank / Latency | NOT_REVIEWED |
+| State Persistence / Refresh / Relaunch | PARTIAL |
 
 Allowed statuses: `NOT_REVIEWED`, `CURRENT`, `STALE`, `PARTIAL`, `N/A`. Do not mark an area `CURRENT` when material interaction, logic or state behavior remains untested.
 
@@ -185,3 +219,7 @@ All 46 PNG captures below are under `local-photos/tawseel-one/`. The repository-
 ### 2026-09-27 — Store-card fulfillment disclosure delta
 - Rechecked the installed `2.0.63` app (`versionCode 263`) on `SM-S9280` with the current Sana'a location. One visible restaurant card exposed `استلم بنفسك`; a neighboring visible card did not expose a fulfillment label in its accessible summary. No account, address, cart, favorite or order state was changed.
 - This is a single-listing observation and does not prove all store cards expose every supported mode.
+
+### 2026-10-05 — Cache-protocol structure alignment
+- Aligned this file to the shared captured-competitor structural contract: added the mandatory black-box review method section and the Priority/Role identity fields, and converted the coverage matrix to the shared two-column shape.
+- No observation, status or review conclusion changed; the per-row evidence boundaries formerly carried in the matrix remain recorded in Current verified state, Interaction / experiment evidence and Unreviewed / stale areas.

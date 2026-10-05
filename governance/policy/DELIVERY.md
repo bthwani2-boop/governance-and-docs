@@ -14,7 +14,7 @@ IMPLEMENTATION_STATE_AUTHORITY: NONE
 - A cutover includes all material consumers, migrations/contracts/config/tests/verifiers and deletion of losing paths.
 - Temporary compatibility exists only for a proven current coexistence need and must have one owner, known consumers, a bounded lifetime or exit condition, and a deletion trigger. It must not become a second truth/writer or permanent default. Without those conditions, delete it rather than preserve it "just in case".
 - Smallest diff is not the goal; simplest complete canonical system is.
-- Structural/refoundation cleanup preserves externally registered deployable identity such as app package/bundle IDs, Expo/EAS project identity, URI/deep-link schemes, signing relationships and provider app/client bindings unless changing that identity is itself explicitly authorized.
+- Structural/refoundation cleanup preserves externally registered deployable identity such as mobile build/distribution project identity (package/bundle IDs, signing identities), URI/deep-link schemes and provider app/client bindings unless changing that identity is itself explicitly authorized.
 - A candidate closes only from exact-state evidence with zero known material defect in its authorized cone.
 - Current increment closure proves the admitted current outcome; it does not imply capability exhaustion, a permanently final domain model or permanent rejection of future Product breadth that has not yet been examined or admitted.
 - Repository mutation authority never implies build distribution, store submission, release, staging or Production authority.
