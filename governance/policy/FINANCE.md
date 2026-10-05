@@ -91,7 +91,7 @@ Risk policy may require full collateral at one stage and a different exposure li
 
 Commercial fee bearer is versioned policy rather than an architectural constant. Where an external funding provider charges a fee, the policy may designate platform, customer or campaign funding as bearer.
 
-Field acquisition reward is a one-time earning for a Field-attributed Partner joining case. Its qualifying event remains canonical `STORE_CLIENT_VISIBLE`; DSH proves that event and WLT records the resulting earning exactly once under an explicit versioned policy for the commercial Store Type of the first qualifying Store. A joining case can produce at most one Field acquisition reward regardless of additional Stores, repeated publication or visibility changes. The reward is financially distinct from per-Order Partner commission: Store Type may parameterize this Field reward only, while per-Order Partner commission is governed by the active Store-specific STORE_COMMERCIAL_AGREEMENT and never by a shared Store Type rate. Missing policy never falls back to another type or a default. Later policy changes must not reinterpret or duplicate historical earnings.
+Field acquisition reward is owned by `PARTNER_CAPTAIN_FIELD_EARNINGS_SETTLEMENT`, including its `STORE_CLIENT_VISIBLE` qualifying event, exactly-once admission and Store-Type-parameterized versioned policy. Later versioned-policy changes must not reinterpret or duplicate historical earnings of any admitted earning class.
 
 ## Refunds, payouts and settlement
 

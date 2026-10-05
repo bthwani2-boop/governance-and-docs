@@ -64,7 +64,7 @@ OWNERS: IDENTITY, DSH, WLT
 CAPABILITIES: PARTNER_ONBOARDING_STORE_PUBLICATION, IDENTITY_ACTIVATION_SESSIONS, CENTRAL_CATALOG, STORE_COMMERCIAL_AGREEMENT
 ENTRY: Eligible Field standing or authorized Operator-originated joining work starts a prospective Partner case.
 EXIT: The exact Store agreement is Partner-accepted and Finance-approved, initial catalog and final Operator readiness pass, and Store publication plus customer-safe readback are available.
-READBACK: Field, Operator and Partner read joining/publication state; Partner and Finance read the canonical agreement state; Client receives the resulting Store projection when catalog/serviceability visibility gates allow it.
+READBACK: Field, Operator and Partner read joining/publication state; Partner and Finance read the canonical agreement state; Client receives the resulting Store projection once the published Store has an active Service City assignment (`STORE_CLIENT_VISIBLE`), with offer-level visibility evaluated by `CENTRAL_CATALOG`.
 
 ### Frontstage and handoffs
 
@@ -388,7 +388,7 @@ DSH → validate canonical OrderLine + allowed action
 → remove item OR propose eligible substitute OR record actual measured quantity
 CLIENT → approve / reject / alternate when required
 DSH → append attributable adjustment + final fulfilled snapshot
-WLT → delta / refund / additional legal financial treatment
+WLT → payment delta/refund and entitlement reversal where the legal change reverses a created earning
 PARTNER → continue only when mandatory adjustment is resolved
 ```
 
@@ -412,7 +412,7 @@ JOURNEY_ID: CAPTAIN_COD_REMITTANCE
 OUTCOME: BThwani Captain-held COD cash is remitted through authorized Finance treatment until the WLT receivable/exposure is canonically closed.
 SURFACES: CAPTAIN, OPERATOR
 OWNERS: DSH, WLT
-CAPABILITIES: ORDER_PAYMENT_COLLECTION, PARTNER_CAPTAIN_FIELD_EARNINGS_SETTLEMENT
+CAPABILITIES: ORDER_PAYMENT_COLLECTION
 ENTRY: WLT has an open BThwani-Captain COD receivable backed by qualifying delivered-order evidence.
 EXIT: Authorized remittance evidence is independently reconciled and WLT closes the corresponding receivable/exposure.
 READBACK: Captain sees resulting liability/balance state; Finance reads canonical WLT reconciliation state.
@@ -447,7 +447,7 @@ Store-retained sale proceeds are not re-credited as a duplicate Partner wallet e
 ## BENEFICIARY_SETTLEMENT — earned entitlement to reconciled payout
 
 JOURNEY_ID: BENEFICIARY_SETTLEMENT
-OUTCOME: Eligible Partner, BThwani Captain or Field entitlement reaches an authorized reconciled payout/settlement result without surfaces becoming ledger writers; Partner Store allocations preserve each Store's effective beneficiary, while the first qualifying Field-attributed Store that becomes `STORE_CLIENT_VISIBLE` produces one acquisition earning per joining case.
+OUTCOME: Eligible Partner, BThwani Captain or Field entitlement reaches an authorized reconciled payout/settlement result without surfaces becoming ledger writers; each Store's allocation preserves that Store's effective beneficiary.
 SURFACES: PARTNER, CAPTAIN, FIELD, OPERATOR
 OWNERS: IDENTITY, DSH, WLT
 CAPABILITIES: PARTNER_CAPTAIN_FIELD_EARNINGS_SETTLEMENT, STORE_SCOPED_ACCESS_DELEGATION
@@ -470,7 +470,7 @@ DSH qualifying event / Store ownership relationship
 → Field reward notification only after WLT entitlement readback
 ```
 
-Financial read permission, payout-request intent, Store payout-recipient routing, Finance approval, execution and reconciliation are distinct authorities. Store beneficiary changes never rewrite an approved or historical payout snapshot.
+Effective-beneficiary selection, pinning, grouping, revocation treatment and authority separation are owned by `PARTNER_CAPTAIN_FIELD_EARNINGS_SETTLEMENT`.
 
 ### Failure / recovery
 
@@ -554,7 +554,7 @@ These are materially governed but are not promoted to top-level Journeys merely 
 | `STORE_COMMERCIAL_AGREEMENT` | PARTNER_TO_VISIBLE_STORE + durable fulfillment-mode changes | PRIMARY FINANCIAL PREREQUISITE |
 | `CUSTOMER_BALANCE_FUNDING` | CUSTOMER_BALANCE_FUNDING subflow | SUPPORTING_SUBFLOW |
 | `CAPTAIN_BALANCE_FUNDING` | CAPTAIN_BALANCE_FUNDING subflow | SUPPORTING_SUBFLOW |
-| `PARTNER_CAPTAIN_FIELD_EARNINGS_SETTLEMENT` | BENEFICIARY_SETTLEMENT + remittance Journeys | PRIMARY |
+| `PARTNER_CAPTAIN_FIELD_EARNINGS_SETTLEMENT` | BENEFICIARY_SETTLEMENT + BTHWANI_CAPTAIN_DELIVERY + ORDER_ADJUSTMENT_EXCEPTION_REFUND + PARTNER_COMMISSION_REMITTANCE | PRIMARY |
 | `CUSTOMER_BALANCE_MANUAL_WITHDRAWAL` | CUSTOMER_MANUAL_WITHDRAWAL subflow | SUPPORTING_SUBFLOW |
 | `STORE_CAPTAIN_MEMBERSHIP` | PARTNER_CAPTAIN_DELIVERY | SUPPORTING |
 | `STORE_SCOPED_ACCESS_DELEGATION` | STORE_SCOPED_DELEGATION + Partner promotion/settlement authorization | SUPPORTING_SUBFLOW |

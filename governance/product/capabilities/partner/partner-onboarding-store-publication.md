@@ -47,7 +47,7 @@ DSH owns joining-case, Field standing admission/eligibility, assignment, Partner
 - owner review is distinct from Field submission;
 - only a bound Partner may correct and resubmit its `needs_correction` case as one governed atomic business transition; Operator does not impersonate that resubmission;
 - Store publication is distinct from serviceability, catalog/offer eligibility and current operational orderability;
-- customer-visible Store publication requires applicable Store publication, active Service City assignment and catalog publication gates; current orderability is evaluated separately;
+- `STORE_CLIENT_VISIBLE` is the canonical derived customer-visibility event owned by this capability: a Store becomes client-visible at the first moment it is both published and assigned to an active Service City; the event is DSH-proven and idempotent, current orderability is evaluated separately, and it is the sole qualifying visibility input for WLT earnings (see `PARTNER_CAPTAIN_FIELD_EARNINGS_SETTLEMENT`);
 - Store publication requires an active Store-specific `STORE_COMMERCIAL_AGREEMENT` for its enabled fulfillment modes, explicit acceptance by the bound Partner owner of the exact agreement version, and Finance approval; Store Type suggestions, Store creation and catalog readiness cannot substitute for these gates;
 - Field may perform authorized initial catalog work only for its assigned, bound joining Store before Go-Live; after successful publication that write authority ends and the Partner becomes the ongoing Store catalog operator;
 - a published Store may remain customer-discoverable as closed/paused when current Product/experience policy allows, but checkout may not treat publication as proof that the Store can accept orders now;

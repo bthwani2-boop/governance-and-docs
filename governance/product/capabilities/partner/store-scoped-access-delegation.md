@@ -38,19 +38,19 @@ One owner action may target several owned Stores, but canonical authority remain
 
 ## Permission model
 
-The allowlist may include only currently admitted operational responsibilities, including where implemented:
+The allowlist may include only currently admitted operational responsibilities:
 
 - Order read/write;
 - Catalog/StoreOffer work;
 - Store operational availability;
 - promotion management;
 - Store fulfillment/Store-Captain operation;
-- financial read/report;
-- payout-request intent.
+- financial read/report (`finance_read`);
+- payout-request intent (`payout_request`).
 
 Permission bundles such as Store Manager, Order Staff, Catalog Staff, Accountant or Delivery Staff are UX presets over this allowlist. Custom selection, when exposed, remains bounded to the same canonical permissions.
 
-Changing a Store payout recipient is not an ordinary delegated permission. Under the current Product model it is owner-only and remains governed by WLT settlement policy. `finance_read` and `payout_request` never imply payout-routing authority, Finance approval, execution or reconciliation authority.
+Changing a Store payout recipient is not an ordinary delegated permission. Under the current Product model it is owner-only and remains governed by the Store effective-beneficiary law owned by `PARTNER_CAPTAIN_FIELD_EARNINGS_SETTLEMENT`. `finance_read` and `payout_request` never imply payout-routing authority, Finance approval, execution or reconciliation authority.
 
 ## Invariants
 
@@ -66,7 +66,7 @@ Changing a Store payout recipient is not an ordinary delegated permission. Under
 - financial read, payout-request intent, Store payout-recipient routing, Finance approval, execution and reconciliation are distinct authorities;
 - financial request, approval, execution and reconciliation remain subject to WLT policy and cannot be bypassed by a Store grant;
 - revocation/suspension stops future access without rewriting historical actions;
-- if a revoked/suspended staff actor is a current payout beneficiary for any Store, access revocation does not silently reroute future payouts; WLT settlement policy governs the required owner action;
+- if a revoked/suspended staff actor is a current payout beneficiary for any Store, access revocation does not silently reroute future payouts; the effective-beneficiary revocation law owned by `PARTNER_CAPTAIN_FIELD_EARNINGS_SETTLEMENT` governs the required owner action;
 - no generic organization, department, team hierarchy, tenant semantics, shared-owner credential or separate Staff app is introduced.
 
 ## Failure and recovery
