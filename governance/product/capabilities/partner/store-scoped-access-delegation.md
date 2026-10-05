@@ -18,7 +18,7 @@ DSH owns Store-scoped invitation/grant lifecycle, Store scope, allowlisted permi
 
 Owners and delegated Store staff use the same Partner application and a `partner` role-scoped session. The role means admitted access to the merchant-side Partner workspace; it does not imply Store ownership. DSH independently authorizes every Store action from Store ownership or an active accepted StoreAccessGrant.
 
-Normal user-facing invitation starts from a phone number, not an `actor_id`, Store code or other technical identifier. DSH/Identity resolve the canonical Human Actor behind that boundary. A UI role preset is only a convenient bundle of bounded DSH permissions; it never becomes a new Identity role or independent RBAC authority.
+Normal user-facing invitation starts from a phone number, not an `actor_id`, Store code or other technical identifier. DSH/Identity resolve the canonical Human Actor behind that boundary. Resolution must fail closed when the phone does not resolve uniquely to one eligible canonical actor. A UI role preset is only a convenient bundle of bounded DSH permissions; it never becomes a new Identity role or independent RBAC authority.
 
 A Store owner cannot grant the `partner` role directly. The governed path is:
 
@@ -59,7 +59,7 @@ Permission bundles such as Store Manager, Order Staff, Catalog Staff, Accountant
 
 ## Failure and recovery
 
-Unknown/unresolved phone/actor, declined/expired invitation, unauthorized owner, duplicate invitation/grant, stale version, cross-Store request, revoked access, conflicting permission update, interrupted role admission and ambiguous mutation converge on one DSH grant truth plus Identity role/session truth. Retry cannot create a second actor, second effective Store grant or broader permission set.
+Unknown, unresolved or ambiguous phone/actor, declined/expired invitation, unauthorized owner, duplicate invitation/grant, stale version, cross-Store request, revoked access, conflicting permission update, interrupted role admission and ambiguous mutation converge on one DSH grant truth plus Identity role/session truth. Retry cannot create a second actor, second effective Store grant or broader permission set.
 
 ## Proof boundary
 
