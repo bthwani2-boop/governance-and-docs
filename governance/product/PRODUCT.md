@@ -89,7 +89,7 @@ Each ID has exactly one capability owner under `capabilities/**`.
 - fulfillment mode is operational truth and remains distinct from payment method;
 - the admitted fulfillment modes are BThwani Captain delivery, Store-affiliated Partner Captain delivery and Customer Pickup;
 - Partner Captain affiliation never creates a sixth high-level Identity role;
-- Store publication, Store operational orderability, Offer availability, geographic serviceability and selected fulfillment-mode availability are distinct truths;
+- Store publication, durable fulfillment-mode admission, Store operational orderability, Offer availability, geographic serviceability and selected fulfillment-mode availability are distinct truths;
 - checkout never silently converts an unavailable fulfillment mode to another mode;
 - a confirmed Order preserves its original transaction snapshot; a legal post-confirmation quantity/substitution/removal change is an attributable Order adjustment, never an in-place rewrite of history;
 - variable-measure commerce may record an actual fulfilled quantity through the governed Order adjustment boundary when that differs from the confirmed request;

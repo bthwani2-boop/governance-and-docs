@@ -21,7 +21,7 @@ DSH owns cart/checkout operational truth and the bounded delivery-recipient snap
 - item identity, availability and commercial evidence come from canonical DSH owners;
 - mutation is versioned/idempotent and one retry identity cannot represent a different payload;
 - checkout carries an explicit fulfillment intent independent from payment method;
-- checkout revalidates current Store operational orderability and selected fulfillment-mode availability immediately before confirmation; a published Store or enabled mode policy alone is insufficient;
+- checkout revalidates current Store operational orderability and selected fulfillment-mode availability immediately before confirmation; a published Store or durable mode admission alone is insufficient;
 - an unavailable selected mode is rejected with explicit readback and is never silently replaced by another mode;
 - checkout establishes one stable logical operation identity before cross-owner financial effects; an ambiguous commit/retry cannot silently allocate another logical Order identity;
 - confirmed checkout snapshots address/serviceability, Store/mode orderability evidence, item/variant/quantity/pricing/modifier evidence and other transaction facts required by `ORDER_LIFECYCLE`;

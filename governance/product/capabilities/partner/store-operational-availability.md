@@ -16,11 +16,10 @@ DSH owns Store operating schedule, one-off closure, temporary pause, bounded pre
 
 ## Invariants
 
-- `PUBLISHED_STORE`, `CUSTOMER_VISIBLE_OFFER`, `SERVICEABLE`, `DURABLY_ENABLED_FULFILLMENT_MODE` and `STORE_OPERATIONALLY_AVAILABLE` are distinct facts;
+- `PUBLISHED_STORE`, `CUSTOMER_VISIBLE_OFFER`, `SERVICEABLE`, `DURABLY_ADMITTED_FULFILLMENT_MODE` and `STORE_OPERATIONALLY_AVAILABLE` are distinct facts;
 - publication never implies that a Store is open for orders now;
 - an operational availability control may pause/resume only a fulfillment mode already durably admitted for that Store;
-- operational availability can never add a new fulfillment mode or bypass Store Commercial Agreement acceptance/Finance approval when the durable change has financial meaning;
-- temporarily pausing/resuming an already admitted mode does not create a new Commercial Agreement version;
+- operational availability can never admit a new fulfillment mode: durable mode admission follows the agreement-version law owned by `STORE_COMMERCIAL_AGREEMENT`, and pause/resume never creates or versions durable admission;
 - a Store has a versioned weekly operating schedule; an authorized Partner may maintain it for an owned or explicitly granted Store scope;
 - DSH may represent a bounded one-off closure or temporary pause with attributable reason and optional end time;
 - temporary operational pressure is represented initially by pause/unavailable semantics, not by inventing a numeric capacity engine;

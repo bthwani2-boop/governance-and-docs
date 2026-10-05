@@ -75,8 +75,8 @@ FIELD → JoiningCase work
 OPERATOR → review / correction / rejection / admission
 DSH → Identity partner-role request
 PARTNER → confirm/correct canonical onboarding data
-DSH → Store ownership + Service City + Commerce Vertical + Store Type + durable fulfillment-mode policy
-WLT → Store-specific agreement proposal
+DSH → Store ownership + Service City + Commerce Vertical + Store Type + durable fulfillment-mode admission
+WLT/Field → Store-specific agreement proposal under `STORE_COMMERCIAL_AGREEMENT` proposer law
 PARTNER → accept exact agreement version and rates
 FINANCE → approve; WLT activates only after both gates
 FIELD → authorized initial catalog work for the bound joining Store
@@ -86,7 +86,7 @@ DSH → idempotent Partner Go-Live/catalog handoff and Field mission-complete no
 CLIENT → customer-safe Store projection
 ```
 
-Store publication is not current orderability. Durable enabled fulfillment modes are not temporary mode availability. The JoiningCase remains onboarding history; ongoing Partner Store scope after admission comes from DSH Store ownership and accepted Store-scoped delegation.
+Store publication is not current orderability. Durable fulfillment-mode admission is not temporary mode availability. The JoiningCase remains onboarding history; ongoing Partner Store scope after admission comes from DSH Store ownership and accepted Store-scoped delegation.
 
 ### Failure / recovery
 
@@ -99,7 +99,7 @@ Field does not approve its own case, accept for the Partner or approve financial
 ## STORE_ORDERABILITY — published Store to current ability to accept orders
 
 JOURNEY_ID: STORE_ORDERABILITY
-OUTCOME: Partner-maintained operating state is evaluated by DSH and exposed consistently so a Client can know whether the Store and a durably enabled fulfillment mode can accept a new order now, with bounded Operator intervention when authorized.
+OUTCOME: Partner-maintained operating state is evaluated by DSH and exposed consistently so a Client can know whether the Store and a durably admitted fulfillment mode can accept a new order now, with bounded Operator intervention when authorized.
 SURFACES: PARTNER, CLIENT, OPERATOR
 OWNERS: DSH
 CAPABILITIES: STORE_OPERATIONAL_AVAILABILITY
@@ -622,7 +622,7 @@ Every currently material concept must have one explicit disposition. Absence fro
 | Ongoing Partner Store scope after onboarding | DSH Store ownership + accepted Store grants | SUPPORTING_SUBFLOW | STORE_SCOPED_DELEGATION + Store-scoped Journeys | MAPPED |
 | Store-specific Partner commercial terms | WLT; DSH Store context; bound Partner acceptance; Finance approval | FINANCIAL_PUBLICATION_PREREQUISITE | PARTNER_TO_VISIBLE_STORE | MAPPED |
 | Store schedule / pause / temporary mode orderability | DSH | TOP_LEVEL_MULTI_SURFACE_JOURNEY | STORE_ORDERABILITY | MAPPED |
-| Durable Store fulfillment-mode policy | DSH + WLT agreement prerequisite where financially material | POLICY_FLOW | PARTNER_TO_VISIBLE_STORE + STORE_ORDERABILITY | MAPPED |
+| Durable Store fulfillment-mode admission | DSH + WLT agreement prerequisite | POLICY_FLOW | PARTNER_TO_VISIBLE_STORE + STORE_ORDERABILITY | MAPPED |
 | Catalog / variants / identifiers / taxonomy / typed attributes / offers / sections / modifiers | DSH | TOP_LEVEL_MULTI_SURFACE_JOURNEY | CATALOG_TO_CUSTOMER_OFFER | MAPPED |
 | Field initial catalog authority | DSH server-side joining-Store scope until Go-Live | SUPPORTING_SUBFLOW | CATALOG_TO_CUSTOMER_OFFER | MAPPED |
 | Product proposals / import preview / import commit / catalog media relation | DSH | SUPPORTING_SUBFLOW | CATALOG_TO_CUSTOMER_OFFER | MAPPED |

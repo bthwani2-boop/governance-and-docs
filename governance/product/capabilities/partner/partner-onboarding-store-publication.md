@@ -12,7 +12,7 @@ A prospective Partner progresses through one DSH-owned joining lifecycle to one 
 
 ## Ownership
 
-DSH owns joining-case, Field standing admission/eligibility, assignment, Partner/Store readiness, review/correction, submitted owner contact and first-Store intake facts, canonical Service City, primary Commerce Vertical, commercial Store Type, initial Store fulfillment-mode assignment, operator-authorized post-creation fulfillment-mode policy changes, Store ownership binding and Store-publication truth. DSH supplies canonical Store context, joining attribution and enabled fulfillment modes to WLT for the Store Commercial Agreement; WLT owns proposal, acceptance, approval and activation of financial terms. Identity alone creates/resolves `actor_id` and admits `partner`/`field` roles after an authorized DSH request. Catalog publication remains with `CENTRAL_CATALOG`; current Store opening/orderability after publication belongs to `STORE_OPERATIONAL_AVAILABILITY`.
+DSH owns joining-case, Field standing admission/eligibility, assignment, Partner/Store readiness, review/correction, submitted owner contact and first-Store intake facts, canonical Service City, primary Commerce Vertical, commercial Store Type, initial durable fulfillment-mode admission, operator-authorized post-creation durable fulfillment-mode admission changes, Store ownership binding and Store-publication truth. DSH supplies canonical Store context, joining attribution and durably admitted fulfillment modes to WLT for the Store Commercial Agreement; WLT owns the agreement record lifecycle and financial-term activation, and agreement proposer rules are owned by `STORE_COMMERCIAL_AGREEMENT`. Identity alone creates/resolves `actor_id` and admits `partner`/`field` roles after an authorized DSH request. Catalog publication remains with `CENTRAL_CATALOG`; current Store opening/orderability after publication belongs to `STORE_OPERATIONAL_AVAILABILITY`.
 
 ## Invariants
 
@@ -32,8 +32,8 @@ DSH owns joining-case, Field standing admission/eligibility, assignment, Partner
 - weekly working hours are expressed in the selected Service City's local time and support closed days and multiple opening intervals in a day; optional onboarding notes are available to the Operator reviewer and do not replace structured intake facts;
 - owner contact, address, map location, working hours, fulfillment modes and other submitted first-Store facts are preserved through review/correction and copied into their canonical Store owner at creation; the case remains the auditable intake snapshot;
 - first-Store Store Type may be corrected before Store creation only through the governed case-correction path;
-- after Store creation, only an active authorized Operator path may change the Store's durable enabled fulfillment-mode policy; Partner surfaces cannot mutate that durable policy;
-- Partner may change only the temporary operational availability allowed by `STORE_OPERATIONAL_AVAILABILITY`; pausing a mode never enables/disables the durable admitted mode policy;
+- after Store creation, only an active authorized Operator path may change the Store's durable fulfillment-mode admission, and any durable admission change follows the agreement-version law owned by `STORE_COMMERCIAL_AGREEMENT`; Partner surfaces cannot mutate durable admission;
+- Partner may change only the temporary operational availability allowed by `STORE_OPERATIONAL_AVAILABILITY`; pausing a mode never changes the Store's durable fulfillment-mode admission;
 - fulfillment-mode policy mutation remains DSH-owned, versioned, attributable and auditable; the Operator surface is an authorized host, not a second writer;
 - Partner is not city-scoped; a Partner may own multiple Stores in the same or different Service Cities;
 - a new Store cannot be created without an active canonical Service City;
@@ -48,7 +48,7 @@ DSH owns joining-case, Field standing admission/eligibility, assignment, Partner
 - only a bound Partner may correct and resubmit its `needs_correction` case as one governed atomic business transition; Operator does not impersonate that resubmission;
 - Store publication is distinct from serviceability, catalog/offer eligibility and current operational orderability;
 - `STORE_CLIENT_VISIBLE` is the canonical derived customer-visibility event owned by this capability: a Store becomes client-visible at the first moment it is both published and assigned to an active Service City; the event is DSH-proven and idempotent, current orderability is evaluated separately, and it is the sole qualifying visibility input for WLT earnings (see `PARTNER_CAPTAIN_FIELD_EARNINGS_SETTLEMENT`);
-- Store publication requires an active Store-specific `STORE_COMMERCIAL_AGREEMENT` for its enabled fulfillment modes, explicit acceptance by the bound Partner owner of the exact agreement version, and Finance approval; Store Type suggestions, Store creation and catalog readiness cannot substitute for these gates;
+- Store publication requires an active Store-specific `STORE_COMMERCIAL_AGREEMENT` covering every durably admitted fulfillment mode, explicit acceptance by the bound Partner owner of the exact agreement version, and Finance approval; Store Type suggestions, Store creation and catalog readiness cannot substitute for these gates;
 - Field may perform authorized initial catalog work only for its assigned, bound joining Store before Go-Live; after successful publication that write authority ends and the Partner becomes the ongoing Store catalog operator;
 - a published Store may remain customer-discoverable as closed/paused when current Product/experience policy allows, but checkout may not treat publication as proof that the Store can accept orders now;
 - trusted case/business scope is derived server-side, never granted by request input;
@@ -69,7 +69,7 @@ PARTNER
 → authorized Identity Partner role admission and access
 → canonical draft Store + owner binding
 → bound Partner confirmation/correction of onboarding data
-→ WLT Store-specific agreement proposal
+→ STORE_COMMERCIAL_AGREEMENT proposal (Field for its authorized joining case, WLT otherwise)
 → bound Partner acceptance of the exact agreement terms
 → Finance approval and WLT activation
 → authorized initial catalog readiness

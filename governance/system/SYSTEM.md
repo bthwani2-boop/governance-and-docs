@@ -69,7 +69,7 @@ ONE MUTABLE FACT
 
 Caches, search, analytics, local state, generated clients and projections are derived.
 
-Published Store, current Store orderability, Offer availability, geographic serviceability and selected fulfillment-mode availability remain distinct DSH facts/evaluations. No surface may collapse them into one editable `available` flag.
+Published Store, durable fulfillment-mode admission, current Store orderability, Offer availability, geographic serviceability and selected fulfillment-mode availability remain distinct DSH facts/evaluations. No surface may collapse them into one editable `available` flag.
 
 A confirmed Store Order preserves its original transaction snapshot. A legal post-confirmation change is an attributable DSH Order-adjustment fact with applicable WLT financial delta; it is never an in-place rewrite that erases the original confirmation.
 
