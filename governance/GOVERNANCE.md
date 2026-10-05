@@ -38,6 +38,7 @@ governance/
     ├── EXPERIENCE.md
     ├── DESIGN.md
     ├── QUALITY.md
+    ├── SCALABILITY.md
     ├── DELIVERY.md
     ├── INTEGRATIONS.md
     └── KNOWLEDGE.md
@@ -51,6 +52,7 @@ governance/
 - `policy` answers: which cross-cutting invariants apply across multiple owners?
 - `policy/EXPERIENCE.md` owns durable information architecture, shell/navigation, interaction, RTL/localization, accessibility and recovery invariants.
 - `policy/DESIGN.md` owns durable cross-surface visual identity and design-language invariants; it is not an executable token or component registry.
+- `policy/SCALABILITY.md` owns durable admission, escalation, proof and retirement rules for performance, capacity, scalability and load-management mechanisms; it does not own current topology, traffic, thresholds or provider choices.
 - `docs` explains how humans/agents work; it owns no Product/System truth.
 - `docs/reference` routes external evidence; reference existence never grants adoption authority.
 
