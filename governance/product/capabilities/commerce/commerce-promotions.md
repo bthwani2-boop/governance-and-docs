@@ -8,23 +8,53 @@ CAPABILITY_ID: COMMERCE_PROMOTIONS
 
 ## Outcome
 
-Authorized campaigns/coupons/promotions change customer commercial eligibility through one DSH rule truth while all funded financial effects remain explicit WLT truth.
+Authorized platform or Partner Store promotions change customer commercial eligibility through one DSH rule truth while funded financial effects remain explicit WLT truth.
 
 ## Ownership
 
-DSH owns promotion identity, eligibility, scope, lifecycle and application to commerce. WLT owns discount funding, subsidy and settlement effects.
+DSH owns promotion identity, author, eligibility, Store/catalog scope, lifecycle, limits, redemption and application to commerce. WLT owns discount funding, subsidy, merchant economic effects and reconciliation. Operator may author platform campaigns. An authorized Partner owner or Store-scoped delegate may author Store promotions only for Stores DSH authorizes.
+
+## Current admitted forms
+
+- Product or StoreOffer discount;
+- bounded product-group/category discount;
+- Store/order-threshold discount;
+- coupon/code;
+- platform campaign with Partner opt-in where required.
+
+The initial Product does not imply loyalty, points, membership, generic marketing automation, AI targeting, dynamic pricing or a broad segmentation system.
+
+## Scope and lifecycle
+
+A promotion may target one Store, selected authorized Stores or all Stores authorized to the acting Partner. Multi-Store authoring is a convenience command; canonical promotion scope remains explicit per Store and never widens authorization.
+
+Durable meaning distinguishes draft/not-yet-effective, scheduled or active, and ended/cancelled states. Exact executable names belong to implementation. Time windows and usage limits are server-evaluated.
+
+## Funding
+
+Every funded discount records an explicit funding source/allocation: `PARTNER`, `BTHWANI` or `SHARED`. `SHARED` records the exact allocation. DSH evaluates commerce eligibility; WLT owns the monetary funding/subsidy and settlement consequence. Client input never chooses funding source.
 
 ## Invariants
 
-- a promotion never rewrites base Catalog/StoreOffer identity;
-- eligibility and redemption are server-owned and concurrency/idempotency safe;
-- eligibility may be scoped to Store, catalog target, time, customer rule and fulfillment mode; the selected scope is snapshotted into the transaction;
-- promotion stacking is denied by default and allowed only by an explicit versioned rule;
+- a promotion never rewrites base Catalog/Product/Variant/StoreOffer identity or base price merely to represent a temporary discount;
+- eligibility and redemption are server-owned, versioned, concurrency-safe and idempotent;
+- Partner promotion authority is Store-scoped and follows `STORE_SCOPED_ACCESS_DELEGATION`;
+- platform campaigns may define eligibility and may require explicit Partner opt-in;
+- stacking is denied by default unless an explicit versioned rule allows it;
 - customer discount and funding source are distinct facts;
-- platform-funded discount is funding for an entitlement, not extra merchant product value;
-- campaign/provider budget or funding cannot be inferred from UI;
-- promotion effect is snapshotted into the transaction evidence required for financial reconciliation.
+- checkout revalidates promotion eligibility server-side;
+- each applicable Order freezes the exact promotion/version, Store scope, discount amount and funding allocation required for reconciliation;
+- later StoreOffer price changes or promotion edits never reinterpret a committed Order;
+- cancellation/refund uses frozen transaction evidence rather than current promotion state.
+
+## Customer readback
+
+Customer surfaces may show effective price, discount label, campaign and coupon result needed for the buying decision. They do not expose Partner accounting, WLT internals or subsidy topology.
 
 ## Failure and recovery
 
-Expired/ineligible code, exhausted usage, concurrent redemption, funding refusal, cancellation/refund and unknown financial effect reconcile without duplicate discount.
+Expired/ineligible code, exhausted usage, invalid Store/catalog scope, unauthorized Partner staff, stale version, concurrent redemption, funding refusal, missing campaign opt-in, cancellation/refund and unknown financial effect fail closed or remain explicit and reconcile without duplicate discount.
+
+## Proof boundary
+
+Proof covers every admitted form, Store and multi-Store scope, owner/delegate authorization, platform campaign opt-in, each funding source, invalid/expired/exhausted states, duplicate/concurrent redemption, base-price preservation, immutable Order funding snapshot and WLT-backed settlement effects.

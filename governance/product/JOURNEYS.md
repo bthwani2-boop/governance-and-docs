@@ -86,7 +86,7 @@ DSH → idempotent Partner Go-Live/catalog handoff and Field mission-complete no
 CLIENT → customer-safe Store projection
 ```
 
-Store publication is not current orderability. Durable enabled fulfillment modes are not temporary mode availability.
+Store publication is not current orderability. Durable enabled fulfillment modes are not temporary mode availability. The JoiningCase remains onboarding history; ongoing Partner Store scope after admission comes from DSH Store ownership and accepted Store-scoped delegation.
 
 ### Failure / recovery
 
@@ -94,7 +94,7 @@ Missing/incompatible first-Store facts, correction loops, duplicate logical case
 
 ### Negative space
 
-Field does not approve its own case, accept for the Partner or approve financial terms. Operator does not become Partner/Store owner. Store is not a tenant.
+Field does not approve its own case, accept for the Partner or approve financial terms. Operator does not become Partner/Store owner. Store is not a tenant. The first JoiningCase is not a permanent one-Store workspace root.
 
 ## STORE_ORDERABILITY — published Store to current ability to accept orders
 
@@ -119,11 +119,11 @@ CHECKOUT → revalidate the same DSH result before Order creation
 
 ### Failure / recovery
 
-Stale schedule, conflicting pause/resume, invalid interval, unauthorized Store scope, offline mutation and ambiguous commit reread canonical DSH state. Failed orderability mutation never changes publication, catalog or serviceability truth.
+Stale schedule, conflicting pause/resume, invalid interval, unauthorized Store scope, attempt to operationally enable an unadmitted fulfillment mode, offline mutation and ambiguous commit reread canonical DSH state. Failed orderability mutation never changes publication, catalog, commercial agreement or serviceability truth.
 
 ### Negative space
 
-No numeric capacity engine, mandatory daily check-in, queue forecaster or AI preparation predictor is admitted. Temporary availability does not mutate durable enabled-mode policy.
+No numeric capacity engine, mandatory daily check-in, queue forecaster or AI preparation predictor is admitted. Temporary availability does not mutate durable enabled-mode policy or add a fulfillment mode absent from the active Store Commercial Agreement.
 
 ## CATALOG_TO_CUSTOMER_OFFER — canonical catalog to customer-safe assortment
 
@@ -160,30 +160,31 @@ Field initial write authority ends at Go-Live and is enforced by DSH; Field cann
 ## DISCOVERY_TO_COMMERCE_ENTRY — governed discovery and promotion to valid target
 
 JOURNEY_ID: DISCOVERY_TO_COMMERCE_ENTRY
-OUTCOME: Authorized discovery content or commercial promotion reaches a Client through an eligible canonical target while any funded promotion preserves the WLT funding boundary.
-SURFACES: OPERATOR, CLIENT
+OUTCOME: Authorized discovery content or an Operator/Partner commercial promotion reaches a Client through an eligible canonical target while any funded promotion preserves the WLT funding boundary.
+SURFACES: OPERATOR, PARTNER, CLIENT
 OWNERS: DSH, WLT
-CAPABILITIES: DISCOVERY_CONTENT, COMMERCE_PROMOTIONS, CENTRAL_CATALOG
-ENTRY: Authorized content or promotion enters its governed review/eligibility lifecycle.
-EXIT: Client reaches a valid Store/Product/Category/commerce target or the content/promotion is ineligible, exhausted or expired.
+CAPABILITIES: DISCOVERY_CONTENT, COMMERCE_PROMOTIONS, CENTRAL_CATALOG, STORE_SCOPED_ACCESS_DELEGATION
+ENTRY: Authorized content, platform campaign or Store promotion enters its governed review/eligibility lifecycle.
+EXIT: Client reaches a valid Store/Product/Category/commerce target or the content/promotion is ineligible, exhausted, not opted-in, cancelled or expired.
 READBACK: Publication/eligibility is DSH-backed and funded promotion effect is WLT-backed through the promotion capability.
 
 ### Parallel lanes
 
 ```text
 EDITORIAL: OPERATOR → Discovery Content → DSH publication → CLIENT target
-COMMERCIAL: OPERATOR → Promotion → DSH eligibility → WLT funding/subsidy effect when applicable → CLIENT application
+PLATFORM COMMERCIAL: OPERATOR → Platform Campaign → eligible PARTNER opt-in where required → DSH eligibility → WLT funding effect → CLIENT application
+STORE COMMERCIAL: PARTNER owner/authorized Store delegate → Store Promotion → DSH Store/catalog eligibility → WLT funding effect when applicable → CLIENT application
 ```
 
-Partner-owned commerce objects may be targets/context without making Partner a material actor in this Journey unless Partner-authored discovery work is separately admitted.
+Partner promotion authority remains bounded to Stores authorized by DSH. Multi-Store authoring never widens Store access and never rewrites base StoreOffer prices.
 
 ### Failure / recovery
 
-Expired target, invalid scope, stale publication, concurrent redemption, funding refusal and retry conflict fail closed. A banner never becomes discount authority.
+Expired target, invalid Store/catalog scope, stale publication/version, missing campaign opt-in, concurrent redemption, exhausted coupon, unauthorized Partner delegate, funding refusal and retry conflict fail closed. A banner, UI price decoration or client request never becomes discount/funding authority.
 
 ### Negative space
 
-No loyalty, paid membership, social-content network or app-local publication authority is implied.
+No loyalty, paid membership, social-content network, generic marketing automation, AI targeting, dynamic pricing or app-local publication authority is implied.
 
 ## SINGLE_STORE_ORDER_CREATION — Client intent to canonical Store Order
 
@@ -191,7 +192,7 @@ JOURNEY_ID: SINGLE_STORE_ORDER_CREATION
 OUTCOME: A Client confirms one Store-scoped commerce intent and the Partner receives at most one canonical Store Order from current catalog, serviceability, Store orderability and financial evidence.
 SURFACES: CLIENT, PARTNER
 OWNERS: DSH, WLT
-CAPABILITIES: SERVICEABILITY_ADDRESSES, CART_CHECKOUT, ORDER_LIFECYCLE, ORDER_PAYMENT_COLLECTION, CUSTOMER_BALANCE_FUNDING, STORE_OPERATIONAL_AVAILABILITY, CENTRAL_CATALOG
+CAPABILITIES: SERVICEABILITY_ADDRESSES, CART_CHECKOUT, ORDER_LIFECYCLE, ORDER_PAYMENT_COLLECTION, CUSTOMER_BALANCE_FUNDING, STORE_OPERATIONAL_AVAILABILITY, CENTRAL_CATALOG, COMMERCE_PROMOTIONS
 ENTRY: Client has an eligible Store/Offer/cart and chooses an admitted fulfillment intent.
 EXIT: One Store Order and its payment/collection intent exist or confirmation fails without duplicate effect.
 READBACK: Client and Partner read the canonical Store Order; Client sees WLT-backed payment state where applicable.
@@ -199,10 +200,10 @@ READBACK: Client and Partner read the canonical Store Order; Client sees WLT-bac
 ### Frontstage and handoffs
 
 ```text
-CLIENT → address / Store / Offer / Variant / quantity / modifiers / fulfillment intent / payment intent
-DSH → revalidate serviceability + offer + Store/mode orderability + cart evidence
-WLT → establish payment/collection intent
-DSH → create at most one canonical Store Order
+CLIENT → address / Store / Offer / Variant / quantity / modifiers / fulfillment intent / payment intent / promotion or coupon intent where applicable
+DSH → revalidate serviceability + offer + Store/mode orderability + promotion eligibility + cart evidence
+WLT → establish payment/collection and funded-promotion effects
+DSH → create at most one canonical Store Order with immutable applicable promotion snapshot
 PARTNER → new Order readback
 ```
 
@@ -214,7 +215,7 @@ A delivery recipient may be `SELF` or `OTHER`. An `OTHER` recipient is bounded d
 
 ### Failure / recovery
 
-Stale cart, closed/paused Store, unavailable selected mode, unavailable Offer, unserviceable address, invalid recipient data, financial refusal, duplicate confirmation, conflict and unknown cross-owner outcome recover through owner readback/reconciliation without silently creating another Order or changing modes.
+Stale cart, closed/paused Store, unavailable selected mode, unavailable Offer, invalid/expired/exhausted promotion, unserviceable address, invalid recipient data, financial refusal, duplicate confirmation, conflict and unknown cross-owner outcome recover through owner readback/reconciliation without silently creating another Order or changing modes.
 
 ### Negative space
 
@@ -486,7 +487,7 @@ These are materially governed but are not promoted to top-level Journeys merely 
 | ROLE_SESSION_RECOVERY | SUPPORTING_SUBFLOW | `IDENTITY_ACTIVATION_SESSIONS` / Identity | managed-role recovery |
 | OPERATOR_PERMISSION_ADMINISTRATION | POLICY_FLOW | `IDENTITY_ACTIVATION_SESSIONS` / Identity | finite Operator scopes + session invalidation |
 | PLATFORM_POLICY_ADMINISTRATION | POLICY_FLOW | Identity / DSH / WLT by typed policy owner | Operator mutation + prospective affected-surface readback |
-| STORE_SCOPED_DELEGATION | SUPPORTING_SUBFLOW | `STORE_SCOPED_ACCESS_DELEGATION` / DSH + Identity admission | Partner-workspace Store authority |
+| STORE_SCOPED_DELEGATION | SUPPORTING_SUBFLOW | `STORE_SCOPED_ACCESS_DELEGATION` / DSH + Identity admission | phone-resolved Partner-workspace authority for one or more Store scopes; canonical grants remain Store-scoped |
 | STORE_CAPTAIN_MEMBERSHIP | SUPPORTING_SUBFLOW | `STORE_CAPTAIN_MEMBERSHIP` / DSH | accepted Partner-Captain relationship |
 | ADDRESS_MANAGEMENT | SUPPORTING_SUBFLOW | `SERVICEABILITY_ADDRESSES` / DSH | ordering prerequisite |
 | CART_MANAGEMENT | SUPPORTING_SUBFLOW | `CART_CHECKOUT` / DSH | ordering prerequisite |
@@ -519,7 +520,7 @@ These are materially governed but are not promoted to top-level Journeys merely 
 | PARTNER_TO_VISIBLE_STORE | READBACK | DIRECT | — | DIRECT | DIRECT |
 | STORE_ORDERABILITY | DIRECT | DIRECT | — | — | CONDITIONAL |
 | CATALOG_TO_CUSTOMER_OFFER | DIRECT | DIRECT | — | DIRECT | DIRECT |
-| DISCOVERY_TO_COMMERCE_ENTRY | DIRECT | — | — | — | DIRECT |
+| DISCOVERY_TO_COMMERCE_ENTRY | DIRECT | DIRECT | — | — | DIRECT |
 | SINGLE_STORE_ORDER_CREATION | DIRECT | READBACK | — | — | — |
 | BTHWANI_CAPTAIN_DELIVERY | DIRECT | DIRECT | DIRECT | — | — |
 | PARTNER_CAPTAIN_DELIVERY | DIRECT | DIRECT | DIRECT | — | — |
@@ -546,16 +547,16 @@ These are materially governed but are not promoted to top-level Journeys merely 
 | `STORE_CAPTAIN_HANDOFF` | BTHWANI_CAPTAIN_DELIVERY / PARTNER_CAPTAIN_DELIVERY | PRIMARY |
 | `FINAL_MILE_DELIVERY` | BTHWANI_CAPTAIN_DELIVERY / PARTNER_CAPTAIN_DELIVERY | PRIMARY |
 | `ORDER_PAYMENT_COLLECTION` | order / fulfillment / remittance / exception | SUPPORTING FINANCIAL OWNER |
-| `STORE_COMMERCIAL_AGREEMENT` | PARTNER_TO_VISIBLE_STORE | PRIMARY FINANCIAL PREREQUISITE |
+| `STORE_COMMERCIAL_AGREEMENT` | PARTNER_TO_VISIBLE_STORE + durable fulfillment-mode changes | PRIMARY FINANCIAL PREREQUISITE |
 | `CUSTOMER_BALANCE_FUNDING` | CUSTOMER_BALANCE_FUNDING subflow | SUPPORTING_SUBFLOW |
 | `CAPTAIN_BALANCE_FUNDING` | CAPTAIN_BALANCE_FUNDING subflow | SUPPORTING_SUBFLOW |
 | `PARTNER_CAPTAIN_FIELD_EARNINGS_SETTLEMENT` | BENEFICIARY_SETTLEMENT + remittance Journeys | PRIMARY |
 | `CUSTOMER_BALANCE_MANUAL_WITHDRAWAL` | CUSTOMER_MANUAL_WITHDRAWAL subflow | SUPPORTING_SUBFLOW |
 | `STORE_CAPTAIN_MEMBERSHIP` | PARTNER_CAPTAIN_DELIVERY | SUPPORTING |
-| `STORE_SCOPED_ACCESS_DELEGATION` | STORE_SCOPED_DELEGATION subflow | SUPPORTING_SUBFLOW |
+| `STORE_SCOPED_ACCESS_DELEGATION` | STORE_SCOPED_DELEGATION + Partner promotion authorization | SUPPORTING_SUBFLOW |
 | `CUSTOMER_PICKUP` | CUSTOMER_PICKUP | PRIMARY |
 | `ORDER_CONVERSATION` | ORDER_COMMUNICATION | PRIMARY |
-| `COMMERCE_PROMOTIONS` | DISCOVERY_TO_COMMERCE_ENTRY | PRIMARY |
+| `COMMERCE_PROMOTIONS` | DISCOVERY_TO_COMMERCE_ENTRY + SINGLE_STORE_ORDER_CREATION | PRIMARY |
 | `DISCOVERY_CONTENT` | DISCOVERY_TO_COMMERCE_ENTRY | PRIMARY |
 | `MULTI_STORE_CHECKOUT` | MULTI_STORE_ORCHESTRATION | PRIMARY |
 
@@ -568,7 +569,7 @@ These are materially governed but are not promoted to top-level Journeys merely 
 | STORE_ORDERABILITY | — | PRIMARY | — |
 | CATALOG_TO_CUSTOMER_OFFER | — | PRIMARY | — |
 | DISCOVERY_TO_COMMERCE_ENTRY | — | PRIMARY | FUNDED PROMOTION EFFECT |
-| SINGLE_STORE_ORDER_CREATION | — | PRIMARY | PAYMENT/COLLECTION |
+| SINGLE_STORE_ORDER_CREATION | — | PRIMARY | PAYMENT/COLLECTION/PROMOTION FUNDING |
 | BTHWANI_CAPTAIN_DELIVERY | — | FULFILLMENT | COD/COLLECTION/EARNING |
 | PARTNER_CAPTAIN_DELIVERY | — | FULFILLMENT | ORDER COLLECTION WHERE APPLICABLE |
 | CUSTOMER_PICKUP | — | PICKUP | COLLECTION/COMMISSION |
@@ -614,13 +615,16 @@ Every currently material concept must have one explicit disposition. Absence fro
 | Operator finite permissions | Identity | POLICY_FLOW | OPERATOR_PERMISSION_ADMINISTRATION | MAPPED |
 | Typed/versioned platform policies | policy-specific Identity/DSH/WLT owner | POLICY_FLOW | PLATFORM_POLICY_ADMINISTRATION | MAPPED |
 | Partner joining / Store ownership / publication | DSH + Identity role handoff + WLT agreement | TOP_LEVEL_MULTI_SURFACE_JOURNEY | PARTNER_TO_VISIBLE_STORE | MAPPED |
+| Ongoing Partner Store scope after onboarding | DSH Store ownership + accepted Store grants | SUPPORTING_SUBFLOW | STORE_SCOPED_DELEGATION + Store-scoped Journeys | MAPPED |
 | Store-specific Partner commercial terms | WLT; DSH Store context; bound Partner acceptance; Finance approval | FINANCIAL_PUBLICATION_PREREQUISITE | PARTNER_TO_VISIBLE_STORE | MAPPED |
 | Store schedule / pause / temporary mode orderability | DSH | TOP_LEVEL_MULTI_SURFACE_JOURNEY | STORE_ORDERABILITY | MAPPED |
-| Durable Store fulfillment-mode policy | DSH | POLICY_FLOW | PARTNER_TO_VISIBLE_STORE + platform policy administration | MAPPED |
+| Durable Store fulfillment-mode policy | DSH + WLT agreement prerequisite where financially material | POLICY_FLOW | PARTNER_TO_VISIBLE_STORE + STORE_ORDERABILITY | MAPPED |
 | Catalog / variants / identifiers / taxonomy / typed attributes / offers / sections / modifiers | DSH | TOP_LEVEL_MULTI_SURFACE_JOURNEY | CATALOG_TO_CUSTOMER_OFFER | MAPPED |
 | Field initial catalog authority | DSH server-side joining-Store scope until Go-Live | SUPPORTING_SUBFLOW | CATALOG_TO_CUSTOMER_OFFER | MAPPED |
 | Product proposals / import preview / import commit / catalog media relation | DSH | SUPPORTING_SUBFLOW | CATALOG_TO_CUSTOMER_OFFER | MAPPED |
 | Current availability-only inventory semantics | DSH | SUPPORTING_SUBFLOW | CATALOG_TO_CUSTOMER_OFFER + checkout | MAPPED |
+| Store/platform promotion identity, scope and redemption | DSH | TOP_LEVEL_MULTI_SURFACE_JOURNEY | DISCOVERY_TO_COMMERCE_ENTRY | MAPPED |
+| Promotion funding/subsidy and settlement effect | WLT | TOP_LEVEL_MULTI_SURFACE_JOURNEY | DISCOVERY_TO_COMMERCE_ENTRY + SINGLE_STORE_ORDER_CREATION | MAPPED |
 | Serviceability / address | DSH | SUPPORTING_SUBFLOW | SINGLE_STORE_ORDER_CREATION | MAPPED |
 | Single-Store cart / checkout / Store Order | DSH + WLT effect | TOP_LEVEL_MULTI_SURFACE_JOURNEY | SINGLE_STORE_ORDER_CREATION | MAPPED |
 | Different delivery recipient for gifts/family delivery | DSH Order snapshot | SUPPORTING_SUBFLOW | SINGLE_STORE_ORDER_CREATION + final mile | MAPPED |
@@ -657,7 +661,7 @@ Every currently material concept must have one explicit disposition. Absence fro
 | Privacy / security / minimization / retention | DATA/SECURITY policy + owner | POLICY_FLOW | PRIVACY_SECURITY_RETENTION | MAPPED |
 | RTL / accessibility / loading-empty-ready-pending-success-forbidden-offline-conflict-reconciliation-error states | Experience policy | POLICY_FLOW | every participating surface | MAPPED |
 | Search / cache / analytics | derived | PROJECTION | read models | MAPPED |
-| Runtime logging/observability | runtime operations | CROSS_CUTTING_LANE | operational evidence | MAPPED |
+| Runtime logging/observability | runtime operations | CROSS_CUTTING_LANE | operational evidence, not business authority | MAPPED |
 | Prescription-required or specially regulated pharmacy fulfillment | none admitted | EXPLICIT_NON_GOAL | current Product target | MAPPED |
 | Generic returns/exchanges | none admitted | EXPLICIT_NON_GOAL | current Product target | MAPPED |
 | Electronics warranty-claim management | none admitted | EXPLICIT_NON_GOAL | current Product target | MAPPED |
@@ -672,6 +676,7 @@ Every currently material concept must have one explicit disposition. Absence fro
 | Generic analytics Product / standalone notification Product | none admitted | EXPLICIT_NON_GOAL | current Product target | MAPPED |
 | Broad customer-profile/privacy orchestration Product | none admitted | EXPLICIT_NON_GOAL | current Product target | MAPPED |
 | Generic Partner organization/team/tenant system | none admitted | EXPLICIT_NON_GOAL | current Product target | MAPPED |
+| Separate Partner Staff application or sixth Store-staff Identity role | none admitted | EXPLICIT_NON_GOAL | current Product target | MAPPED |
 | ERP/POS replacement | none admitted | EXPLICIT_NON_GOAL | current Product target | MAPPED |
 | Speculative multi-currency breadth | none admitted | EXPLICIT_NON_GOAL | current Product target | MAPPED |
 
