@@ -30,6 +30,15 @@ WLT owns earnings ledger, beneficiary eligibility/holds, payout intent, official
 - payout approval freezes an immutable beneficiary/destination/amount snapshot;
 - external execution evidence is independently verified/reconciled before completion;
 - an approved payout cannot silently follow a later destination change;
+- WLT owns each Store's effective payout-recipient actor assignment and its version, effective time, audit and readiness; the default is the Partner owner, and the owner may explicitly assign one verified eligible staff actor per Store;
+- multiple Stores may share a beneficiary, but each Store assignment remains independently scoped and read back; a multi-Store selection creates individual canonical assignments rather than one global routing fact;
+- recipient eligibility requires a canonical actor with current verified Identity facts, an active eligible relationship to that Store and a current Finance-approved WLT destination/provider;
+- recipient assignment is owner-only and names a beneficiary relationship, never a wallet number, name or destination; delegated finance-read, report, payout-request or Store-management permissions cannot change it;
+- payout-request authority permits only a bounded intent for authorized Store scope; WLT independently enforces eligibility, holds and all approval, execution and reconciliation boundaries;
+- if the assigned staff member's Store relationship is suspended/revoked or ceases to be eligible, the Store's future payout readiness requires owner action; WLT must not silently keep paying that actor or silently fall back to the owner;
+- a verified-phone or Identity change makes the affected destination require Finance reverification before a future payout; it never silently redirects a payout;
+- recipient changes affect only future payout intents that have not been committed to an immutable snapshot; approved, executing, transferred and reconciled payouts retain their original beneficiary, destination and per-Store allocations;
+- aggregated owner readback preserves per-Store attribution; a payout spanning different recipients or destinations is partitioned into separate canonical groups/transfers, never one transfer to multiple recipients;
 - Field earning policy defines the qualifying event explicitly; attribution/publication alone does not silently become the permanent reward law;
 - Store-affiliated Partner Captain compensation and cash custody remain outside this capability and WLT unless a separately governed integration is explicitly admitted;
 - no surface edits ledger balances directly.

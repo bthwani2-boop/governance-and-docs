@@ -40,7 +40,11 @@ One owner action may target several owned Stores, but canonical authority remain
 
 The allowlist may include only currently admitted operational responsibilities, including where implemented: Orders, Catalog/StoreOffer, Store operations, promotions, fulfillment/Store-Captain work and bounded financial read/request intents governed by WLT policy.
 
-Permission bundles such as Store Manager, Order Staff, Catalog Staff, Accountant or Delivery Staff are UX presets over this allowlist. Custom selection, when exposed, remains bounded to the same canonical permissions.
+Permission bundles such as Store Manager, Order Staff, Catalog Staff, Accountant or Delivery Staff are UX presets over this allowlist. Custom selection, when exposed, remains bounded to the same canonical permissions. The user-facing permissions may cover Orders read/manage, Catalog read/manage, Store operations, promotion management, finance read/report, payout-intent request and admitted fulfillment/Store-Captain operations. DSH enforces each grant per Store; WLT independently authorizes financial read and intent against the same Store scope. A payout-intent permission never changes the payout recipient.
+
+The Partner owner alone may assign, change or reconfirm a Store payout recipient. That owner-only routing authority is not a delegable permission and is distinct from the ability to read financial information or request a payout. Team invitation, grant changes, suspension and revocation remain owner-managed in the current scope.
+
+Role presets remain presentation bundles rather than backend authorities. Their normal mappings are bounded: Store Manager receives the admitted operational scopes; Order Staff receives Orders; Catalog Staff receives Catalog and only explicitly granted promotion management; Accountant receives finance read/report and receives payout-intent request only when separately granted; Delivery Staff receives only admitted fulfillment/Orders scopes.
 
 ## Invariants
 
