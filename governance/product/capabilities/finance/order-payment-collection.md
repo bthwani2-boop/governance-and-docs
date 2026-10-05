@@ -39,7 +39,7 @@ WLT owns payment intent, customer payment allocation, collection state, Order-ad
 ## Funded promotions and commission basis
 
 - the Order-bound funded-promotion financial effect is WLT truth: each Order's frozen promotion snapshot (promotion/version, Store scope, discount amount and `PARTNER`/`BTHWANI`/`SHARED` funding allocation) posts one explicit funding/subsidy effect with a stable logical identity;
-- the funding source bears the discount: a `PARTNER`-funded discount reduces Partner sale proceeds, a `BTHWANI`-funded discount records a platform subsidy for the merchant entitlement, and a `SHARED` discount splits the consequence by its exact recorded allocation; a platform-funded discount is a funding source for the merchant entitlement, not an extra copy of product value;
+- the funding source bears the discount: a `PARTNER`-funded discount reduces Partner sale proceeds, a `BTHWANI`-funded discount records a platform subsidy for the merchant entitlement, and a `SHARED` discount splits the consequence by its exact recorded allocation;
 - product value — the Partner commission calculation basis — is the pre-discount value of the Order's confirmed line items at their frozen StoreOffer prices; funded discounts are carried by their recorded funding source and never silently change the commission basis or rate;
 - refund/adjustment deltas reverse funded-promotion effects from the frozen transaction evidence, never from current promotion state (eligibility and authoring are owned by `COMMERCE_PROMOTIONS`);
 - customer payment allocation covers the resulting discounted payable.

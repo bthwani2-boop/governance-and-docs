@@ -27,6 +27,7 @@ governance/
 ├── platform/PLATFORM.md
 ├── product/
 │   ├── PRODUCT.md
+│   ├── CAPABILITIES.md
 │   ├── JOURNEYS.md
 │   └── capabilities/**
 ├── system/SYSTEM.md

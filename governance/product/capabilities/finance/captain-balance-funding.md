@@ -47,4 +47,4 @@ available_exposure
 
 ## Failure and recovery
 
-Duplicate/replayed event, timeout, unknown result, provider reversal, mismatched amount/reference and delayed confirmation reconcile before another credit is possible. WLT canonical readback resolves whether the Captain balance was credited.
+A duplicate or replayed provider event, timeout, unknown result, reversal, or an amount/reference mismatch with delayed confirmation is reconciled before another Captain balance credit is possible. WLT canonical readback resolves whether the Captain balance was credited.

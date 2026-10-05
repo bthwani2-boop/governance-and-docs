@@ -293,6 +293,263 @@ for (const file of liveKnowledge) {
   for (const token of stalePathTokens) if (body.includes(token)) fail(`${relative} retains retired live path: ${token}`);
 }
 
+// ===== Refoundation hardening: relational and forbidden-state checks =====
+// These checks pin mechanically detectable classes of semantic drift that the
+// structural checks above cannot see. They prove relationships, not truth.
+
+// GAP 4a — canonical surface-term alias guard (PLATFORM.md owns the surface set).
+for (const file of [...governanceFiles, path.join(root, "AGENTS.md")]) {
+  if (!fs.existsSync(file)) continue;
+  const body = fs.readFileSync(file, "utf8");
+  if (/\bControl Panel\b/.test(body)) fail(`${rel(file)} uses retired surface alias "Control Panel" (canonical: Operator)`);
+}
+
+// GAP 4b — competitor-cache REFERENCE_CLASS stem rule.
+for (const file of referenceFiles) {
+  const relative = rel(file);
+  if (!relative.startsWith("docs/reference/competitors/")) continue;
+  const stem = path.basename(relative, ".md");
+  if (stem === "README") continue;
+  const body = fs.readFileSync(file, "utf8");
+  const expected = `CACHED_COMPETITOR_OBSERVATION_${stem.replace(/-/g, "_").toUpperCase()}`;
+  const declared = body.match(/^REFERENCE_CLASS:\s*(\S+)\s*$/m)?.[1];
+  if (declared && declared !== expected) fail(`${relative} REFERENCE_CLASS must be ${expected} (found ${declared})`);
+}
+
+// GAP 8a — GOVERNANCE.md canonical owner tree must match the filesystem.
+{
+  const govIndex = read("governance/GOVERNANCE.md");
+  const treeBlock = govIndex.match(/## Canonical owner tree\s*\n```text\n([\s\S]*?)```/)?.[1] ?? "";
+  const treeSet = new Set();
+  const stack = [];
+  for (const line of treeBlock.split("\n")) {
+    const branchIdx = Math.max(line.indexOf("├"), line.indexOf("└"));
+    if (branchIdx < 0) continue;
+    const depth = Math.floor(branchIdx / 4);
+    const name = line.slice(branchIdx + 4).trim();
+    stack.length = depth;
+    if (name.endsWith("/")) {
+      stack.length = depth;
+      stack.push(name.slice(0, -1));
+      continue;
+    }
+    if (name === "capabilities/**") {
+      for (const p of capabilityFiles) treeSet.add(rel(p));
+      continue;
+    }
+    if (name.endsWith(".md")) treeSet.add(["governance", ...stack.slice(0, depth), name].join("/"));
+  }
+  const actual = new Set(governanceFiles.map(rel).filter((p) => p !== "governance/GOVERNANCE.md"));
+  for (const p of treeSet) if (!actual.has(p)) fail(`GOVERNANCE.md owner tree lists a file that does not exist: ${p}`);
+  for (const p of actual) if (!treeSet.has(p)) fail(`governance file is absent from the GOVERNANCE.md owner tree: ${p}`);
+}
+
+// GAP 9 — every governance/docs path reference resolves on disk.
+{
+  const referencing = [...governanceFiles, ...docsFiles, path.join(root, "AGENTS.md"), path.join(root, "README.md"), path.join(root, "GOVERNANCE-STANDARDS.md")].filter(fs.existsSync);
+  for (const file of referencing) {
+    const relative = rel(file);
+    const body = fs.readFileSync(file, "utf8");
+    for (const match of body.matchAll(/(?:governance|docs)\/[A-Za-z0-9\/_.\-]+\.md/g)) {
+      if (!exists(match[0])) fail(`${relative} references a non-existent knowledge path: ${match[0]}`);
+    }
+  }
+}
+
+// Subflow IDs (reused by census/matrix resolution checks).
+const subflowIds = new Set(
+  [...journeys.matchAll(/^\|\s*([A-Z][A-Z0-9_]+)\s*\|/gm)].map((m) => m[1]),
+);
+const resolvableIds = new Set([...seenJourneyIds, ...subflowIds]);
+
+// GAP 2 — Platform material census row contract.
+{
+  const allowedDispositions = new Set([
+    "TOP_LEVEL_MULTI_SURFACE_JOURNEY",
+    "SUPPORTING_SUBFLOW",
+    "CROSS_CUTTING_LANE",
+    "POLICY_FLOW",
+    "PROJECTION",
+    "FINANCIAL_PUBLICATION_PREREQUISITE",
+    "EXPLICIT_NON_GOAL",
+  ]);
+  const seenConcepts = new Set();
+  for (const row of censusRows) {
+    const cells = row.trim().replace(/^\|/, "").replace(/\|$/, "").split("|").map((c) => c.trim());
+    if (cells.length !== 5) {
+      fail(`Platform material census row must have exactly 5 cells: ${row.trim()}`);
+      continue;
+    }
+    const [concept, , disposition, placement, status] = cells;
+    if (seenConcepts.has(concept)) fail(`duplicate Platform material census concept: ${concept}`);
+    seenConcepts.add(concept);
+    if (!allowedDispositions.has(disposition)) fail(`census row has invalid disposition "${disposition}": ${concept}`);
+    if (status !== "MAPPED") fail(`census row is not closed as MAPPED: ${concept}`);
+    for (const token of placement.match(/[A-Z][A-Z0-9]*_[A-Z0-9_]+/g) ?? []) {
+      if (!resolvableIds.has(token)) fail(`census placement token does not resolve to a Journey or subflow ID: ${token} (row: ${concept})`);
+    }
+  }
+}
+
+// GAP 3 — Journey × Surface and Journey × Canonical Owner matrix consistency.
+{
+  const declaredSurfaces = new Map();
+  const declaredOwners = new Map();
+  for (const section of journeySections) {
+    const body = section[2];
+    const surfaces = (body.match(/^SURFACES:\s*(.+)$/m)?.[1] ?? "").split(",").map((v) => v.trim());
+    const owners = (body.match(/^OWNERS:\s*(.+)$/m)?.[1] ?? "").split(",").map((v) => v.trim());
+    declaredSurfaces.set(section[1], new Set(surfaces));
+    declaredOwners.set(section[1], new Set(owners));
+  }
+  const parseMatrix = (heading, columns) => {
+    const block = journeys.match(new RegExp(`## Matrix — ${heading}([\\s\\S]*?)(?=\\n## |$)`))?.[1] ?? "";
+    const rows = new Map();
+    for (const line of block.split("\n")) {
+      const cells = line.trim().replace(/^\|/, "").replace(/\|$/, "").split("|").map((c) => c.trim());
+      if (cells.length !== columns.length + 1) continue;
+      const [journey, ...values] = cells;
+      if (!/^[A-Z][A-Z0-9_]+$/.test(journey)) continue;
+      rows.set(journey, values);
+    }
+    return { rows, columns };
+  };
+  const surfaceMatrix = parseMatrix("Journey × Surface", ["CLIENT", "PARTNER", "CAPTAIN", "FIELD", "OPERATOR"]);
+  for (const [journey, values] of surfaceMatrix.rows) {
+    const marked = new Set(surfaceMatrix.columns.filter((_, i) => values[i] !== "—"));
+    const declared = declaredSurfaces.get(journey) ?? new Set();
+    for (const s of marked) if (!declared.has(s)) fail(`Journey × Surface matrix marks ${s} for ${journey} but SURFACES does not declare it`);
+    for (const s of declared) if (!marked.has(s)) fail(`Journey ${journey} declares surface ${s} but the Journey × Surface matrix does not mark it`);
+  }
+  for (const [id, declared] of declaredSurfaces) if (!surfaceMatrix.rows.has(id)) fail(`Journey ${id} missing from Journey × Surface matrix`);
+
+  const ownerMatrix = parseMatrix("Journey × Canonical Owner", ["IDENTITY", "DSH", "WLT"]);
+  for (const [journey, values] of ownerMatrix.rows) {
+    const marked = new Set(ownerMatrix.columns.filter((_, i) => values[i] !== "—"));
+    const declared = declaredOwners.get(journey) ?? new Set();
+    for (const o of marked) if (!declared.has(o)) fail(`Journey × Canonical Owner matrix marks ${o} for ${journey} but OWNERS does not declare it`);
+    for (const o of declared) if (!marked.has(o)) fail(`Journey ${journey} declares owner ${o} but the Journey × Canonical Owner matrix does not mark it`);
+  }
+  for (const [id, declared] of declaredOwners) if (!ownerMatrix.rows.has(id)) fail(`Journey ${id} missing from Journey × Canonical Owner matrix`);
+}
+
+// GAP 1 — capability-participation matrix journey tokens must resolve.
+{
+  for (const line of capabilityMatrix.split("\n")) {
+    const cells = line.trim().replace(/^\|/, "").replace(/\|$/, "").split("|").map((c) => c.trim());
+    if (cells.length !== 3) continue;
+    const id = cells[0].replace(/`/g, "");
+    if (!capabilityIds.has(id)) continue;
+    for (const token of cells[1].match(/[A-Z][A-Z0-9]*_[A-Z0-9_]+/g) ?? []) {
+      if (!resolvableIds.has(token)) fail(`capability participation matrix token does not resolve to a Journey or subflow ID: ${token} (capability: ${id})`);
+    }
+  }
+}
+
+// GAP 5 — policy placement guard: policy files own cross-cutting invariants only.
+{
+  const productFiles = collect(path.join(root, "governance/product")).filter((p) => p.endsWith(".md"));
+  const ownedVocabulary = new Set();
+  for (const file of [...productFiles, path.join(root, "governance/system/SYSTEM.md"), path.join(root, "governance/platform/PLATFORM.md")]) {
+    const body = fs.readFileSync(file, "utf8");
+    for (const m of body.matchAll(/`([A-Z][A-Z0-9]*_[A-Z0-9_]+)`/g)) ownedVocabulary.add(m[1]);
+  }
+  const policyEnums = new Set(["GOVERNANCE_IMPACT", "QUALITY_DIMENSION", "NOT_CHECKED"]);
+  for (const file of collect(path.join(root, "governance/policy")).filter((p) => p.endsWith(".md"))) {
+    const relative = rel(file);
+    const body = fs.readFileSync(file, "utf8");
+    const classes = [...body.matchAll(/^ARTIFACT_CLASS:\s*(\S+)\s*$/gm)].map((m) => m[1]);
+    if (classes.length !== 1 || classes[0] !== "DURABLE_CROSS_CUTTING_POLICY") fail(`${relative} must declare exactly one ARTIFACT_CLASS: DURABLE_CROSS_CUTTING_POLICY`);
+    if (/\bcapabilit(?:y|ies)\b[^.\n]*\b(?:is|are)\s+(?:currently\s+)?admitted\b/i.test(body)) fail(`${relative} declares capability admission state; admission belongs to PRODUCT.md/capability owners`);
+    if (/\bnot enabled by this admission\b/i.test(body)) fail(`${relative} declares admission scope; admission belongs to capability owners`);
+    for (const m of body.matchAll(/`([A-Z][A-Z0-9]*_[A-Z0-9_]+)`/g)) {
+      const token = m[1];
+      if (capabilityIds.has(token) || ownedVocabulary.has(token) || policyEnums.has(token)) continue;
+      fail(`${relative} uses backticked token not owned by any capability/product/system/platform owner: ${token}`);
+    }
+  }
+}
+
+// GAP 6 — duplicate-invariant shingle detector (one-source law evidence).
+// Structural metadata (headers, field labels) is excluded; only durable prose counts.
+{
+  const shingleSize = 12;
+  const shingles = new Map();
+  for (const file of [...governanceFiles, path.join(root, "AGENTS.md")]) {
+    if (!fs.existsSync(file)) continue;
+    const relative = rel(file);
+    let body = fs.readFileSync(file, "utf8");
+    body = body.replace(/```[\s\S]*?```/g, "\n");
+    const firstSection = body.indexOf("\n## ");
+    if (firstSection >= 0) body = body.slice(firstSection);
+    body = body.split("\n").filter((line) => !/^[A-Z][A-Z_]+:\s/.test(line)).join("\n");
+    const words = body.toLowerCase().replace(/[^\p{L}\p{N}\s]/gu, " ").split(/\s+/).filter(Boolean);
+    for (let i = 0; i + shingleSize <= words.length; i++) {
+      const shingle = words.slice(i, i + shingleSize).join(" ");
+      if (!shingles.has(shingle)) shingles.set(shingle, new Set());
+      shingles.get(shingle).add(relative);
+    }
+  }
+  for (const [shingle, ownersSet] of shingles) {
+    if (ownersSet.size >= 2) fail(`duplicate durable-invariant shingle across ${[...ownersSet].join(" + ")}: "${shingle}"`);
+  }
+}
+
+// GAP 10 — user-visible state vocabulary single source.
+{
+  const acceptance = journeys.match(/## Journey acceptance law([\s\S]*?)(?=\n## |$)/)?.[1] ?? "";
+  const journeyStates = [...acceptance.matchAll(/`([a-z_]+)`/g)].map((m) => m[1]);
+  const experience = read("governance/policy/EXPERIENCE.md");
+  const vocabSentence = experience.match(/canonical user-visible state vocabulary[^\n]*/)?.[0] ?? "";
+  for (const state of journeyStates) {
+    if (!vocabSentence.includes(state)) fail(`JOURNEYS acceptance-law state \`${state}\` is not part of the canonical EXPERIENCE.md state vocabulary`);
+  }
+}
+
+// GAP 11 — competitor-cache structural contract.
+{
+  const gitignore = read(".gitignore");
+  for (const file of referenceFiles) {
+    const relative = rel(file);
+    if (!relative.startsWith("docs/reference/competitors/")) continue;
+    const stem = path.basename(relative, ".md");
+    if (stem === "README") continue;
+    const body = fs.readFileSync(file, "utf8");
+    for (const token of ["## Mandatory black-box review method", "CANONICAL_FILE_FOR_THIS_APP: YES", "PARALLEL_REPORTS_ALLOWED: NO"]) {
+      if (!body.includes(token)) fail(`${relative} missing competitor-cache contract element: ${token}`);
+    }
+    if (!/^\s*-\s*Priority:\s/m.test(body) || !/^\s*-\s*Role:\s/m.test(body)) fail(`${relative} missing Priority/Role identity fields`);
+    if (!gitignore.includes(`/docs/reference/competitors/local-photos/${stem}/`)) fail(`.gitignore missing local-photos boundary for ${stem}`);
+  }
+}
+
+// GAP 7 + GAP 12 — closure-token sync, workflow content, meta-standard neutrality.
+{
+  const agents = read("AGENTS.md");
+  const agentTokens = [...agents.matchAll(/^`?([A-Z][A-Z0-9_]+)=(?:0|1)`?$/gm)].map((m) => m[1]);
+  if (new Set(agentTokens).size !== agentTokens.length) fail("AGENTS.md closure block contains duplicate tokens");
+  const template = read(".github/pull_request_template.md");
+  const templateTokens = [...template.matchAll(/^`?([A-Z][A-Z0-9_]+)=(?:0|1)`?$/gm)].map((m) => m[1]);
+  for (const token of templateTokens) if (!agentTokens.includes(token)) fail(`pull request template closure token is not canonical AGENTS.md law: ${token}`);
+  for (const token of agentTokens) if (!templateTokens.includes(token)) fail(`AGENTS.md closure token missing from pull request template: ${token}`);
+
+  const integrityWorkflow = read(".github/workflows/knowledge-integrity.yml");
+  if (!integrityWorkflow.includes("node tools/verify-knowledge.mjs")) fail("knowledge-integrity.yml no longer runs the verifier");
+  if (!/push:\s*\n\s*branches:\s*\[main\]/.test(integrityWorkflow) || !/pull_request:\s*\n\s*branches:\s*\[main\]/.test(integrityWorkflow)) fail("knowledge-integrity.yml must trigger on push and pull_request to main");
+  if (!/ref:\s*\$\{\{ github\.event\.pull_request\.head\.sha \|\| github\.sha \}\}/.test(integrityWorkflow)) fail("knowledge-integrity.yml must verify the exact candidate SHA");
+
+  const prPolicy = read(".github/workflows/governance-pr-policy.yml");
+  for (const token of agentTokens) {
+    if (!prPolicy.includes(token)) fail(`governance-pr-policy.yml does not enforce canonical closure token: ${token}`);
+  }
+  for (const heading of ["## Summary", "## Exact candidate and material question", "## Governance impact", "## Material quality scope", "## Evidence and freshness", "## Verification", "## Negative space and consumer impact"]) {
+    if (!prPolicy.includes(heading)) fail(`governance-pr-policy.yml does not enforce template heading: ${heading}`);
+  }
+
+  const standards = read("GOVERNANCE-STANDARDS.md");
+  if (/\b(?:BThwani|WLT|DSH|YER|Yemen)\b/.test(standards)) fail("GOVERNANCE-STANDARDS.md must remain project-neutral (BThwani-specific semantics leaked in)");
+}
+
 if (failures.length) {
   console.error("KNOWLEDGE_STRUCTURE_INTEGRITY=FAIL");
   for (const failure of [...new Set(failures)].sort()) console.error(`  ${failure}`);

@@ -63,7 +63,7 @@ Changing a Store payout recipient is not an ordinary delegated permission. Under
 - Partner role/session and DSH Store authorization are both required; possession of either one alone is insufficient;
 - a delegated actor cannot cross Store scope or mutate another owner's facts;
 - aggregate or multi-Store views never weaken object-level Store authorization;
-- financial read, payout-request intent, Store payout-recipient routing, Finance approval, execution and reconciliation are distinct authorities;
+- delegated `finance_read`/`payout_request` permissions never imply payout-routing, Finance approval, execution or reconciliation authority; the payout authority-separation law is owned by `PARTNER_CAPTAIN_FIELD_EARNINGS_SETTLEMENT`;
 - financial request, approval, execution and reconciliation remain subject to WLT policy and cannot be bypassed by a Store grant;
 - revocation/suspension stops future access without rewriting historical actions;
 - if a revoked/suspended staff actor is a current payout beneficiary for any Store, access revocation does not silently reroute future payouts; the effective-beneficiary revocation law owned by `PARTNER_CAPTAIN_FIELD_EARNINGS_SETTLEMENT` governs the required owner action;

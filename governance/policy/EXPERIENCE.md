@@ -94,7 +94,7 @@ Touch targets, focus order, keyboard reachability, gesture behavior and safe-are
 
 ## State, feedback, recovery and truth
 
-The canonical user-visible state vocabulary is owned by this policy: loading, empty, no-results, forbidden, conflict, offline, error, unknown, busy, disabled, selected, validation and recovery states are materially distinct when the capability exposes them.
+The canonical user-visible state vocabulary is owned by this policy: loading, empty, no-results, ready, pending, success, forbidden, conflict, offline, error, unknown, busy, disabled, selected, validation, reconciliation_required and recovery states are materially distinct when the capability exposes them.
 
 A surface accounts for every applicable user-visible state and transition rather than implementing only the happy path. Missing applicable states are incomplete implementation, not future polish.
 
