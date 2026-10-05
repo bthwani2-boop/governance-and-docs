@@ -30,7 +30,7 @@ WLT owns earnings ledger, beneficiary eligibility/holds, payout intent, official
 - payout approval freezes an immutable beneficiary/destination/amount snapshot;
 - external execution evidence is independently verified/reconciled before completion;
 - an approved payout cannot silently follow a later destination change;
-- WLT owns each Store's effective payout-recipient actor assignment and its version, effective time, audit and readiness; the default is the Partner owner, and the owner may explicitly assign one verified eligible staff actor per Store;
+- WLT owns each Store's effective payout-recipient actor assignment and its version, effective time, audit and readiness; the default is the Partner owner, and the owner may explicitly assign one verified eligible owner or staff actor per Store;
 - multiple Stores may share a beneficiary, but each Store assignment remains independently scoped and read back; a multi-Store selection creates individual canonical assignments rather than one global routing fact;
 - recipient eligibility requires a canonical actor with current verified Identity facts, an active eligible relationship to that Store and a current Finance-approved WLT destination/provider;
 - recipient assignment is owner-only and names a beneficiary relationship, never a wallet number, name or destination; delegated finance-read, report, payout-request or Store-management permissions cannot change it;
@@ -43,6 +43,18 @@ WLT owns earnings ledger, beneficiary eligibility/holds, payout intent, official
 - Store-affiliated Partner Captain compensation and cash custody remain outside this capability and WLT unless a separately governed integration is explicitly admitted;
 - no surface edits ledger balances directly.
 
+## Minimal recipient-assignment state semantics
+
+The exact executable representation belongs to implementation, but current durable meaning must distinguish at least:
+
+```text
+DEFAULT_OWNER
+SELECTED_VERIFIED_STAFF
+RECIPIENT_REVIEW_REQUIRED
+```
+
+`DEFAULT_OWNER` routes future unpinned payout intents to the Partner owner without requiring an explicit assignment record. `SELECTED_VERIFIED_STAFF` records an owner-assigned eligible staff beneficiary. `RECIPIENT_REVIEW_REQUIRED` marks a Store whose recipient eligibility is broken (for example a suspended, revoked or otherwise ineligible staff relationship); future payout readiness for that Store stays blocked until the owner selects or explicitly reconfirms a legal recipient. Assignments enter `RECIPIENT_REVIEW_REQUIRED` fail-closed from canonical eligibility facts; every other transition is owner-initiated, versioned and audited. No transition rewrites a committed payout snapshot.
+
 ## Failure and recovery
 
-Insufficient eligible amount, destination verification failure, duplicate payout, execution timeout/unknown, missing receipt, statement mismatch, duplicate statement import and reconciliation exception remain explicit and recover through WLT canonical readback.
+Insufficient eligible amount, destination verification failure, duplicate payout, execution timeout/unknown, missing receipt, statement mismatch, duplicate statement import and reconciliation exception remain explicit and recover through WLT canonical readback. A Store entering `RECIPIENT_REVIEW_REQUIRED` does not mutate in-flight payouts; it blocks only future payout readiness until explicit owner action.
