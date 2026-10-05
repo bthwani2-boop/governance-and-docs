@@ -35,6 +35,8 @@ WLT
 → all internal financial truth
 → payment intent / customer payment allocation
 → internal customer balance / funding
+→ internal Captain balance / funding
+→ promotion discount funding/subsidy and funded-promotion settlement effect
 → COD exposure / risk holds
 → cash receivable / remittance
 → fees / commissions / earnings

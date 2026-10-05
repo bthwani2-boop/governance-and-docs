@@ -23,6 +23,8 @@ The actor-facing surfaces are exactly `CLIENT`, `PARTNER`, `CAPTAIN`, `FIELD` an
 
 Authentication/session is a prerequisite lane except where role admission is itself the Journey outcome. A surface is listed in `SURFACES` only when it materially participates in the Journey outcome; a merely possible exception or contextual target does not count. Single-surface or owner-internal work remains a supporting subflow, policy/control lane, projection or explicit non-goal.
 
+OWNERS lists every canonical owner materially crossed by the Journey, including qualifying-evidence providers; the Journey × Canonical Owner matrix marks the primary writer.
+
 ## MANAGED_PARTICIPANT_ADMISSION — admitted managed actor becomes usable
 
 JOURNEY_ID: MANAGED_PARTICIPANT_ADMISSION
@@ -78,11 +80,11 @@ PARTNER → confirm/correct canonical onboarding data
 DSH → Store ownership + Service City + Commerce Vertical + Store Type + durable fulfillment-mode admission
 WLT/Field → Store-specific agreement proposal under `STORE_COMMERCIAL_AGREEMENT` proposer law
 PARTNER → accept exact agreement version and rates
-FINANCE → approve; WLT activates only after both gates
+OPERATOR (Finance-authorized) → approve; WLT activates only after both gates
 FIELD → authorized initial catalog work for the bound joining Store
 OPERATOR → final readiness and publication approval
 DSH → Store publication
-DSH → idempotent Partner Go-Live/catalog handoff and Field mission-complete notification from publication readback
+DSH → idempotent Partner Go-Live/catalog handoff and Field assignment-complete notification from publication readback
 CLIENT → customer-safe Store projection
 ```
 
@@ -114,7 +116,7 @@ PARTNER → weekly schedule / temporary pause / resume / allowed temporary mode 
 OPERATOR → bounded authorized operational intervention when required
 DSH → validate + version + derive Store/mode orderability
 CLIENT → open / closed / paused / unavailable readback
-CHECKOUT → revalidate the same DSH result before Order creation
+DSH checkout boundary → revalidate the same orderability result before Order creation
 ```
 
 ### Failure / recovery
@@ -172,6 +174,7 @@ READBACK: Publication/eligibility is DSH-backed and funded promotion effect is W
 
 ```text
 EDITORIAL: OPERATOR → Discovery Content → DSH publication → CLIENT target
+DSH → validate catalog/Store target and scope eligibility
 PLATFORM COMMERCIAL: OPERATOR → Platform Campaign → eligible PARTNER opt-in where required → DSH eligibility → WLT funding effect → CLIENT application
 STORE COMMERCIAL: PARTNER owner/authorized Store delegate → Store Promotion → DSH Store/catalog eligibility → WLT funding effect when applicable → CLIENT application
 ```
@@ -321,7 +324,7 @@ JOURNEY_ID: MULTI_STORE_ORCHESTRATION
 OUTCOME: One Client parent checkout coordinates independent Store Orders without erasing each Store's fulfillment, payment, exception or completion truth.
 SURFACES: CLIENT, PARTNER, CAPTAIN
 OWNERS: DSH, WLT
-CAPABILITIES: MULTI_STORE_CHECKOUT, CART_CHECKOUT, ORDER_LIFECYCLE, ORDER_PAYMENT_COLLECTION, CAPTAIN_DISPATCH, STORE_CAPTAIN_MEMBERSHIP, CUSTOMER_PICKUP
+CAPABILITIES: MULTI_STORE_CHECKOUT, CART_CHECKOUT, ORDER_LIFECYCLE, ORDER_PAYMENT_COLLECTION, CAPTAIN_DISPATCH, STORE_CAPTAIN_MEMBERSHIP, CUSTOMER_PICKUP, STORE_CAPTAIN_HANDOFF, FINAL_MILE_DELIVERY
 ENTRY: Client confirms a parent intent containing eligible carts for multiple Stores.
 EXIT: Each child Store Order has an independent result and parent orchestration exposes canonical aggregate readback.
 READBACK: Client sees parent + child results; each Partner/Captain sees only authorized child work.
@@ -460,7 +463,7 @@ READBACK: Beneficiary surface and Finance read canonical WLT settlement state; P
 ```text
 DSH qualifying event / Store ownership relationship
 → WLT entitlement and Store-attributed economic allocation
-→ PARTNER OWNER selects owner-default or eligible verified staff beneficiary for future unpinned Store settlement
+→ PARTNER (Store owner) selects owner-default or eligible verified staff beneficiary for future unpinned Store settlement
 → WLT resolves Finance-verified official destination from canonical Identity facts
 → WLT groups only same-beneficiary/destination allocations and separates different beneficiaries
 → OPERATOR Finance preparation + approval + execution evidence
@@ -482,7 +485,9 @@ Store-affiliated Captain remuneration remains outside BThwani WLT earnings seman
 
 ## Supporting subflows and cross-cutting lanes
 
-These are materially governed but are not promoted to top-level Journeys merely to satisfy coverage:
+These are materially governed but are not promoted to top-level Journeys merely to satisfy coverage.
+
+Typed/versioned platform policies are each owned by their canonical policy/capability owner (see `governance/GOVERNANCE.md` placement law); this flow routes Operator mutation to that owner.
 
 | ID | Disposition | Capability / owner | Participation |
 |---|---|---|---|
@@ -490,7 +495,7 @@ These are materially governed but are not promoted to top-level Journeys merely 
 | OPERATOR_BOOTSTRAP_SESSION | SUPPORTING_SUBFLOW | `IDENTITY_ACTIVATION_SESSIONS` / Identity | Operator access prerequisite |
 | ROLE_SESSION_RECOVERY | SUPPORTING_SUBFLOW | `IDENTITY_ACTIVATION_SESSIONS` / Identity | managed-role recovery |
 | OPERATOR_PERMISSION_ADMINISTRATION | POLICY_FLOW | `IDENTITY_ACTIVATION_SESSIONS` / Identity | finite Operator scopes + session invalidation |
-| PLATFORM_POLICY_ADMINISTRATION | POLICY_FLOW | Identity / DSH / WLT by typed policy owner | Operator mutation + prospective affected-surface readback |
+| PLATFORM_POLICY_ADMINISTRATION | POLICY_FLOW | typed policy owner per `governance/policy/*` and the owning capability | Operator mutation + prospective affected-surface readback |
 | STORE_SCOPED_DELEGATION | SUPPORTING_SUBFLOW | `STORE_SCOPED_ACCESS_DELEGATION` / DSH + Identity admission | phone-resolved Partner-workspace authority for one or more Store scopes; canonical grants remain Store-scoped |
 | STORE_CAPTAIN_MEMBERSHIP | SUPPORTING_SUBFLOW | `STORE_CAPTAIN_MEMBERSHIP` / DSH | accepted Partner-Captain relationship |
 | ADDRESS_MANAGEMENT | SUPPORTING_SUBFLOW | `SERVICEABILITY_ADDRESSES` / DSH | ordering prerequisite |
@@ -617,7 +622,7 @@ Every currently material concept must have one explicit disposition. Absence fro
 | Client registration/session/recovery | Identity | SUPPORTING_SUBFLOW | CLIENT_REGISTRATION_SESSION | MAPPED |
 | Operator bootstrap/session/recovery | Identity | SUPPORTING_SUBFLOW | OPERATOR_BOOTSTRAP_SESSION | MAPPED |
 | Operator finite permissions | Identity | POLICY_FLOW | OPERATOR_PERMISSION_ADMINISTRATION | MAPPED |
-| Typed/versioned platform policies | policy-specific Identity/DSH/WLT owner | POLICY_FLOW | PLATFORM_POLICY_ADMINISTRATION | MAPPED |
+| Typed/versioned platform policies | canonical owner per `governance/policy/*` / owning capability | POLICY_FLOW | PLATFORM_POLICY_ADMINISTRATION | MAPPED |
 | Partner joining / Store ownership / publication | DSH + Identity role handoff + WLT agreement | TOP_LEVEL_MULTI_SURFACE_JOURNEY | PARTNER_TO_VISIBLE_STORE | MAPPED |
 | Ongoing Partner Store scope after onboarding | DSH Store ownership + accepted Store grants | SUPPORTING_SUBFLOW | STORE_SCOPED_DELEGATION + Store-scoped Journeys | MAPPED |
 | Store-specific Partner commercial terms | WLT; DSH Store context; bound Partner acceptance; Finance approval | FINANCIAL_PUBLICATION_PREREQUISITE | PARTNER_TO_VISIBLE_STORE | MAPPED |
