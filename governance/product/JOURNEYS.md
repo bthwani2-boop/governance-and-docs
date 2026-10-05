@@ -461,7 +461,9 @@ READBACK: Beneficiary surface and Finance read canonical WLT settlement state.
 DSH qualifying event
 → WLT entitlement / eligibility / hold
 → for the first qualifying `STORE_CLIENT_VISIBLE` Store only, WLT records exactly one Field acquisition earning per joining case
+→ PARTNER owner optionally assigns one eligible beneficiary to each Store; WLT records separate Store-scoped recipient assignments and resolves the beneficiary's verified destination
 → OPERATOR Finance preparation + approval + execution evidence
+→ WLT preserves Store attribution and partitions payout groups by effective recipient and verified destination
 → independent reconciliation
 → WLT completion
 → PARTNER / CAPTAIN / FIELD readback
