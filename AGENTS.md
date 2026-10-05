@@ -79,19 +79,7 @@ Research stops when additional evidence can no longer materially change the curr
 
 ## 4. Evidence council
 
-For a material question, consider these evidence lanes for applicability:
-
-```text
-LIVE BTHWANI
-CURRENT GOVERNANCE
-DONOR / HISTORY
-OSS / PRODUCT EXEMPLARS
-YEMEN-MARKET / COMPETITOR EVIDENCE
-PRIMARY TECHNOLOGY SOURCES
-NORMATIVE / ASSURANCE SOURCES
-EXPERIENCE / DESIGN SOURCES
-CURRENT ECOSYSTEM / TOOLING DISCOVERY
-```
+For a material question, applicable evidence lanes are selected and weighted under the evidence-routing law owned by `governance/policy/KNOWLEDGE.md`.
 
 Inspect a lane when it can materially change the decision. Do not repeatedly reopen an already-proven reusable decision without new disconfirming evidence or changed constraints.
 
@@ -143,13 +131,9 @@ A new file, owner, policy, capability, registry, verifier or abstraction must pr
 
 ## 7. External change and technology evolution
 
-Mutable external facts are revalidated at actual use.
-
 When a materially affected technology, platform, provider or tooling boundary is extended or refounded, inspect current primary sources for stable capabilities, deprecations, security/reliability changes or simpler mechanisms that can materially alter the solution.
 
-Newer is not automatically better. Adoption is a decision, not a discovery result. Evaluate current need, maturity/status, compatibility, regression evidence, security/license/provenance, operational cost, migration/rollback, complexity removed and claim-specific proof. Pre-release novelty does not enter the canonical baseline merely because it is newer.
-
-Do not create a permanent market, dependency or technology-news inventory in Governance.
+Newer is not automatically better. Adoption is a decision, not a discovery result; candidate evaluation criteria and outcome law are owned by `governance/policy/KNOWLEDGE.md`. Pre-release novelty does not enter the canonical baseline merely because it is newer.
 
 ## 8. Verifier law
 
@@ -164,8 +148,6 @@ Do not encode semantic correctness as brittle prose matching. Exact wording is p
 A consuming repository binds Governance through one exact immutable full commit SHA.
 
 A moving Governance `main` never silently changes a pinned implementation state. Repin only when the authorized outcome needs the newer durable meaning, and migrate affected consumers/verifiers in the same coherent cutover.
-
-The pin is provenance, not a second knowledge registry.
 
 ## 10. Current-material closure
 

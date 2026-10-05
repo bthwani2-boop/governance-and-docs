@@ -12,7 +12,7 @@ Authorized platform or Partner Store promotions change customer commercial eligi
 
 ## Ownership
 
-DSH owns promotion identity, author, eligibility, Store/catalog scope, lifecycle, limits, redemption and application to commerce. WLT owns discount funding, subsidy, merchant economic effects and reconciliation. Operator may author platform campaigns. An authorized Partner owner or Store-scoped delegate may author Store promotions only for Stores DSH authorizes.
+DSH owns promotion identity, author, eligibility, Store/catalog scope, lifecycle, limits, redemption and application to commerce. WLT owns the Order-bound funded-promotion financial effect and funding-source consequence through `ORDER_PAYMENT_COLLECTION`. Operator may author platform campaigns. An authorized Partner owner or Store-scoped delegate may author Store promotions only for Stores DSH authorizes.
 
 ## Current admitted forms
 

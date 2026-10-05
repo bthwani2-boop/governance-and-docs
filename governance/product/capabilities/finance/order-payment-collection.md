@@ -36,6 +36,14 @@ WLT owns payment intent, customer payment allocation, collection state, Order-ad
 - ambiguous distributed/provider outcomes remain explicit until reconciled;
 - no surface or DSH projection becomes payment truth.
 
+## Funded promotions and commission basis
+
+- the Order-bound funded-promotion financial effect is WLT truth: each Order's frozen promotion snapshot (promotion/version, Store scope, discount amount and `PARTNER`/`BTHWANI`/`SHARED` funding allocation) posts one explicit funding/subsidy effect with a stable logical identity;
+- the funding source bears the discount: a `PARTNER`-funded discount reduces Partner sale proceeds, a `BTHWANI`-funded discount records a platform subsidy for the merchant entitlement, and a `SHARED` discount splits the consequence by its exact recorded allocation; a platform-funded discount is a funding source for the merchant entitlement, not an extra copy of product value;
+- product value — the Partner commission calculation basis — is the pre-discount value of the Order's confirmed line items at their frozen StoreOffer prices; funded discounts are carried by their recorded funding source and never silently change the commission basis or rate;
+- refund/adjustment deltas reverse funded-promotion effects from the frozen transaction evidence, never from current promotion state (eligibility and authoring are owned by `COMMERCE_PROMOTIONS`);
+- customer payment allocation covers the resulting discounted payable.
+
 ## Failure and recovery
 
 Insufficient balance/exposure, adjustment delta refusal, unknown provider outcome, duplicate collection/delta/remittance, wrong collected amount, cancellation race, unresolved Partner commission receivable, remittance uncertainty and refund exception fail closed or remain reconciliation-required from canonical WLT state.
