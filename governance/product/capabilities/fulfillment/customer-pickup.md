@@ -17,6 +17,8 @@ DSH owns pickup eligibility, readiness, proof and operational completion. WLT ow
 ## Invariants
 
 - pickup is explicit Order fulfillment mode;
+- the authorized pickup party is the purchasing Client; a wrong-customer pickup attempt is denied and remains an explicit failure;
+- operational completion is one canonical terminal pickup result: the Order is released to the authorized customer exactly once;
 - no Captain assignment/handoff/cash-custody fact is invented for pickup;
 - delivery-address fields that are not meaningful to pickup cannot be required merely because another fulfillment mode uses them;
 - Store confirms readiness before customer pickup completion;

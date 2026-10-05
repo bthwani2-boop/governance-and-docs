@@ -303,7 +303,7 @@ READBACK: Client and Partner receive one canonical pickup result.
 PARTNER → accept / prepare / ready for pickup
 CLIENT → arrives
 CLIENT ↔ PARTNER → bounded pickup proof
-DSH → CUSTOMER_PICKED_UP
+DSH → terminal pickup result (released to the authorized customer exactly once)
 WLT → applicable collection / Partner commission effect
 ```
 
@@ -396,7 +396,7 @@ Original confirmation snapshot remains immutable; adjustments are attributable f
 
 ### Exception branches
 
-Pre-accept cancellation, post-accept cancellation, preparation failure, customer rejection of adjustment, custody mismatch, delivery failure, unavailable customer/recipient, governed return-to-Store when required, payment uncertainty, refund, external RefundCase and post-completion wrong/damaged/missing dispute remain explicit branches. Post-completion dispute does not silently reopen the completed Order. Operator/Finance participation occurs only where the exception requires authorized intervention.
+Pre-accept cancellation, post-accept cancellation, preparation failure, customer rejection of adjustment, custody mismatch, delivery failure, unavailable customer/recipient, governed return-to-Store when required, payment uncertainty, refund, governed manual refund case and post-completion wrong/damaged/missing dispute remain explicit branches. Post-completion dispute does not silently reopen the completed Order. Operator/Finance participation occurs only where the exception requires authorized intervention.
 
 ### Failure / recovery
 
@@ -643,7 +643,7 @@ Every currently material concept must have one explicit disposition. Absence fro
 | Order communication / read state / grace closure | DSH | TOP_LEVEL_MULTI_SURFACE_JOURNEY | ORDER_COMMUNICATION | MAPPED |
 | Out-of-stock / substitute / actual variable measure | DSH + WLT delta | TOP_LEVEL_MULTI_SURFACE_JOURNEY | ORDER_ADJUSTMENT_EXCEPTION_REFUND | MAPPED |
 | Cancellation / rejection / preparation failure / custody mismatch / delivery failure | DSH + WLT | TOP_LEVEL_MULTI_SURFACE_JOURNEY | ORDER_ADJUSTMENT_EXCEPTION_REFUND | MAPPED |
-| Refund / reversal / external RefundCase / payment uncertainty | WLT + DSH evidence | TOP_LEVEL_MULTI_SURFACE_JOURNEY | ORDER_ADJUSTMENT_EXCEPTION_REFUND | MAPPED |
+| Refund / reversal / governed manual refund case / payment uncertainty | WLT + DSH evidence | TOP_LEVEL_MULTI_SURFACE_JOURNEY | ORDER_ADJUSTMENT_EXCEPTION_REFUND | MAPPED |
 | Post-completion wrong/damaged/missing dispute | DSH + WLT | TOP_LEVEL_MULTI_SURFACE_JOURNEY | ORDER_ADJUSTMENT_EXCEPTION_REFUND | MAPPED |
 | Customer balance funding | WLT | SUPPORTING_SUBFLOW | CUSTOMER_BALANCE_FUNDING | MAPPED |
 | Captain balance funding | WLT | SUPPORTING_SUBFLOW | CAPTAIN_BALANCE_FUNDING | MAPPED |

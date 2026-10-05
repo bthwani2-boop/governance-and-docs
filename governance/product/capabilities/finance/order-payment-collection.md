@@ -12,7 +12,7 @@ Every admitted Store Order has one WLT-owned payment/collection truth that conse
 
 ## Ownership
 
-WLT owns payment intent, customer payment allocation, collection state, Order-adjustment financial deltas, COD receivable/exposure, Partner commission receivable, refund/reversal treatment and financial readback. DSH owns operational Order/fulfillment/adjustment facts that qualify financial effects.
+WLT owns payment intent, customer payment allocation, collection state, Order-adjustment financial deltas, COD receivable/exposure, Partner commission receivable, refund/reversal treatment and the governed manual refund case, and financial readback. DSH owns operational Order/fulfillment/adjustment facts that qualify financial effects.
 
 ## Invariants
 
@@ -26,6 +26,7 @@ WLT owns payment intent, customer payment allocation, collection state, Order-ad
 - for the initial `PARTNER_CAPTAIN` release, no customer delivery fee is charged; Store-Captain remuneration remains an off-WLT Store responsibility;
 - when a Store Captain collects cash for a `PARTNER_CAPTAIN` Order, sale proceeds belong to Store/Partner and the Captain hands them to the Store; DSH records collection/handoff/Store acknowledgment outside WLT, and WLT creates no BThwani-Captain COD receivable, Captain earning or wallet movement for those proceeds;
 - Store-collected pickup cash never creates BThwani Captain cash custody, COD exposure, Captain COD remittance or a duplicate Partner wallet credit for sale proceeds already retained by the Store;
+- an admitted refund requires an external provider refund capability that is proven for the applicable rail; where that capability is not proven, WLT records one governed manual refund case binding the refund obligation, its transfer-specific evidence and its reconciliation before completion;
 - customer payment allocation does not include merchant/platform settlement funding;
 - external provider funding first becomes WLT internal balance through `CUSTOMER_BALANCE_FUNDING`;
 - COD risk hold is not ordinary payment consumption;
