@@ -16,22 +16,19 @@ a storefront grouping into one record. The Operator workspace manages the
 shared catalog; the Partner surface manages the Store's local catalog and
 assortment; the Client surface reads a DSH-composed customer-safe storefront.
 
-This is the current Central Catalog capability. It is not a second
-`CATALOG_V2` capability and it does not admit a full PIM, ERP, POS or marketing
-system.
+This is the current Central Catalog capability. It does not admit a full PIM,
+ERP, POS or marketing system.
 
 ## Ownership and verticals
 
 `CommerceVertical` is the canonical classification of the commercial activity
-of a Store. A Store has exactly one `primary_vertical_id` in this slice. A
+of a Store. A Store has exactly one `primary_vertical_id`. A
 Partner is not vertical-scoped and may own Stores in different verticals.
 
-The joining case requires the first-Store vertical before admission. The value
-is preserved through review, correction and resubmission and is transferred to
-the Store atomically with Store creation. An existing Store with no vertical
-is retained for history but is not vertical-discoverable or customer-visible
-until an authorized Operator assigns one through the DSH owner path. No legacy
-Store receives a guessed vertical.
+The joining-case intake requirement and atomic transfer of the primary vertical
+are owned by `PARTNER_ONBOARDING_STORE_PUBLICATION`. A Store without a primary
+vertical is not vertical-discoverable or customer-visible until an authorized
+Operator assigns one through the DSH owner path; assignment is never guessed.
 
 The Commerce Vertical registry is canonical DSH data, not a hard-coded Governance inventory. Registry members change only through authorized DSH mutation and canonical readback; this capability owns the classification semantics, not the current registry contents. A vertical may carry a non-authoritative workflow preference that helps route initial product entry. That preference cannot require a Store or vertical to use only shared or only Store-scoped identities and cannot block a mixed assortment.
 
@@ -40,7 +37,7 @@ The Commerce Vertical registry is canonical DSH data, not a hard-coded Governanc
 `CatalogCategory` is the shared catalog taxonomy: a flexible tree with
 `parent_category_id`. It is not a fixed L1/L2/L3/L4 model, a
 `CommerceVertical`, or a Store-local menu grouping. A category belongs to one
-vertical in this slice. A shared Product may have multiple category assignments
+vertical. A shared Product may have multiple category assignments
 when each assignment is explicitly valid for its vertical. Parent links must
 remain in the same vertical and cycles are rejected. Store-local items are
 organized by their Store's menu/grouping data; they do not need an invented
@@ -170,13 +167,13 @@ does not inline an unbounded catalog.
 
 The Operator Catalog workspace may manage verticals, shared taxonomy, typed
 attribute rules, Shared Products, Variants, identifiers, bounded media,
-proposals, legacy classification recovery and import preview/commit. Every mutation goes to DSH
+proposals, vertical assignment recovery and import preview/commit. Every mutation goes to DSH
 for validation, authorization, idempotency, concurrency control, audit and
 canonical readback; the Operator workspace is not a business owner.
 
 Catalog bulk/import mutation has one canonical DSH writer path. Any admitted import mechanism must validate before mutation, distinguish duplicate/conflict from new identity, require an explicit commit boundary, preserve attributable audit and finish with canonical readback. Missing input never implies deletion, blind upsert is forbidden, and retry/resume cannot silently create a different identity.
 
-Field, Partner and authorized Operator catalog work use one Store Catalog import flow with surface-specific authorization. It accepts XLSX and CSV rows with a barcode and price when the identifier is known; the user does not need internal IDs or enums. One run parses, normalizes and resolves rows, previews results, commits valid rows and leaves unresolved rows for review. An invalid or conflicting minority does not discard valid rows. A run is replay-safe and auditable, and the current Product target supports 5,000 rows in one run; internal chunking does not create multiple user-visible imports or a hard 1,000-row cap.
+Field, Partner and authorized Operator catalog work use one Store Catalog import flow with surface-specific authorization. It accepts XLSX and CSV rows with a barcode and price when the identifier is known; the user does not need internal IDs or enums. One run parses, normalizes and resolves rows, previews results, commits valid rows and leaves unresolved rows for review. An invalid or conflicting minority does not discard valid rows. A run is replay-safe and auditable; one import run is a single user-visible import with one commit boundary, and internal batching is invisible to that boundary.
 
 Quick Prices edits use the canonical `StoreOffer` mutation. Search and category/brand/package filters help find products, including without-price, already-offered, not-offered and hidden items. Bulk changes show a summary and require an explicit commit. Listing a Shared Product never adds an offer. Only changed rows mutate, and the canonical audit preserves old/new price, actor, time and provenance. Field, Partner and Operator barcode scans use one DSH resolver with Store context and the scanned identifier; it distinguishes an existing Store offer, Shared match, Store-local match, unknown identifier and variable-measure identifier. Store SKU is not a global barcode, and variable-measure codes are not silently treated as GTINs.
 
@@ -194,7 +191,7 @@ import the initial Store assortment, and submit Shared Product proposals or
 corrections for its authorized joining Store. DSH enforces that joining-case,
 Store and pre-publication scope server-side. Field cannot approve or merge
 Shared identities or directly change Shared media. Its initial catalog write
-authority ends at successful Go-Live; the Partner then owns ongoing Store
+authority ends at successful Store publication; the Partner then owns ongoing Store
 catalog operations.
 
 ## Evolution and migration invariants

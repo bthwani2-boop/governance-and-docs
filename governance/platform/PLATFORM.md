@@ -35,7 +35,7 @@ A Partner Captain is not a sixth Identity role. The Human Actor remains a canoni
 
 Detailed role admission/authentication/session semantics belong to `IDENTITY_ACTIVATION_SESSIONS`. Store-scoped Captain relationship semantics belong to `STORE_CAPTAIN_MEMBERSHIP`. Bounded domain ownership belongs to `governance/system/SYSTEM.md`. Current Product breadth belongs to `governance/product/PRODUCT.md`.
 
-Store-scoped delegated access is not a new high-level Identity role. It is an explicit DSH-owned grant from an authorized Store owner to a canonical actor admitted to the Partner workspace where required by the grant lifecycle, with Store scope, an allowlisted permission set, expiry/revocation and audit. It cannot create a generic Partner organization or team hierarchy. The role answers which high-level workspace the actor may authenticate to; the DSH Store relationship answers which Store resources/actions are authorized there.
+Store-scoped delegated access is not a new high-level Identity role. It is an explicit DSH-owned grant within one Store for an appropriately admitted Partner-workspace actor, with bounded permissions, expiry/revocation and audit; it cannot create a generic Partner organization or team hierarchy. Grant anatomy and the permission allowlist are owned by `STORE_SCOPED_ACCESS_DELEGATION`.
 
 A delivery recipient may be a person other than the purchasing Client. A recipient snapshot is bounded delivery-contact data attached to the Store Order; it does not create a Human Actor, role, account, payment authority or support authority. The purchasing Client remains the Order/payment principal.
 
@@ -56,6 +56,7 @@ Brand unity does not imply identical information architecture or shell across ro
 - **Captain** — authenticated Human Actor with the `captain` role; operational relationships are separate DSH facts.
 - **Store** — DSH business resource belonging to a Partner owner; not a tenant or Human Actor.
 - **Store ownership** — DSH resource relationship establishing owner authority for one Store.
+- **Store owner** — Partner actor holding DSH Store ownership authority for one Store; during onboarding this is the bound Partner owner of the joining case.
 - **Store Captain Membership** — DSH-owned Store-scoped relation between a Store and canonical Captain actor; not a role.
 - **Store-scoped access grant** — DSH-owned bounded permission grant within one Store for an appropriately admitted Partner-workspace actor; not a role, tenant or generic team membership.
 - **Delivery recipient** — bounded Order delivery-contact snapshot; not an account/role or Order/payment principal.
