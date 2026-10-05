@@ -12,18 +12,20 @@ A Store may establish an accepted Store-scoped affiliation with a canonical Capt
 
 ## Ownership
 
-DSH owns invitation/membership/affiliation, Store scope, acceptance, eligibility, suspension/removal and operational readback. Identity owns the canonical Human Actor and standing `captain` role. WLT retains only the Order payment/Partner commission financial authority that applies to `PARTNER_CAPTAIN`; Store-Captain internal remuneration is a Store responsibility outside WLT.
+DSH owns invitation/membership/affiliation, Store scope, acceptance, eligibility, suspension/restore/removal and operational readback. Identity owns the canonical Human Actor and standing `captain` role. WLT retains only the Order payment/Partner commission financial authority that applies to `PARTNER_CAPTAIN`; Store-Captain internal remuneration is a Store responsibility outside WLT.
+
+Membership operations (invite, suspend, restore, remove) are performed by the authorized Store owner, or by a delegated Partner-workspace staff actor holding the Store fulfillment/Store-Captain operation permission owned by `STORE_SCOPED_ACCESS_DELEGATION`. Delegation never grants Identity `captain` role admission.
 
 ## Minimal lifecycle
 
 ```text
-PARTNER STORE OWNER
+AUTHORIZED STORE PARTNER (owner or delegated staff)
 → invite canonical eligible Captain
 → CAPTAIN reads invitation
 → accept OR decline
 → DSH activates membership only after acceptance
-→ Partner may suspend/remove when authorized
-→ Captain may leave when current policy permits
+→ authorized Partner may suspend/restore/remove
+→ Captain may leave under the DSH membership policy
 ```
 
 ## Invariants
@@ -31,7 +33,7 @@ PARTNER STORE OWNER
 - Partner Captain is not a separate Identity role;
 - Partner cannot create or grant the `captain` role;
 - invitation/membership references one canonical Captain actor and one Store;
-- delegated membership authority is inactive until the Captain accepts;
+- membership operational authority becomes active only after the Captain accepts;
 - one Captain actor may hold multiple accepted Store relationships;
 - Store owner authorization cannot grant or mutate Identity role by request input;
 - membership eligibility is distinct from platform Captain availability/pool state;

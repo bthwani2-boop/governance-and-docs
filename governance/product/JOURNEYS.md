@@ -271,11 +271,11 @@ READBACK: Partner, Captain and Client read canonical fulfillment result.
 ### Supporting membership subflow
 
 ```text
-PARTNER → invite canonical eligible Captain
+PARTNER (owner or delegated staff) → invite canonical eligible Captain
 CAPTAIN → accept / decline
 DSH → ACTIVE membership only after acceptance
-PARTNER → suspend/remove when authorized
-CAPTAIN → leave when current policy permits
+authorized PARTNER → suspend/restore/remove
+CAPTAIN → leave under the DSH membership policy
 ```
 
 ### Failure / recovery

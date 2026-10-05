@@ -110,7 +110,7 @@ version + attributable audit
 
 An offer does not copy canonical Product name, taxonomy, variant attributes,
 identifiers or canonical media. Partners may create and manage offers only for
-Stores they own. `StoreOffer` is the sole current Store-assortment writer. Historical aggregate names or representations have no current mutation/readback authority.
+Stores they own or hold an active accepted StoreAccessGrant for. `StoreOffer` is the sole current Store-assortment writer. Historical aggregate names or representations have no current mutation/readback authority.
 
 Quantity has exact integer base units and separate requested quantity,
 pricing basis, minimum, maximum and step semantics. Discrete quantities use a
@@ -172,13 +172,13 @@ The Operator Catalog workspace may manage verticals, shared taxonomy, typed
 attribute rules, Shared Products, Variants, identifiers, bounded media,
 proposals, legacy classification recovery and import preview/commit. Every mutation goes to DSH
 for validation, authorization, idempotency, concurrency control, audit and
-canonical readback; the Control Panel is not a business owner.
+canonical readback; the Operator workspace is not a business owner.
 
 Catalog bulk/import mutation has one canonical DSH writer path. Any admitted import mechanism must validate before mutation, distinguish duplicate/conflict from new identity, require an explicit commit boundary, preserve attributable audit and finish with canonical readback. Missing input never implies deletion, blind upsert is forbidden, and retry/resume cannot silently create a different identity.
 
 Field, Partner and authorized Operator catalog work use one Store Catalog import flow with surface-specific authorization. It accepts XLSX and CSV rows with a barcode and price when the identifier is known; the user does not need internal IDs or enums. One run parses, normalizes and resolves rows, previews results, commits valid rows and leaves unresolved rows for review. An invalid or conflicting minority does not discard valid rows. A run is replay-safe and auditable, and the current Product target supports 5,000 rows in one run; internal chunking does not create multiple user-visible imports or a hard 1,000-row cap.
 
-Quick Prices edits use the canonical `StoreOffer` mutation. Search and category/brand/package filters help find products, including without-price, already-offered, not-offered and hidden items. Bulk changes show a summary and require an explicit commit. Listing a Shared Product never adds an offer. Only changed rows mutate, and the canonical audit preserves old/new price, actor, time and provenance. Field, Partner and Control Panel barcode scans use one DSH resolver with Store context and the scanned identifier; it distinguishes an existing Store offer, Shared match, Store-local match, unknown identifier and variable-measure identifier. Store SKU is not a global barcode, and variable-measure codes are not silently treated as GTINs.
+Quick Prices edits use the canonical `StoreOffer` mutation. Search and category/brand/package filters help find products, including without-price, already-offered, not-offered and hidden items. Bulk changes show a summary and require an explicit commit. Listing a Shared Product never adds an offer. Only changed rows mutate, and the canonical audit preserves old/new price, actor, time and provenance. Field, Partner and Operator barcode scans use one DSH resolver with Store context and the scanned identifier; it distinguishes an existing Store offer, Shared match, Store-local match, unknown identifier and variable-measure identifier. Store SKU is not a global barcode, and variable-measure codes are not silently treated as GTINs.
 
 Partners can browse/search Shared Products, inspect Variants and identifiers,
 select Variants and create StoreOffers alongside their Store-scoped items.
@@ -211,8 +211,8 @@ Catalog representation may evolve only through the DSH-owned migration history u
 
 ## Failure, security and proof invariants
 
-- Operator-only Shared Catalog mutations and Partner-own-Store authorization
-  are enforced at DSH using trusted actor/session context.
+- Operator-only Shared Catalog mutations and Partner own-or-granted-Store
+  authorization are enforced at DSH using trusted actor/session context.
 - Client input never grants Store scope, Product scope, vertical, eligibility,
   price, quantity, inventory or publication authority.
 - Exact identifier conflict, duplicate request with different facts, stale

@@ -17,7 +17,7 @@ DSH owns custody/handoff and operational exception truth. Platform assignment el
 ## Invariants
 
 - handoff is bound to current Order, Store, fulfillment mode and canonical Captain actor;
-- only authorized owning-Store Partner scope confirms the Store side;
+- only an authorized owned-or-granted Store Partner scope confirms the Store side;
 - only the legally assigned/eligible Captain completes Captain-side pickup;
 - pickup cannot complete before required confirmation;
 - one executable custody transfer exists per current fulfillment assignment;
