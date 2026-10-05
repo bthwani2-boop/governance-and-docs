@@ -8,7 +8,7 @@ CAPABILITY_ID: COMMERCE_PROMOTIONS
 
 ## Outcome
 
-Authorized platform or Partner Store promotions change customer commercial eligibility through one DSH rule truth while funded financial effects remain explicit WLT truth.
+Authorized platform or Partner Store promotions apply governed commercial eligibility and effects to customer commerce through one DSH rule truth while funded financial effects remain explicit WLT truth.
 
 ## Ownership
 

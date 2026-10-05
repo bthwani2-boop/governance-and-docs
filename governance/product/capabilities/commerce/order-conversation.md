@@ -17,7 +17,8 @@ DSH owns conversation membership, message identity/content relation, read state,
 ## Invariants
 
 - conversation is bound to one canonical Store Order;
-- participants derive from current authorized Order/Store/Captain/customer relations;
+- participants derive from current authorized Order/Store/Captain/customer relations, or join through the governed escalation path as admitted below;
+- an authorized Operator escalation participant may join the conversation only through the governed escalation path when an Order exception requires it; escalation participation is attributable and ends with the exception;
 - text is the baseline message type; admitted media remains bounded and provider-independent;
 - messages cannot mutate Order/payment/custody truth;
 - notification delivery is a projection of message/owner events, not message authority;

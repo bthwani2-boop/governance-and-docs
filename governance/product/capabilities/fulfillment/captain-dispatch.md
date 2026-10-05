@@ -23,7 +23,7 @@ Store-affiliated Partner Captain eligibility belongs to `STORE_CAPTAIN_MEMBERSHI
 ## Invariants
 
 - only a ready `BTHWANI_CAPTAIN` order is platform-dispatchable;
-- only an eligible available Captain with required financial exposure capacity may accept an applicable COD offer;
+- only an eligible available Captain may accept a dispatch offer; where the Order carries COD, required WLT financial exposure capacity (`CAPTAIN_BALANCE_FUNDING`) must also be available;
 - one order has at most one active assignment;
 - capacity, eligibility and financial authorization are owner-backed and enforced under concurrency;
 - only the authenticated offered Captain may accept/reject the live offer;

@@ -12,7 +12,7 @@ A Client builds one owned Store cart and confirms one Store-scoped checkout inte
 
 ## Ownership
 
-DSH owns cart/checkout operational truth and the bounded delivery-recipient snapshot carried into the resulting Store Order. Catalog, Store publication, `STORE_OPERATIONAL_AVAILABILITY` and serviceability owners provide canonical evidence. WLT owns admitted financial intent/allocation. Multi-Store composition belongs to `MULTI_STORE_CHECKOUT`.
+DSH owns cart/checkout operational truth and the checkout delivery-recipient intent; the durable Order-resident recipient snapshot is owned by `ORDER_LIFECYCLE`. Catalog, Store publication, `STORE_OPERATIONAL_AVAILABILITY` and serviceability owners provide canonical evidence. WLT owns admitted financial intent/allocation. Multi-Store composition belongs to `MULTI_STORE_CHECKOUT`.
 
 ## Invariants
 
@@ -24,7 +24,7 @@ DSH owns cart/checkout operational truth and the bounded delivery-recipient snap
 - checkout revalidates current Store operational orderability and selected fulfillment-mode availability immediately before confirmation; a published Store or durable mode admission alone is insufficient;
 - an unavailable selected mode is rejected with explicit readback and is never silently replaced by another mode;
 - checkout establishes one stable logical operation identity before cross-owner financial effects; an ambiguous commit/retry cannot silently allocate another logical Order identity;
-- confirmed checkout snapshots address/serviceability, Store/mode orderability evidence, item/variant/quantity/pricing/modifier evidence and other transaction facts required by `ORDER_LIFECYCLE`;
+- confirmed checkout snapshots delivery address/serviceability evidence (for delivery fulfillment intents), Store/mode orderability evidence, item/variant/quantity/pricing/modifier evidence and other transaction facts required by `ORDER_LIFECYCLE`;
 - a delivery recipient may be `SELF` or `OTHER`; when `OTHER`, only bounded recipient name/phone/delivery instructions needed for execution are snapshotted, while the purchasing Client remains Order/payment principal;
 - recipient data never creates an actor, account, role or financial authority;
 - stale or invalidated evidence blocks confirmation;
@@ -36,7 +36,7 @@ DSH derives authoritative commercial basis from owner facts and asks WLT to esta
 
 ## Failure and recovery
 
-Stale cart, unavailable/unpublished Offer, invalid modifier/quantity, closed/paused Store, unavailable selected mode, unserviceable address, invalid recipient data, financial refusal, conflict, offline state and ambiguous cross-owner outcome recover through canonical reread/reconciliation. No success is reported before committed owner readback.
+Stale cart, unavailable/unpublished StoreOffer, invalid modifier/quantity, closed/paused Store, unavailable selected mode, unserviceable address, invalid recipient data, financial refusal, conflict, offline state and ambiguous cross-owner outcome recover through canonical reread/reconciliation. No success is reported before committed owner readback.
 
 ## Material participants
 
