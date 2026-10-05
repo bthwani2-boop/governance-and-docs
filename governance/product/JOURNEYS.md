@@ -514,6 +514,8 @@ These are materially governed but are not promoted to top-level Journeys merely 
 | ANALYTICS_SEARCH_CACHE | PROJECTION | derived | no mutation authority |
 | OBSERVABILITY | CROSS_CUTTING_LANE | runtime operations | evidence, not business authority |
 
+Notification projections are bounded, idempotent derivations of committed canonical owner state under this lane; they never become a second writer of owner facts. Material event classes currently requiring a projection include: Store-scoped delegation invitation, acceptance, activation, suspension and revocation; Store payout-recipient assignment change or required owner review; Finance destination reverification staleness; promotion scheduling/activation/ending and platform-campaign availability/opt-in where Partner- or customer-visible; Store Commercial Agreement awaiting acceptance or version activation; payout lifecycle transitions and payout readiness. Avoiding notification spam is part of the bounded projection law.
+
 ## Matrix — Journey × Surface
 
 | Journey | CLIENT | PARTNER | CAPTAIN | FIELD | OPERATOR |
