@@ -17,13 +17,13 @@ WLT owns payment intent, customer payment allocation, collection state, Order-ad
 ## Invariants
 
 - payment method/source is independent from fulfillment mode;
-- customer funding allocation currently composes admitted WLT internal balance and/or cash semantics; external provider account balance is never directly authoritative at checkout;
+- customer payment allocation currently composes admitted WLT internal balance and/or cash semantics; external provider account balance is never directly authoritative at checkout;
 - original financial confirmation remains attributable to the original Order snapshot; an approved DSH OrderAdjustment causes a new WLT delta/reversal/additional-treatment fact rather than rewriting prior ledger movement;
 - duplicate/retried OrderAdjustment identity cannot create a duplicate financial effect;
 - where a substitute/actual measure would require more value than the already authorized amount, WLT determines the legal additional financial treatment; DSH/Partner cannot assume extra collection authority;
 - for `CUSTOMER_PICKUP` paid with cash at the Store, the Store receives and retains the customer's sale proceeds; WLT records the Order-bound collection and the versioned commission receivable owed by the responsible Partner;
 - Partner commission uses product value as its calculation basis and is governed by the active Store-specific `STORE_COMMERCIAL_AGREEMENT` for that Store and fulfillment mode. Each applicable Order snapshots the agreement identity and version, fulfillment mode, commission rate, calculation basis and required rounding facts; later agreement changes never reinterpret an existing Order;
-- for the initial `PARTNER_CAPTAIN` release, no customer delivery fee is charged; Store-Captain remuneration remains an off-WLT Store responsibility;
+- no customer delivery fee is admitted under the current Product target for Captain delivery modes; Store-Captain remuneration remains an off-WLT Store responsibility. Introducing a customer delivery fee is a governed admission change, not a pricing detail;
 - when a Store Captain collects cash for a `PARTNER_CAPTAIN` Order, sale proceeds belong to Store/Partner and the Captain hands them to the Store; DSH records collection/handoff/Store acknowledgment outside WLT, and WLT creates no BThwani-Captain COD receivable, Captain earning or wallet movement for those proceeds;
 - Store-collected pickup cash never creates BThwani Captain cash custody, COD exposure, Captain COD remittance or a duplicate Partner wallet credit for sale proceeds already retained by the Store;
 - an admitted refund requires an external provider refund capability that is proven for the applicable rail; where that capability is not proven, WLT records one governed manual refund case binding the refund obligation, its transfer-specific evidence and its reconciliation before completion;

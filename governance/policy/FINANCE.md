@@ -52,52 +52,21 @@ A platform-funded discount is a funding source for the merchant entitlement; it 
 
 ## External funding and internal balance
 
-An external official wallet/payment provider is a rail, not BThwani balance truth.
+An external official wallet/payment provider is a rail, not BThwani balance truth. External funding becomes WLT internal balance only through the admitted funding capabilities (`CUSTOMER_BALANCE_FUNDING`, `CAPTAIN_BALANCE_FUNDING`), which own their admission scopes. Checkout consumes WLT internal balance/cash allocation; it does not treat an external provider account as an internal checkout balance. The provider rail never chooses the WLT wallet/accounting destination; the server-owned funding purpose does.
 
-```text
-FundingIntent
-→ provider evidence
-→ reconciliation when needed
-→ WLT internal balance credit
-```
+Provider timeout, unknown outcome and duplicate-movement law is owned by `governance/policy/INTEGRATIONS.md`; retry, idempotency and reconciliation law is owned by `governance/policy/RELIABILITY.md`.
 
-Checkout consumes WLT internal balance/cash allocation. It does not treat an external provider account as an internal checkout balance.
+## Fees and commissions
 
-Provider timeout or missing confirmation is not automatic failure or success. Unknown outcomes remain unknown until reconciled, and another rail is not invoked while duplicate movement remains possible.
-
-External provider Cash-In is currently admitted only for Customers and BThwani Captains. Customer funding and Captain funding are separately governed capabilities even when they share a CashInRail implementation. Partner, Field and Store-affiliated Partner Captain funding are not enabled by this admission. The provider rail never chooses the WLT wallet/accounting destination; the server-owned funding purpose does.
-
-## COD exposure, collateral and remittance
-
-Captain COD coverage is a risk hold, not ordinary settlement consumption.
-
-```text
-available_exposure
-= governed collateral / eligible balance capacity
-- active COD holds
-- other governed exposure
-```
-
-- accepting a covered COD obligation creates/reserves a hold against available exposure;
-- ordinary successful COD delivery/collection does not consume the Captain's collateral;
-- the hold remains until the associated cash remittance/reconciliation closes the exposure;
-- cash remittance closes the corresponding WLT cash receivable in the ledger and releases the governed hold;
-- collateral/balance is debited only for an explicit governed shortage/default/loss or another independently authorized financial effect;
-- Store-affiliated Partner Captain or Store-collected cash must not be silently treated as BThwani Captain cash custody.
-
-Risk policy may require full collateral at one stage and a different exposure limit later; the architecture governs exposure capacity, not an eternal fixed percentage.
-
-## Fees, discounts and commissions
-
-Commercial fee bearer is versioned policy rather than an architectural constant. Where an external funding provider charges a fee, the policy may designate platform, customer or campaign funding as bearer.
+Commercial fee bearer is versioned policy rather than an architectural constant. Where an external funding provider charges a fee, the applicable versioned policy designates the bearer from currently admitted funding sources.
 
 Field acquisition reward is owned by `PARTNER_CAPTAIN_FIELD_EARNINGS_SETTLEMENT`, including its `STORE_CLIENT_VISIBLE` qualifying event, exactly-once admission and Store-Type-parameterized versioned policy. Later versioned-policy changes must not reinterpret or duplicate historical earnings of any admitted earning class.
 
 ## Refunds, payouts and settlement
 
-Refund eligibility derives from canonical operational facts and versioned financial policy. Where provider-side refund capability is not proven, a governed manual refund case may be used; provider capability is never inferred from provider name.
+Refund eligibility derives from canonical operational facts and versioned financial policy; the governed manual refund case and the provider-capability proof rule are owned by `ORDER_PAYMENT_COLLECTION`.
 
-Beneficiary settlement uses:
+Beneficiary settlement uses one cross-cutting WLT shape:
 
 ```text
 eligible amount
@@ -109,28 +78,14 @@ eligible amount
 → completion or explicit exception
 ```
 
-The current external payout execution method is manual transfer through the appropriate official wallet, not a provider payout API. WLT still derives the eligible amount, places/releases/finalizes holds, resolves and pins the verified destination, and controls every legal transition. Each transfer requires its own receipt/evidence attached to that transfer. An authoritative official-wallet statement is retained once per period or batch and its matched statement rows are linked to the relevant transfers; one statement may support multiple transfers. A generated XLSX may serve as a frozen execution artifact, but it never updates WLT accounting truth.
+Payout execution method, destination derivation from canonical Identity facts, destination governance, statement/receipt evidence and beneficiary rules are owned by `PARTNER_CAPTAIN_FIELD_EARNINGS_SETTLEMENT`. Client-supplied phone, name or wallet data never creates or changes an official-wallet destination.
 
-For every beneficiary paid through an official-wallet rail, the wallet number is the current verified canonical Identity phone and the beneficiary name is the current canonical official Identity name. Neither value is an independent onboarding or payout input. WLT resolves both from the bound actor identity and selected provider; client-supplied phone or name cannot create or change a destination. Before payout approval and execution, WLT checks the destination against current Identity facts. A phone or identity-version mismatch makes the destination stale and requires Finance reverification; payment to the old or new number is blocked until the destination is verified again. No silent redirect is allowed.
-
-For the current approved target, Partner/Captain/Field surfaces are read-only for official-wallet destination master data. Their admission/onboarding intake may capture a provider preference only; that preference does not activate a destination or grant destination-writing authority. Finance creates or changes a destination through the authorized verification/approval workflow; beneficiaries cannot create, update, deactivate, replace or select a payout destination. A destination change cannot rewrite an already approved payout snapshot.
-
-Customer balance withdrawal is not a customer-facing or self-service payout capability. A rare exception begins with an Operations-recorded request and authorization/evidence; WLT resolves the eligible internal balance and reserves the approved amount. Authorized Finance staff approve and perform the manual external transfer, attach transfer-specific receipt evidence, and bind the transfer to the period/batch statement evidence. A different authorized operator independently reconciles the transfer and statement row. WLT reduces the customer liability only after required reconciliation; unknown, mismatched or unsupported outcomes remain held/open as an explicit exception. This process is distinct from Customer funding, Partner/Captain/Field earnings settlement and Captain COD remittance.
+Customer balance withdrawal is not a customer-facing or self-service payout capability; it is a separately authorized exception workflow owned by `CUSTOMER_BALANCE_MANUAL_WITHDRAWAL`, distinct from Customer funding, Partner/Captain/Field earnings settlement and Captain COD remittance.
 
 ## Cross-owner reliability
 
-If an operational owner event creates a financial effect:
-
-```text
-DSH proves canonical operational transition
-→ durable idempotent handoff
-→ WLT applies financial effect
-→ WLT canonical readback
-→ reconciliation of unknown/partial outcomes
-```
-
-Synchronous calls are not treated as a distributed transaction. A retry must preserve the same logical operation identity and cannot allocate a new financial identity merely because a commit result was ambiguous.
+If a DSH-proven operational transition creates a financial effect, WLT applies it idempotently with one canonical readback and reconciliation of unknown/partial outcomes. The cross-owner handoff, retry and unknown-outcome laws are owned by `governance/system/SYSTEM.md` and `governance/policy/RELIABILITY.md`. A synchronous call is not a distributed transaction, and an ambiguous commit result never allocates a new financial identity.
 
 ## Finance access
 
-Every Finance workspace read and mutation requires the current Identity `finance` permission on the Operator session. The `operator` role alone is insufficient. Missing, stale or invalid permission evidence fails closed. The Store Commercial Agreement editor and any retained Store Type suggestion controls follow this boundary; each financial mutation remains attributed to its acting Operator and audited by its canonical owner. Customer withdrawal request intake belongs to the Operations owner and requires its own authorization; intake permission does not grant Finance approval, execution, reconciliation or ledger authority.
+Finance workspace authorization follows the Operator permission boundaries owned by `IDENTITY_ACTIVATION_SESSIONS`; the `operator` role alone is never sufficient. Customer withdrawal request intake follows the Operator authorization model owned by `IDENTITY_ACTIVATION_SESSIONS` and the request-record ownership owned by `CUSTOMER_BALANCE_MANUAL_WITHDRAWAL`; intake permission never grants Finance approval, execution, reconciliation or ledger authority.

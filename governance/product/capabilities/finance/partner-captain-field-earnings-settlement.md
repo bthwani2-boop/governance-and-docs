@@ -46,7 +46,7 @@ Each Store settlement is routed to exactly one effective beneficiary: the Store 
 - each external transfer has transfer-specific receipt/evidence, while a period/batch statement is retained once and matched statement rows may be linked to multiple transfers;
 - generated spreadsheets are immutable execution artifacts and never a source of WLT financial truth;
 - Partner, BThwani Captain and Field surfaces do not create, update, deactivate, replace or select official-wallet destination master data; Finance owns the governed provisioning/change workflow;
-- official-wallet admission for Partner, BThwani Captain and Field collects a provider preference only. WLT derives the number and beneficiary name from current canonical Identity facts under `governance/policy/FINANCE.md`; stale Identity facts require reverification before payout approval or execution;
+- official-wallet admission for Partner, BThwani Captain and Field collects a provider preference only. WLT derives the number and beneficiary name from current canonical Identity facts; stale Identity facts require reverification before payout approval or execution;
 - a derived wallet number may be shown read-only; it is never an editable destination input;
 - payout approval freezes an immutable beneficiary/destination/amount snapshot;
 - external execution evidence is independently verified/reconciled before completion;

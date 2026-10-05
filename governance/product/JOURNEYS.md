@@ -498,8 +498,8 @@ These are materially governed but are not promoted to top-level Journeys merely 
 | CUSTOMER_BALANCE_FUNDING | SUPPORTING_SUBFLOW | `CUSTOMER_BALANCE_FUNDING` / WLT | internal-balance funding |
 | CAPTAIN_BALANCE_FUNDING | SUPPORTING_SUBFLOW | `CAPTAIN_BALANCE_FUNDING` / WLT | BThwani-Captain balance funding |
 | PAYMENT_ALLOCATION | SUPPORTING_SUBFLOW | `ORDER_PAYMENT_COLLECTION` / WLT | checkout/payment boundary |
-| COD_EXPOSURE_HOLD | SUPPORTING_SUBFLOW | `ORDER_PAYMENT_COLLECTION` / WLT | BThwani-Captain dispatch boundary |
-| CUSTOMER_MANUAL_WITHDRAWAL | SUPPORTING_SUBFLOW | `CUSTOMER_BALANCE_MANUAL_WITHDRAWAL` / WLT | Client request → Operations/Finance → independent reconciliation |
+| COD_EXPOSURE_HOLD | SUPPORTING_SUBFLOW | `CAPTAIN_BALANCE_FUNDING` / WLT | BThwani-Captain dispatch boundary |
+| CUSTOMER_MANUAL_WITHDRAWAL | SUPPORTING_SUBFLOW | `CUSTOMER_BALANCE_MANUAL_WITHDRAWAL` / WLT | Client request → authorized Operator intake / Finance → independent reconciliation |
 | ORDER_FEEDBACK | SUPPORTING_SUBFLOW | `ORDER_LIFECYCLE` / DSH | bounded completed-Order feedback |
 | NOTIFICATIONS | PROJECTION | DSH owner events + delivery adapter | many Journeys |
 | TRACKING | PROJECTION | DSH | Captain fulfillment Journeys |

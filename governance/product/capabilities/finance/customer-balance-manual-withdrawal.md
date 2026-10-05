@@ -12,12 +12,12 @@ Operations can record a rare Customer request to return eligible value from the 
 
 ## Ownership
 
-WLT owns eligibility calculation, amount validation/resolution, hold, payout/transfer identity, destination snapshot, ledger finalization and canonical readback. Operations owns request intake and evidence of the request. Authorized Finance staff approve and execute the external transfer. An independently authorized operator reconciles the transfer against authoritative official-wallet statement evidence.
+WLT owns the withdrawal request record and its evidence, eligibility calculation, amount validation/resolution, hold, payout/transfer identity, destination snapshot, ledger finalization and canonical readback. An Operator holding the Operations workspace authorization records the request through the authorized Operator-surface workflow. Authorized Finance staff approve and execute the external transfer. An independently authorized operator reconciles the transfer against authoritative official-wallet statement evidence.
 
 ## Invariants
 
 - Customers cannot submit a withdrawal mutation through a self-service client journey;
-- Operations records the request, Customer identity, reason and supporting authorization/evidence through its authorized workflow;
+- the request, Customer identity, reason and supporting authorization/evidence are recorded through the authorized Operator workflow; the request record and its evidence are WLT-owned;
 - WLT derives eligible balance and reserves the approved amount before execution; client or Operator arithmetic never establishes the amount;
 - Finance approval, manual execution and independent reconciliation are attributable, authorized and audited;
 - every transfer has its own receipt/evidence, and a retained statement for the relevant period/batch is linked through matched statement rows;
