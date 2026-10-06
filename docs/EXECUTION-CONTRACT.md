@@ -162,3 +162,36 @@ Phrases such as “complete”, “100%” or “do not miss anything” do not 
 Stop when the authorized objective and its proven affected cone reach fixed point.
 
 Do not invent further phases, optional refactors, new abstractions, extra proof or additional scope after closure.
+
+## 11. Exact blocked contract
+
+Use `BLOCKED` only when the next material action cannot proceed safely within current authority or evidence.
+
+A blocked checkpoint must state exactly:
+
+```text
+BLOCKED
+
+ROOT_CAUSE:
+<why execution cannot proceed>
+
+IMPACT:
+<what material objective/phase is prevented>
+
+EVIDENCE:
+<current evidence proving the blocker>
+
+EXACT_UNBLOCK_REQUIREMENT:
+<the precise decision, authority, state or external change required>
+```
+
+Do not use vague blocker labels when the exact unblock requirement is knowable.
+
+## 12. Continue without asking for next
+
+Do not ask the human for “next” when the next safe material action is derivable from the authorized objective, compact checkpoint and exact live state.
+
+Continue by emitting the current phase remainder, next material phase, final integration step or closure as appropriate.
+
+Ask the human only when a decision, authority boundary or decision-critical unknown cannot be derived safely.
+
