@@ -10,6 +10,7 @@ This repository is BThwani's compact, challengeable, durable knowledge base.
 - `governance/system/` — durable system ownership and boundary model.
 - `governance/policy/` — cross-cutting invariants.
 - `docs/` — non-authoritative development/operations guidance and reference routing.
+  - `docs/EXECUTION-CONTRACT.md` — canonical low-context Planner/Executor handoff guide; it owns no Product/System/Policy truth.
 - `tools/verify-knowledge.mjs` — structural/relational integrity verification.
 
 The repository is not an implementation inventory, backlog, ADR archive, research notebook, or provider catalog. Git history is the archive. Exact source/runtime in the consuming repository is the authority for what currently exists.

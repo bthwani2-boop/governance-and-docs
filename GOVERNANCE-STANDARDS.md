@@ -197,3 +197,14 @@ INVALIDATED_REQUIRED_EVIDENCE=0
 ```
 
 A refoundation or material governance change closes only when the resulting exact state is proven against this standard. The existence of this file alone is never that proof.
+
+## 15. Execution-request economy and planner boundary
+
+An implementation request is an objective carrier, not a second agent constitution or a copy of Governance.
+
+When a BThwani agent prepares implementation work, use `docs/EXECUTION-CONTRACT.md` as the canonical construction guide. Do not maintain a parallel reusable trigger that restates the same law, and do not copy the contract into generated phase commands.
+
+Generated commands must stay bounded to the current material phase, delegate durable/executable truth to canonical owners, and carry only task-specific objective, decisions, affected owners and return requirements.
+
+For large objectives, preserve objective continuity through compact checkpoints and delta review while resetting execution context between material phases. Re-audit broadly only when new evidence invalidates the prior affected-cone model.
+

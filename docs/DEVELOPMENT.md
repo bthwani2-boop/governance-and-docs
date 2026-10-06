@@ -14,3 +14,8 @@ Do not load the entire knowledge repository by default. Do not stop at one file 
 Current repository commands, paths, versions and runtime shape are sourced from the consuming repository, not this document.
 
 When durable knowledge changes, update or restructure the canonical Governance owner before closure and deliberately repin consumers that require the new knowledge.
+
+When preparing or continuing implementation work, use `EXECUTION-CONTRACT.md` for the Planner → current-phase command → compact checkpoint → delta-review handoff.
+
+Do not create a separate reusable trigger that duplicates the generated execution command. Carry only the current objective and task-specific decisions; source durable and executable truth from their canonical owners.
+
