@@ -12,6 +12,7 @@ Use exemplars to recover edge cases, state machines, failure/recovery patterns a
 
 ## Commerce and delivery
 - Shopify developer docs — https://shopify.dev/docs
+- Shopify open-source engineering — https://github.com/Shopify
 - commercetools docs — https://docs.commercetools.com/
 - Saleor — https://github.com/saleor/saleor
 - Medusa — https://github.com/medusajs/medusa
@@ -19,6 +20,19 @@ Use exemplars to recover edge cases, state machines, failure/recovery patterns a
 - Traccar — https://github.com/traccar/traccar
 - Valhalla — https://github.com/valhalla/valhalla
 - VROOM — https://github.com/VROOM-Project/vroom
+
+### Global commerce and delivery product benchmarks
+
+Use these as non-authoritative product and operations benchmarks when their proven patterns can materially improve a BThwani decision. Public company GitHub organizations are engineering/OSS references only; they are **not** the source code of the corresponding commercial product and must not be used to infer private implementation details.
+
+- Shopify — https://www.shopify.com/ — commerce benchmark for catalog, products/variants/options, inventory, pricing, discounts, merchant operations, order lifecycle, fulfillment, permissions, media and bulk operations. Public engineering/OSS: https://github.com/Shopify
+- Talabat — https://www.talabat.com/ — MENA marketplace/delivery benchmark for multi-vertical discovery, merchant operations, ordering, delivery-state UX, promotions and regional operational patterns. Talabat is part of Delivery Hero; use the parent company's verified public engineering/OSS only as an engineering reference, not as Talabat product source: https://github.com/deliveryhero
+- Amazon — https://www.amazon.com/ — marketplace benchmark for catalog depth, seller/offer separation, availability, fulfillment, returns/refunds, trust, search/filtering and large-scale commerce operations. Public engineering/OSS: https://github.com/amzn
+- DoorDash — https://www.doordash.com/ — on-demand delivery benchmark for merchant/customer/courier coordination, fulfillment state machines, dispatch, ETA, substitutions, support and delivery recovery. Public engineering/OSS: https://github.com/doordash
+- Uber Eats — https://www.ubereats.com/ — delivery marketplace benchmark for discovery, ordering, courier handoff, live delivery states, ETA, support and multi-sided marketplace UX. Use Uber's public engineering/OSS as an engineering reference, not as Uber Eats product source: https://github.com/uber
+- Noon — https://www.noon.com/ — MENA marketplace benchmark for catalog, offers/sellers, pricing, fulfillment, returns, regional merchandising and marketplace UX. No verified official Noon GitHub OSS organization is recorded here; revalidate at use rather than linking an unverified repository.
+
+Benchmark extraction rule: compare **domain logic, state machines, edge cases, failure/recovery behavior, operational controls and UX patterns**. Adopt only patterns that fit BThwani's canonical product model and owners. Never copy external terminology, architecture, provider constraints or workflows merely because they exist in a market leader.
 
 ### Yemen delivery market product exemplars
 
