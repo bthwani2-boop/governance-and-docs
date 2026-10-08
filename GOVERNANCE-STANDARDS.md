@@ -202,7 +202,7 @@ A refoundation or material governance change closes only when the resulting exac
 
 An implementation request is an objective carrier, not a second agent constitution or a copy of Governance.
 
-When a BThwani agent prepares implementation work, use `docs/EXECUTION-CONTRACT.md` as the canonical construction guide. Do not maintain a parallel reusable trigger that restates the same law, and do not copy the contract into generated phase commands.
+When a BThwani agent prepares implementation work, use `docs/EXECUTION-CONTRACT.md` as the canonical construction guide. Do not maintain a parallel reusable trigger that restates the same law, and do not copy the contract into generated slice commands.
 
 Generated commands must stay bounded to the current material slice, delegate durable/executable truth to canonical owners, and carry only task-specific objective, decisions, affected owners and return requirements.
 
