@@ -1,197 +1,78 @@
-# BThwani Execution Planning Contract
+# BThwani Slice Execution Planning Contract
 
 DOCUMENT_CLASS: NONAUTHORITATIVE_EXECUTION_PLANNING_GUIDE
 EXECUTION_AUTHORITY: NONE
 PRODUCT_SEMANTIC_AUTHORITY: NONE
 CURRENT_IMPLEMENTATION_AUTHORITY: NONE
 
-This document defines the canonical construction shape for handing implementation work from a planning agent to an execution agent. It owns no Product/System/Policy meaning and no current implementation truth.
+This is the single concise planner/executor handoff guide, not a second agent constitution. The consuming repository's `AGENTS.md` owns execution and safety; pinned canonical Governance owns durable Product/System/Policy meaning; exact source/config/schema/runtime/readback owns implementation state.
 
-The consuming repository's `AGENTS.md` owns execution and safety law. Pinned Governance owns applicable durable meaning. Live source/config/schema/runtime/readback owns current implementation state.
+## 1. One objective, one bounded slice
 
-## 1. No trigger duplication
+A **cross-surface vertical slice** is one independently verifiable business or foundation capability/outcome, including every materially affected surface, actor, canonical owner, API/contract, persistence, event, UX/UI state, security boundary, runtime dependency and relevant Governance owner. It is not one screen, one endpoint, or a mandate to edit every app. Identify shared roots before choosing the slice boundary; combine inseparable behavior instead of generating artificial micro-tasks.
 
-Do not maintain a separate reusable trigger plus a generated execution command.
+An end-to-end Journey remains a business/integration proof scenario, not the planning, status, implementation or closure unit. E2E proof across connected slices is required before claiming the joined operational outcome complete.
 
-The human/planner input is only:
+## 2. Minimal human input
 
 ```text
-REF: <branch/ref>
-
-OBJECTIVE:
-<one materially testable outcome>
-
-DECISIONS:
-<only task-specific decisions already authorized; omit when empty>
+REF: <existing implementation branch/ref>
+OBJECTIVE: <one materially testable outcome>
+DECISIONS: <only task-specific authorized decisions, omit when empty>
 ```
 
-Do not copy repository law, Governance law, journey catalogs, proof catalogs, implementation inventories, historical defects or generic mutation permissions into this input.
+No duplicated reusable trigger, agent law, journey catalog, long proof list, historical diagnosis or future slice catalog. Scope authority is the current task; do not infer authorization to merge, release, destroy data or alter unrelated branches.
 
-## 2. Planner responsibility
+## 3. Bounded discovery and exact ownership
 
-The planner:
+Pin the exact repository/branch/HEAD and current relevant state. Discover all material producer/consumer relations across the implementation repository and its pinned canonical Governance. Resolve the canonical owner, highest causal root, negative space, consequences and required proof. Search broadly for connections; read deeply only where relevant. Widen only when evidence reveals another material dependency.
 
-1. pins the exact working state;
-2. performs one bounded discovery sufficient to identify the proven affected cone, highest causal root, canonical owners and material unknowns;
-3. classifies Governance impact as `NONE | REVALIDATE_ONLY | UPDATE_REQUIRED | DEFECT_FOUND`;
-4. derives the minimum material phase map needed for the objective;
-5. emits an execution command for the current phase only.
+Classify `GOVERNANCE_IMPACT=NONE | REVALIDATE_ONLY | UPDATE_REQUIRED | DEFECT_FOUND`. For a required durable semantic change, update and merge its owner by the governed path before deliberately repinning the consumer to the exact immutable Governance SHA; do not edit a second shadow policy inside implementation.
 
-Do not pre-create detailed commands for later phases whose shape can change after current evidence.
+## 4. Radical closure without rewrite theater
 
-A small objective may require one phase. Do not manufacture phases for symmetry.
+Inside the verified cone, repair causes rather than symptoms. `DELETE / CLEAN / MERGE / RESTRUCTURE / REFOUND / REPLACE` are permitted when necessary: retain sound code; migrate all affected consumers, writers, contracts, configurations, migrations, tests and references before deleting losing paths. Preserve durable data, secrets, safety, authorization, deployable identity and history.
 
-## 3. Governance changes
+Verify both **positive space** (required behavior/UX/roles/edge cases/handoffs) and **negative space** (obsolete code, conflicting writers, dead endpoints, duplicated rules, stale Governance/docs and unnecessary tooling). A term appearing in history or an immutable migration is not itself evidence for deletion. One canonical owner; no patch-on-patch, speculative abstraction or permanent temporary compatibility.
 
-If an authorized decision changes durable Product/System/Policy meaning, treat the applicable canonical Governance owner first, merge it through the governed path, then deliberately repin consumers that require the new meaning.
+## 5. Plan only the current material slice
 
-Implementation-only choices do not justify Governance edits.
-
-The planner must not assume Governance needs modification before discovery.
-
-## 4. Current-phase command
-
-A phase command stays compact and task-specific. It contains only:
+When the objective spans multiple slices, derive a compact dependency order from the live state and record a small checkpoint. Do not pre-generate long future commands; start foundational slices only when a real shared root makes them necessary. Do not re-audit already proven unaffected regions.
 
 ```text
-PHASE: <id/name>
-REF: <branch/ref>
+SLICE: <id/outcome>
+REF: <branch>
 BASE_HEAD: <exact sha>
-
-OBJECTIVE:
-<phase outcome>
-
-AFFECTED OWNERS:
-<only owners proven material>
-
-CLOSE:
-<material obligations unique to this phase>
-
-DO NOT EXPAND:
-<known unrelated scope when ambiguity exists>
-
-RETURN:
-HEAD
-STATUS
-CLOSED
-VALID_PROOF
-REMAINING
-BLOCKERS
+OBJECTIVE: <testable slice outcome>
+AFFECTED OWNERS: <only materially affected owners>
+CLOSE: <slice-specific acceptance and proof>
+DO NOT EXPAND: <known unrelated scope, if any>
+RETURN: HEAD | STATUS | CLOSED | VALID_PROOF | REMAINING | BLOCKERS
 ```
 
-Do not restate rules already owned by the consuming `AGENTS.md` or pinned Governance.
+All general execution/safety rules remain in the consuming repository's `AGENTS.md`; do not repeat them in the command.
 
-## 5. Executor checkpoint
+## 6. Execute, prove, checkpoint
 
-The executor returns a compact checkpoint, not a transcript:
+Work from one bounded discovery into implementation. As relevant, prove affected static/unit/API/contract/database/browser/device/runtime behavior, negative cases, cross-surface handoffs and canonical readback. A green static check alone never proves user-visible or cross-owner behavior. Reuse valid evidence and rerun only what an affected change invalidates.
 
 ```text
 HEAD: <exact sha>
-PHASE: <id/name>
+SLICE: <id>
 STATUS: CLOSED | REMAINDER | BLOCKED
-
-DECISIONS:
-<still-active material decisions only>
-
-CLOSED:
-<material outcomes closed in this phase>
-
-VALID_PROOF:
-<proof still valid for the exact state>
-
-REMAINING:
-<material dependencies/cells not yet closed>
-
-BLOCKERS:
-<none or exact blocker>
+DECISIONS: <still-active material decisions>
+CLOSED: <verified outcome and retired competing paths>
+VALID_PROOF: <specific checks/readback tied to exact state>
+REMAINING: <unresolved material dependencies>
+BLOCKERS: <none or exact root/cause and unblock requirement>
 ```
 
-Do not retain raw logs, unchanged source, giant diffs or already-superseded analysis in the checkpoint.
+A slice is not `CLOSED` with a known material defect, unverified consumer, unresolved critical unknown or unjustified residue. Do not claim permanent infallibility. Keep the checkpoint short; do not store raw logs, duplicate screenshots, giant diffs or repeating inventories.
 
-## 6. Planner continuation
+## 7. Integration and Git safety
 
-After a phase, perform a delta closure review only from:
+Follow the consuming repository's commit/push policy and the user's explicit integration requirements. Verified slices can be committed and pushed when authorized; a push alone is not a PR/merge/release. Avoid repeating identical CI/review waves after each tiny edit. Integrate connected slices with affected E2E scenario proof before claiming platform-wide completion. On a Governance change, the canonical main state must be verified through its PR and intentionally repinned by consuming repositories.
 
-```text
-previous checkpoint
-+ current exact HEAD
-+ changes since the checkpoint
-+ newly affected owners/evidence
-```
+## 8. Continuation and stop
 
-Do not repeat repository-wide discovery unless new evidence invalidates the prior affected-cone model.
-
-Then emit exactly one of:
-
-- a small remainder command for the current phase;
-- the next phase command;
-- final integration instructions when material execution is complete;
-- `BLOCKED` with the exact unblock requirement.
-
-## 7. Context reset
-
-The objective remains continuous; execution context does not.
-
-At each material phase boundary retain only:
-
-```text
-exact HEAD
-active decisions
-affected owners
-still-valid proof
-remaining material dependencies
-blockers
-```
-
-Start the next phase from a fresh bounded context using that checkpoint and the exact live state.
-
-## 8. Integration boundary
-
-Iterative phase work uses local commits/checkpoints according to the consuming repository law.
-
-Remote push, pull request, CI and remote review are integration events, not default phase checkpoints. Unless earlier integration is materially required, defer them until feature freeze and perform one final affected integration wave.
-
-## 9. Broad-audit exception
-
-Platform-wide or all-journey discovery is allowed only when the human objective explicitly authorizes a broad audit or evidence proves that such breadth is material.
-
-Phrases such as “complete”, “100%” or “do not miss anything” do not by themselves authorize unrelated platform-wide census work.
-
-## 10. Stop rule
-
-Stop when the authorized objective and its proven affected cone reach fixed point.
-
-Do not invent further phases, optional refactors, new abstractions, extra proof or additional scope after closure.
-
-## 11. Exact blocked contract
-
-Use `BLOCKED` only when the next material action cannot proceed safely within current authority or evidence.
-
-A blocked checkpoint must state exactly:
-
-```text
-BLOCKED
-
-ROOT_CAUSE:
-<why execution cannot proceed>
-
-IMPACT:
-<what material objective/phase is prevented>
-
-EVIDENCE:
-<current evidence proving the blocker>
-
-EXACT_UNBLOCK_REQUIREMENT:
-<the precise decision, authority, state or external change required>
-```
-
-Do not use vague blocker labels when the exact unblock requirement is knowable.
-
-## 12. Continue without asking for next
-
-Do not ask the human for “next” when the next safe material action is derivable from the authorized objective, compact checkpoint and exact live state.
-
-Continue by emitting the current phase remainder, next material phase, final integration step or closure as appropriate.
-
-Ask the human only when a decision, authority boundary or decision-critical unknown cannot be derived safely.
-
+At the next slice, use only the previous checkpoint, current exact HEAD, delta, active decisions and affected dependencies; reset stale context. Continue to the next safe material slice without asking for another trigger. Stop at the authorized fixed point, or return `BLOCKED` with exact root cause, consequence, evidence and unblock requirement. “100%” means zero **known** material defect in the proven scope, not a guarantee about all future execution.

@@ -5,7 +5,9 @@ SEMANTIC_OWNER: governance/product/JOURNEYS.md
 EXECUTION_AUTHORITY: NONE
 IMPLEMENTATION_STATE_AUTHORITY: NONE
 
-## Journey law
+## End-to-end scenario boundary
+
+This document preserves durable cross-capability business scenarios, material handoffs, surface participation and canonical readback expectations. These scenarios are **integration and end-to-end proof lenses**, not implementation slices, slice status, delivery sequence or an authorization to declare code complete. Implementation planning and closure use bounded cross-surface vertical slices derived from current source and admitted Product semantics. A slice may touch many surfaces; not every surface must be changed when unaffected. No separate Journey execution backlog or closure score is maintained here.
 
 A top-level Journey is one end-to-end user/business outcome that crosses at least two material actor-facing surfaces, crosses every canonical business owner/handoff needed by that outcome, and ends with canonical readback usable by every authorized participant.
 
@@ -584,28 +586,6 @@ Notification projections are bounded, idempotent derivations of committed canoni
 | PARTNER_COMMISSION_REMITTANCE | — | QUALIFYING EVIDENCE | PRIMARY |
 | BENEFICIARY_SETTLEMENT | — | QUALIFYING EVIDENCE | PRIMARY |
 
-## Matrix — Journey × Correctness dimension
-
-Legend: `A` applicable, `C` conditional, `N` not applicable for the Journey outcome.
-
-| Journey | Authz | Idempotency | Concurrency | Offline | Retry | Unknown outcome | Restart | Audit | Notification | Media | Tracking | Financial | Exception | Readback |
-|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
-| MANAGED_PARTICIPANT_ADMISSION | A | A | A | C | A | C | A | A | C | N | N | N | A | A |
-| PARTNER_TO_VISIBLE_STORE | A | A | A | C | A | C | A | A | C | C | N | A | A | A |
-| STORE_ORDERABILITY | A | A | A | C | A | C | A | A | C | N | N | N | A | A |
-| CATALOG_TO_CUSTOMER_OFFER | A | A | A | C | A | C | A | A | C | A | N | N | A | A |
-| DISCOVERY_TO_COMMERCE_ENTRY | A | A | A | C | A | C | A | A | C | A | N | C | A | A |
-| SINGLE_STORE_ORDER_CREATION | A | A | A | A | A | A | A | A | C | C | N | A | A | A |
-| BTHWANI_CAPTAIN_DELIVERY | A | A | A | A | A | A | A | A | A | C | A | A | A | A |
-| PARTNER_CAPTAIN_DELIVERY | A | A | A | A | A | A | A | A | A | C | A | C | A | A |
-| CUSTOMER_PICKUP | A | A | A | A | A | A | A | A | C | C | N | A | A | A |
-| MULTI_STORE_ORCHESTRATION | A | A | A | A | A | A | A | A | C | C | C | A | A | A |
-| ORDER_COMMUNICATION | A | A | A | A | A | C | A | A | A | A | N | N | A | A |
-| ORDER_ADJUSTMENT_EXCEPTION_REFUND | A | A | A | A | A | A | A | A | A | C | C | A | A | A |
-| CAPTAIN_COD_REMITTANCE | A | A | A | C | A | A | A | A | C | C | N | A | A | A |
-| PARTNER_COMMISSION_REMITTANCE | A | A | A | C | A | A | A | A | C | C | N | A | A | A |
-| BENEFICIARY_SETTLEMENT | A | A | A | C | A | A | A | A | C | C | N | A | A | A |
-
 ## Platform material census
 
 Every currently material concept must have one explicit disposition. Absence from a top-level Journey is not omission when deliberately classified here or in the supporting-lanes table.
@@ -684,11 +664,11 @@ Every currently material concept must have one explicit disposition. Absence fro
 | ERP/POS replacement | none admitted | EXPLICIT_NON_GOAL | current Product target | MAPPED |
 | Speculative multi-currency breadth | none admitted | EXPLICIT_NON_GOAL | current Product target | MAPPED |
 
-## Journey acceptance law
+## End-to-end integration proof boundary
 
 For every participating surface, applicable user-visible states are not polish: `loading`, `empty`, `ready`, `pending`, `success`, `forbidden`, `offline`, `conflict`, `reconciliation_required` and `error` must be deliberately handled or marked not applicable with reason by implementation proof.
 
-A Journey is not complete merely because endpoints exist. Current-material proof follows:
+A cross-surface scenario is not proven merely because endpoints exist or constituent slices pass independently. When the connected outcome is claimed, current-material integration proof follows:
 
 ```text
 INTENT

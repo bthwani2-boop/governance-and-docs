@@ -35,7 +35,7 @@ QUALITY_DIMENSION: GOVERNANCE_DOCS_RESIDUE
 
 Synthetic runtime proof state is evidence/development state, not Product truth. When an operational journey is claimed, its business state is created through the canonical owner and writer paths. A synthetic proof environment is isolated, reproducible and disposable; valid proven proof state may be reused, while untrusted state is discarded and rebuilt through canonical owners rather than repaired manually to manufacture a green result.
 
-Material cross-role journey proof connects the affected real surfaces to the same canonical identities and business state. Synthetic proof does not authorize Product or schema exceptions and must not create uncontrolled real-world effects. Direct persistence mutation does not substitute for a business journey; it is limited to cases where persistence is the correct evidence producer for a database or fault/recovery claim.
+Material cross-role slice and end-to-end scenario proof connects the affected real surfaces to the same canonical identities and business state. Synthetic proof does not authorize Product or schema exceptions and must not create uncontrolled real-world effects. Direct persistence mutation does not substitute for a canonical business operation; it is limited to cases where persistence is the correct evidence producer for a database or fault/recovery claim.
 
 The durable meanings for data, security, integrations and reliability remain owned by `DATA.md`, `SECURITY.md`, `INTEGRATIONS.md` and `RELIABILITY.md`; this policy defines only the cross-cutting proof-environment boundary.
 
@@ -65,15 +65,15 @@ A ready Governance PR records the dimensions actually examined and the concrete 
 For a material outcome, closure reasoning covers the material cells produced by:
 
 ```text
-CAPABILITY
-× JOURNEY
-× SURFACE / ACTOR
+SLICE / CAPABILITY
+× MATERIAL SURFACE / ACTOR
 × CANONICAL OWNER / WRITER / READBACK
 × MATERIAL FULL-STACK LAYER
 × REQUIRED PROOF
+× RELEVANT CROSS-SLICE HANDOFF / E2E SCENARIO
 ```
 
-The matrix is a reasoning and proof model, not a permanent backlog or mandatory new artifact. Include only cells that can materially affect the authorized outcome. Every material cell at closure resolves to exactly one of:
+The matrix is a reasoning and proof model, not a permanent backlog or mandatory new artifact. Start with the bounded slice and its cross-repository impact; include only cells that can materially affect the authorized outcome. Verify E2E scenarios at integration boundaries, without treating journey documents as a second implementation queue. Every material cell at closure resolves to exactly one of:
 
 ```text
 PROVEN
@@ -147,7 +147,7 @@ When correctness depends on OS/device behavior, use representative real-device e
 
 For user-facing work, rendered quality is correctness. Representative evidence covers the materially affected IA/shell/navigation, adaptive sizes, RTL, appearance, accessibility, applicable loading/empty/forbidden/conflict/offline/error/recovery states and actual interaction path.
 
-A screenshot alone is not journey proof. Static type/source checks do not override visibly, structurally or interactively defective behavior.
+A screenshot alone is not cross-surface or end-to-end proof. Static type/source checks do not override visibly, structurally or interactively defective behavior.
 
 ## External assurance
 

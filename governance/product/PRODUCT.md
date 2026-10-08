@@ -38,7 +38,7 @@ OPERATOR ───────────────────────�
 MULTI-STORE ────────────────────────── orchestration above independent Store Orders
 ```
 
-Detailed material surfaces, handoffs, branches and readbacks are owned exclusively by `JOURNEYS.md`.
+Detailed cross-capability surfaces, handoffs, branches and readbacks are owned by `JOURNEYS.md` as durable E2E scenario meaning; its contents do not prescribe implementation slices or assert their completion.
 
 The active implementation slice may be narrower. Current approved Governance may intentionally lead implementation progress. Missing admitted breadth is not by itself a defect unless the authorized objective or current delivery gate requires that breadth to be complete.
 
