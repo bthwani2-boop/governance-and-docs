@@ -5,12 +5,10 @@
 <!-- Exact base/candidate refs; the specific decision and affected semantic owners. -->
 
 ## Governance impact
-<!-- Provide one evidence-backed GOVERNANCE_IMPACT=NONE | REVALIDATE_ONLY | UPDATE_REQUIRED | DEFECT_FOUND. No default classification. -->
+<!-- Record one evidence-backed governance impact classification: NONE, REVALIDATE_ONLY, UPDATE_REQUIRED or DEFECT_FOUND. -->
 
 ## Material quality scope
-<!-- Classify only the dimensions actually material to this decision, e.g.:
-- GOVERNANCE_DOCS_RESIDUE: AFFECTED — concrete reason and evidence
-Use AFFECTED, PROVEN_UNAFFECTED or N/A_WITH_REASON. -->
+<!-- One bullet per actually examined quality dimension, with AFFECTED, PROVEN_UNAFFECTED or N/A_WITH_REASON and concrete evidence. -->
 
 ## Evidence and freshness
 <!-- Which current owner/source evidence supports the change? What was checked, reused, or excluded with reason? -->
