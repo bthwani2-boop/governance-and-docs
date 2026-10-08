@@ -204,7 +204,9 @@ An implementation request is an objective carrier, not a second agent constituti
 
 When a BThwani agent prepares implementation work, use `docs/EXECUTION-CONTRACT.md` as the canonical construction guide. Do not maintain a parallel reusable trigger that restates the same law, and do not copy the contract into generated phase commands.
 
-Generated commands must stay bounded to the current material phase, delegate durable/executable truth to canonical owners, and carry only task-specific objective, decisions, affected owners and return requirements.
+Generated commands must stay bounded to the current material slice, delegate durable/executable truth to canonical owners, and carry only task-specific objective, decisions, affected owners and return requirements.
 
-For large objectives, preserve objective continuity through compact checkpoints and delta review while resetting execution context between material phases. Re-audit broadly only when new evidence invalidates the prior affected-cone model.
+For large objectives, preserve objective continuity through compact slice checkpoints and delta review while resetting execution context between material slices. Re-audit broadly only when new evidence invalidates the prior affected-cone model.
+
+A cross-surface vertical slice is the implementation work and closure unit. All materially affected actors, owners, layers and repositories belong to its cone; unrelated areas do not. End-to-end journeys remain business/integration proof scenarios, not a second execution queue or a second closure registry. Governance does not enumerate planned slices or store their mutable progress. Do not duplicate the same requirement in a trigger, policy, template and agent constitution.
 

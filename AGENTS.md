@@ -77,7 +77,15 @@ The quality-dimension catalog in `governance/policy/QUALITY.md` is a discovery t
 
 Research stops when additional evidence can no longer materially change the current decision.
 
-## 4. Evidence council
+## 4. Implementation execution boundary
+
+The consuming repository's `AGENTS.md` remains the execution authority. For authorized implementation work, the unit of planning, repair and evidence-based closure is a **bounded cross-surface vertical slice**: one independently verifiable capability/outcome across every materially affected surface, owner and layer. Foundation slices are allowed when they repair a proven shared root. A screen, isolated endpoint or one service passing alone is not slice closure.
+
+Discover the slice's actual impact across implementation and canonical Governance, repair the highest causal root, migrate every affected consumer, remove losing paths and obsolete references, and prove both required behavior and absence of material residue. `DELETE / CLEAN / RESTRUCTURE / REFOUND / REPLACE` are options justified by the evidence, not mandatory edits to sound code. Never widen into unrelated healthy areas or preserve workaround debt.
+
+An end-to-end Journey is a **business scenario and integration-proof lens**, not a parallel planning, status, execution or closure unit. Use `governance/product/JOURNEYS.md` to preserve material actor handoffs and canonical readbacks; do not turn it into a static backlog or claim that its existence proves implementation. The concise planner/executor handoff is in `docs/EXECUTION-CONTRACT.md`. Avoid duplicated triggers, checklists and closure registries.
+
+## 5. Evidence council
 
 For a material question, consider these evidence lanes for applicability:
 
@@ -97,7 +105,7 @@ Inspect a lane when it can materially change the decision. Do not repeatedly reo
 
 External evidence is distilled into the correct BThwani owner or discarded; research transcripts and mutable market/tool inventories do not become live Governance.
 
-## 5. Governance impact
+## 6. Governance impact
 
 Every material task classifies exactly one:
 
@@ -119,7 +127,7 @@ Current approved Governance may intentionally be broader than the active impleme
 
 When implementation work requires `UPDATE_REQUIRED` or `DEFECT_FOUND`, correct and merge the canonical Governance owner first. Only then may a consumer deliberately pin the resulting immutable Governance SHA.
 
-## 6. Semantic conservation and restructuring
+## 7. Semantic conservation and restructuring
 
 Knowledge structure has no preservation right; required durable meaning does.
 
@@ -141,7 +149,7 @@ Git is the archive. Do not preserve historical cutover state, implementation sna
 
 A new file, owner, policy, capability, registry, verifier or abstraction must prove a unique current responsibility that a simpler existing owner cannot satisfy.
 
-## 7. External change and technology evolution
+## 8. External change and technology evolution
 
 Mutable external facts are revalidated at actual use.
 
@@ -151,7 +159,7 @@ Newer is not automatically better. Adoption is a decision, not a discovery resul
 
 Do not create a permanent market, dependency or technology-news inventory in Governance.
 
-## 8. Verifier law
+## 9. Verifier law
 
 A verifier is deterministic evidence, not semantic authority.
 
@@ -159,7 +167,7 @@ Prefer checks for relationships and mechanically detectable forbidden states: un
 
 Do not encode semantic correctness as brittle prose matching. Exact wording is protected only when wording itself is intentionally the contract.
 
-## 9. Cross-repository consumption
+## 10. Cross-repository consumption
 
 A consuming repository binds Governance through one exact immutable full commit SHA.
 
@@ -167,7 +175,7 @@ A moving Governance `main` never silently changes a pinned implementation state.
 
 The pin is provenance, not a second knowledge registry.
 
-## 10. Current-material closure
+## 11. Current-material closure
 
 `100% CURRENT MATERIAL CLOSURE` is exact-state closure, not permanent infallibility.
 
