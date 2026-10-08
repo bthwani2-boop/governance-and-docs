@@ -29,6 +29,8 @@ Pin the exact repository/branch/HEAD and current relevant state. Discover all ma
 
 Classify `GOVERNANCE_IMPACT=NONE | REVALIDATE_ONLY | UPDATE_REQUIRED | DEFECT_FOUND`. For a required durable semantic change, update and merge its owner by the governed path before deliberately repinning the consumer to the exact immutable Governance SHA; do not edit a second shadow policy inside implementation.
 
+For local-development work, record the observed target and data-disposition evidence before any destructive reset: `LOCAL_TARGET=VERIFIED | UNVERIFIED`, `LOCAL_DATA_MODE=CONFIRMED_DISPOSABLE | MUST_PRESERVE | UNKNOWN`, and `RESET_SCOPE=<exact project-owned targets | NONE>`. Local phase, Docker location, or a test/demo label alone does not establish disposability. Proceed non-destructively when disposition is unknown; isolate a provably disposable target or resolve the specific blocker before a reset. Reset only expressly authorized, confirmed-disposable resources; then prove fresh setup and canonical owner readback. The consuming repository's `AGENTS.md` owns data, migration, security and mutation rules.
+
 ## 4. Radical closure without rewrite theater
 
 Inside the verified cone, repair causes rather than symptoms. `DELETE / CLEAN / MERGE / RESTRUCTURE / REFOUND / REPLACE` are permitted when necessary: retain sound code; migrate all affected consumers, writers, contracts, configurations, migrations, tests and references before deleting losing paths. Preserve durable data, secrets, safety, authorization, deployable identity and history.
@@ -45,9 +47,12 @@ REF: <branch>
 BASE_HEAD: <exact sha>
 OBJECTIVE: <testable slice outcome>
 AFFECTED OWNERS: <only materially affected owners>
+LOCAL_TARGET: VERIFIED | UNVERIFIED (current observation)
+LOCAL_DATA_MODE: CONFIRMED_DISPOSABLE | MUST_PRESERVE | UNKNOWN (evidenced scope)
+RESET_SCOPE: <exact verified, authorized disposable targets | NONE>
 CLOSE: <slice-specific acceptance and proof>
 DO NOT EXPAND: <known unrelated scope, if any>
-RETURN: HEAD | STATUS | CLOSED | VALID_PROOF | REMAINING | BLOCKERS
+RETURN: HEAD | STATUS | CLOSED | LOCAL_TARGET | LOCAL_DATA_MODE | RESET_SCOPE | CLOSURE_GATE_1_TO_8 | VALID_PROOF | REMAINING | BLOCKERS
 ```
 
 All general execution/safety rules remain in the consuming repository's `AGENTS.md`; do not repeat them in the command.
@@ -56,12 +61,18 @@ All general execution/safety rules remain in the consuming repository's `AGENTS.
 
 Work from one bounded discovery into implementation. As relevant, prove affected static/unit/API/contract/database/browser/device/runtime behavior, negative cases, cross-surface handoffs and canonical readback. A green static check alone never proves user-visible or cross-owner behavior. Reuse valid evidence and rerun only what an affected change invalidates.
 
+Report `CLOSURE_GATE_1_TO_8` for the applicable slice boundary: `1` causal root; `2` canonical ownership/write/readback; `3` necessary structural repair; `4` obsolete/conflicting-path removal; `5` affected surfaces/handoffs; `6` justified minimum complexity; `7` canonical Governance consistency/correction; `8` falsifiable technical/runtime/data/security proof. For each return `PASS | NOT_APPLICABLE(reason/evidence) | FAIL | UNPROVEN` and one compact claim-specific evidence reference. An applicable `FAIL` or `UNPROVEN` forbids `CLOSED`; return `REMAINDER` or `BLOCKED` with the precise unresolved claim. `NOT_APPLICABLE` must be justified by the actual boundary, not used to waive material proof. These are reporting gates over the existing execution law, not an additional parallel rule system or eight redundant test passes.
+
 ```text
 HEAD: <exact sha>
 SLICE: <id>
 STATUS: CLOSED | REMAINDER | BLOCKED
 DECISIONS: <still-active material decisions>
 CLOSED: <verified outcome and retired competing paths>
+LOCAL_TARGET: VERIFIED | UNVERIFIED
+LOCAL_DATA_MODE: CONFIRMED_DISPOSABLE | MUST_PRESERVE | UNKNOWN
+RESET_SCOPE: <actual authorized resets and post-reset readback | NONE>
+CLOSURE_GATE_1_TO_8: <1..8 status + concise claim-specific evidence/reason>
 VALID_PROOF: <specific checks/readback tied to exact state>
 REMAINING: <unresolved material dependencies>
 BLOCKERS: <none or exact root/cause and unblock requirement>
