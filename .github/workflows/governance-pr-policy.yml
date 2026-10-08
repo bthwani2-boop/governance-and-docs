@@ -57,7 +57,6 @@ jobs:
           fi
 
           body="${PR_BODY:-}"
-          (( ${#body} >= 400 )) || { echo "::error::Ready Governance PR lacks material evidence"; exit 1; }
 
           required_headings=(
             '## Summary'
@@ -69,7 +68,14 @@ jobs:
             '## Negative space and consumer impact'
           )
           for heading in "${required_headings[@]}"; do
-            grep -Fq -- "${heading}" <<<"${body}" || { echo "::error::PR body missing required section: ${heading}"; exit 1; }
+            grep -Fxq -- "${heading}" <<<"${body}" || { echo "::error::PR body missing required section: ${heading}"; exit 1; }
+            # Nonempty, non-comment evidence is required; typed success flags cannot prove their own truth.
+            evidence="$(awk -v heading="${heading}" '
+              $0 == heading { inside=1; next }
+              inside && /^## / { exit }
+              inside && $0 !~ /^[[:space:]]*$/ && $0 !~ /^[[:space:]]*<!--/ { print }
+            ' <<<"${body}")"
+            [[ -n "${evidence}" ]] || { echo "::error::PR section is empty: ${heading}"; exit 1; }
           done
 
           mapfile -t impacts < <(grep -Eo 'GOVERNANCE_IMPACT=(NONE|REVALIDATE_ONLY|UPDATE_REQUIRED|DEFECT_FOUND)' <<<"${body}" || true)
@@ -94,9 +100,7 @@ jobs:
             exit 1
           fi
 
-          for closure in             PLAUSIBLY_MATERIAL_DIMENSIONS_UNRESOLVED=0             AFFECTED_DIMENSIONS_WITHOUT_OWNER=0             AFFECTED_DIMENSIONS_WITHOUT_REQUIRED_PROOF=0             MATERIAL_DURABLE_MEANING_LOST=0             DUPLICATE_DURABLE_AUTHORITIES=0             DISCOVERABLE_IMPLEMENTATION_STATE_AS_GOVERNANCE=0             HISTORICAL_OR_CUTOVER_STATE_AS_CURRENT_GOVERNANCE=0             KNOWN_MATERIAL_DEFECTS=0             KNOWN_MATERIAL_CONTRADICTIONS=0             DECISION_CRITICAL_UNKNOWNS=0             KNOWN_GOVERNANCE_DRIFT=0             UNJUSTIFIED_KNOWLEDGE_COMPLEXITY_OR_RESIDUE=0; do
-            grep -Fq -- "${closure}" <<<"${body}" || { echo "::error::Ready PR missing closure assertion: ${closure}"; exit 1; }
-          done
+          # Claim-specific closure is reviewed against sources and checks, not proved by copied '=0' literals.
 
           echo "GOVERNANCE_PR_POLICY=PASS"
           echo "MATERIAL_QUALITY_DIMENSIONS=${#classified[@]}"
