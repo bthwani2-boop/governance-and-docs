@@ -555,6 +555,12 @@ Analytics remains derived and cannot become canonical mutation authority.
 
 ## 11. Service/runtime scaling
 
+**BThwani operating posture — vertical first, horizontal only on demonstrated need.** Local development and initial operation default to one server with a simple single-instance runtime per service; increase available host capacity before introducing replicas when that meets the actual need. This is a preferred scaling strategy, not a frozen deployment inventory. Executable deployment configuration owns actual topology.
+
+**Horizontal readiness is an anti-lock-in constraint, not a feature or a present proof gate.** Do not introduce new durable dependence on one application process's memory or local filesystem for canonical sessions, business data or media. Process-local caches, transient state and in-process workers remain allowed when correct, bounded and recoverable under the current single-instance model.
+
+Do not add replicas, load balancers, shared caches, brokers, distributed locks/leases, separate worker services, orchestrators, new abstraction layers or multi-replica test requirements merely for possible future scale. Preserve currently required correctness, retry, idempotency, concurrency and restart/recovery semantics with the simplest existing owner mechanism. When measured capacity, availability or operational requirements justify horizontal scaling, treat replica coordination and multi-replica proof as a separately scoped change.
+
 ### 11.1 Stateless request-serving runtime
 
 Request-serving service replicas should not rely on local ephemeral state as canonical business truth. Material state belongs to the canonical owner/storage boundary.
