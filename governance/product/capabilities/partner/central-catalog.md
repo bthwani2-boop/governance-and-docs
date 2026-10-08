@@ -16,14 +16,13 @@ a storefront grouping into one record. The Operator workspace manages the
 shared catalog; the Partner surface manages the Store's local catalog and
 assortment; the Client surface reads a DSH-composed customer-safe storefront.
 
-This is the current Central Catalog capability. It is not a second
-`CATALOG_V2` capability and it does not admit a full PIM, ERP, POS or marketing
+This Central Catalog capability does not admit a full PIM, ERP, POS or marketing
 system.
 
 ## Ownership and verticals
 
 `CommerceVertical` is the canonical classification of the commercial activity
-of a Store. A Store has exactly one `primary_vertical_id` in this slice. A
+of a Store. A Store has exactly one `primary_vertical_id` in the admitted Product model. A
 Partner is not vertical-scoped and may own Stores in different verticals.
 
 The joining case requires the first-Store vertical before admission. The value
@@ -40,7 +39,7 @@ The Commerce Vertical registry is canonical DSH data, not a hard-coded Governanc
 `CatalogCategory` is the shared catalog taxonomy: a flexible tree with
 `parent_category_id`. It is not a fixed L1/L2/L3/L4 model, a
 `CommerceVertical`, or a Store-local menu grouping. A category belongs to one
-vertical in this slice. A shared Product may have multiple category assignments
+vertical. A shared Product may have multiple category assignments
 when each assignment is explicitly valid for its vertical. Parent links must
 remain in the same vertical and cycles are rejected. Store-local items are
 organized by their Store's menu/grouping data; they do not need an invented
@@ -49,7 +48,7 @@ assignment to the shared taxonomy.
 Category rules are owned by the category through typed
 `CategoryAttributeRule` records. A rule may be required, filterable or a
 variant axis. The rule model is bounded to the data types needed by current
-catalog journeys: text, number, boolean, enum, measurement and date. Values
+catalog use cases: text, number, boolean, enum, measurement and date. Values
 are typed records, never an opaque options JSON blob, encoded names or a
 vertical-specific column explosion.
 
@@ -120,7 +119,7 @@ customer-sellable, the confirmed request range and the actual fulfilled amount
 are explicit facts. No floating-point business quantity, fake `half`/`quarter`
 unit or display label is an authority.
 
-This slice admits `AVAILABILITY_ONLY` inventory for current offers. It does not
+Current offers admit `AVAILABILITY_ONLY` inventory. It does not
 invent stock numbers for restaurants or stores without finite-stock evidence.
 Finite count/measure inventory may be admitted only with an atomic reserve,
 release, duplicate-retry and unknown-outcome rule owned by DSH; an enum or

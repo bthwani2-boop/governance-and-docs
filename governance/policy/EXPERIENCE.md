@@ -150,7 +150,7 @@ PRODUCT SEMANTICS
 → CANONICAL OUTCOME READBACK
 ```
 
-Rendered claims require interaction/accessibility/device/runtime evidence appropriate to the affected surface. A screenshot alone is not journey proof. Static type/source checks do not override a visibly, structurally or interactively defective surface.
+Rendered claims require interaction/accessibility/device/runtime evidence appropriate to the affected surface. A screenshot alone is not cross-surface or end-to-end proof. Static type/source checks do not override a visibly, structurally or interactively defective surface.
 
 Visual regression can prove stability of a rendered contract when that contract is mature and materially valuable, but it does not replace behavioral, accessibility, RTL or canonical-readback proof.
 

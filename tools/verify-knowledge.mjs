@@ -98,6 +98,8 @@ for (const file of governanceFiles) {
   if (!body.includes("EXECUTION_AUTHORITY: NONE")) fail(`${relative} missing execution non-authority`);
   if (!body.includes("IMPLEMENTATION_STATE_AUTHORITY: NONE")) fail(`${relative} missing implementation-state non-authority`);
 
+  if (/\bJ\d+\b/.test(body)) fail(`${relative} retains a retired J-numbered journey reference`);
+
   const forbiddenSnapshots = [
     { re: /\b\d{3}\.\.\d{3}\b/, label: "migration ordinal/range snapshot" },
     { re: /\b(?:localhost|127\.0\.0\.1):\d{2,5}\b/i, label: "local runtime port snapshot" },

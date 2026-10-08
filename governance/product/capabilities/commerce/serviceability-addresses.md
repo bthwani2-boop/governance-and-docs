@@ -45,7 +45,7 @@ Store delivery origin and exact DeliveryAddress coordinates are preserved as pur
 - an address belongs to exactly one authorized client, derived from the verified client session;
 - serviceability is Store-scoped, evaluated by DSH server-side from canonical Store and Address records;
 - client activeServiceCityId is local client discovery preference only and is never serviceability authority;
-- Store publication/customer visibility remains J1 truth; serviceability readiness is a J2 customer-journey prerequisite and does not redefine publication;
+- Store publication/customer visibility remains the `PARTNER_TO_VISIBLE_STORE` outcome; serviceability readiness is a prerequisite for `SINGLE_STORE_ORDER_CREATION` and does not redefine publication;
 - the canonical result exposes sufficient Store, Address, and Service City version evidence for later Cart freshness validation without exposing raw coordinates;
 - no alternate fulfillment lane can be selected through address/serviceability input;
 - exact location is purpose-limited operational data and must be minimized.
