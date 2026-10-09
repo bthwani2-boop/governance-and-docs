@@ -8,7 +8,6 @@ CURRENT_IMPLEMENTATION_AUTHORITY: NONE
 Docs explain how to work with BThwani knowledge and operations. They own no Product/System truth and no current command/version/runtime inventory.
 
 Use:
-- `DEVELOPMENT.md` for the development/decision method.
 - `EXECUTION-CONTRACT.md` for low-context Planner/Executor vertical-slice handoff and execution-command construction.
 - `OPERATIONS.md` for the operations/recovery method.
 - `reference/standards.md` for normative/security standards.
