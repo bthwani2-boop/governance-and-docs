@@ -31,6 +31,36 @@ Classify `GOVERNANCE_IMPACT=NONE | REVALIDATE_ONLY | UPDATE_REQUIRED | DEFECT_FO
 
 For local-development work, record the observed target and data-disposition evidence before any destructive reset: `LOCAL_TARGET=VERIFIED | UNVERIFIED`, `LOCAL_DATA_MODE=CONFIRMED_DISPOSABLE | MUST_PRESERVE | UNKNOWN`, and `RESET_SCOPE=<exact project-owned targets | NONE>`. Local phase, Docker location, or a test/demo label alone does not establish disposability. Proceed non-destructively when disposition is unknown; isolate a provably disposable target or resolve the specific blocker before a reset. Reset only expressly authorized, confirmed-disposable resources; then prove fresh setup and canonical owner readback. The consuming repository's `AGENTS.md` owns data, migration, security and mutation rules.
 
+## 3A. Whole-program coverage and predecessor gate
+
+Before proposing a next slice in a foundational, cross-capability program, construct or refresh **one** compact, evidence-backed coverage map of the *currently admitted* capability universe and its material end-to-end scenarios. Start from `PRODUCT.md`, `CAPABILITIES.md`, `JOURNEYS.md`, the exact implementation ref and the canonical owner readbacks; do not choose among an arbitrary handful of screens, apps or adjacent tasks. This census is a planning input, not a second Product specification, a claim that every capability is missing, or a mandate for repeated whole-repository scans. Reuse the latest proven census; revisit only a change that can alter scope, edges, status or precedence.
+
+For each proposed outcome, trace **all material incoming prerequisites** and the corresponding owning producer, consumer, permitted transition and falsifiable readback. Classify each edge:
+
+- `HARD`: prerequisite without which the next mutation/outcome would violate currently admitted authorization, business meaning, integrity or runtime contracts. **Block implementation** until independently proven.
+- `REFERENCE_READY`: the admitted, owner-managed *actual reference values* needed for the target scenario exist, are active/compatible and can be read through their canonical API. **Block that scenario** if absent; a table/API's existence alone is not readiness. Do not require every possible city, category, product or future value.
+- `PROGRAM_ORDER`: an expressly selected preparation/validation order useful for this current local delivery program, but not an invariant of the Product or a universal technical dependency. Record it transparently; do not describe it as `HARD`.
+- `INTEGRATION_PROOF`: crossing an owner/surface boundary requires its own targeted E2E evidence at the first relevant handoff. It does not by itself mandate early implementation of all downstream capabilities.
+
+Run a backward prerequisite walk from the requested outcome to the first unproven hard or reference-readiness ancestor; also inspect sibling prerequisites of any selected outcome. Verify edge direction against the owning capability and code, detect dependency cycles and unintended transitive blocks, and preserve explicitly independent/parallel work. **Never promote** an illustrative graph, document order, UI navigation order, historical branch sequence, competitor workflow, or numeric slice ID into dependency authority. When a prerequisite is already proven on the same applicable state, reuse it; when only code exists, mark `IMPLEMENTED_UNPROVEN`; when unexamined, mark `UNKNOWN`. Do not create missing work or demand reimplementation by assumption.
+
+Choose the **earliest eligible material outcome** in the current authorized program, bounded to its real owner/writer/readback and affected surfaces. If multiple outcomes are eligible, prefer the one unlocking the nearest blocked agreed business handoff, then the smaller causally coherent proof cone; a human-approved `PROGRAM_ORDER` resolves remaining choices without fabricating hard edges. Where evidence reveals an earlier prerequisite that the provisional map omitted, **stop and correct the map/owner first** rather than proceeding with the later slice. Do not require the entire future roadmap to be simultaneously closed; an independently eligible slice remains eligible even when unrelated later work is open.
+
+The brief next-slice checkpoint must expose:
+
+```text
+COVERAGE: admitted capabilities/scenarios included, excluded only with reason
+SELECTED_SLICE: one observable outcome, not a screen or a whole domain
+HARD_PREDECESSORS: owner, proof/readback, PASS | BLOCKED | UNKNOWN
+REFERENCE_READY: exact scenario options and canonical readback, PASS | BLOCKED | N/A
+PROGRAM_ORDER: stated preference, not falsely HARD
+INTEGRATION_PROOF: first required cross-owner handoff
+REMAINING_EARLIER_BLOCKERS: none or exact roots; no silent omission
+PREVIOUS_SLICE: exact HEAD, evidence validity, manual gate if required
+```
+
+For a user-authorized sequential delivery program, do not begin the next *execution* slice until the previous slice's **required** technical and explicit manual acceptance gates are met for the exact tested state. Planning or correcting Governance may proceed without pretending that acceptance exists. Do not infer a general release/merge entitlement from either gate.
+
 ## 4. Radical closure without rewrite theater
 
 Inside the verified cone, repair causes rather than symptoms. `DELETE / CLEAN / MERGE / RESTRUCTURE / REFOUND / REPLACE` are permitted when necessary: retain sound code; migrate all affected consumers, writers, contracts, configurations, migrations, tests and references before deleting losing paths. Preserve durable data, secrets, safety, authorization, deployable identity and history.
