@@ -98,6 +98,7 @@ GAPS: <falsifiable claims | NO_MATERIAL_GAPS>
 REPAIR_SCOPE: <causal owners/affected consumers | NONE>
 HARD_PREDECESSORS: <specific owner-backed status | NONE>
 REFERENCE_READY: <scenario-specific data proof | N/A>
+PROGRAM_ORDER: <explicit authorized preference, not HARD | NONE>
 INTEGRATION_PROOF: <first applicable handoff | N/A>
 GOVERNANCE_IMPACT: NONE | REVALIDATE_ONLY | UPDATE_REQUIRED | DEFECT_FOUND
 LOCAL_TARGET: VERIFIED | UNVERIFIED
