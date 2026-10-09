@@ -860,7 +860,7 @@ The specialized conditions in sections 5–20 are the sole policy admission rule
 
 Profile-guided optimization (PGO) is a narrow CPU optimization only when representative profiling proves the applicable language/toolchain and workload benefit after the higher-level bottlenecks have been corrected. Preserve the profile provenance and before/after measurement; it is never a mandatory build mode.
 
-## 24. Closure law
+## 22. Closure law
 
 A performance/scalability change closes only when:
 
