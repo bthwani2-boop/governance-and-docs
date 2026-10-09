@@ -56,10 +56,16 @@ REFERENCE_READY: exact scenario options and canonical readback, PASS | BLOCKED |
 PROGRAM_ORDER: stated preference, not falsely HARD
 INTEGRATION_PROOF: first required cross-owner handoff
 REMAINING_EARLIER_BLOCKERS: none or exact roots; no silent omission
-PREVIOUS_SLICE: exact HEAD, evidence validity, manual gate if required
+PREVIOUS_SLICE: exact tested HEAD, closure gates 1–8, outstanding technical remainder, and evidence validity
 ```
 
-For a user-authorized sequential delivery program, do not begin the next *execution* slice until the previous slice's **required** technical and explicit manual acceptance gates are met for the exact tested state. Planning or correcting Governance may proceed without pretending that acceptance exists. Do not infer a general release/merge entitlement from either gate.
+For an authorized sequential local development program, do not begin the next *execution* slice until all applicable technical closure gates of the previous slice are proven on the exact relevant tested state. An operator/user manual acceptance declaration is **not** a prerequisite for local slice progression. Run relevant browser, Android, API, persistence, authorization and regression checks automatically; where automated evidence is genuinely unavailable, report a specific technical `BLOCKED`/`UNPROVEN` claim and stop rather than replace it with verbal acceptance. This rule does not grant authority to bypass repository protections, security gates, reviews, irreversible operations or production approvals. Planning and correcting Governance may proceed while the execution gate is blocked.
+
+## 3B. Causally coherent foundational slice boundaries
+
+A slice may combine multiple owner-managed registries when they form one early operational foundation with shared Operator authorization, cross-surface selectors and a common falsifiable first-business-handoff proof. Do **not** split such a foundation into one slice per database table, Control Panel screen or HTTP route solely for smaller tasks. Equally, do not absorb a downstream actor enrollment, complete sellable Product/Variant lifecycle, Store publication, financial agreement or checkout merely because it reads some foundation data.
+
+For the currently authorized BThwani program, the first post-Operator reference/taxonomy foundation may jointly close canonical Service City, Commerce Vertical, compatible Commercial Store Type, CatalogCategory tree/typed attribute rules/category media, and **only** admission-relevant wallet-provider and fulfillment-mode reference options. These are named, distinct DSH-owned facts with Identity-backed Operator permission boundaries; WLT still owns monetary/payout truth. Treat this as the current program's `PROGRAM_ORDER`, not as a blanket hard prerequisite for the Field role or a mandate to preload every city, category or Product. Validate all participating owners, clients/Field lookup handoffs, mutations, reference options and negative cases on one exact state. If a tested prerequisite is unproven, close its material remainder first.
 
 ## 4. Radical closure without rewrite theater
 
