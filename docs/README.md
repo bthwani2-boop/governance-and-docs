@@ -10,7 +10,6 @@ Docs explain how to work with BThwani knowledge and operations. They own no Prod
 Use:
 - `DEVELOPMENT.md` for the development/decision method.
 - `EXECUTION-CONTRACT.md` for low-context Planner/Executor vertical-slice handoff and execution-command construction.
-- `PROGRAM-DEPENDENCY-MAP.md` is historical, non-authoritative candidate coverage only; never treat its P-numbers as current priorities, missing features, or execution commands.
 - `OPERATIONS.md` for the operations/recovery method.
 - `reference/standards.md` for normative/security standards.
 - `reference/engineering.md` for assurance/engineering frameworks.
