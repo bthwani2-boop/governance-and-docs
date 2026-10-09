@@ -288,11 +288,37 @@ for (const line of capRows) {
     if (parts[1].includes(id) && !meta.capabilities.has(capability)) fail("capability participation matrix contradicts top-level CAPABILITIES: " + capability + " -> " + id);
   }
 }
+// Supporting lanes and the material census must route to existing Product/Journey identifiers.
+const supportingBlock = journeys.split("## Supporting subflows and cross-cutting lanes")[1]?.split("## Matrix — Journey × Surface")[0] ?? "";
+const supportingIds = new Set();
+const supportRows = supportingBlock.split("\n").filter((line) => line.startsWith("| ") && !line.startsWith("| ID |"));
+for (const line of supportRows) {
+  const parts = line.split("|").slice(1, -1).map((x) => x.trim());
+  if (parts.length !== 4 || !/^[A-Z][A-Z0-9_]+$/.test(parts[0])) { fail("invalid supporting lane row"); continue; }
+  const id = parts[0];
+  if (supportingIds.has(id) || journeyDeclarations.has(id)) fail("duplicate/colliding supporting lane ID: " + id);
+  supportingIds.add(id);
+  const tick = String.fromCharCode(96);
+  const referencedIds = parts[2].split(tick).filter((x, i) => i % 2 === 1);
+  for (const cap of referencedIds) if (!admittedIds.has(cap)) fail("supporting lane references non-admitted capability: " + id + " -> " + cap);
+}
+if (!supportingIds.size) fail("no supporting lanes in current Product journey map");
 const materialCensus = journeys.match(/## Platform material census([\s\S]*?)(?=\n## |$)/)?.[1] ?? "";
 if (!materialCensus) fail("JOURNEYS.md missing Platform material census");
 const censusRows = materialCensus.split("\n").filter((line) => /^\|[^-].*\|$/.test(line.trim()) && !/^\|\s*Material concept\s*\|/.test(line.trim()));
 if (!censusRows.length) fail("Platform material census has no rows");
 for (const row of censusRows) if (!/\|\s*MAPPED\s*\|\s*$/.test(row)) fail(`Platform material census row is not closed as MAPPED: ${row.trim()}`);
+const censusConcepts = new Set();
+for (const row of censusRows) {
+  const fields = row.split("|").slice(1, -1).map((x) => x.trim());
+  if (fields.length !== 5 || !fields[0] || !fields[1] || !fields[2] || !fields[3]) { fail("incomplete Platform material census row"); continue; }
+  if (censusConcepts.has(fields[0])) fail("duplicate Platform material concept: " + fields[0]);
+  censusConcepts.add(fields[0]);
+  const referenced = [...fields[3].matchAll(/\b[A-Z][A-Z0-9_]{4,}\b/g)].map((m) => m[0]);
+  for (const id of referenced) {
+    if (!journeyDeclarations.has(id) && !supportingIds.has(id)) fail("Platform material census references missing Journey/lane: " + fields[0] + " -> " + id);
+  }
+}
 for (const forbidden of ["UNMAPPED", "TBD_WITHOUT_OWNER", "UNKNOWN_WITHOUT_DECISION"]) {
   if (materialCensus.includes(forbidden)) fail(`Platform material census contains unresolved status token: ${forbidden}`);
 }
