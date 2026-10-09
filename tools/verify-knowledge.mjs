@@ -307,6 +307,21 @@ for (const file of docsFiles) {
   if (!docsIndex.includes(`\`${local}\``)) fail(`docs/README.md does not route ${local}`);
 }
 
+// Check all repository-local Markdown destinations; exclude only documented, deliberately untracked competitor captures.
+const linkedDocuments = [...governanceFiles, ...docsFiles, path.join(root, "execution/contract.md"), path.join(root, "README.md"), path.join(root, "AGENTS.md")];
+for (const document of linkedDocuments) {
+  const source = rel(document);
+  const text = fs.readFileSync(document, "utf8");
+  for (const match of text.matchAll(/\]\(([^)]+)\)/g)) {
+    let raw = match[1].trim().replace(/^<|>$/g, "").split(/\s+/)[0];
+    if (!raw || /^(https?:|mailto:|#|data:)/i.test(raw)) continue;
+    let target = raw.split("#")[0].split("?")[0];
+    if (!target) continue;
+    target = target.startsWith("/") ? target.replace(/^\/+/, "") : path.posix.normalize(path.posix.join(path.posix.dirname(source), target));
+    if (target.startsWith("docs/reference/competitors/local-photos/")) continue;
+    if (!trackedCaseSensitive.has(target)) fail("unresolved Markdown link " + source + " -> " + target);
+  }
+}
 const prTemplate = read(".github/pull_request_template.md");
 for (const heading of [
   "## Exact candidate and material question",
