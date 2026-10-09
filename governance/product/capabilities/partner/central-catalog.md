@@ -34,6 +34,14 @@ Store receives a guessed vertical.
 
 The Commerce Vertical registry is canonical DSH data, not a hard-coded Governance inventory. Registry members change only through authorized DSH mutation and canonical readback; this capability owns the classification semantics, not the current registry contents. A vertical may carry a non-authoritative workflow preference that helps route initial product entry. That preference cannot require a Store or vertical to use only shared or only Store-scoped identities and cannot block a mixed assortment.
 
+## Reference classification and sequencing boundaries
+
+Keep four independent DSH-owned concepts distinct: `ServiceCity` is geographic operating scope; `CommerceVertical` classifies the Store's commercial activity; `CommercialStoreType` is a compatible business-model type within one vertical; and `CatalogCategory` is the shared Product taxonomy within a vertical. A Store-local `StorefrontSection` is a fifth, separate merchandising/grouping meaning. None is a synonym, a surrogate foreign key or an authority inferred from another label.
+
+A submitted first-Store joining case requires an active Service City, Commerce Vertical and compatible CommercialStoreType, but it does **not** require a pre-existing exhaustive shared Product library or every category of that vertical. An authorized Operator may establish the needed registry/taxonomy/Shared Product core ahead of onboarding as a current-program preparation choice; such preparation does not alter the Field role-admission prerequisites. Field may later use Shared Products, create permitted Store-scoped items and submit missing Shared Product proposals before Go-Live. Publication and customer-visible offer eligibility still enforce their separate catalog rules.
+
+Reference readiness means proven values and owner API readback for the particular admitted scenario, including active status and vertical/type/category compatibility where that relationship applies. Database schema existence, menu navigation or a test/demo record name alone is not proof of readiness. Do not automatically seed new actor/store/offer authority when initializing a catalog.
+
 ## Shared catalog taxonomy and data definitions
 
 `CatalogCategory` is the shared catalog taxonomy: a flexible tree with
