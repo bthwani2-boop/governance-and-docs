@@ -329,6 +329,14 @@ for (const row of censusRows) {
   if (censusConcepts.has(fields[0])) fail("duplicate Platform material concept: " + fields[0]);
   censusConcepts.add(fields[0]);
   const referenced = [...fields[3].matchAll(/\b[A-Z][A-Z0-9_]{4,}\b/g)].map((m) => m[0]);
+  const hasJourney = referenced.some((id) => journeyDeclarations.has(id));
+  const hasConcretePlacement = hasJourney || referenced.some((id) => supportingIds.has(id));
+  if (["TOP_LEVEL_MULTI_SURFACE_JOURNEY", "FINANCIAL_PUBLICATION_PREREQUISITE"].includes(fields[2]) && !hasJourney) {
+    fail("Platform material census lacks canonical top-level Journey placement: " + fields[0]);
+  }
+  if (fields[2] === "SUPPORTING_SUBFLOW" && !hasConcretePlacement) {
+    fail("Platform material census lacks canonical subflow/Journey placement: " + fields[0]);
+  }
   for (const id of referenced) {
     if (!journeyDeclarations.has(id) && !supportingIds.has(id)) fail("Platform material census references missing Journey/lane: " + fields[0] + " -> " + id);
   }
