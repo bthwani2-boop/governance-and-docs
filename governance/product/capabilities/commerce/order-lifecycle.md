@@ -22,7 +22,7 @@ DSH owns operational Order truth, original confirmation snapshot, OrderAdjustmen
 - the durable Order model distinguishes `BTHWANI_CAPTAIN`, `PARTNER_CAPTAIN` and `CUSTOMER_PICKUP`; fulfillment mode is distinct from payment method;
 - the Client selects one fulfillment mode from current canonical eligible modes; checkout rejects disabled/unavailable mode and snapshots the selection without fallback;
 - when adding a fulfillment mode, any required backfill must preserve existing Order identities and explicit historical mode meaning; never silently reinterpret past Orders to introduce another mode;
-- required StoreOffer/ProductVariant/display-name/variant/modifier/requested-quantity/pricing/amount/serviceability and other purchase evidence remains the original confirmation snapshot;
+- required StoreOffer/ProductVariant/display-name/variant/modifier/requested-quantity/pricing/amount and any applicable delivery-serviceability evidence remain the original confirmation snapshot;
 - a legal post-confirmation change never mutates that original snapshot in place; it creates an attributable OrderAdjustment and contributes to a separate final fulfilled snapshot;
 - an OrderAdjustment may cover bounded item removal, eligible substitution or actual fulfilled quantity/measure where current catalog quantity semantics permit it;
 - a required customer decision is explicit when the adjustment materially changes what the customer will receive/pay; Partner cannot self-approve a customer-required substitute merely by continuing preparation;

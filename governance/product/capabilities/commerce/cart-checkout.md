@@ -8,7 +8,7 @@ CAPABILITY_ID: CART_CHECKOUT
 
 ## Outcome
 
-A Client builds one owned Store cart and confirms one Store-scoped checkout intent from canonical Catalog, Store, current orderability and serviceability evidence without client-authoritative eligibility or duplicate operational/financial effects.
+A Client builds one owned Store cart and confirms one Store-scoped checkout intent from canonical Catalog, Store and current orderability evidence, plus delivery-address serviceability when the selected fulfillment mode requires delivery, without client-authoritative eligibility or duplicate operational/financial effects.
 
 ## Ownership
 
@@ -24,7 +24,7 @@ DSH owns cart/checkout operational truth and the bounded delivery-recipient snap
 - checkout revalidates current Store operational orderability and selected fulfillment-mode availability immediately before confirmation; a published Store or enabled mode policy alone is insufficient;
 - an unavailable selected mode is rejected with explicit readback and is never silently replaced by another mode;
 - checkout establishes one stable logical operation identity before cross-owner financial effects; an ambiguous commit/retry cannot silently allocate another logical Order identity;
-- confirmed checkout snapshots address/serviceability, Store/mode orderability evidence, item/variant/quantity/pricing/modifier evidence and other transaction facts required by `ORDER_LIFECYCLE`;
+- confirmed delivery checkout snapshots the applicable delivery address/serviceability evidence, and every checkout snapshots Store/mode orderability, item/variant/quantity/pricing/modifier evidence and other transaction facts required by `ORDER_LIFECYCLE`; `CUSTOMER_PICKUP` never requires an invented delivery address or delivery-serviceability result;
 - a delivery recipient may be `SELF` or `OTHER`; when `OTHER`, only bounded recipient name/phone/delivery instructions needed for execution are snapshotted, while the purchasing Client remains Order/payment principal;
 - recipient data never creates an actor, account, role or financial authority;
 - stale or invalidated evidence blocks confirmation;

@@ -23,11 +23,11 @@ WLT owns agreement identity and versions, proposed rates, Partner acceptance, Fi
 - silence, Store creation, role admission, catalog readiness or publication is not Partner acceptance;
 - only authorized Finance approval can activate an accepted version;
 - each material term change creates a new version and historical evidence is immutable;
-- adding a fulfillment mode that changes commercial obligations requires a new agreement version containing that mode before DSH may treat it as durably enabled;
-- materially changing or removing an enabled mode's commercial terms also requires a new agreement version;
+- adding any fulfillment mode to a Store's durable admitted mode policy requires a new agreement version containing that mode and its explicit rate, with bound Partner acceptance and Finance approval before DSH enables it; an equal numeric rate in another mode does not waive this gate;
+- changing a mode's binding commercial terms or removing a durably admitted mode requires a new agreement version; the accepted prior version and historical Order snapshots remain immutable;
 - temporarily pausing/resuming a mode already durably admitted is operational state owned by `STORE_OPERATIONAL_AVAILABILITY` and does not create a new agreement version;
 - an operational toggle cannot activate a fulfillment mode absent from the Store's durable admitted mode policy and active agreement;
-- a Store Type-by-mode policy, if retained, is only a suggested negotiation starting value and never a fallback authority;
+- any Store Type-by-mode suggestion supplied by an applicable versioned policy is a negotiation starting value only; it never substitutes for explicit accepted Store-specific terms or becomes a fallback authority;
 - no more than one agreement version is active for a Store at a time;
 - Field can propose only for its authorized joining Store and cannot accept or approve terms on another actor's behalf;
 - retries, stale versions and concurrent transitions preserve one auditable result.

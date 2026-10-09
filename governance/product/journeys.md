@@ -191,7 +191,7 @@ No loyalty, paid membership, social-content network, generic marketing automatio
 ## SINGLE_STORE_ORDER_CREATION — Client intent to canonical Store Order
 
 JOURNEY_ID: SINGLE_STORE_ORDER_CREATION
-OUTCOME: A Client confirms one Store-scoped commerce intent and the Partner receives at most one canonical Store Order from current catalog, serviceability, Store orderability and financial evidence.
+OUTCOME: A Client confirms one Store-scoped commerce intent and the Partner receives at most one canonical Store Order from current catalog, Store orderability, applicable delivery serviceability and financial evidence.
 SURFACES: CLIENT, PARTNER
 OWNERS: DSH, WLT
 CAPABILITIES: SERVICEABILITY_ADDRESSES, CART_CHECKOUT, ORDER_LIFECYCLE, ORDER_PAYMENT_COLLECTION, CUSTOMER_BALANCE_FUNDING, STORE_OPERATIONAL_AVAILABILITY, CENTRAL_CATALOG, COMMERCE_PROMOTIONS
@@ -202,8 +202,8 @@ READBACK: Client and Partner read the canonical Store Order; Client sees WLT-bac
 ### Frontstage and handoffs
 
 ```text
-CLIENT → address / Store / Offer / Variant / quantity / modifiers / fulfillment intent / payment intent / promotion or coupon intent where applicable
-DSH → revalidate serviceability + offer + Store/mode orderability + promotion eligibility + cart evidence
+CLIENT → delivery address when required by the selected fulfillment mode / Store / Offer / Variant / quantity / modifiers / fulfillment intent / payment intent / promotion or coupon intent where applicable
+DSH → revalidate applicable delivery serviceability + offer + Store/mode orderability + promotion eligibility + cart evidence
 WLT → establish payment/collection and funded-promotion effects
 DSH → create at most one canonical Store Order with immutable applicable promotion snapshot
 PARTNER → new Order readback
@@ -493,7 +493,7 @@ These are materially governed but are not promoted to top-level Journeys merely 
 | PLATFORM_POLICY_ADMINISTRATION | POLICY_FLOW | Identity / DSH / WLT by typed policy owner | Operator mutation + prospective affected-surface readback |
 | STORE_SCOPED_DELEGATION | SUPPORTING_SUBFLOW | `STORE_SCOPED_ACCESS_DELEGATION` / DSH + Identity admission | phone-resolved Partner-workspace authority for one or more Store scopes; canonical grants remain Store-scoped |
 | STORE_CAPTAIN_MEMBERSHIP | SUPPORTING_SUBFLOW | `STORE_CAPTAIN_MEMBERSHIP` / DSH | accepted Partner-Captain relationship |
-| ADDRESS_MANAGEMENT | SUPPORTING_SUBFLOW | `SERVICEABILITY_ADDRESSES` / DSH | ordering prerequisite |
+| ADDRESS_MANAGEMENT | SUPPORTING_SUBFLOW | `SERVICEABILITY_ADDRESSES` / DSH | delivery-mode ordering prerequisite |
 | CART_MANAGEMENT | SUPPORTING_SUBFLOW | `CART_CHECKOUT` / DSH | ordering prerequisite |
 | CUSTOMER_BALANCE_FUNDING | SUPPORTING_SUBFLOW | `CUSTOMER_BALANCE_FUNDING` / WLT | internal-balance funding |
 | CAPTAIN_BALANCE_FUNDING | SUPPORTING_SUBFLOW | `CAPTAIN_BALANCE_FUNDING` / WLT | BThwani-Captain balance funding |
