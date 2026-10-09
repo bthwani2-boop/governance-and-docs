@@ -5,7 +5,7 @@ EXECUTION_AUTHORITY: NONE
 PRODUCT_SEMANTIC_AUTHORITY: NONE
 CURRENT_IMPLEMENTATION_AUTHORITY: NONE
 
-This is **one revisable coverage and ordering reference**, not Product truth, an executable backlog, proof of closure, a migration plan, or authorization to implement every row. The semantic owners remain `governance/product/PRODUCT.md`, `CAPABILITIES.md`, `JOURNEYS.md`, the individual capability owners and System/Policy Governance. The **current source/runtime/readback** determines which outcomes are already implemented and proven. `EXECUTION-CONTRACT.md` is the one owner of the slice-selection method.
+This is **an illustrative historical coverage reference**, not Product truth, an executable backlog, proof of closure, a migration plan, or authorization to implement every row. The semantic owners remain `governance/product/PRODUCT.md`, `CAPABILITIES.md`, `JOURNEYS.md`, the individual capability owners and System/Policy Governance. The **current source/runtime/readback** determines which outcomes are already implemented and proven. `EXECUTION-CONTRACT.md` is the one owner of the slice-selection method.
 
 ## 1. Program universe and closure language
 
@@ -34,14 +34,6 @@ Census the **23 currently admitted Product capabilities** and **15 top-level cro
 | Platform Captain dispatch | Prepared Store Order, standing Captain, legal availability and WLT exposure where applicable | Distinct from Partner Captain membership and Customer Pickup. |
 
 **Corrections to previous over-serial planning:** Customer Identity can be developed after Identity foundation independently of Field/Partner; Store-scoped delegation need not wait for customer-visible Store publication when the current ownership and invitation gates are met; Captain standing does not require an already delivered Order; Customer Pickup does not require platform Captain dispatch; WLT foundational ledger contracts are prerequisites at first payment/commission handoff, not after a completed delivery. Never declare the **entire** Store-catalog subsystem a hard gate to Field authentication.
-
-## 2A. Currently selected post-Operator coherent foundation (SLICE 002)
-
-The current local delivery program groups reference-facing candidate outcomes **P02 + P03 + P04 + P05 (only the admission-relevant operational options) + P06** into **one** bounded technical execution slice. This grouping reduces artificial micro-slices; it does **not** collapse the distinct canonical DSH entities, invent a generic settings store, move WLT monetary truth to DSH, or mandate an exhaustive Yemen-wide dataset.
-
-The slice closes actual ServiceCity, CommerceVertical, CommercialStoreType, CatalogCategory hierarchy, attribute definitions/typed category rules/enum options and category media as **reference structures**. It validates the admitted official-wallet-provider registry and the existing initial fulfillment-mode options; do not turn fulfillment choices into newly configurable products when Governance admits only defined modes. Real active representative options must be queryable by their intended Operator, Field and client consumers and stay valid across idempotent replay, stale version, disabled ancestor and process restart. The first-Store intake's City + Vertical + compatible Type is a hard data requirement; category rule/image readiness is prepared in this selected program phase but an exhaustive Shared Product catalog is not required for Field activation.
-
-Explicitly **not** part of this foundation: all Shared Product/Variant media and import flows, activation of a Field/Partner/Captain role, real JoiningCase submission, Store publication/financial agreement, Store-specific fulfillment policy edits, WLT funds or checkout. Boundary-only compatibility probes for affected consumers are in scope. If the dependency census disproves this grouping or reveals a material earlier blocker, stop and correct the authorized plan before broadening execution.
 
 ## 3. Full candidate-outcome coverage — topological guidance, not a mandatory linear backlog
 
@@ -110,7 +102,3 @@ Do not claim a whole Journey complete because its participating capability files
 - Uber Eats separates store hours/online pause from menu content, supporting an independently proven current orderability result. Its menu entity graph is not automatically BThwani's shared taxonomy.
 - Saleor and Medusa distinguish catalog/product variants, regional selling context, inventory and fulfillment. Their `Channel`/`Region` abstractions are **not** a mandate to make BThwani ServiceCity a tenant or add a generic inventory system.
 - External examples are **question-specific disconfirmation tools only**. Current BThwani Governance and verified business-owner decisions determine admitted behavior; do not copy competitor thresholds, license-incompatible code or vendor-specific topology.
-
-## 6. Next-slice check
-
-Before the current post-Operator composite reference foundation, prove P01's applicable technical closure gates at the exact tested HEAD, then inspect and retain existing DSH-owned City/Vertical/Type/Category/Attribute/WalletProvider records and readbacks. Close only real gaps across the selected foundation, not just City alone. Enforce `platform_policies` for City/provider policy and `catalog` for vertical/type/category/attribute administration; cross-check actual Field joining selectors and reference compatibility. The complete Shared Product/Variant lifecycle remains a distinct later outcome. An unproven hard predecessor blocks execution, but **no user-manual acceptance** is required. This map does not grant authority to push, merge or start the next slice absent the authorized technical gate.
