@@ -1,7 +1,7 @@
 # BThwani Governance
 
 ARTIFACT_CLASS: DURABLE_GOVERNANCE_INDEX
-SEMANTIC_OWNER: governance/GOVERNANCE.md
+SEMANTIC_OWNER: governance/README.md
 EXECUTION_AUTHORITY: NONE
 IMPLEMENTATION_STATE_AUTHORITY: NONE
 
@@ -22,37 +22,28 @@ Governance is authoritative within the applicable durable semantic owner and cha
 
 ## Canonical owner tree
 
-```text
+~~~text
 governance/
-├── platform/PLATFORM.md
+├── README.md            owner router
+├── platform.md          roles / actors / surfaces
+├── architecture.md      bounded services and data ownership
 ├── product/
-│   ├── PRODUCT.md
-│   ├── JOURNEYS.md
-│   └── capabilities/**
-├── system/SYSTEM.md
-└── policy/
-    ├── SECURITY.md
-    ├── DATA.md
-    ├── FINANCE.md
-    ├── RELIABILITY.md
-    ├── EXPERIENCE.md
-    ├── DESIGN.md
-    ├── QUALITY.md
-    ├── SCALABILITY.md
-    ├── DELIVERY.md
-    ├── INTEGRATIONS.md
-    └── KNOWLEDGE.md
-```
+│   ├── overview.md       admitted Product scope
+│   ├── capabilities.md   capability routing
+│   ├── journeys.md       cross-surface E2E scenarios
+│   └── capabilities/     one file per durable capability
+└── policies/            cross-cutting invariants
+~~~
 
 ## Placement law
 
-- `platform` answers: what is BThwani, who participates, and what trust/terms are canonical?
-- `product` answers: what current user/business outcomes and capabilities are admitted?
-- `system` answers: which bounded owner owns each durable fact and how boundaries compose?
-- `policy` answers: which cross-cutting invariants apply across multiple owners?
-- `policy/EXPERIENCE.md` owns durable information architecture, shell/navigation, interaction, RTL/localization, accessibility and recovery invariants.
-- `policy/DESIGN.md` owns durable cross-surface visual identity and design-language invariants; it is not an executable token or component registry.
-- `policy/SCALABILITY.md` owns durable admission, escalation, proof and retirement rules for performance, capacity, scalability and load-management mechanisms; it does not own current topology, traffic, thresholds or provider choices.
+- `platform.md` answers: what is BThwani, who participates, and what trust/terms are canonical?
+- `product/` answers: what current user/business outcomes and capabilities are admitted?
+- `architecture.md` answers: which bounded owner owns each durable fact and how boundaries compose?
+- `policies/` answers: which cross-cutting invariants apply across multiple owners?
+- `policies/experience.md` owns durable information architecture, shell/navigation, interaction, RTL/localization, accessibility and recovery invariants.
+- `policies/design.md` owns durable cross-surface visual identity and design-language invariants; it is not an executable token or component registry.
+- `policies/scalability.md` owns durable admission, escalation, proof and retirement rules for performance, capacity, scalability and load-management mechanisms; it does not own current topology, traffic, thresholds or provider choices.
 - `docs` explains how humans/agents work; it owns no Product/System truth.
 - `docs/reference` routes external evidence; reference existence never grants adoption authority.
 

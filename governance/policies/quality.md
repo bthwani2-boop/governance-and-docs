@@ -1,7 +1,7 @@
 # Quality Policy
 
 ARTIFACT_CLASS: DURABLE_CROSS_CUTTING_POLICY
-SEMANTIC_OWNER: governance/policy/QUALITY.md
+SEMANTIC_OWNER: governance/policies/quality.md
 EXECUTION_AUTHORITY: NONE
 IMPLEMENTATION_STATE_AUTHORITY: NONE
 
@@ -92,10 +92,10 @@ Higher-consequence claims require proportionally independent negative, boundary,
 ```text
 UX_IA_CONTENT
 ACCESSIBILITY_RTL_LOCALIZATION
-→ governance/policy/EXPERIENCE.md
+→ governance/policies/experience.md
 
 VISUAL_IDENTITY_DESIGN_SYSTEM
-→ governance/policy/DESIGN.md
+→ governance/policies/design.md
 
 RENDERED / INTERACTION / DEVICE PROOF OBLIGATION
 → this QUALITY.md evidence model using the applicable semantic owners above

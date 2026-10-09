@@ -73,7 +73,7 @@ PIN EXACT STATE
 → CLOSE
 ```
 
-The quality-dimension catalog in `governance/policy/QUALITY.md` is a discovery taxonomy, not a requirement to manufacture commentary about clearly irrelevant dimensions. Every plausibly material dimension must be resolved; silent omission of a plausibly material dimension is forbidden.
+The quality-dimension catalog in `governance/policies/quality.md` is a discovery taxonomy, not a requirement to manufacture commentary about clearly irrelevant dimensions. Every plausibly material dimension must be resolved; silent omission of a plausibly material dimension is forbidden.
 
 Research stops when additional evidence can no longer materially change the current decision.
 
@@ -83,7 +83,7 @@ The consuming repository's `AGENTS.md` remains the execution authority. For auth
 
 Discover the slice's actual impact across implementation and canonical Governance, repair the highest causal root, migrate every affected consumer, remove losing paths and obsolete references, and prove both required behavior and absence of material residue. `DELETE / CLEAN / RESTRUCTURE / REFOUND / REPLACE` are options justified by the evidence, not mandatory edits to sound code. Never widen into unrelated healthy areas or preserve workaround debt.
 
-An end-to-end Journey is a **business scenario and integration-proof lens**, not a parallel planning, status, execution or closure unit. Use `governance/product/JOURNEYS.md` to preserve material actor handoffs and canonical readbacks; do not turn it into a static backlog or claim that its existence proves implementation. The concise planner/executor handoff is in `docs/EXECUTION-CONTRACT.md`. Avoid duplicated triggers, checklists and closure registries.
+An end-to-end Journey is a **business scenario and integration-proof lens**, not a parallel planning, status, execution or closure unit. Use `governance/product/journeys.md` to preserve material actor handoffs and canonical readbacks; do not turn it into a static backlog or claim that its existence proves implementation. The concise planner/executor handoff is in `execution/contract.md`. Avoid duplicated triggers, checklists and closure registries.
 
 ## 5. Evidence council
 

@@ -1,7 +1,7 @@
 # BThwani Current Product
 
 ARTIFACT_CLASS: DURABLE_PRODUCT_GOVERNANCE
-SEMANTIC_OWNER: governance/product/PRODUCT.md
+SEMANTIC_OWNER: governance/product/overview.md
 EXECUTION_AUTHORITY: NONE
 IMPLEMENTATION_STATE_AUTHORITY: NONE
 
@@ -9,7 +9,7 @@ IMPLEMENTATION_STATE_AUTHORITY: NONE
 
 This file owns current Product breadth, non-goals and capability admission law.
 
-The Human Actor/role model is owned by `governance/platform/PLATFORM.md`. Bounded system ownership is owned by `governance/system/SYSTEM.md`. Detailed capability truth lives only in `capabilities/**`; cross-capability, cross-surface orchestration lives only in `JOURNEYS.md`.
+The Human Actor/role model is owned by `governance/platform.md`. Bounded system ownership is owned by `governance/architecture.md`. Detailed capability truth lives only in `capabilities/**`; cross-capability, cross-surface orchestration lives only in `JOURNEYS.md`.
 
 ## Current approved Product target
 
@@ -100,7 +100,7 @@ Each ID has exactly one capability owner under `capabilities/**`.
 - a delivery recipient may be different from the purchasing Client without becoming a BThwani Human Actor or gaining Order/payment authority;
 - surfaces never become business owners;
 - client input never grants identity, role, business scope or owner authority;
-- system-owner boundaries follow `governance/system/SYSTEM.md`;
+- system-owner boundaries follow `governance/architecture.md`;
 - derived search/cache/analytics/notification/tracking state never becomes mutation authority;
 - successful user-facing mutation requires canonical committed readback;
 - admitted breadth and implementation completion are separate claims.

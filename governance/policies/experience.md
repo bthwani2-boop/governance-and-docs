@@ -1,13 +1,13 @@
 # Experience and Interaction Policy
 
 ARTIFACT_CLASS: DURABLE_CROSS_CUTTING_POLICY
-SEMANTIC_OWNER: governance/policy/EXPERIENCE.md
+SEMANTIC_OWNER: governance/policies/experience.md
 EXECUTION_AUTHORITY: NONE
 IMPLEMENTATION_STATE_AUTHORITY: NONE
 
 UX communicates canonical Product state, authority, available actions, feedback and recovery. User-facing experience is part of functional correctness, not end-stage polish.
 
-This policy owns durable information-architecture, navigation, interaction, RTL/localization, accessibility, state/recovery and platform-adaptation invariants. Durable visual identity and design language are owned by `governance/policy/DESIGN.md`.
+This policy owns durable information-architecture, navigation, interaction, RTL/localization, accessibility, state/recovery and platform-adaptation invariants. Durable visual identity and design language are owned by `governance/policies/design.md`.
 
 ## BThwani experience contract
 
@@ -21,7 +21,7 @@ The durable BThwani experience must remain:
 - adapted to the actor's real job rather than forcing every app into one navigation model;
 - adaptive to platform/device/window/input conventions rather than forcing one layout model everywhere.
 
-Visual identity, color, typography, shape, iconography, imagery, elevation and motion language are governed by `governance/policy/DESIGN.md` and implemented through the canonical reusable Design System where reuse is proven.
+Visual identity, color, typography, shape, iconography, imagery, elevation and motion language are governed by `governance/policies/design.md` and implemented through the canonical reusable Design System where reuse is proven.
 
 ## Information architecture and application shell
 
@@ -70,7 +70,7 @@ A materially capable operational registry exposes only the controls that improve
 
 Collection state that materially affects repeated work must survive the interaction path by an appropriate mechanism. Filters, sort, page/position, visible columns, density or another relevant view preference may be persisted or made shareable when doing so materially reduces repeated setup. URL persistence is appropriate only for nonsensitive state with an unambiguous owning collection; sensitive values do not enter URLs merely for convenience. Repeated operational query configurations may become saved views when their recurrence and value are proven rather than speculatively prebuilt.
 
-Selection scope is explicit. Page-local selection, loaded-result selection and an action over all canonical records matching a query are materially different states and must never be represented as interchangeable. A bulk action states the affected scope and consequence before execution and exposes busy/progress, partial failure or recovery, and final canonical outcome when those states are materially possible. Large or long-running multi-record execution semantics are owned by `governance/policy/RELIABILITY.md`; presentation must not simulate a client-side loop as atomic platform success.
+Selection scope is explicit. Page-local selection, loaded-result selection and an action over all canonical records matching a query are materially different states and must never be represented as interchangeable. A bulk action states the affected scope and consequence before execution and exposes busy/progress, partial failure or recovery, and final canonical outcome when those states are materially possible. Large or long-running multi-record execution semantics are owned by `governance/policies/reliability.md`; presentation must not simulate a client-side loop as atomic platform success.
 
 Detail presentation preserves collection context when operators repeatedly inspect or compare multiple records. A split panel, drawer, expandable detail or equivalent in-context presentation is appropriate only when that workflow is materially faster and clearer than repeated route changes. Complex editing, investigation or multi-step work uses a focused detail/workflow surface when a persistent side panel would constrain the task or duplicate the canonical object workspace.
 
