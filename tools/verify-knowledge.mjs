@@ -200,6 +200,7 @@ const allowedSurfaces = new Set(["CLIENT", "PARTNER", "CAPTAIN", "FIELD", "OPERA
 const allowedOwners = new Set(["IDENTITY", "DSH", "WLT"]);
 const seenJourneyIds = new Set();
 const coveredSurfaces = new Set();
+const journeyDeclarations = new Map();
 const journeySections = [...journeys.matchAll(/^##\s+([A-Z][A-Z0-9_]+)\s+—[^\n]*\n([\s\S]*?)(?=^##\s+|\Z)/gm)];
 if (!journeySections.length) fail("JOURNEYS.md has no cross-surface E2E scenario sections");
 
@@ -233,6 +234,7 @@ for (const section of journeySections) {
   const capabilityTokens = (fields.get("CAPABILITIES") ?? "").split(",").map((v) => v.trim()).filter(Boolean);
   if (!capabilityTokens.length) fail(`${headingId} declares no capability participation`);
   for (const id of capabilityTokens) if (!admittedIds.has(id)) fail(`${headingId} references non-admitted capability: ${id}`);
+  journeyDeclarations.set(headingId, { surfaces: uniqueSurfaces, owners: new Set(ownerTokens), capabilities: new Set(capabilityTokens) });
 }
 for (const surface of allowedSurfaces) if (!coveredSurfaces.has(surface)) fail(`actor-facing surface has no top-level journey coverage: ${surface}`);
 
@@ -247,6 +249,44 @@ for (const id of admittedIds) {
 }
 for (const id of mappedCounts.keys()) if (!admittedIds.has(id)) fail(`capability participation matrix contains non-admitted ID: ${id}`);
 
+// Relationship matrices must agree with Journey-owned metadata; a row count alone cannot prove that.
+function relationMatrix(heading, columns) {
+  const block = journeys.split("## " + heading + "\n")[1]?.split("\n## ")[0];
+  if (!block) { fail("missing Journey relationship matrix: " + heading); return new Map(); }
+  const lines = block.split("\n").filter((line) => line.startsWith("|") && !/^\|\s*-/.test(line));
+  const cells = (line) => line.split("|").slice(1, -1).map((value) => value.trim());
+  if (JSON.stringify(cells(lines[0] ?? "")) !== JSON.stringify(["Journey", ...columns])) fail("invalid Journey matrix columns: " + heading);
+  const map = new Map();
+  for (const line of lines.slice(1)) {
+    const row = cells(line);
+    if (row.length !== columns.length + 1 || !row[0]) { fail("invalid Journey matrix row: " + heading); continue; }
+    const id = row[0];
+    if (map.has(id)) fail("duplicate Journey matrix row: " + heading + ": " + id);
+    if (!journeyDeclarations.has(id)) fail("orphan Journey matrix row: " + heading + ": " + id);
+    map.set(id, new Set(columns.filter((name, i) => row[i + 1] !== "—" && row[i + 1] !== "")));
+    for (let i = 1; i < row.length; i++) if (!row[i]) fail("empty Journey matrix cell: " + heading + ": " + id);
+  }
+  for (const id of journeyDeclarations.keys()) if (!map.has(id)) fail("missing Journey matrix row: " + heading + ": " + id);
+  return map;
+}
+function sameMembers(a, b) { return a.size === b.size && [...a].every((value) => b.has(value)); }
+const surfaceRelations = relationMatrix("Matrix — Journey × Surface", ["CLIENT", "PARTNER", "CAPTAIN", "FIELD", "OPERATOR"]);
+const ownerRelations = relationMatrix("Matrix — Journey × Canonical Owner", ["IDENTITY", "DSH", "WLT"]);
+for (const [id, meta] of journeyDeclarations) {
+  if (!sameMembers(meta.surfaces, surfaceRelations.get(id) ?? new Set())) fail("Journey surface matrix disagrees with SURFACES: " + id);
+  if (!sameMembers(meta.owners, ownerRelations.get(id) ?? new Set())) fail("Journey owner matrix disagrees with OWNERS: " + id);
+}
+// A matrix claim naming a top-level journey must agree with that Journey CAPABILITIES declaration.
+const tick = String.fromCharCode(96);
+const capRows = capabilityMatrix.split("\n").filter((line) => line.startsWith("| " + tick));
+for (const line of capRows) {
+  const parts = line.split("|").slice(1, -1).map((value) => value.trim());
+  if (parts.length !== 3) { fail("invalid capability participation matrix row"); continue; }
+  const capability = parts[0].replaceAll(tick, "");
+  for (const [id, meta] of journeyDeclarations) {
+    if (parts[1].includes(id) && !meta.capabilities.has(capability)) fail("capability participation matrix contradicts top-level CAPABILITIES: " + capability + " -> " + id);
+  }
+}
 const materialCensus = journeys.match(/## Platform material census([\s\S]*?)(?=\n## |$)/)?.[1] ?? "";
 if (!materialCensus) fail("JOURNEYS.md missing Platform material census");
 const censusRows = materialCensus.split("\n").filter((line) => /^\|[^-].*\|$/.test(line.trim()) && !/^\|\s*Material concept\s*\|/.test(line.trim()));
