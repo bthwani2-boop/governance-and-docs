@@ -22,42 +22,9 @@ PARALLEL_REPORTS_ALLOWED: NO
 - Review confidence: `PARTIAL_INTERACTIVE_BLACK_BOX_REVIEW`
 - Freshness: `REVALIDATE_AT_USE`
 
-## Evidence cache rules
-Read this file before live inspection. Reuse still-current evidence; inspect relevant, stale or missing areas only; replace stale current facts; append one concise Review history entry. Never create a parallel report.
+## Review method
 
-`COMPETITOR OBSERVATION != BTHWANI REQUIREMENT`.
-
-## Mandatory black-box review method
-A review is not complete from screenshots or visual browsing alone. For each material journey/screen/workspace, use normal authorized interaction on the real app/device and cover the applicable dimensions:
-
-```text
-PRODUCT / UX
-BEHAVIORAL REVERSE ANALYSIS
-LOGIC / VISIBLE RULES
-INTERACTION / CONTROL COVERAGE
-EXPERIMENTAL PATH COVERAGE
-VISUAL
-TECHNICAL / PLATFORM OBSERVATION
-PERFORMANCE / RESPONSIVENESS
-FAILURE / RECOVERY
-OPERATIONAL FLOW
-```
-
-For every relevant route/screen:
-
-```text
-ENTER RELEVANT TAB / ROUTE
-→ TAP RELEVANT BUTTONS / CTAs / ICONS / ROWS / CARDS
-→ EXERCISE MENUS / SHEETS / DIALOGS / FILTERS / SORT / SEARCH / SELECTORS / TOGGLES
-→ TEST BACK / CLOSE / CANCEL / CONFIRM / RETRY / REFRESH / SCROLL / PAGINATION / CAROUSEL WHEN PRESENT
-→ TRY SAFE ALTERNATIVE INPUTS / PATHS
-→ OBSERVE STATE BEFORE / AFTER
-→ RECORD RESULT / FAILURE / RECOVERY / PERFORMANCE
-```
-
-Every relevant control is either exercised or recorded as `NOT_TESTED_WITH_REASON`. Do not cross an irreversible, paid, destructive or externally consequential boundary without explicit authority.
-
-Do not decompile binaries, bypass protections, intercept secrets, or present hidden implementation as fact. Classify conclusions as `OBSERVED`, `STRONGLY_INFERRED`, `HYPOTHESIS`, or `NOT_TESTED`.
+Use the [shared black-box review method](README.md#shared-black-box-review-method). This file retains its own identity, coverage, observations, limitations and review history.
 
 ## Coverage matrix
 | Dimension | Status |
