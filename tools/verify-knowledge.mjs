@@ -35,6 +35,7 @@ const required = [
   "governance/policy/DESIGN.md",
   "docs/README.md",
   "docs/DEVELOPMENT.md",
+  "docs/EXECUTION-CONTRACT.md",
   "docs/OPERATIONS.md",
   ".github/pull_request_template.md",
   ".github/workflows/knowledge-integrity.yml",
@@ -269,6 +270,14 @@ for (const file of referenceFiles) {
 }
 
 const docsIndex = read("docs/README.md");
+// Index references must resolve in both directions. A missing referenced guide is a failure,
+// not a reason to silently treat the guide as absent from the docs census.
+for (const match of docsIndex.matchAll(/^\s*-\s*`([^`]+\.md)`/gm)) {
+  const indexed = path.posix.normalize(`docs/${match[1]}`);
+  if (!indexed.startsWith("docs/") || !exists(indexed)) {
+    fail(`docs/README.md references missing document: ${match[1]}`);
+  }
+}
 for (const file of docsFiles) {
   const relative = rel(file);
   if (relative === "docs/README.md") continue;
