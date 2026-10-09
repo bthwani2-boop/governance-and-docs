@@ -20,7 +20,7 @@ Census the **23 currently admitted Product capabilities** and **15 top-level cro
 
 | Outcome | HARD / REFERENCE_READY before its claimed success | PROGRAM_ORDER / other note |
 | --- | --- | --- |
-| Initial Operator workspace | Identity actor, unique first-operator authority, active Operator session/scope, authorized Control Panel and owner readback | Foundation first; technical evidence + explicit user manual acceptance must be evaluated. |
+| Initial Operator workspace | Identity actor, unique first-operator authority, active Operator session/scope, authorized Control Panel and owner readback | Foundation first; all applicable technical closure evidence is mandatory; no additional user-manual approval gate. |
 | Service City reference administration | Authorized Operator `platform_policies` and DSH canonical registry/CRUD/version readback | Prepare relevant active cities before Field/Store scenario tests. No all-Yemen data preload. |
 | Commerce Vertical and Commercial Store Type | Authorized Operator `catalog`; active vertical before a compatible store type; DSH writer/readback | Prepare real scenario values before submitting first-Store intake. |
 | Shared category/attribute rules | Active compatible Commerce Vertical; DSH catalog writer/readback | Category is not CommercialStoreType; do not confuse with StorefrontSection. |
@@ -34,6 +34,14 @@ Census the **23 currently admitted Product capabilities** and **15 top-level cro
 | Platform Captain dispatch | Prepared Store Order, standing Captain, legal availability and WLT exposure where applicable | Distinct from Partner Captain membership and Customer Pickup. |
 
 **Corrections to previous over-serial planning:** Customer Identity can be developed after Identity foundation independently of Field/Partner; Store-scoped delegation need not wait for customer-visible Store publication when the current ownership and invitation gates are met; Captain standing does not require an already delivered Order; Customer Pickup does not require platform Captain dispatch; WLT foundational ledger contracts are prerequisites at first payment/commission handoff, not after a completed delivery. Never declare the **entire** Store-catalog subsystem a hard gate to Field authentication.
+
+## 2A. Currently selected post-Operator coherent foundation (SLICE 002)
+
+The current local delivery program groups reference-facing candidate outcomes **P02 + P03 + P04 + P05 (only the admission-relevant operational options) + P06** into **one** bounded technical execution slice. This grouping reduces artificial micro-slices; it does **not** collapse the distinct canonical DSH entities, invent a generic settings store, move WLT monetary truth to DSH, or mandate an exhaustive Yemen-wide dataset.
+
+The slice closes actual ServiceCity, CommerceVertical, CommercialStoreType, CatalogCategory hierarchy, attribute definitions/typed category rules/enum options and category media as **reference structures**. It validates the admitted official-wallet-provider registry and the existing initial fulfillment-mode options; do not turn fulfillment choices into newly configurable products when Governance admits only defined modes. Real active representative options must be queryable by their intended Operator, Field and client consumers and stay valid across idempotent replay, stale version, disabled ancestor and process restart. The first-Store intake's City + Vertical + compatible Type is a hard data requirement; category rule/image readiness is prepared in this selected program phase but an exhaustive Shared Product catalog is not required for Field activation.
+
+Explicitly **not** part of this foundation: all Shared Product/Variant media and import flows, activation of a Field/Partner/Captain role, real JoiningCase submission, Store publication/financial agreement, Store-specific fulfillment policy edits, WLT funds or checkout. Boundary-only compatibility probes for affected consumers are in scope. If the dependency census disproves this grouping or reveals a material earlier blocker, stop and correct the authorized plan before broadening execution.
 
 ## 3. Full candidate-outcome coverage — topological guidance, not a mandatory linear backlog
 
@@ -105,4 +113,4 @@ Do not claim a whole Journey complete because its participating capability files
 
 ## 6. Next-slice check
 
-Before P02 (or any other selected next outcome), confirm P01 technical claims and the user's exact-HEAD manual acceptance, inspect the live DSH/Operator city state and capability ownership, prove the `platform_policies` boundary, and close only the material City registry/readiness/access defect. A different earliest eligible outcome may supersede P02 when supported by fresh hard-edge evidence. Do not infer authority to push, merge or start P02 merely from this document.
+Before the current post-Operator composite reference foundation, prove P01's applicable technical closure gates at the exact tested HEAD, then inspect and retain existing DSH-owned City/Vertical/Type/Category/Attribute/WalletProvider records and readbacks. Close only real gaps across the selected foundation, not just City alone. Enforce `platform_policies` for City/provider policy and `catalog` for vertical/type/category/attribute administration; cross-check actual Field joining selectors and reference compatibility. The complete Shared Product/Variant lifecycle remains a distinct later outcome. An unproven hard predecessor blocks execution, but **no user-manual acceptance** is required. This map does not grant authority to push, merge or start the next slice absent the authorized technical gate.
