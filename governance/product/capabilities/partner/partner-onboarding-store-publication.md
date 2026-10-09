@@ -54,6 +54,17 @@ DSH owns joining-case, Field standing admission/eligibility, assignment, Partner
 - trusted case/business scope is derived server-side, never granted by request input;
 - mutations are concurrency-safe, idempotent and attributable.
 
+## Reference-readiness and participant-admission boundaries
+
+The following are **different admission/operation gates**, not one compulsory global bootstrap chain:
+
+- **Field candidate and standing admission:** an authorized Operator, DSH Field-admission policy/eligibility and the selected active Service City scope (or an admitted all-cities scope), plus any currently required active official-wallet provider option. A complete shared Product catalog, Store, JoiningCase or Store-specific agreement is **not** a prerequisite for admitting or activating a Field actor.
+- **Field JoiningCase intake/submission:** the Field actor must have current standing and permitted case scope; the first Store requires an active canonical Service City, one active Commerce Vertical and a compatible active Commercial Store Type, along with its admitted contact, evidence, location, schedule and fulfillment-mode facts. DSH validates actual registry records, not presentation labels or client selections as authority.
+- **Partner role admission:** only the approved DSH joining/ownership or admitted Store-delegation eligibility may request the `partner` role from Identity; a candidate or phone input alone does not create Partner standing.
+- **Store publication:** separate, later Store-specific agreement acceptance/Finance approval, admitted initial catalog readiness and final Operator readiness; creating a Field account, JoiningCase, Partner account or Store never implies publication or current orderability.
+
+Preparation of shared categories and representative shared Products before Field onboarding may be chosen as `PROGRAM_ORDER` to make initial Store catalog work practical. It is **not** an additional hard dependency for standing Field admission or a requirement that every possible shared Product be pre-created. Keep existing valid cases, identities and versions when a reference registry gains values.
+
 ## Minimal lifecycle
 
 ```text
