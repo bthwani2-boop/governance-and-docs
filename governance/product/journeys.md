@@ -614,7 +614,7 @@ Every currently material concept must have one explicit disposition. Absence fro
 | Different delivery recipient for gifts/family delivery | DSH Order snapshot | SUPPORTING_SUBFLOW | SINGLE_STORE_ORDER_CREATION + final mile | MAPPED |
 | Restaurants/menu modifiers/sections | DSH Catalog | SUPPORTING_SUBFLOW | CATALOG_TO_CUSTOMER_OFFER | MAPPED |
 | Grocery/fresh variable measure and actual fulfilled quantity | DSH + WLT delta | SUPPORTING_SUBFLOW | catalog + ORDER_ADJUSTMENT_EXCEPTION_REFUND | MAPPED |
-| Standard non-regulated pharmacy commerce | DSH/WLT standard commerce | SUPPORTING_SUBFLOW | catalog/order/fulfillment Journeys | MAPPED |
+| Standard non-regulated pharmacy commerce | DSH/WLT standard commerce | SUPPORTING_SUBFLOW | CATALOG_TO_CUSTOMER_OFFER / SINGLE_STORE_ORDER_CREATION / fulfillment Journeys | MAPPED |
 | Electronics wrong/damaged/missing delivered item | DSH + WLT | SUPPORTING_SUBFLOW | ORDER_ADJUSTMENT_EXCEPTION_REFUND | MAPPED |
 | BThwani Captain dispatch / handoff / custody / delivery | DSH + WLT effects | TOP_LEVEL_MULTI_SURFACE_JOURNEY | BTHWANI_CAPTAIN_DELIVERY | MAPPED |
 | Partner Captain invitation/membership/delivery | DSH | TOP_LEVEL_MULTI_SURFACE_JOURNEY | PARTNER_CAPTAIN_DELIVERY | MAPPED |
