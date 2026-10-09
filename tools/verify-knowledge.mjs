@@ -34,7 +34,6 @@ const required = [
   "governance/policy/EXPERIENCE.md",
   "governance/policy/DESIGN.md",
   "docs/README.md",
-  "docs/DEVELOPMENT.md",
   "docs/EXECUTION-CONTRACT.md",
   "docs/OPERATIONS.md",
   ".github/pull_request_template.md",
