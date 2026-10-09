@@ -1,7 +1,7 @@
 # BThwani Performance, Capacity and Scalability Policy
 
 ARTIFACT_CLASS: DURABLE_CROSS_CUTTING_POLICY
-SEMANTIC_OWNER: governance/policy/SCALABILITY.md
+SEMANTIC_OWNER: governance/policies/scalability.md
 EXECUTION_AUTHORITY: NONE
 IMPLEMENTATION_STATE_AUTHORITY: NONE
 
@@ -17,13 +17,13 @@ It does not own current implementation state, exact ports, current providers, cu
 
 It does not replace:
 
-- `governance/system/SYSTEM.md` for bounded ownership, canonical truth and cross-owner composition;
-- `governance/policy/DATA.md` for durable data, migration, projection, paging and media-data invariants;
-- `governance/policy/RELIABILITY.md` for retry, idempotency, reconciliation, recovery and failure semantics;
-- `governance/policy/SECURITY.md` for authentication, authorization, abuse protection, secrets and privacy;
-- `governance/policy/QUALITY.md` for applicability, evidence and closure proof;
-- `governance/policy/DELIVERY.md` for change/cutover/compatibility/release authority;
-- `governance/policy/INTEGRATIONS.md` for external-provider admission and adapter boundaries.
+- `governance/architecture.md` for bounded ownership, canonical truth and cross-owner composition;
+- `governance/policies/data.md` for durable data, migration, projection, paging and media-data invariants;
+- `governance/policies/reliability.md` for retry, idempotency, reconciliation, recovery and failure semantics;
+- `governance/policies/security.md` for authentication, authorization, abuse protection, secrets and privacy;
+- `governance/policies/quality.md` for applicability, evidence and closure proof;
+- `governance/policies/delivery.md` for change/cutover/compatibility/release authority;
+- `governance/policies/integrations.md` for external-provider admission and adapter boundaries.
 
 Where one of those owners already defines an invariant, this policy routes to it and does not create a second authority.
 

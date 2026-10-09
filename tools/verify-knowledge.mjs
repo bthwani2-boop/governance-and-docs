@@ -24,18 +24,18 @@ const required = [
   "AGENTS.md",
   "GOVERNANCE-STANDARDS.md",
   "README.md",
-  "governance/GOVERNANCE.md",
-  "governance/platform/PLATFORM.md",
-  "governance/product/PRODUCT.md",
-  "governance/product/CAPABILITIES.md",
-  "governance/product/JOURNEYS.md",
-  "governance/system/SYSTEM.md",
-  "governance/policy/QUALITY.md",
-  "governance/policy/EXPERIENCE.md",
-  "governance/policy/DESIGN.md",
+  "governance/README.md",
+  "governance/platform.md",
+  "governance/product/overview.md",
+  "governance/product/capabilities.md",
+  "governance/product/journeys.md",
+  "governance/architecture.md",
+  "governance/policies/quality.md",
+  "governance/policies/experience.md",
+  "governance/policies/design.md",
   "docs/README.md",
-  "docs/EXECUTION-CONTRACT.md",
-  "docs/OPERATIONS.md",
+  "execution/contract.md",
+  "docs/operations.md",
   ".github/pull_request_template.md",
   ".github/workflows/knowledge-integrity.yml",
   ".github/workflows/governance-pr-policy.yml",
@@ -51,9 +51,16 @@ for (const token of [
 ]) if (!metaStandard.includes(token)) fail(`GOVERNANCE-STANDARDS.md missing meta-authority boundary: ${token}`);
 
 const retiredRoots = [
+  "governance/platform/PLATFORM.md",
+  "governance/GOVERNANCE.md",
+  "governance/product/PRODUCT.md",
+  "governance/product/CAPABILITIES.md",
+  "governance/product/JOURNEYS.md",
+  "docs/EXECUTION-CONTRACT.md",
+  "docs/OPERATIONS.md",
   "governance/project",
-  "governance/architecture",
-  "governance/policies",
+  "governance/system",
+  "governance/policy",
   "governance/product/PRD.md",
   "governance/product/COMMERCIAL-AND-PARTNER-MODEL.md",
   "governance/product/FINANCIAL-MODEL.md",
@@ -63,17 +70,18 @@ const retiredRoots = [
   "docs/runbooks",
   "tools/verify-control-panel-identity-vocabulary.mjs",
 ];
-for (const p of retiredRoots) if (exists(p)) fail(`retired knowledge topology survives: ${p}`);
+const trackedCaseSensitive = new Set(collect(root).map(rel));
+for (const p of retiredRoots) if ([...trackedCaseSensitive].some((name) => name === p || name.startsWith(p + "/"))) fail(`retired knowledge topology survives: ${p}`);
 
 const governanceFiles = collect(path.join(root, "governance")).filter((p) => p.endsWith(".md"));
 const docsFiles = collect(path.join(root, "docs")).filter((p) => p.endsWith(".md"));
 
 const allowedGovernancePrefixes = [
-  "governance/GOVERNANCE.md",
-  "governance/platform/",
+  "governance/README.md",
+  "governance/platform.md",
   "governance/product/",
-  "governance/system/",
-  "governance/policy/",
+  "governance/architecture.md",
+  "governance/policies/",
 ];
 for (const file of governanceFiles) {
   const relative = rel(file);
@@ -121,7 +129,7 @@ for (const file of docsFiles) {
   if (/^SEMANTIC_OWNER:/m.test(body)) fail(`${relative} must not be a semantic owner`);
 }
 
-const quality = read("governance/policy/QUALITY.md");
+const quality = read("governance/policies/quality.md");
 const qualityDimensions = [...quality.matchAll(/^QUALITY_DIMENSION:\s*([A-Z0-9_]+)\s*$/gm)].map((m) => m[1]);
 if (qualityDimensions.length < 10) fail("QUALITY.md must expose a meaningful material-quality discovery taxonomy");
 if (new Set(qualityDimensions).size !== qualityDimensions.length) fail("QUALITY.md contains duplicate QUALITY_DIMENSION identifiers");
@@ -157,7 +165,7 @@ for (const file of capabilityFiles) {
   if (/^STATUS:/mi.test(body)) fail(`${relative} keeps duplicated/historical STATUS metadata`);
 }
 
-const product = read("governance/product/PRODUCT.md");
+const product = read("governance/product/overview.md");
 const admittedBlock = product.match(/## Admitted capabilities([\s\S]*?)(?=\n## |$)/)?.[1] ?? "";
 const admittedIds = new Set([...admittedBlock.matchAll(/`([A-Z][A-Z0-9_]+)`/g)].map((m) => m[1]));
 if (!admittedIds.size) fail("PRODUCT.md has no admitted capability set");
@@ -165,7 +173,7 @@ if (!admittedIds.size) fail("PRODUCT.md has no admitted capability set");
 for (const [id, p] of capabilityIds) if (!admittedIds.has(id)) fail(`capability owner not admitted by PRODUCT.md: ${id} -> ${p}`);
 for (const id of admittedIds) if (!capabilityIds.has(id)) fail(`PRODUCT.md admits capability without owner: ${id}`);
 
-const router = read("governance/product/CAPABILITIES.md");
+const router = read("governance/product/capabilities.md");
 for (const [id, p] of capabilityIds) {
   const local = p.replace("governance/product/", "");
   if (!router.includes(`\`${id}\``) || !router.includes(`\`${local}\``)) fail(`capability router missing ${id} -> ${local}`);
@@ -174,7 +182,7 @@ const routedIds = new Set([...router.matchAll(/`([A-Z][A-Z0-9_]+)`\s*→/g)].map
 for (const id of routedIds) if (!capabilityIds.has(id)) fail(`capability router contains non-owner ID: ${id}`);
 
 // JOURNEYS.md structural evidence only. Semantic correctness remains human/governance evidence.
-const journeys = read("governance/product/JOURNEYS.md");
+const journeys = read("governance/product/journeys.md");
 if (/^##\s+J\d+\s+—/m.test(journeys)) fail("retired sequential J0..Jn journey taxonomy survives");
 
 const allowedSurfaces = new Set(["CLIENT", "PARTNER", "CAPTAIN", "FIELD", "OPERATOR"]);
@@ -268,12 +276,16 @@ for (const file of referenceFiles) {
   }
 }
 
+const execution = read("execution/contract.md");
+for (const token of ["DOCUMENT_CLASS:","EXECUTION_AUTHORITY: NONE","PRODUCT_SEMANTIC_AUTHORITY: NONE","CURRENT_IMPLEMENTATION_AUTHORITY: NONE","NO_ACTION","PROOF_ONLY","GAP_REPAIR","CLOSURE_GATE_1_TO_8","LOCAL_DATA_MODE"]) {
+  if (!execution.includes(token)) fail("execution/contract.md missing boundary: " + token);
+}
 const docsIndex = read("docs/README.md");
 // Index references must resolve in both directions. A missing referenced guide is a failure,
 // not a reason to silently treat the guide as absent from the docs census.
 for (const match of docsIndex.matchAll(/^\s*-\s*`([^`]+\.md)`/gm)) {
   const indexed = path.posix.normalize(`docs/${match[1]}`);
-  if (!indexed.startsWith("docs/") || !exists(indexed)) {
+  if (!(indexed.startsWith("docs/") || indexed.startsWith("execution/")) || !exists(indexed)) {
     fail(`docs/README.md references missing document: ${match[1]}`);
   }
 }
@@ -294,8 +306,8 @@ for (const heading of [
   "## Negative space and consumer impact",
 ]) if (!prTemplate.includes(heading)) fail(`pull request template missing canonical evidence section: ${heading}`);
 
-const liveKnowledge = [...governanceFiles, ...docsFiles, path.join(root, "AGENTS.md"), path.join(root, "README.md")].filter(fs.existsSync);
-const stalePathTokens = ["governance/project/", "governance/architecture/", "governance/policies/", "docs/method/", "docs/development/", "docs/runbooks/"];
+const liveKnowledge = [...governanceFiles, ...docsFiles, path.join(root, "execution/contract.md"), path.join(root, "AGENTS.md"), path.join(root, "README.md")].filter(fs.existsSync);
+const stalePathTokens = ["governance/project/", "governance/system/", "governance/policy/", "docs/method/", "docs/development/", "docs/runbooks/"];
 for (const file of liveKnowledge) {
   const relative = rel(file);
   const body = fs.readFileSync(file, "utf8");

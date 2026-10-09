@@ -16,7 +16,7 @@ Identity owns `actor_id`, the current canonical official identity name, verified
 
 ## Role-specific lifecycle
 
-The canonical current role set is owned by `governance/platform/PLATFORM.md`. Identity applies the following lifecycle distinctions to that set; this section does not independently admit roles.
+The canonical current role set is owned by `governance/platform.md`. Identity applies the following lifecycle distinctions to that set; this section does not independently admit roles.
 
 - Client uses governed self-registration/login/recovery.
 - Partner/Captain/Field require domain admission/eligibility, governed Identity role admission, then one-time activation/enrollment and normal role-scoped session behavior. A current dispatch assignment is not a prerequisite for standing Captain admission. A Partner session authenticates the Partner workspace only; DSH separately authorizes every Store resource from Store ownership or an active Store-scoped grant.

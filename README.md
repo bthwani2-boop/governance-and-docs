@@ -4,13 +4,13 @@ This repository is BThwani's compact, challengeable, durable knowledge base.
 
 - `AGENTS.md` — repository-local operating law.
 - `GOVERNANCE-STANDARDS.md` — project-neutral acceptance standard for Governance/AGENTS integrity; it owns no BThwani semantics.
-- `governance/GOVERNANCE.md` — semantic-owner router.
-- `governance/platform/` — what BThwani is.
+- `governance/README.md` — semantic-owner router.
+- `governance/platform.md` — what BThwani is.
 - `governance/product/` — what BThwani currently does.
-- `governance/system/` — durable system ownership and boundary model.
-- `governance/policy/` — cross-cutting invariants.
-- `docs/` — non-authoritative development/operations guidance and reference routing.
-  - `docs/EXECUTION-CONTRACT.md` — canonical low-context cross-surface vertical-slice Planner/Executor handoff guide; it owns no Product/System/Policy truth.
+- `governance/architecture.md` — durable system ownership and boundary model.
+- `governance/policies/` — cross-cutting invariants.
+- `execution/contract.md` — one audit-first closure handoff.
+- `docs/` — operations and non-authoritative external evidence.
 - `tools/verify-knowledge.mjs` — structural/relational integrity verification.
 
 The repository is not an implementation inventory, backlog, ADR archive, research notebook, or provider catalog. Git history is the archive. Exact source/runtime in the consuming repository is the authority for what currently exists.

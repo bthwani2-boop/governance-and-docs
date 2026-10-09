@@ -1,7 +1,7 @@
 # BThwani Platform Model
 
 ARTIFACT_CLASS: DURABLE_PLATFORM_GOVERNANCE
-SEMANTIC_OWNER: governance/platform/PLATFORM.md
+SEMANTIC_OWNER: governance/platform.md
 EXECUTION_AUTHORITY: NONE
 IMPLEMENTATION_STATE_AUTHORITY: NONE
 
@@ -33,7 +33,7 @@ One Human Actor may hold multiple roles. Role admission, credentials and session
 
 A Partner Captain is not a sixth Identity role. The Human Actor remains a canonical `captain`; Store-scoped affiliation/membership/eligibility is a DSH-owned relationship around that actor. The same Captain actor may hold multiple permitted relationships without creating duplicate identity.
 
-Detailed role admission/authentication/session semantics belong to `IDENTITY_ACTIVATION_SESSIONS`. Store-scoped Captain relationship semantics belong to `STORE_CAPTAIN_MEMBERSHIP`. Bounded domain ownership belongs to `governance/system/SYSTEM.md`. Current Product breadth belongs to `governance/product/PRODUCT.md`.
+Detailed role admission/authentication/session semantics belong to `IDENTITY_ACTIVATION_SESSIONS`. Store-scoped Captain relationship semantics belong to `STORE_CAPTAIN_MEMBERSHIP`. Bounded domain ownership belongs to `governance/architecture.md`. Current Product breadth belongs to `governance/product/overview.md`.
 
 Store-scoped delegated access is not a new high-level Identity role. It is an explicit DSH-owned grant from an authorized Store owner to a canonical actor admitted to the Partner workspace where required by the grant lifecycle, with Store scope, an allowlisted permission set, expiry/revocation and audit. It cannot create a generic Partner organization or team hierarchy. The role answers which high-level workspace the actor may authenticate to; the DSH Store relationship answers which Store resources/actions are authorized there.
 

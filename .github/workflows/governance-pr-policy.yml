@@ -81,7 +81,7 @@ jobs:
           mapfile -t impacts < <(grep -Eo 'GOVERNANCE_IMPACT=(NONE|REVALIDATE_ONLY|UPDATE_REQUIRED|DEFECT_FOUND)' <<<"${body}" || true)
           [[ ${#impacts[@]} -eq 1 ]] || { echo "::error::Ready PR must declare exactly one GOVERNANCE_IMPACT"; exit 1; }
 
-          mapfile -t canonical_dimensions < <(sed -n 's/^QUALITY_DIMENSION:[[:space:]]*\([A-Z0-9_]*\)[[:space:]]*$/\1/p' governance/policy/QUALITY.md)
+          mapfile -t canonical_dimensions < <(sed -n 's/^QUALITY_DIMENSION:[[:space:]]*\([A-Z0-9_]*\)[[:space:]]*$/\1/p' governance/policies/quality.md)
           [[ ${#canonical_dimensions[@]} -gt 0 ]] || { echo "::error::No canonical QUALITY_DIMENSION values found"; exit 1; }
 
           mapfile -t classified < <(grep -E '^- [A-Z0-9_]+: (AFFECTED|PROVEN_UNAFFECTED|N/A_WITH_REASON)[[:space:]]+[-—][[:space:]].+$' <<<"${body}" || true)

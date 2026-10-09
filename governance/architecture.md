@@ -1,7 +1,7 @@
 # BThwani System Ownership and Boundaries
 
 ARTIFACT_CLASS: DURABLE_SYSTEM_GOVERNANCE
-SEMANTIC_OWNER: governance/system/SYSTEM.md
+SEMANTIC_OWNER: governance/architecture.md
 EXECUTION_AUTHORITY: NONE
 IMPLEMENTATION_STATE_AUTHORITY: NONE
 
@@ -42,7 +42,7 @@ WLT
 → payout / settlement / reconciliation
 ```
 
-A service existing in source does not automatically admit Product breadth; Product admission is owned by `governance/product/PRODUCT.md`.
+A service existing in source does not automatically admit Product breadth; Product admission is owned by `governance/product/overview.md`.
 
 ## Adapter boundary
 

@@ -1,7 +1,7 @@
 # Design and Visual Identity Policy
 
 ARTIFACT_CLASS: DURABLE_CROSS_CUTTING_POLICY
-SEMANTIC_OWNER: governance/policy/DESIGN.md
+SEMANTIC_OWNER: governance/policies/design.md
 EXECUTION_AUTHORITY: NONE
 IMPLEMENTATION_STATE_AUTHORITY: NONE
 
@@ -77,7 +77,7 @@ Focus, busy, disabled, selected and error treatments should preserve understanda
 
 ## Iconography, imagery and media
 
-Iconography uses a coherent family, consistent stroke/fill language and semantic meaning. Direction-sensitive symbols must remain compatible with the Arabic/RTL interaction contract owned by `governance/policy/EXPERIENCE.md`.
+Iconography uses a coherent family, consistent stroke/fill language and semantic meaning. Direction-sensitive symbols must remain compatible with the Arabic/RTL interaction contract owned by `governance/policies/experience.md`.
 
 Images, illustrations and media support Product understanding or brand character; they do not fabricate Product truth or crowd out primary actions. Material visual assets require known provenance and compatible licensing. Donor or third-party assets are evidence/candidates only and are not adopted by existence.
 
@@ -85,7 +85,7 @@ Images, illustrations and media support Product understanding or brand character
 
 Motion communicates hierarchy, continuity, feedback or state change. Decorative motion that slows task completion, masks latency or competes with operational actions is noncanonical.
 
-Exact durations, easing curves and platform implementations belong to the executable Design System. Accessibility and reduced-motion interaction behavior remain governed by `governance/policy/EXPERIENCE.md`.
+Exact durations, easing curves and platform implementations belong to the executable Design System. Accessibility and reduced-motion interaction behavior remain governed by `governance/policies/experience.md`.
 
 ## Light and dark appearance
 
@@ -128,6 +128,6 @@ APP-SPECIFIC COMPOSITION
 → change the owning surface without promoting local composition into global design law
 ```
 
-Rendered evidence is required for claims about actual appearance; source declarations alone do not prove visual quality. Interaction, accessibility, RTL, responsive/adaptive and state-transition proof remain governed by `governance/policy/EXPERIENCE.md` and `governance/policy/QUALITY.md`.
+Rendered evidence is required for claims about actual appearance; source declarations alone do not prove visual quality. Interaction, accessibility, RTL, responsive/adaptive and state-transition proof remain governed by `governance/policies/experience.md` and `governance/policies/quality.md`.
 
 Donor implementations, OSS, Material, Apple guidance and other external design systems are challenge/evidence sources only. Preserve useful BThwani meaning, reject defects and obsolete architecture, and never copy external visual identity as authority.
