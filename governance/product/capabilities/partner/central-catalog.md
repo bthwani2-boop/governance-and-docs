@@ -208,7 +208,7 @@ catalog operations.
 
 Catalog representation may evolve only through the DSH-owned migration history under `governance/policy/DATA.md`.
 
-- already-applied migrations remain immutable without copying their current ordinal/range into Governance;
+- migration mutability and protection follow the consuming repository's exact-state execution rules and `governance/policy/DATA.md`; never rewrite merged or preservation-required migration history, and never copy a live migration ordinal/range into Governance;
 - representation changes preserve current canonical Product, Variant, StoreOffer, identifier, media, category and audit meaning unless an explicitly authorized Product decision changes that meaning;
 - local-to-Shared promotion selects or creates an approved Shared identity, repoints the Store's offers while preserving price, availability and history, then removes the losing local identity responsibility;
 - legacy/historical records are never guessed into a current classification merely to satisfy a newer model;
