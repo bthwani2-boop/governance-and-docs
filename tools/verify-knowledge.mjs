@@ -277,12 +277,12 @@ for (const [id, meta] of journeyDeclarations) {
   if (!sameMembers(meta.owners, ownerRelations.get(id) ?? new Set())) fail("Journey owner matrix disagrees with OWNERS: " + id);
 }
 // A matrix claim naming a top-level journey must agree with that Journey CAPABILITIES declaration.
-const tick = String.fromCharCode(96);
-const capRows = capabilityMatrix.split("\n").filter((line) => line.startsWith("| " + tick));
+const matrixTick = String.fromCharCode(96);
+const capRows = capabilityMatrix.split("\n").filter((line) => line.startsWith("| " + matrixTick));
 for (const line of capRows) {
   const parts = line.split("|").slice(1, -1).map((value) => value.trim());
   if (parts.length !== 3) { fail("invalid capability participation matrix row"); continue; }
-  const capability = parts[0].replaceAll(tick, "");
+  const capability = parts[0].replaceAll(matrixTick, "");
   for (const [id, meta] of journeyDeclarations) {
     if (parts[1].includes(id) && !meta.capabilities.has(capability)) fail("capability participation matrix contradicts top-level CAPABILITIES: " + capability + " -> " + id);
   }
