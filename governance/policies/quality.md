@@ -37,7 +37,7 @@ Synthetic runtime proof state is evidence/development state, not Product truth. 
 
 Material cross-role slice and end-to-end scenario proof connects the affected real surfaces to the same canonical identities and business state. Synthetic proof does not authorize Product or schema exceptions and must not create uncontrolled real-world effects. Direct persistence mutation does not substitute for a canonical business operation; it is limited to cases where persistence is the correct evidence producer for a database or fault/recovery claim.
 
-The durable meanings for data, security, integrations and reliability remain owned by `DATA.md`, `SECURITY.md`, `INTEGRATIONS.md` and `RELIABILITY.md`; this policy defines only the cross-cutting proof-environment boundary.
+The durable meanings for data, security, integrations and reliability remain owned by `governance/policies/data.md`, `governance/policies/security.md`, `governance/policies/integrations.md` and `governance/policies/reliability.md`; this policy defines only the cross-cutting proof-environment boundary.
 
 For each material task:
 
@@ -98,7 +98,7 @@ VISUAL_IDENTITY_DESIGN_SYSTEM
 → governance/policies/design.md
 
 RENDERED / INTERACTION / DEVICE PROOF OBLIGATION
-→ this QUALITY.md evidence model using the applicable semantic owners above
+→ this governance/policies/quality.md evidence model using the applicable semantic owners above
 ```
 
 Visual implementation conforms to the durable Design policy through the consuming repository's canonical executable Design System where reusable meaning is admitted. App-specific composition remains local to the owning surface.

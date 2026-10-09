@@ -36,7 +36,7 @@ Decision types are `AUDIT_ONLY` (unknown status requires investigation), `PROOF_
 
 ## 3. Dependencies and slice boundaries
 
-For a multi-capability authorized objective, make **one compact, temporary coverage census**, beginning with current `PRODUCT.md`, `CAPABILITIES.md`, `JOURNEYS.md`, exact implementation and owner readbacks; reuse it until relevant facts change. The census is not a second Product specification, backlog, permanent Governance file, missing-feature assertion or mandate to implement all capabilities.
+For a multi-capability authorized objective, make **one compact, temporary coverage census**, beginning with current `governance/product/overview.md`, `governance/product/capabilities.md`, `governance/product/journeys.md`, exact implementation and owner readbacks; reuse it until relevant facts change. The census is not a second Product specification, backlog, permanent Governance file, missing-feature assertion or mandate to implement all capabilities.
 
 Trace prerequisites backwards from the required outcome, and verify sibling blockers and their direction:
 
