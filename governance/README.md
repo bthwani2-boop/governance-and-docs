@@ -41,13 +41,27 @@ governance/
 - `product/` answers: what current user/business outcomes and capabilities are admitted?
 - `architecture.md` answers: which bounded owner owns each durable fact and how boundaries compose?
 - `policies/` answers: which cross-cutting invariants apply across multiple owners?
-- `policies/experience.md` owns durable information architecture, shell/navigation, interaction, RTL/localization, accessibility and recovery invariants.
-- `policies/design.md` owns durable cross-surface visual identity and design-language invariants; it is not an executable token or component registry.
-- `policies/scalability.md` owns durable admission, escalation, proof and retirement rules for performance, capacity, scalability and load-management mechanisms; it does not own current topology, traffic, thresholds or provider choices.
 - `docs` explains how humans/agents work; it owns no Product/System truth.
 - `docs/reference` routes external evidence; reference existence never grants adoption authority.
 
 If a fact cannot be placed without ambiguity, diagnose the owner split. Do not duplicate it.
+
+
+## Cross-cutting policy routes
+
+Routing only: each listed file owns its own durable invariants. Every policy must be indexed here, without duplicating policy law.
+
+- `governance/policies/security.md` — trusted authentication, authorization and safety invariants
+- `governance/policies/data.md` — canonical writers, migrations, integrity and retention
+- `governance/policies/finance.md` — WLT-owned money conservation, balance, collection and settlement
+- `governance/policies/reliability.md` — idempotency, failure handling, resilience and recovery
+- `governance/policies/experience.md` — owns durable information architecture, shell/navigation, interaction, RTL/localization, accessibility and recovery invariants.
+- `governance/policies/design.md` — owns durable cross-surface visual identity and design-language invariants; it is not an executable token or component registry.
+- `governance/policies/quality.md` — evidence, testing, assurance and justified closure
+- `governance/policies/scalability.md` — owns durable admission, escalation, proof and retirement rules for performance, capacity, scalability and load-management mechanisms; it does not own current topology, traffic, thresholds or provider choices.
+- `governance/policies/delivery.md` — bounded work, safe changes, integration and delivery
+- `governance/policies/integrations.md` — bounded external providers, rails and interoperability
+- `governance/policies/knowledge.md` — evidence, curation, freshness and durable sources
 
 ## One-source law
 

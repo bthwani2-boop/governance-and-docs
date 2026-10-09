@@ -129,6 +129,17 @@ for (const file of docsFiles) {
   if (/^SEMANTIC_OWNER:/m.test(body)) fail(`${relative} must not be a semantic owner`);
 }
 
+const policyFiles = collect(path.join(root, "governance/policies")).filter((p) => p.endsWith(".md")).map(rel);
+const routerText = read("governance/README.md");
+const tick = String.fromCharCode(96);
+const policyRoutes = routerText.split("\n").filter((line) => line.startsWith("- " + tick + "governance/policies/")).map((line) => line.split(tick)[1]);
+const policyRouteSet = new Set(policyRoutes);
+if (!policyRoutes.length || policyRoutes.length !== policyRouteSet.size) fail("missing or duplicate policy route in Governance index");
+for (const p of policyFiles) {
+  if (!policyRouteSet.has(p)) fail("unrouted policy owner: " + p);
+  if (!read(p).includes("ARTIFACT_CLASS: DURABLE_CROSS_CUTTING_POLICY")) fail("invalid policy class: " + p);
+}
+for (const p of policyRouteSet) if (!trackedCaseSensitive.has(p)) fail("invalid or missing policy route: " + p);
 const quality = read("governance/policies/quality.md");
 const qualityDimensions = [...quality.matchAll(/^QUALITY_DIMENSION:\s*([A-Z0-9_]+)\s*$/gm)].map((m) => m[1]);
 if (qualityDimensions.length < 10) fail("QUALITY.md must expose a meaningful material-quality discovery taxonomy");
