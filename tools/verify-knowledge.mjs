@@ -277,20 +277,13 @@ for (const [id, meta] of journeyDeclarations) {
   if (!sameMembers(meta.surfaces, surfaceRelations.get(id) ?? new Set())) fail("Journey surface matrix disagrees with SURFACES: " + id);
   if (!sameMembers(meta.owners, ownerRelations.get(id) ?? new Set())) fail("Journey owner matrix disagrees with OWNERS: " + id);
 }
-// A matrix claim naming a top-level journey must agree with that Journey CAPABILITIES declaration.
+// Validate the capability matrix after indexing both Journeys and supporting lanes.
 const matrixTick = String.fromCharCode(96);
 const capRows = capabilityMatrix.split("\n").filter((line) => line.startsWith("| " + matrixTick));
-for (const line of capRows) {
-  const parts = line.split("|").slice(1, -1).map((value) => value.trim());
-  if (parts.length !== 3) { fail("invalid capability participation matrix row"); continue; }
-  const capability = parts[0].replaceAll(matrixTick, "");
-  for (const [id, meta] of journeyDeclarations) {
-    if (parts[1].includes(id) && !meta.capabilities.has(capability)) fail("capability participation matrix contradicts top-level CAPABILITIES: " + capability + " -> " + id);
-  }
-}
 // Supporting lanes and the material census must route to existing Product/Journey identifiers.
 const supportingBlock = journeys.split("## Supporting subflows and cross-cutting lanes")[1]?.split("## Matrix — Journey × Surface")[0] ?? "";
 const supportingIds = new Set();
+const supportingCapabilityRefs = new Map();
 const supportRows = supportingBlock.split("\n").filter((line) => line.startsWith("| ") && !line.startsWith("| ID |"));
 for (const line of supportRows) {
   const parts = line.split("|").slice(1, -1).map((x) => x.trim());
@@ -301,8 +294,29 @@ for (const line of supportRows) {
   const tick = String.fromCharCode(96);
   const referencedIds = parts[2].split(tick).filter((x, i) => i % 2 === 1);
   for (const cap of referencedIds) if (!admittedIds.has(cap)) fail("supporting lane references non-admitted capability: " + id + " -> " + cap);
+  supportingCapabilityRefs.set(id, new Set(referencedIds));
 }
 if (!supportingIds.size) fail("no supporting lanes in current Product journey map");
+
+// Each derived matrix placement must name an actual Journey or supporting lane.
+// Descriptive context may accompany the exact IDs, but cannot substitute for them.
+for (const line of capRows) {
+  const parts = line.split("|").slice(1, -1).map((value) => value.trim());
+  if (parts.length !== 3) { fail("invalid capability participation matrix row"); continue; }
+  const capability = parts[0].replaceAll(matrixTick, "");
+  const placementIds = [...parts[1].matchAll(/\b[A-Z][A-Z0-9_]{4,}\b/g)].map((match) => match[0]);
+  if (!placementIds.length) fail("capability participation row has no exact Journey/subflow placement: " + capability);
+  for (const id of placementIds) {
+    if (journeyDeclarations.has(id)) {
+      if (!journeyDeclarations.get(id).capabilities.has(capability)) fail("capability participation matrix contradicts top-level CAPABILITIES: " + capability + " -> " + id);
+    } else if (supportingIds.has(id)) {
+      const linked = supportingCapabilityRefs.get(id);
+      if (linked?.size && !linked.has(capability)) fail("capability participation matrix contradicts supporting lane: " + capability + " -> " + id);
+    } else {
+      fail("capability participation matrix references unknown Journey/subflow: " + capability + " -> " + id);
+    }
+  }
+}
 const materialCensus = journeys.match(/## Platform material census([\s\S]*?)(?=\n## |$)/)?.[1] ?? "";
 if (!materialCensus) fail("JOURNEYS.md missing Platform material census");
 const censusRows = materialCensus.split("\n").filter((line) => /^\|[^-].*\|$/.test(line.trim()) && !/^\|\s*Material concept\s*\|/.test(line.trim()));
