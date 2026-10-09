@@ -322,6 +322,15 @@ for (const document of linkedDocuments) {
     if (!trackedCaseSensitive.has(target)) fail("unresolved Markdown link " + source + " -> " + target);
   }
 }
+// Renamed owners must never survive as ambiguous unqualified legacy filenames in durable text.
+const renamedOwnerAliases = ["PRODUCT.md","CAPABILITIES.md","JOURNEYS.md","PLATFORM.md","SYSTEM.md","DATA.md","SECURITY.md","INTEGRATIONS.md","RELIABILITY.md","QUALITY.md","DESIGN.md","EXPERIENCE.md","SCALABILITY.md","OPERATIONS.md","EXECUTION-CONTRACT.md"];
+const durableTextFiles = [...governanceFiles, path.join(root,"execution/contract.md"), path.join(root,"README.md"), path.join(root,"AGENTS.md")];
+for (const file of durableTextFiles) {
+  const body = fs.readFileSync(file,"utf8");
+  for (const alias of renamedOwnerAliases) {
+    if (body.includes(alias)) fail(rel(file) + " uses obsolete owner name: " + alias);
+  }
+}
 const prTemplate = read(".github/pull_request_template.md");
 for (const heading of [
   "## Exact candidate and material question",

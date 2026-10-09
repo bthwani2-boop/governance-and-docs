@@ -8,13 +8,13 @@ IMPLEMENTATION_STATE_AUTHORITY: NONE
 This policy owns BThwani's durable cross-surface visual identity and design-language invariants. It does not own Product capabilities, information architecture, navigation, interaction/recovery behavior, accessibility policy, implementation topology, or current rendered state.
 
 ```text
-DESIGN.md
+governance/policies/design.md
 → durable visual identity / design language
 
-EXPERIENCE.md
+governance/policies/experience.md
 → information architecture / shell / navigation / interaction / RTL / accessibility / recovery
 
-QUALITY.md
+governance/policies/quality.md
 → material review and proof obligations
 
 EXECUTABLE DESIGN SYSTEM

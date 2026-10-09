@@ -5,7 +5,7 @@ SEMANTIC_OWNER: governance/product/capabilities.md
 EXECUTION_AUTHORITY: NONE
 IMPLEMENTATION_STATE_AUTHORITY: NONE
 
-Routing only; behavior remains in each capability owner. Journey participation is owned exclusively by `JOURNEYS.md`.
+Routing only; behavior remains in each capability owner. Journey participation is owned exclusively by `governance/product/journeys.md`.
 
 `IDENTITY_ACTIVATION_SESSIONS` → `capabilities/access/identity-activation-sessions.md`
 `PARTNER_ONBOARDING_STORE_PUBLICATION` → `capabilities/partner/partner-onboarding-store-publication.md`

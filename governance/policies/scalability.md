@@ -122,7 +122,7 @@ Depending on the claim, capacity evidence may include:
 - recovery/restart testing;
 - representative mobile/network conditions when user-perceived performance depends on them.
 
-`QUALITY.md` remains the owner of proportional proof applicability and closure.
+`governance/policies/quality.md` remains the owner of proportional proof applicability and closure.
 
 ---
 
@@ -382,7 +382,7 @@ Where a request has a deadline, downstream database and service calls must inher
 
 ### 7.5 Retry discipline
 
-Retries must obey `RELIABILITY.md` and must not multiply traffic uncontrollably.
+Retries must obey `governance/policies/reliability.md` and must not multiply traffic uncontrollably.
 
 Where retries are safe and required, use bounded attempts and backoff/jitter appropriate to the failure class. Do not blindly retry unknown non-idempotent mutation outcomes.
 
@@ -405,7 +405,7 @@ Material endpoints must have bounded input/resource behavior appropriate to thei
 - bounded concurrent expensive operations;
 - downstream concurrency budgets.
 
-Security-sensitive limits remain governed by `SECURITY.md`.
+Security-sensitive limits remain governed by `governance/policies/security.md`.
 
 ### 7.9 Backpressure and load shedding
 
@@ -471,7 +471,7 @@ Uploads remain subject to security/privacy validation, including content-type/si
 
 ### 9.1 Durable handoff first
 
-Cross-owner and failure-sensitive asynchronous effects remain governed by the durable handoff, idempotency and reconciliation laws in `SYSTEM.md` and `RELIABILITY.md`.
+Cross-owner and failure-sensitive asynchronous effects remain governed by the durable handoff, idempotency and reconciliation laws in `governance/architecture.md` and `governance/policies/reliability.md`.
 
 A broker does not make an effect durable merely because a message was published.
 
@@ -750,7 +750,7 @@ Do not chase universal line coverage or benchmark count. Prove the material clai
 
 ## 16. Backup, recovery and disaster readiness
 
-Backup/recovery semantics are owned by `DATA.md` and `RELIABILITY.md`; scalability work must not weaken them.
+Backup/recovery semantics are owned by `governance/policies/data.md` and `governance/policies/reliability.md`; scalability work must not weaken them.
 
 Before Production material data is trusted, the operating model must define and prove as applicable:
 

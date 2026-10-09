@@ -9,7 +9,7 @@ IMPLEMENTATION_STATE_AUTHORITY: NONE
 
 This file owns current Product breadth, non-goals and capability admission law.
 
-The Human Actor/role model is owned by `governance/platform.md`. Bounded system ownership is owned by `governance/architecture.md`. Detailed capability truth lives only in `capabilities/**`; cross-capability, cross-surface orchestration lives only in `JOURNEYS.md`.
+The Human Actor/role model is owned by `governance/platform.md`. Bounded system ownership is owned by `governance/architecture.md`. Detailed capability truth lives only in `capabilities/**`; cross-capability, cross-surface orchestration lives only in `governance/product/journeys.md`.
 
 ## Current approved Product target
 
@@ -38,7 +38,7 @@ OPERATOR ───────────────────────�
 MULTI-STORE ────────────────────────── orchestration above independent Store Orders
 ```
 
-Detailed cross-capability surfaces, handoffs, branches and readbacks are owned by `JOURNEYS.md` as durable E2E scenario meaning; its contents do not prescribe implementation slices or assert their completion.
+Detailed cross-capability surfaces, handoffs, branches and readbacks are owned by `governance/product/journeys.md` as durable E2E scenario meaning; its contents do not prescribe implementation slices or assert their completion.
 
 The active implementation slice may be narrower. Current approved Governance may intentionally lead implementation progress. Missing admitted breadth is not by itself a defect unless the authorized objective or current delivery gate requires that breadth to be complete.
 
