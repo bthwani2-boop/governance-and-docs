@@ -251,7 +251,8 @@ for (const id of mappedCounts.keys()) if (!admittedIds.has(id)) fail(`capability
 
 // Relationship matrices must agree with Journey-owned metadata; a row count alone cannot prove that.
 function relationMatrix(heading, columns) {
-  const block = journeys.split("## " + heading + "\n")[1]?.split("\n## ")[0];
+  const normalized = journeys.replace(/\r\n/g, "\n");
+  const block = normalized.split("## " + heading + "\n")[1]?.split("\n## ")[0];
   if (!block) { fail("missing Journey relationship matrix: " + heading); return new Map(); }
   const lines = block.split("\n").filter((line) => line.startsWith("|") && !/^\|\s*-/.test(line));
   const cells = (line) => line.split("|").slice(1, -1).map((value) => value.trim());
