@@ -1,143 +1,136 @@
-# BThwani Slice Execution Planning Contract
+# BThwani Existing-System Audit and Gap-Closure Contract
 
 DOCUMENT_CLASS: NONAUTHORITATIVE_EXECUTION_PLANNING_GUIDE
 EXECUTION_AUTHORITY: NONE
 PRODUCT_SEMANTIC_AUTHORITY: NONE
 CURRENT_IMPLEMENTATION_AUTHORITY: NONE
 
-This is the single concise planner/executor handoff guide, not a second agent constitution. The consuming repository's `AGENTS.md` owns execution and safety; pinned canonical Governance owns durable Product/System/Policy meaning; exact source/config/schema/runtime/readback owns implementation state.
+This is the **single** low-context method for planner → executor handoff, not an agent constitution, Product roadmap, backlog or execution-state registry. The consuming repository's `AGENTS.md` owns execution and safety; pinned Governance Product/System/Policy owners own approved durable meaning; exact code/schema/config/runtime and canonical readback own current implementation truth.
 
-## 1. One objective, one bounded slice
-
-A **cross-surface vertical slice** is one independently verifiable business or foundation capability/outcome, including every materially affected surface, actor, canonical owner, API/contract, persistence, event, UX/UI state, security boundary, runtime dependency and relevant Governance owner. It is not one screen, one endpoint, or a mandate to edit every app. Identify shared roots before choosing the slice boundary; combine inseparable behavior instead of generating artificial micro-tasks.
-
-An end-to-end Journey remains a business/integration proof scenario, not the planning, status, implementation or closure unit. E2E proof across connected slices is required before claiming the joined operational outcome complete.
-
-## 2. Minimal human input
+## 1. Input and authority
 
 ```text
-REF: <existing implementation branch/ref>
-OBJECTIVE: <one materially testable outcome>
-DECISIONS: <only task-specific authorized decisions, omit when empty>
+REF: <exact existing implementation branch/ref>
+OBJECTIVE: <currently authorized business/foundation outcome or audit scope>
+DECISIONS: <only current task-specific approved decisions, or NONE>
+PREVIOUS_CHECKPOINT: <exact tested HEAD and still-valid proofs, if relevant>
 ```
 
-No duplicated reusable trigger, agent law, journey catalog, long proof list, historical diagnosis or future slice catalog. Scope authority is the current task; do not infer authorization to merge, release, destroy data or alter unrelated branches.
+Resolve the current branch/HEAD and pinned Governance SHA before decisions. Recover previously completed work, the most recent valid evidence, existing canonical owners and current material user intent. Do not treat a listed capability, old slice number, template, old branch or historical plan as evidence that functionality is missing. No separate reusable rulebook, copied agent constitution, large speculative plan or invented permanent status registry. No implicit authority to merge, deploy, grant access, delete protected data or reset unrelated state.
 
-## 3. Bounded discovery and exact ownership
+## 2. Audit existing behavior before selecting work
 
-**Existing implementation before new work.** Recover proven prior implementation and still-valid owner readbacks before deciding that any work is missing. Audit the material dependent cone, but change only the causal paths with evidenced defects. Distinguish `PROVEN_EXISTING`, `IMPLEMENTED_UNPROVEN`, `PARTIAL`, `DEFECTIVE`, `CONFLICTING`, `OBSOLETE`, `TRULY_MISSING`, and `UNKNOWN`. This is a task-scoped audit classification, not a second Product backlog or persistent status registry.
+Inspect the **material audit cone**: owning writer/readback, contracts, producers, consumers, role authorization, business rules, affected UI/device surfaces, persistence, cross-owner handoffs and negative/error paths. Start with the actual source and available owner-backed evidence; widen only for a newly evidenced dependency. Do not repeatedly scan proven unaffected areas or load all Governance by default.
 
-`IMPLEMENTED_UNPROVEN` requires targeted verification, not rebuilding. `TRULY_MISSING` authorizes implementation only if the current authorized delivery gate requires it. A suspected defect must have a falsifiable claim before mutation. Sound unaffected implementation stays untouched. The valid outcomes are `NO_ACTION` (no gaps), `PROOF_ONLY` (missing proof), `GAP_REPAIR` (evidenced causal defects), and `IMPLEMENT_MISSING` (genuinely absent required function).
+Classify each relevant claim (temporary task observations, not Product statuses):
 
-Pin the exact repository/branch/HEAD and current relevant state. Discover all material producer/consumer relations across the implementation repository and its pinned canonical Governance. Resolve the canonical owner, highest causal root, negative space, consequences and required proof. Search broadly for connections; read deeply only where relevant. Widen only when evidence reveals another material dependency.
+- `PROVEN_EXISTING` — correct on the applicable state with credible, still-valid proof: retain unchanged.
+- `IMPLEMENTED_UNPROVEN` — code exists but required behavior is not proven: verify; do not assume missing implementation.
+- `PARTIAL` / `TRULY_MISSING` — a presently authorized capability or behavior is incomplete/absent; prove need and exact gap before building.
+- `DEFECTIVE` / `CONFLICTING` / `OBSOLETE` — evidence proves wrong behavior, competing authority or an invalid path: identify causal root and affected consumers before changing/removing it.
+- `UNKNOWN` — decision-critical evidence not yet obtained: audit or return blocked; never fabricate closure or reimplementation.
 
-Classify `GOVERNANCE_IMPACT=NONE | REVALIDATE_ONLY | UPDATE_REQUIRED | DEFECT_FOUND`. For a required durable semantic change, update and merge its owner by the governed path before deliberately repinning the consumer to the exact immutable Governance SHA; do not edit a second shadow policy inside implementation.
+Separate `AUDIT_SCOPE` (relationships that must be inspected) from `REPAIR_SCOPE` (only proven causal changes and affected consumers). Missing historical test logs do not make sound implementation absent. If no material defect or missing proof survives targeted verification, use `NO_ACTION` with direct evidence; do not create work to fill a slice queue.
 
-For local-development work, record the observed target and data-disposition evidence before any destructive reset: `LOCAL_TARGET=VERIFIED | UNVERIFIED`, `LOCAL_DATA_MODE=CONFIRMED_DISPOSABLE | MUST_PRESERVE | UNKNOWN`, and `RESET_SCOPE=<exact project-owned targets | NONE>`. Local phase, Docker location, or a test/demo label alone does not establish disposability. Proceed non-destructively when disposition is unknown; isolate a provably disposable target or resolve the specific blocker before a reset. Reset only expressly authorized, confirmed-disposable resources; then prove fresh setup and canonical owner readback. The consuming repository's `AGENTS.md` owns data, migration, security and mutation rules.
+Decision types are `AUDIT_ONLY` (unknown status requires investigation), `PROOF_ONLY` (implemented but unproven), `GAP_REPAIR` (causal fix/delete/merge/refound), `IMPLEMENT_MISSING` (genuinely absent and **currently** authorized), and `NO_ACTION`. Choose one supported by the evidence; a suspected defect is not yet `GAP_REPAIR`. Reopen previously proven work only when fresh evidence invalidates its proof or meaning.
 
-**Development decision path:** start from the authorized human outcome and exact implementation evidence; reconcile durable owners, affected dependencies and decision-critical unknowns. Use only the smallest relevant current standards/OSS/external observations that could falsify a material decision. External sources never replace BThwani Product/System/Policy ownership. Derive commands, versions and runtime facts exclusively from the consuming repository, apply the correct `GOVERNANCE_IMPACT` path, prove the cutover, then re-census obsolete or conflicting residue. Do not open the entire knowledge repository or repeat still-valid proof without a material reason.
+## 3. Dependencies and slice boundaries
 
-## 3A. Whole-program coverage and predecessor gate
+For a multi-capability authorized objective, make **one compact, temporary coverage census**, beginning with current `PRODUCT.md`, `CAPABILITIES.md`, `JOURNEYS.md`, exact implementation and owner readbacks; reuse it until relevant facts change. The census is not a second Product specification, backlog, permanent Governance file, missing-feature assertion or mandate to implement all capabilities.
 
-Before proposing a next slice in a foundational, cross-capability program, construct or refresh **one** compact, evidence-backed coverage map of the *currently admitted* capability universe and its material end-to-end scenarios. Start from `PRODUCT.md`, `CAPABILITIES.md`, `JOURNEYS.md`, the exact implementation ref and the canonical owner readbacks; do not choose among an arbitrary handful of screens, apps or adjacent tasks. This census is a planning input, not a second Product specification, a claim that every capability is missing, or a mandate for repeated whole-repository scans. Reuse the latest proven census; revisit only a change that can alter scope, edges, status or precedence.
+Trace prerequisites backwards from the required outcome, and verify sibling blockers and their direction:
 
-For each proposed outcome, trace **all material incoming prerequisites** and the corresponding owning producer, consumer, permitted transition and falsifiable readback. Classify each edge:
+- `HARD` — directly required authorization/business/integrity/runtime condition; block an unsafe change until proven.
+- `REFERENCE_READY` — scenario-specific *actual* active, compatible owner-managed reference values and API readback; schema or table existence is insufficient. Do not require every potential future city, category, product or option.
+- `PROGRAM_ORDER` — current user-approved sequencing preference; never mislabel it `HARD` or freeze it as universal Product law.
+- `INTEGRATION_PROOF` — first necessary cross-owner or cross-surface handoff proof, not a reason to prebuild all downstream journeys.
 
-- `HARD`: prerequisite without which the next mutation/outcome would violate currently admitted authorization, business meaning, integrity or runtime contracts. **Block implementation** until independently proven.
-- `REFERENCE_READY`: the admitted, owner-managed *actual reference values* needed for the target scenario exist, are active/compatible and can be read through their canonical API. **Block that scenario** if absent; a table/API's existence alone is not readiness. Do not require every possible city, category, product or future value.
-- `PROGRAM_ORDER`: an expressly selected preparation/validation order useful for this current local delivery program, but not an invariant of the Product or a universal technical dependency. Record it transparently; do not describe it as `HARD`.
-- `INTEGRATION_PROOF`: crossing an owner/surface boundary requires its own targeted E2E evidence at the first relevant handoff. It does not by itself mandate early implementation of all downstream capabilities.
+Reject false hard edges inferred from old maps, row numbers, historical branches, UI navigation or competitor applications. Detect cycles and unintended transitive blocks; do not stall unrelated independently eligible work. Prefer the earliest **evidenced unresolved material gap** unlocking the next authorized business handoff, then the smallest causally coherent proof boundary. Combine inseparable shared causes across surfaces; do not create a slice per table/screen/endpoint, or expand one repair into a whole domain. End-to-end Journeys are integration proof scenarios, **not** an independent execution or closure queue.
 
-Run a backward prerequisite walk from the requested outcome to the first unproven hard or reference-readiness ancestor; also inspect sibling prerequisites of any selected outcome. Verify edge direction against the owning capability and code, detect dependency cycles and unintended transitive blocks, and preserve explicitly independent/parallel work. **Never promote** an illustrative graph, document order, UI navigation order, historical branch sequence, competitor workflow, or numeric slice ID into dependency authority. When a prerequisite is already proven on the same applicable state, reuse it; when only code exists, mark `IMPLEMENTED_UNPROVEN`; when unexamined, mark `UNKNOWN`. Do not create missing work or demand reimplementation by assumption.
+For sequential local development, a preceding execution slice needs all applicable **technical** closure gates on the relevant exact tested state. Manual user acceptance is not a universal prerequisite. Automatically exercise relevant browser, Android, API, persistence, authorization and regression paths; if required technical evidence cannot be obtained, return a precise `UNPROVEN`/`BLOCKED` claim. This does not bypass security, repository protection or production approvals. Audits and Governance corrections may continue while a dependent implementation slice is blocked.
 
-Choose the **earliest evidenced unresolved material gap or proof obligation** in the current authorized program, bounded to its real owner/writer/readback and affected surfaces. If multiple outcomes are eligible, prefer the one unlocking the nearest blocked agreed business handoff, then the smaller causally coherent proof cone; a human-approved `PROGRAM_ORDER` resolves remaining choices without fabricating hard edges. Where evidence reveals an earlier prerequisite that the provisional map omitted, **stop and correct the map/owner first** rather than proceeding with the later slice. Do not require the entire future roadmap to be simultaneously closed; an independently eligible slice remains eligible even when unrelated later work is open.
+## 4. Repair, data safety and Governance consistency
 
-If no material gap or missing proof remains, return `NO_ACTION` with sufficient direct evidence; never invent an implementation task to keep the program moving. A previously closed outcome is reopened only by new material falsifying evidence or invalidation of proof.
+For `GAP_REPAIR` or `IMPLEMENT_MISSING`, solve the proven cause without patch-on-patch, optional abstraction or speculative infrastructure. `DELETE / CLEAN / MERGE / RESTRUCTURE / REFOUND / REPLACE` are permitted when justified; retain healthy components and migrate every material producer, consumer, writer, read path, contract, runtime/config, test and data obligation **before** retiring a losing path. Prove both required positive behavior and removal of obsolete writers, dead routes and stale documentation (negative space). Immutable historical migrations and Git history are not themselves delete targets.
 
-The brief next-slice checkpoint must expose:
+Classify `GOVERNANCE_IMPACT=NONE | REVALIDATE_ONLY | UPDATE_REQUIRED | DEFECT_FOUND`. Any required durable semantic correction goes to its **single canonical Governance owner** by governed PR/merge before a deliberate immutable consumer repin. Do not create a shadow implementation policy or silently change approved Product meaning. Use only decision-critical current standards, official evidence and OSS/external observations to challenge a material claim; never copy vendor architecture or competitor behavior as BThwani law. The current implementation repo, not this document, owns live commands, versions, infrastructure and state.
 
-```text
-COVERAGE: authorized audited scope and necessary connected scenarios; excluded only with reason
-PROVEN_EXISTING: preserved healthy paths and still-valid evidence
-GAPS: falsifiable remaining gaps, or NO_MATERIAL_GAPS
-ACTION: NO_ACTION | PROOF_ONLY | GAP_REPAIR | IMPLEMENT_MISSING
-SELECTED_SLICE: one observable outcome, not a screen or a whole domain
-HARD_PREDECESSORS: owner, proof/readback, PASS | BLOCKED | UNKNOWN
-REFERENCE_READY: exact scenario options and canonical readback, PASS | BLOCKED | N/A
-PROGRAM_ORDER: stated preference, not falsely HARD
-INTEGRATION_PROOF: first required cross-owner handoff
-REMAINING_EARLIER_BLOCKERS: none or exact roots; no silent omission
-PREVIOUS_SLICE: exact tested HEAD, closure gates 1–8, outstanding technical remainder, and evidence validity
-```
-
-For an authorized sequential local development program, do not begin the next *execution* slice until all applicable technical closure gates of the previous slice are proven on the exact relevant tested state. An operator/user manual acceptance declaration is **not** a prerequisite for local slice progression. Run relevant browser, Android, API, persistence, authorization and regression checks automatically; where automated evidence is genuinely unavailable, report a specific technical `BLOCKED`/`UNPROVEN` claim and stop rather than replace it with verbal acceptance. This rule does not grant authority to bypass repository protections, security gates, reviews, irreversible operations or production approvals. Planning and correcting Governance may proceed while the execution gate is blocked.
-
-## 3B. Scope coherence
-
-Group related reference facts only when one shared causal defect and common integration proof require it. Such grouping never requires rewriting already proven healthy reference structures or preloading unrelated catalogs, actors, Stores or financial records.
-
-## 4. Radical closure without rewrite theater
-
-Inside the verified cone, repair causes rather than symptoms. `DELETE / CLEAN / MERGE / RESTRUCTURE / REFOUND / REPLACE` are permitted when necessary: retain sound code; migrate all affected consumers, writers, contracts, configurations, migrations, tests and references before deleting losing paths. Preserve durable data, secrets, safety, authorization, deployable identity and history.
-
-Verify both **positive space** (required behavior/UX/roles/edge cases/handoffs) and **negative space** (obsolete code, conflicting writers, dead endpoints, duplicated rules, stale Governance/docs and unnecessary tooling). A term appearing in history or an immutable migration is not itself evidence for deletion. One canonical owner; no patch-on-patch, speculative abstraction or permanent temporary compatibility.
-
-## 5. Plan only the current material slice
-
-When the objective spans multiple slices, derive a compact dependency order from the live state and record a small checkpoint. Do not pre-generate long future commands; start foundational slices only when a real shared root makes them necessary. Do not re-audit already proven unaffected regions.
+Before a destructive local operation report:
 
 ```text
-SLICE: <existing outcome; no artificial renumbering>
-ACTION: NO_ACTION | PROOF_ONLY | GAP_REPAIR | IMPLEMENT_MISSING
-AUDIT_SCOPE: <material inspected relationships>
-PROVEN_EXISTING: <unchanged sound implementation and evidence>
-GAPS: <specific supported gaps | NO_MATERIAL_GAPS>
-REPAIR_SCOPE: <verified causal changes and affected consumers | NONE>
-REF: <branch>
-BASE_HEAD: <exact sha>
-OBJECTIVE: <testable slice outcome>
-AFFECTED OWNERS: <only materially affected owners>
-LOCAL_TARGET: VERIFIED | UNVERIFIED (current observation)
-LOCAL_DATA_MODE: CONFIRMED_DISPOSABLE | MUST_PRESERVE | UNKNOWN (evidenced scope)
-RESET_SCOPE: <exact verified, authorized disposable targets | NONE>
-CLOSE: <slice-specific acceptance and proof>
-DO NOT EXPAND: <known unrelated scope, if any>
-RETURN: HEAD | ACTION | STATUS | PROVEN_EXISTING | GAPS | REPAIR_SCOPE | CLOSED | LOCAL_TARGET | LOCAL_DATA_MODE | RESET_SCOPE | CLOSURE_GATE_1_TO_8 | VALID_PROOF | REMAINING | BLOCKERS
-```
-
-All general execution/safety rules remain in the consuming repository's `AGENTS.md`; do not repeat them in the command.
-
-## 6. Execute, prove, checkpoint
-
-For `NO_ACTION`, give owner/readback evidence and make no changes. For `PROOF_ONLY`, test the unresolved claim without rewriting correct code. For `GAP_REPAIR` or `IMPLEMENT_MISSING`, work from one bounded discovery into implementation. As relevant, prove affected static/unit/API/contract/database/browser/device/runtime behavior, negative cases, cross-surface handoffs and canonical readback. A green static check alone never proves user-visible or cross-owner behavior. Reuse valid evidence and rerun only what an affected change invalidates.
-
-Report `CLOSURE_GATE_1_TO_8` for the applicable slice boundary: `1` causal root; `2` canonical ownership/write/readback; `3` necessary structural repair; `4` obsolete/conflicting-path removal; `5` affected surfaces/handoffs; `6` justified minimum complexity; `7` canonical Governance consistency/correction; `8` falsifiable technical/runtime/data/security proof. For each return `PASS | NOT_APPLICABLE(reason/evidence) | FAIL | UNPROVEN` and one compact claim-specific evidence reference. An applicable `FAIL` or `UNPROVEN` forbids `CLOSED`; return `REMAINDER` or `BLOCKED` with the precise unresolved claim. `NOT_APPLICABLE` must be justified by the actual boundary, not used to waive material proof. These are reporting gates over the existing execution law, not an additional parallel rule system or eight redundant test passes.
-
-```text
-HEAD: <exact sha>
-SLICE: <id>
-ACTION: NO_ACTION | PROOF_ONLY | GAP_REPAIR | IMPLEMENT_MISSING
-STATUS: CLOSED | NO_ACTION | REMAINDER | BLOCKED
-PROVEN_EXISTING: <preserved healthy paths>
-GAPS: <resolved findings or NO_MATERIAL_GAPS>
-REPAIR_SCOPE: <actual causal changes | NONE>
-DECISIONS: <still-active material decisions>
-CLOSED: <verified outcome and retired competing paths>
 LOCAL_TARGET: VERIFIED | UNVERIFIED
 LOCAL_DATA_MODE: CONFIRMED_DISPOSABLE | MUST_PRESERVE | UNKNOWN
-RESET_SCOPE: <actual authorized resets and post-reset readback | NONE>
-CLOSURE_GATE_1_TO_8: <1..8 status + concise claim-specific evidence/reason>
-VALID_PROOF: <specific checks/readback tied to exact state>
-REMAINING: <unresolved material dependencies>
-BLOCKERS: <none or exact root/cause and unblock requirement>
+RESET_SCOPE: <exact authorized, verified disposable resources | NONE>
 ```
 
-A slice is not `CLOSED` with a known material defect, unverified consumer, unresolved critical unknown or unjustified residue. Do not claim permanent infallibility. Keep the checkpoint short; do not store raw logs, duplicate screenshots, giant diffs or repeating inventories.
+Local Docker, test labels or the development phase do **not** imply disposability. Preserve live actors, useful sessions, money/business state, credentials, protected migrations and unrelated resources. When status is unknown use non-destructive inspection or an independently verified disposable target. After an authorized scoped reset, prove fresh setup and canonical owner readback. The consuming `AGENTS.md` remains the stronger data/migration/security/mutation authority.
 
-## 7. Integration and Git safety
+## 5. Claim-specific proof and eight closure gates
 
-Follow the consuming repository's commit/push policy and the user's explicit integration requirements. Verified slices can be committed and pushed when authorized; a push alone is not a PR/merge/release. Avoid repeating identical CI/review waves after each tiny edit. Integrate connected slices with affected E2E scenario proof before claiming platform-wide completion. On a Governance change, the canonical main state must be verified through its PR and intentionally repinned by consuming repositories.
+For the affected cone, use the smallest sufficient static/unit/API/contract/DB/browser/device/runtime and negative/failure evidence. A green static test, visual screenshot, invented fixture or copied pass label cannot prove an owner handoff. Reuse still-valid evidence; rerun invalidated claims only. Verify final canonical state, correct roles, mutation/replay, error/recovery and affected integrations as needed.
 
-## 8. Continuation and stop
+Return `CLOSURE_GATE_1_TO_8`, each `PASS | NOT_APPLICABLE | FAIL | UNPROVEN` with a concise claim-specific evidence pointer or genuine N/A reason:
 
-At the next slice, use only the previous checkpoint, current exact HEAD, delta, active decisions and affected dependencies; reset stale context. Continue to the next safe material slice without asking for another trigger. Stop at the authorized fixed point, or return `BLOCKED` with exact root cause, consequence, evidence and unblock requirement. “100%” means zero **known** material defect in the proven scope, not a guarantee about all future execution.
+1. **Causal root:** the proven gap/cause is resolved, not disguised.
+2. **Canonical authority:** one owner/writer with authoritative readback.
+3. **Necessary structural repair:** full justified correction/refoundation, healthy state retained.
+4. **Negative space:** losing/conflicting/obsolete paths removed when applicable.
+5. **Affected cone:** all material surfaces, roles, contracts and cross-owner handoffs proven.
+6. **Minimum sound complexity:** no unsupported new machinery or permanent compatibility residue.
+7. **Governance consistency:** correct owner and required correction/consumer pin accounted for.
+8. **Falsifiable outcome:** material technical, runtime, data, authorization and recovery proof.
+
+An applicable `FAIL` or `UNPROVEN` forbids `CLOSED`. `NOT_APPLICABLE` needs grounded explanation; eight gates are one compact **report over existing law**, not eight redundant test passes. A result of `NO_ACTION` is valid with sufficient current evidence and no mutation. No claim of permanent infallibility.
+
+## 6. One bounded command and checkpoint
+
+Issue work only for the current observed gap/proof obligation. Generic safety law stays in the consuming `AGENTS.md`, not copied into the command.
+
+```text
+SLICE: <existing scope/outcome, no artificial re-numbering>
+REF: <branch>
+BASE_HEAD: <exact sha>
+OBJECTIVE: <authorized current outcome>
+ACTION: AUDIT_ONLY | PROOF_ONLY | GAP_REPAIR | IMPLEMENT_MISSING | NO_ACTION
+AUDIT_SCOPE: <necessary connected owners/relations>
+PROVEN_EXISTING: <sound paths and valid evidence to preserve>
+GAPS: <falsifiable claims | NO_MATERIAL_GAPS>
+REPAIR_SCOPE: <causal owners/affected consumers | NONE>
+HARD_PREDECESSORS: <specific owner-backed status | NONE>
+REFERENCE_READY: <scenario-specific data proof | N/A>
+PROGRAM_ORDER: <explicit authorized preference, not HARD | NONE>
+INTEGRATION_PROOF: <first applicable handoff | N/A>
+GOVERNANCE_IMPACT: NONE | REVALIDATE_ONLY | UPDATE_REQUIRED | DEFECT_FOUND
+LOCAL_TARGET: VERIFIED | UNVERIFIED
+LOCAL_DATA_MODE: CONFIRMED_DISPOSABLE | MUST_PRESERVE | UNKNOWN
+RESET_SCOPE: <authorized disposable scope | NONE>
+CLOSE: <claim-specific checks and readback>
+DO_NOT_EXPAND: <known unrelated scope>
+RETURN: HEAD | ACTION | STATUS | PROVEN_EXISTING | GAPS | REPAIR_SCOPE | CLOSURE_GATE_1_TO_8 | VALID_PROOF | REMAINING | BLOCKERS
+```
+
+Compact checkpoint after execution/audit:
+
+```text
+HEAD: <exact tested sha>
+SLICE: <existing outcome>
+ACTION: AUDIT_ONLY | PROOF_ONLY | GAP_REPAIR | IMPLEMENT_MISSING | NO_ACTION
+STATUS: CLOSED | NO_ACTION | REMAINDER | BLOCKED
+DECISIONS: <still-active material decisions | NONE>
+PROVEN_EXISTING: <retained healthy paths>
+GAPS: <closed claims | remaining proven claims | NO_MATERIAL_GAPS>
+REPAIR_SCOPE: <actual causal changes | NONE>
+LOCAL_TARGET: VERIFIED | UNVERIFIED
+LOCAL_DATA_MODE: CONFIRMED_DISPOSABLE | MUST_PRESERVE | UNKNOWN
+RESET_SCOPE: <actual safe reset/readback | NONE>
+CLOSURE_GATE_1_TO_8: <status + evidence/reason for each applicable gate>
+VALID_PROOF: <claim-specific checks and canonical readback on exact state>
+REMAINING: <material unresolved claims | NONE>
+BLOCKERS: <exact root, consequence and unblock condition | NONE>
+```
+
+## 7. Git integration and stopping
+
+Follow the implementation repository's commit/push rules and explicit integration authorization. A push is not a merge. For Governance changes, review/CI/merge the exact canonical candidate, verify `main` readback, and deliberately repin a consumer **only when needed**; do not maintain shadow truth. Do not rerun identical CI/review waves for every trivial edit.
+
+Continue from the previous checkpoint, fresh exact HEAD, changed dependency edges and still-valid evidence, not a full restart of analysis. Integrated journeys require E2E proof at the first joined handoff. Stop at the authorized fixed point (`NO_ACTION` or proven `CLOSED`), or return `BLOCKED` with what is missing. "100%" refers to zero **known** material defects in the evidence-backed scope, not an assurance against future defects.
